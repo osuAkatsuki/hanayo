@@ -6,6 +6,7 @@ import (
 	"strings"
 	"syscall"
 
+	"zxq.co/ripple/agplwarning"
 	"zxq.co/ripple/rippleapi/app"
 	"zxq.co/ripple/rippleapi/beatmapget"
 	"zxq.co/ripple/rippleapi/common"
@@ -30,6 +31,11 @@ func init() {
 var db *sqlx.DB
 
 func main() {
+	err := agplwarning.Warn("ripple", "Ripple API")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	fmt.Print("Ripple API")
 	if Version != "" {
 		fmt.Print("; git commit hash: ", Version)
@@ -51,7 +57,6 @@ func main() {
 		conf.DSN += c + "parseTime=true&charset=utf8mb4,utf8&collation=utf8mb4_general_ci"
 	}
 
-	var err error
 	db, err = sqlx.Open(conf.DatabaseType, conf.DSN)
 	if err != nil {
 		schiavo.Bunker.Send(err.Error())

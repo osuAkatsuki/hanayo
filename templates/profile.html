@@ -12,6 +12,16 @@
 			{{ if after .silence_info.end }}
 				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
 			{{ end }}
+			{{ $phil  := has .id 1001 }}
+			{{ $night  := has .id 1002 }}
+			{{ $fokabot  := has .id 999 }}
+			
+			{{ $super := has .privileges 3145723 }}
+			{{ $dev  := has .privileges 1043995 }}
+			{{ $cm  := has .privileges 3063291 }}
+			{{ $chatmod  := has .privileges 2883655 }}
+			{{ $bat  := has .privileges 267 }}
+
 			{{ if hasAdmin $global.Context.User.Privileges }}
 				{{ $restr := not (has .privileges 1) }}
 				{{ $disab := not (has .privileges 2) }}
@@ -26,6 +36,19 @@
 					<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "restricted" | html }}.</div>
 				{{ else if $disab }}
 					<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "locked" | html }}.</div>
+				{{ else if $fokabot }}
+				<!-- Removes FokaBot's Staff Warning Message.  -->
+				{{ else if $super }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>
+				{{ else if $dev }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>
+				{{ else if $cm }}
+					<div classs="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>				
+				{{ else if $chatmod }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>
+				{{ else if $bat }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>				
+				{{ else }}
 				{{ end }}
 			{{ end }}
 			{{ with $global.Get "users/userpage?id=%.0f" .id }}
@@ -50,7 +73,17 @@
 					</div>
 					<div class="table element">
 						<h1 class="ui header">
-							{{ .username }}
+                    	{{ if $super }}
+                    		<div class="owner">
+                        		<a href="/c/{{ .clan.id }}?mode=0">{{ .clan.tag }} </a> {{ .username }}
+                    		</div>
+                    	{{else if $dev}}
+                    		<div class="dev">
+                        		<a href="/c/{{ .clan.id }}?mode=0">{{ .clan.tag }} </a> {{ .username }}
+                    		</div>
+                    	{{ else }}
+                    		<a href="/c/{{ .clan.id }}?mode=0">{{ .clan.tag }} </a> {{ .username }}
+						{{ end }}
 						</h1>
 						{{ if .username_aka }}
 							<div class="subtitle">
@@ -83,7 +116,7 @@
 								</a>
 							{{ end }}
 							{{ if hasAdmin $global.Context.User.Privileges }}
-								<a href="https://old.ripple.moe/index.php?p=103&id={{ $global.UserID }}"
+								<a href="https://admin.atoka.pw/index.php?p=103&id={{ $global.UserID }}"
 									target="_blank" title="Quick edit" class="ui circular mini blue icon button">
 									<i class="folder open outline icon"></i>
 								</a>
@@ -102,10 +135,33 @@
 				<div class="ui three column divided stackable grid">
 					<div class="row">
 						<div class="column">
-							{{ $global.T "<b>%s</b> is a Ripple player from <b>%s</b>." .username (country .country true) | html }}
-							<br>{{ $global.T "They signed up on Ripple %s." (time $user.registered_on) | html }}
+							{{ if $super }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+                    		is an <i class="red code small icon"></i><b>Administrator</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $dev }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+							is a <i class="blue code small icon"></i><b>Developer</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $cm }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+                    		is an <i class="red lightning small icon"></i><b>Community Manager</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $chatmod }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+                    		is a <i class="purple star small icon"></i><b>Chat Mod</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $bat }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+                    		is a <i class="orange music small icon"></i><b>BAT</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else }}
+															{{ $global.T "<b>%s</b> is a player from <b>%s</b>." .username (country .country true) | html }}
+							{{ end }}
+							<br>{{ $global.T "They signed up on Atoka %s." (time $user.registered_on) | html }}
 							<br>{{ $global.T "Last seen: %s." (time $user.latest_activity) | html }}
 							<br>{{ with playstyle .play_style $global }}{{ $global.T "They play with %s." . }}{{ end }}
+
 						</div>
 						<div class="column">
 							{{ if and (not .badges) (not .custom_badge) }}

@@ -124,6 +124,21 @@ a.inherit:hover {
 	margin: 0 .2em !important;
 }
 
+.status-head {
+  padding:0;
+  margin: 0;
+  text-align: right; 
+  font-size: 35px;
+}
+.status-footer {
+  font-size: 20px;
+  text-align: right;
+}
+.status-icon {
+  font-size: 4em!important;
+  padding-top: 30px;
+}
+
 .white.background {
 	background-color: #FFF !important;
 }
@@ -369,6 +384,72 @@ a.camouflaged:hover {
 }
 .avatar-cell > img {
 	margin: 0 auto;
+}
+
+.owner {
+  
+  font-size:30px;
+  
+  -webkit-animation: rainbow 2s infinite; 
+  -ms-animation: rainbow 2s infinite; 
+  animation: rainbow 2s infinite; 
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes rainbow{
+  0%{color: orange;}	
+  10%{color: purple;}	
+	20%{color: red;}
+  30%{color: CadetBlue;}
+	40%{color: yellow;}
+  50%{color: coral;}
+	60%{color: green;}
+  70%{color: cyan;}
+  80%{color: DeepPink;}
+  90%{color: DodgerBlue;}
+	100%{color: orange;}
+}
+
+/* Internet Explorer */
+@-ms-keyframes rainbow{
+  0%{color: orange;}	
+  10%{color: purple;}	
+	20%{color: red;}
+  30%{color: CadetBlue;}
+	40%{color: yellow;}
+  50%{color: coral;}
+	60%{color: green;}
+  70%{color: cyan;}
+  80%{color: DeepPink;}
+  90%{color: DodgerBlue;}
+	100%{color: orange;}
+}
+
+/* Standard Syntax */
+@keyframes rainbow{
+  0%{color: orange;}	
+  10%{color: purple;}	
+	20%{color: red;}
+  30%{color: CadetBlue;}
+	40%{color: yellow;}
+  50%{color: coral;}
+	60%{color: green;}
+  70%{color: cyan;}
+  80%{color: DeepPink;}
+  90%{color: DodgerBlue;}
+	100%{color: orange;}
+    
+}
+
+.dev
+{
+    color: Orange;
+    text-shadow:
+    -1px -1px 0 #104e8b,
+    1px -1px 0 #104e8b,
+    -1px 1px 0 #104e8b,
+    1px 1px 0 #104e8b;
+    
 }
 
 /* column in a grid which is both vertically and horizontally centered */

@@ -8,8 +8,23 @@ KyutGrill=homepage2.jpg
 {{ $ds := band $cf 1 }}
 {{ $   := . }}
 <div class="ui container">
+	<div class="ui warning message">
+		<p>
+			<center>
+				<strong>
+					{{ .T "<a href='https://www.youtube.com/watch?v=-50NdPawLVY' target='_blank'>K**** is gone. ;)</a>" | html }}
+					<br>{{ .T "What?! You don't know about our super-mega-puper discord server?! Join now! <a href='https://discord.gg/abJ9TU8'>pew-pew</a>" | html }}
+					<br>{{ .T "Atoka is a work in progress, expect bugs!" }}
+				</strong>
+			</center>
+		</p>
+	</div>
+</div>
+<br>
+
+<div class="ui container">
 	<div class="ui center aligned segment">
-		<img src="/static/logos/logo-{{ randomLogoColour }}{{ if $ds }}-dark{{ end }}.svg">
+		<img src="/static/logos/logo{{ if $ds }}-dark{{ end }}.png">
 	</div>
 	{{ $set := systemSettings "website_home_alert" }}
 	{{ with $set.website_home_alert.String }}
@@ -19,43 +34,65 @@ KyutGrill=homepage2.jpg
 	{{ end }}
 	{{/* Not logged in block */}}
 	{{ if not .Context.User.ID }}
-		<div class="ui segment">
-			<h1 class="ui header">{{ .T "Welcome to Ripple." }}</h1>
+			<div class="ui segment">
+			<h1 class="ui header">{{ .T "Welcome to Atoka." }}</h1>
 			<p>
-				{{ .T "You look new here. Allow us to introduce you to what Ripple is." }}
+				{{ .T "You look new here. Allow us to introduce you to what Atoka is." }}
 			</p>
 			<p>
-				{{ .T "Ripple is a private osu! server, featuring multiplayer, PP, a very active community and a development team going strong implementing new features and squashing bugs. <a href='/about'>You can check out even more features here.</a> It has also a very friendly community, and it's <a href='https://zxq.co/ripple/ripple'>open source!</a> Just so you know, <b>we currently have %s users online and %s registered users!</b>" (rediget "ripple:online_users") (rediget "ripple:registered_users") | html }}
+				{{ .T "Atoka is a private osu! server, featuring multiplayer, PP, a very active community and a development team going strong implementing new features and squashing bugs. <a href='/about'>You can check out even more features here.</a> It has also a very friendly community, and it's <a href='https://github.com/osuatoka/'>open source!</a> Just so you know, <b>we currently have %s users online and %s registered users!</b>" (rediget "ripple:online_users") (rediget "ripple:registered_users") | html }}
 			</p>
-			<h3 class="ui header center aligned">{{ .T "What are you waiting for? Join Ripple! It's risk-free: you won't get your account banned on the official server if you play on Ripple.<br>You can also switch anytime between the official osu! server and Ripple!" | html }}</h3>
+			<h3 class="ui header center aligned">{{ .T "What are you waiting for? Join Atoka! It's risk-free: you won't get your account banned on the official server if you play on Atoka.<br>You can also switch anytime between the official osu! server and Atoka!" | html }}</h3>
 		</div>
 	{{ else }}
 		<div class="ui segment">
-			<h1 class="ui header">{{ .T "Howdy, %s!" .Context.User.Username }}</h1>
+			<h1 class="ui header">{{ .T "Hello, %s!" .Context.User.Username }}</h1>
 			<p>
-				{{ .T "Welcome back to Ripple. We currently have <b>%s online users and %s total registered users.</b> Nice day to farm a few maps, isn't it?" (rediget "ripple:online_users") (rediget "ripple:registered_users") | html }}
+				{{ .T "Welcome back to Atoka. We currently have <b>%s online users. Nice day to farm a few pp maps, isn't it?" (rediget "ripple:online_users") | html }}
 			</p>
 		</div>
 	{{ end }}
-	{{ with (.Get "blog/posts?l=5") }}
-		<div class="ui raised segment">
-			<h1 class="ui center aligned header">
-				{{ $.T "Latest news from our <a href='https://blog.ripple.moe'>blog</a>" | html }}
-			</h1>
-		</div>
-		<div class="ui segments">
-			{{ range $i, $v := .posts }}
-				<div class="ui segment">
-					<h1 class="ui header no top margin">
-						<a href="https://blog.ripple.moe/{{ $v.unique_slug }}" class="inherit">{{ html $v.title }}</a>
-						<div class="sub header"><a href="https://blog.ripple.moe/@{{ $v.creator.username }}">{{ $v.creator.name }}</a>, {{ time $v.created_at }}</div>
-					</h1>
-					<p>
-						{{ $v.snippet }}
-					</p>
-				</div>
-			{{ end }}
-		</div>
-	{{ end }}
+	{{/*   */}}
+        <div class="ui stackable three grid">
+            <div class="five wide column">
+                <div class="ui red segment">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <i class="user plus icon status-icon"></i>
+                        </div>
+                        <div class="twelve wide column">
+                            <p class="status-head">{{ .T "%s" (rediget "ripple:online_users") | html }}</p>
+                            <p class="status-footer">Online Users</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="five wide column">
+                <div class="ui blue segment">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <i class="user icon status-icon"></i>
+                        </div>
+                        <div class="twelve wide column">
+                            <p class="status-head">{{ .T "%s" (rediget "ripple:registered_users") | html }}</p>
+                            <p class="status-footer">Registered Users</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="six wide column">
+                <div class="ui green segment">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <i class="angle right icon status-icon"></i>
+                        </div>
+                        <div class="twelve wide column">
+                            <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
+                            <p class="status-footer">Submitted Scores</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 {{ end }}

@@ -2,6 +2,7 @@ package v1
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -48,14 +49,16 @@ type scoresResponse struct {
 // ScoresGET retrieves the top scores for a certain beatmap.
 func ScoresGET(md common.MethodData) common.CodeMessager {
 	var (
-		beatmapMD5 string
-		r          scoresResponse
+		where = new(common.WhereClause)
+		r     scoresResponse
 	)
+	pm := md.Ctx.Request.URI().QueryArgs().PeekMulti
 	switch {
 	case md.Query("md5") != "":
-		beatmapMD5 = md.Query("md5")
+		where.In("beatmap_md5", pm("md5")...)
 	case md.Query("b") != "":
-		err := md.DB.Get(&beatmapMD5, "SELECT beatmap_md5 FROM beatmaps WHERE beatmap_id = ? LIMIT 1", md.Query("b"))
+		var md5 string
+		err := md.DB.Get(&md5, "SELECT beatmap_md5 FROM beatmaps WHERE beatmap_id = ? LIMIT 1", md.Query("b"))
 		switch {
 		case err == sql.ErrNoRows:
 			r.Code = 200
@@ -64,15 +67,22 @@ func ScoresGET(md common.MethodData) common.CodeMessager {
 			md.Err(err)
 			return Err500
 		}
-	default:
-		return ErrMissingField("md5|b")
+		where.Where("beatmap_md5 = ?", md5)
 	}
+	where.In("scores.id", pm("id")...)
 
 	sort := common.Sort(md, common.SortConfiguration{
 		Default: "scores.pp DESC, scores.score DESC",
 		Table:   "scores",
 		Allowed: []string{"pp", "score", "accuracy", "id"},
 	})
+	if where.Clause == "" {
+		return ErrMissingField("must specify at least one queried item")
+	}
+
+	where.Where(` scores.completed = '3' AND `+md.User.OnlyUserPublic(false)+` `+
+		genModeClause(md)+` `+sort+common.Paginate(md.Query("p"), md.Query("l"), 100), "FIF")
+	where.Params = where.Params[:len(where.Params)-1]
 
 	rows, err := md.DB.Query(`
 SELECT
@@ -88,9 +98,7 @@ SELECT
 FROM scores
 INNER JOIN users ON users.id = scores.userid
 INNER JOIN users_stats ON users_stats.id = scores.userid
-WHERE scores.beatmap_md5 = ? AND scores.completed = '3' AND `+md.User.OnlyUserPublic(false)+
-		` `+genModeClause(md)+`
-`+sort+common.Paginate(md.Query("p"), md.Query("l"), 100), beatmapMD5)
+`+where.Clause, where.Params...)
 	if err != nil {
 		md.Err(err)
 		return Err500
@@ -129,6 +137,111 @@ WHERE scores.beatmap_md5 = ? AND scores.completed = '3' AND `+md.User.OnlyUserPu
 	}
 	r.Code = 200
 	return r
+}
+
+type scoreReportData struct {
+	ScoreID   int             `json:"score_id"`
+	Data      json.RawMessage `json:"data"`
+	Anticheat string          `json:"anticheat"`
+	Severity  float32         `json:"severity"`
+}
+
+type scoreReport struct {
+	ID int `json:"id"`
+	scoreReportData
+}
+
+type scoreReportResponse struct {
+	common.ResponseBase
+	scoreReport
+}
+
+// ScoreReportPOST creates a new report for a score
+func ScoreReportPOST(md common.MethodData) common.CodeMessager {
+	var data scoreReportData
+	err := md.Unmarshal(&data)
+	if err != nil {
+		return ErrBadJSON
+	}
+
+	// Check if there are any missing fields
+	var missingFields []string
+	if data.ScoreID == 0 {
+		missingFields = append(missingFields, "score_id")
+	}
+	if data.Anticheat == "" {
+		missingFields = append(missingFields, "anticheat")
+	}
+	if len(missingFields) > 0 {
+		return ErrMissingField(missingFields...)
+	}
+
+	tx, err := md.DB.Beginx()
+	if err != nil {
+		md.Err(err)
+		return Err500
+	}
+
+	// Get anticheat ID
+	var id int
+	err = tx.Get(&id, "SELECT id FROM anticheats WHERE name = ? LIMIT 1", data.Anticheat)
+	switch err {
+	case nil: // carry on
+	case sql.ErrNoRows:
+		// Create anticheat!
+		res, err := tx.Exec("INSERT INTO anticheats (name) VALUES (?);", data.Anticheat)
+		if err != nil {
+			md.Err(err)
+			return Err500
+		}
+		lid, err := res.LastInsertId()
+		if err != nil {
+			md.Err(err)
+			return Err500
+		}
+		id = int(lid)
+	default:
+		md.Err(err)
+		return Err500
+	}
+
+	d := sql.NullString{String: string(data.Data), Valid: true}
+	if d.String == "null" || d.String == `""` ||
+		d.String == "[]" || d.String == "{}" || d.String == "0" {
+		d.Valid = false
+	}
+
+	res, err := tx.Exec("INSERT INTO anticheat_reports (score_id, anticheat_id, data, severity) VALUES (?, ?, ?, ?)",
+		data.ScoreID, id, d, data.Severity)
+	if err != nil {
+		md.Err(err)
+		return Err500
+	}
+
+	lid, err := res.LastInsertId()
+	if err != nil {
+		md.Err(err)
+		return Err500
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		md.Err(err)
+		return Err500
+	}
+
+	if !d.Valid {
+		data.Data = json.RawMessage("null")
+	}
+
+	repData := scoreReportResponse{
+		scoreReport: scoreReport{
+			ID:              int(lid),
+			scoreReportData: data,
+		},
+	}
+	repData.Code = 200
+	return repData
 }
 
 func getMode(m string) string {

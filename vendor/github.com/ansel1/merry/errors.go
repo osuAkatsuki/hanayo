@@ -57,14 +57,14 @@ func SetStackCaptureEnabled(enabled bool) {
 
 // VerboseDefault returns the global default for verbose mode.
 // When true, e.Error() == Details(e)
-// When false, e.Error() == Message(e)
+// When false, e.Error() == Message(e) + Cause(e)
 func VerboseDefault() bool {
 	return verbose
 }
 
 // SetVerboseDefault sets the global default for verbose mode.
 // When true, e.Error() == Details(e)
-// When false, e.Error() == Message(e)
+// When false, e.Error() == Message(e) + Cause(e)
 func SetVerboseDefault(b bool) {
 	verbose = b
 }
@@ -85,6 +85,8 @@ type Error interface {
 	Here() Error
 	WithStackSkipping(skip int) Error
 	WithHTTPCode(code int) Error
+	WithCause(err error) Error
+	Cause() error
 	fmt.Formatter
 }
 
@@ -192,14 +194,20 @@ func Values(e error) map[interface{}]interface{} {
 // Useful when returning copies of exported package errors.
 // If e is nil, returns nil.
 func Here(e error) Error {
+	return HereSkipping(e, 1)
+}
+
+// HereSkipping returns an error with a new stacktrace, at the call site
+// of HereSkipping() - skip frames.
+func HereSkipping(e error, skip int) Error {
 	switch m := e.(type) {
 	case nil:
 		return nil
 	case *merryErr:
 		// optimization: only capture the stack once, since its expensive
-		return m.WithStackSkipping(1)
+		return m.WithStackSkipping(1 + skip)
 	default:
-		return WrapSkipping(e, 1)
+		return WrapSkipping(e, 1+skip)
 	}
 }
 
@@ -259,9 +267,45 @@ func Message(e error) string {
 	}
 	m, _ := Value(e, message).(string)
 	if m == "" {
-		return Unwrap(e).Error()
+		m = Unwrap(e).Error()
 	}
 	return m
+}
+
+// Cause returns the cause of the argument.  If e is nil, or has no cause,
+// nil is returned.
+func Cause(e error) error {
+	if e == nil {
+		return nil
+	}
+	c, _ := Value(e, cause).(error)
+	return c
+}
+
+// RootCause returns the innermost cause of the argument (i.e. the last
+// error in the cause chain)
+func RootCause(e error) error {
+	if e == nil {
+		return e
+	}
+	for {
+		c := Cause(e)
+		if c == nil {
+			break
+		} else {
+			e = c
+		}
+	}
+	return e
+}
+
+// WithCause returns an error based on the first argument, with the cause
+// set to the second argument.  If e is nil, returns nil.
+func WithCause(e error, cause error) Error {
+	if e == nil {
+		return nil
+	}
+	return WrapSkipping(e, 1).WithCause(cause)
 }
 
 // WithMessage returns an error with a new message.
@@ -353,6 +397,18 @@ func Prependf(e error, format string, args ...interface{}) Error {
 //
 //     if merry.Is(err, urpack.ErrEOF) {
 //
+// Causes
+//
+// Is will also return true if any of the originals is in the cause chain
+// of e.  For example:
+//
+//     e1 := merry.New("base error")
+//     e2 := merry.New("library error")
+//     // e2 was caused by e1
+//     e3 := merry.WithCause(e1, e2)
+//     merry.Is(e3, e2)  // yes it is, because e3 is based on e2
+//     merry.Is(e3, e1)  // yes it is, because e1 was a cause of e3
+//
 func Is(e error, originals ...error) bool {
 	is := func(e, original error) bool {
 		for {
@@ -374,6 +430,11 @@ func Is(e error, originals ...error) bool {
 			return true
 		}
 	}
+	// check cause
+	if c := Cause(e); c != nil {
+		return Is(c, originals...)
+	}
+
 	return false
 }
 
@@ -411,12 +472,16 @@ const (
 	message                   = "message"
 	httpCode                  = "http status code"
 	userMessage               = "user message"
+	cause                     = "cause"
 )
 
 type merryErr struct {
 	err        error
 	key, value interface{}
 }
+
+// make sure merryErr implements Error
+var _ Error = (*merryErr)(nil)
 
 // Format implements fmt.Formatter
 func (e *merryErr) Format(s fmt.State, verb rune) {
@@ -434,9 +499,6 @@ func (e *merryErr) Format(s fmt.State, verb rune) {
 	}
 }
 
-// make sure merryErr implements Error
-var _ Error = (*merryErr)(nil)
-
 // Error implements golang's error interface
 // returns the message value if set, otherwise
 // delegates to inner error
@@ -446,7 +508,13 @@ func (e *merryErr) Error() string {
 	}
 	m := Message(e)
 	if m == "" {
-		return UserMessage(e)
+		m = UserMessage(e)
+	}
+	// add cause
+	if c := Cause(e); c != nil {
+		if ce := c.Error(); ce != "" {
+			m += ": " + ce
+		}
 	}
 	return m
 }
@@ -528,7 +596,7 @@ func (e *merryErr) Append(msg string) Error {
 	if e == nil {
 		return nil
 	}
-	return e.WithMessagef("%s: %s", e.Error(), msg)
+	return e.WithMessagef("%s: %s", Message(e), msg)
 }
 
 // Append a message after the current error message, in the format "original: new"
@@ -544,7 +612,7 @@ func (e *merryErr) Prepend(msg string) Error {
 	if e == nil {
 		return nil
 	}
-	return e.WithMessagef("%s: %s", msg, e.Error())
+	return e.WithMessagef("%s: %s", msg, Message(e))
 }
 
 // Prepend a message before the current error message, in the format "new: original"
@@ -553,4 +621,19 @@ func (e *merryErr) Prependf(format string, args ...interface{}) Error {
 		return nil
 	}
 	return e.Prepend(fmt.Sprintf(format, args...))
+}
+
+// WithCause returns an error based on the receiver, with the cause
+// set to the argument.
+func (e *merryErr) WithCause(err error) Error {
+	if e == nil || err == nil {
+		return e
+	}
+	return e.WithValue(cause, err)
+}
+
+// Cause returns the cause of the receiver, or nil if there is
+// no cause, or the receiver is nil
+func (e *merryErr) Cause() error {
+	return Cause(e)
 }

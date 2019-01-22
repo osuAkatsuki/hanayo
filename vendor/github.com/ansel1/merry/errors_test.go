@@ -10,6 +10,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"regexp"
 )
 
 func TestNew(t *testing.T) {
@@ -128,39 +130,39 @@ func TestWrap(t *testing.T) {
 }
 
 func TestHere(t *testing.T) {
-	ParseError := New("Parse error")
-	InvalidCharSet := WithMessage(ParseError, "Invalid charset").WithHTTPCode(400)
-	InvalidSyntax := ParseError.WithMessage("Syntax error")
+	parseError := New("Parse error")
+	invalidCharSet := WithMessage(parseError, "Invalid charset").WithHTTPCode(400)
+	invalidSyntax := parseError.WithMessage("Syntax error")
 
-	if !Is(InvalidCharSet, ParseError) {
-		t.Error("InvalidCharSet should be a ParseError")
+	if !Is(invalidCharSet, parseError) {
+		t.Error("invalidCharSet should be a parseError")
 	}
 
 	_, _, rl, _ := runtime.Caller(0)
-	pe := Here(ParseError)
+	pe := Here(parseError)
 	_, l := Location(pe)
 	if l != rl+1 {
-		t.Errorf("Extend should capture a new stack.  Expected %d, got %d", rl+1, l)
+		t.Errorf("Here should capture a new stack.  Expected %d, got %d", rl+1, l)
 	}
 
-	if !Is(pe, ParseError) {
-		t.Error("pe should be a ParseError")
+	if !Is(pe, parseError) {
+		t.Error("pe should be a parseError")
 	}
-	if Is(pe, InvalidCharSet) {
-		t.Error("pe should not be an InvalidCharSet")
+	if Is(pe, invalidCharSet) {
+		t.Error("pe should not be an invalidCharSet")
 	}
 	if pe.Error() != "Parse error" {
 		t.Errorf("child error's message is wrong, expected: Parse error, got %v", pe.Error())
 	}
-	icse := Here(InvalidCharSet)
-	if !Is(icse, ParseError) {
-		t.Error("icse should be a ParseError")
+	icse := Here(invalidCharSet)
+	if !Is(icse, parseError) {
+		t.Error("icse should be a parseError")
 	}
-	if !Is(icse, InvalidCharSet) {
-		t.Error("icse should be an InvalidCharSet")
+	if !Is(icse, invalidCharSet) {
+		t.Error("icse should be an invalidCharSet")
 	}
-	if Is(icse, InvalidSyntax) {
-		t.Error("icse should not be an InvalidSyntax")
+	if Is(icse, invalidSyntax) {
+		t.Error("icse should not be an invalidSyntax")
 	}
 	if icse.Error() != "Invalid charset" {
 		t.Errorf("child's message is wrong.  Expected: Invalid charset, got: %v", icse.Error())
@@ -171,6 +173,20 @@ func TestHere(t *testing.T) {
 
 	// nil -> nil
 	assert.Nil(t, Here(nil))
+}
+
+func TestHereSkipping(t *testing.T) {
+	var e error = New("boom")
+
+	f := func() error {
+		return HereSkipping(e, 1)
+	}
+
+	_, _, rl, _ := runtime.Caller(0)
+	e = f()
+
+	_, l := Location(e)
+	require.Equal(t, rl+1, l)
 }
 
 func TestUnwrap(t *testing.T) {
@@ -409,17 +425,16 @@ func TestSourceLine(t *testing.T) {
 	source := SourceLine(nil)
 	assert.Equal(t, source, "")
 
-	err := New("foo")
+	var err error = New("foo")
 	source = SourceLine(err)
 	t.Log(source)
 	assert.NotEqual(t, source, "")
 
-	parts := strings.Split(source, ":")
-	assert.Equal(t, len(parts), 2)
+	p := regexp.MustCompile(`^.*errors_test\.go:(\d+)$`)
 
-	if !strings.HasSuffix(parts[0], "errors_test.go") {
-		t.Error("source line should contain file name")
-	}
+	parts := p.FindStringSubmatch(source)
+	require.NotNil(t, parts, "source did not match path pattern: %v", source)
+
 	if i, e := strconv.Atoi(parts[1]); e != nil {
 		t.Errorf("not a number: %s", parts[1])
 	} else if i <= 0 {
@@ -540,6 +555,41 @@ func TestMerryErr_Format(t *testing.T) {
 	assert.Equal(t, fmt.Sprintf("%s", e), e.Error())
 	assert.Equal(t, fmt.Sprintf("%q", e), fmt.Sprintf("%q", e.Error()))
 	assert.Equal(t, fmt.Sprintf("%+v", e), Details(e))
+}
+
+func TestCause(t *testing.T) {
+
+	e1 := New("low level error")
+	e2 := New("high level error")
+
+	e3 := WithCause(e2, e1)
+	e4 := New("top level error")
+	e5 := e4.WithCause(e3)
+
+	assert.True(t, Is(e3, e1))
+	assert.True(t, Is(e3, e2))
+
+	assert.Equal(t, e1, Cause(e3))
+	assert.Equal(t, e1, e3.(Error).Cause())
+
+	assert.Nil(t, Cause(e2))
+	assert.Nil(t, Cause(e1))
+	assert.Nil(t, e1.(Error).Cause())
+	assert.Nil(t, e2.(Error).Cause())
+
+	assert.Equal(t, e3.Error(), e2.Error()+": "+e1.Error())
+
+	assert.True(t, Is(e5, e4))
+	assert.True(t, Is(e5, e3))
+	assert.True(t, Is(e5, e2))
+	assert.True(t, Is(e5, e1))
+
+	assert.Equal(t, e3, Cause(e5))
+	assert.NotEqual(t, e3, RootCause(e5))
+	assert.Equal(t, e1, RootCause(e5))
+
+	// ensure cause message isn't double appended
+	assert.Equal(t, "red: high level error: low level error", Prepend(e3, "red").Error())
 }
 
 func BenchmarkNew_withStackCapture(b *testing.B) {

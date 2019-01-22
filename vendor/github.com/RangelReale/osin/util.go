@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -51,13 +52,26 @@ func CheckBasicAuth(r *http.Request) (*BasicAuth, error) {
 		return nil, errors.New("Invalid authorization message")
 	}
 
-	return &BasicAuth{Username: pair[0], Password: pair[1]}, nil
+	// Decode the client_id and client_secret pairs as per
+	// https://tools.ietf.org/html/rfc6749#section-2.3.1
+
+	username, err := url.QueryUnescape(pair[0])
+	if err != nil {
+		return nil, err
+	}
+
+	password, err := url.QueryUnescape(pair[1])
+	if err != nil {
+		return nil, err
+	}
+
+	return &BasicAuth{Username: username, Password: password}, nil
 }
 
 // Return "Bearer" token from request. The header has precedence over query string.
 func CheckBearerAuth(r *http.Request) *BearerAuth {
 	authHeader := r.Header.Get("Authorization")
-	authForm := r.Form.Get("code")
+	authForm := r.FormValue("code")
 	if authHeader == "" && authForm == "" {
 		return nil
 	}
@@ -78,14 +92,14 @@ func CheckBearerAuth(r *http.Request) *BearerAuth {
 // getClientAuth checks client basic authentication in params if allowed,
 // otherwise gets it from the header.
 // Sets an error on the response if no auth is present or a server error occurs.
-func getClientAuth(w *Response, r *http.Request, allowQueryParams bool) *BasicAuth {
+func (s Server) getClientAuth(w *Response, r *http.Request, allowQueryParams bool) *BasicAuth {
 
 	if allowQueryParams {
 		// Allow for auth without password
 		if _, hasSecret := r.Form["client_secret"]; hasSecret {
 			auth := &BasicAuth{
-				Username: r.Form.Get("client_id"),
-				Password: r.Form.Get("client_secret"),
+				Username: r.FormValue("client_id"),
+				Password: r.FormValue("client_secret"),
 			}
 			if auth.Username != "" {
 				return auth
@@ -95,13 +109,11 @@ func getClientAuth(w *Response, r *http.Request, allowQueryParams bool) *BasicAu
 
 	auth, err := CheckBasicAuth(r)
 	if err != nil {
-		w.SetError(E_INVALID_REQUEST, "")
-		w.InternalError = err
+		s.setErrorAndLog(w, E_INVALID_REQUEST, err, "get_client_auth=%s", "check auth error")
 		return nil
 	}
 	if auth == nil {
-		w.SetError(E_INVALID_REQUEST, "")
-		w.InternalError = errors.New("Client authentication not sent")
+		s.setErrorAndLog(w, E_INVALID_REQUEST, errors.New("Client authentication not sent"), "get_client_auth=%s", "client authentication not sent")
 		return nil
 	}
 	return auth
