@@ -278,6 +278,7 @@ func generateEngine() *gin.Engine {
 	r.POST("/register", registerSubmit)
 	r.GET("/register/verify", verifyAccount)
 	r.GET("/register/welcome", welcome)
+	r.POST("/cans/create", ccreate)
 	r.POST("/clans/create", ccreateSubmit)
 	r.POST("/settings/clansettings", createInvite)
 	r.POST("/settings/clansettings/k", clanKick)
