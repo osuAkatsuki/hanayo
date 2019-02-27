@@ -20,6 +20,7 @@ KyutGrill=leaderboard2.jpg
 		{{ end }}
 	</div>
 	<div class="ui twelve item stackable menu">
+		{{/* This works now. FeelsWoahMan */}}
 		{{ range countryList 11 }}
 			<a class="item lb-country" data-country="{{ . }}"><i class="{{ . }} flag nopad"></i></a>
 		{{ end }}

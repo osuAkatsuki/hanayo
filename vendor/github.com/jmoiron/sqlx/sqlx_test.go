@@ -1158,7 +1158,7 @@ func TestUsage(t *testing.T) {
 		person := &Person{}
 		err = db.Get(person, "SELECT * FROM person WHERE first_name=$1", "does-not-exist")
 		if err == nil {
-			t.Fatal("Should have got an error for Get on non-existant row.")
+			t.Fatal("Should have got an error for Get on non-existent row.")
 		}
 
 		// lets test prepared statements some more
@@ -1320,6 +1320,17 @@ func TestRebind(t *testing.T) {
 		t.Errorf("q2 failed")
 	}
 
+	s1 = Rebind(AT, q1)
+	s2 = Rebind(AT, q2)
+
+	if s1 != `INSERT INTO foo (a, b, c, d, e, f, g, h, i) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10)` {
+		t.Errorf("q1 failed")
+	}
+
+	if s2 != `INSERT INTO foo (a, b, c) VALUES (@p1, @p2, "foo"), ("Hi", @p3, @p4)` {
+		t.Errorf("q2 failed")
+	}
+
 	s1 = Rebind(NAMED, q1)
 	s2 = Rebind(NAMED, q2)
 
@@ -1387,13 +1398,17 @@ func (p PropertyMap) Value() (driver.Value, error) {
 
 func (p PropertyMap) Scan(src interface{}) error {
 	v := reflect.ValueOf(src)
-	if !v.IsValid() || v.IsNil() {
+	if !v.IsValid() || v.CanAddr() && v.IsNil() {
 		return nil
 	}
-	if data, ok := src.([]byte); ok {
-		return json.Unmarshal(data, &p)
+	switch ts := src.(type) {
+	case []byte:
+		return json.Unmarshal(ts, &p)
+	case string:
+		return json.Unmarshal([]byte(ts), &p)
+	default:
+		return fmt.Errorf("Could not not decode type %T -> %T", src, p)
 	}
-	return fmt.Errorf("Could not not decode type %T -> %T", src, p)
 }
 
 func TestEmbeddedMaps(t *testing.T) {
@@ -1493,6 +1508,9 @@ func TestIn(t *testing.T) {
 		{"SELECT * FROM foo WHERE x in (?)",
 			[]interface{}{[]int{1, 2, 3, 4, 5, 6, 7, 8}},
 			8},
+		{"SELECT * FROM foo WHERE x = ? AND y in (?)",
+			[]interface{}{[]byte("foo"), []int{0, 5, 3}},
+			4},
 	}
 	for _, test := range tests {
 		q, a, err := In(test.q, test.args...)

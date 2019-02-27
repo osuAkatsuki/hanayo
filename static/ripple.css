@@ -1,4 +1,4 @@
-.ripple.logo {
+ripple.logo {
 	padding-top: 4px;
 }
 
@@ -101,6 +101,9 @@ a.inherit:hover {
 	font-weight: bold;
 }
 
+.menu:not(.secondary) > .itemgray.active {
+}
+
 .mode-container {
 	margin: 1rem 0;
 }
@@ -122,6 +125,21 @@ a.inherit:hover {
 
 .smallpadd {
 	margin: 0 .2em !important;
+}
+
+.status-head {
+  padding:0;
+  margin: 0;
+  text-align: right; 
+  font-size: 35px;
+}
+.status-footer {
+  font-size: 20px;
+  text-align: right;
+}
+.status-icon {
+  font-size: 4em!important;
+  padding-top: 30px;
 }
 
 .white.background {
@@ -291,6 +309,10 @@ code {
 	margin-left: 0;
 }
 
+.firetrucking-right-menu .itemgray {
+	margin-left: 0;
+}
+
 .score.rank {
 	height: 1.2rem;
 }
@@ -299,6 +321,9 @@ code {
 @media (max-width: 911px) {
 	#navbar .item {
 		margin: 0 !important;
+	}
+	#navbar .itemgray {
+	 margin: 0 !important;
 	}
 	#navbar {
 		margin-left: 0;
@@ -371,6 +396,72 @@ a.camouflaged:hover {
 	margin: 0 auto;
 }
 
+.owner {
+  
+  font-size:30px;
+  
+  -webkit-animation: rainbow 2s infinite; 
+  -ms-animation: rainbow 2s infinite; 
+  animation: rainbow 2s infinite; 
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes rainbow{
+  0%{color: orange;}	
+  10%{color: purple;}	
+	20%{color: red;}
+  30%{color: CadetBlue;}
+	40%{color: yellow;}
+  50%{color: coral;}
+	60%{color: green;}
+  70%{color: cyan;}
+  80%{color: DeepPink;}
+  90%{color: DodgerBlue;}
+	100%{color: orange;}
+}
+
+/* Internet Explorer */
+@-ms-keyframes rainbow{
+  0%{color: orange;}	
+  10%{color: purple;}	
+	20%{color: red;}
+  30%{color: CadetBlue;}
+	40%{color: yellow;}
+  50%{color: coral;}
+	60%{color: green;}
+  70%{color: cyan;}
+  80%{color: DeepPink;}
+  90%{color: DodgerBlue;}
+	100%{color: orange;}
+}
+
+/* Standard Syntax */
+@keyframes rainbow{
+  0%{color: orange;}	
+  10%{color: purple;}	
+	20%{color: red;}
+  30%{color: CadetBlue;}
+	40%{color: yellow;}
+  50%{color: coral;}
+	60%{color: green;}
+  70%{color: cyan;}
+  80%{color: DeepPink;}
+  90%{color: DodgerBlue;}
+	100%{color: orange;}
+    
+}
+
+.dev
+{
+    color: Orange;
+    text-shadow:
+    -1px -1px 0 #104e8b,
+    1px -1px 0 #104e8b,
+    -1px 1px 0 #104e8b,
+    1px 1px 0 #104e8b;
+    
+}
+
 /* column in a grid which is both vertically and horizontally centered */
 .ui.grid > .row > .full-centered.column {
 	display: inline-flex;
@@ -398,3 +489,32 @@ img.locked-achievement:hover {
 	filter: brightness(0.5) drop-shadow(0 5px 5px #777);
 }
 
+.rotation {
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.iframe-container {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
+}
+
+.iframe-container iframe {
+   border: 0;
+   overflow: hidden;
+   left: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
+
+/* 4x3 Aspect Ratio */
+.iframe-container-4x3 {
+  padding-top: 75%;
+}

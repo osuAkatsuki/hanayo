@@ -1,6 +1,23 @@
-# Hanayo ![build status](https://ci.zxq.co/api/badges/ripple/hanayo/status.svg)
+# Hanayo v1.8.6 - Modified for the osu! private server: Atoka
 
 This repository has a mirror [here](https://github.com/osuripple/hanayo). The original repo is still [here](https://zxq.co/ripple/hanayo).
+
+### Stuff that works now!
+
+Stuff that we got working now!
+
+* Clans (I went big brain -Night)
+* Linking Discord (Website at least. in-game still broke asf.)
+* Authorized Applications
+
+### Stuff that might not work.
+
+We'll update this repository when we get the below functions working properly.
+
+* Two Factor Authentication
+
+Sorry for the broken stuff,
+Atoka
 
 ## To fellow developers: this is not how you do it!
 
@@ -23,3 +40,13 @@ The key concepts and insights for me where:
 
 But don't stop here. Actually making a project using Vue helps you to understand this much more easily than using mere words. Go ahead and build something, even if just to play around!
 
+## How to install this?
+
+* Download it: `go get -u github.com/osuatoka/hanayo`
+* Go to it: `cd $GOPATH/src/zxq.co/ripple/hanayo`
+* Install dependencies: `./dep ensure` <-- Run this in `$GOPATH/src/zxq.co/ripple/hanayo`
+* Build it: `go build .`
+* Run it: `go run .`
+* Edit configuration: `nano hanayo.conf`
+
+If you don't know how to do any of this, you aren't qualified.

@@ -1,0 +1,162 @@
+{{/*###
+Handler=/apply
+Include=user_group.html
+TitleBar=Apply for Staff
+KyutGrill=donate2.png
+*/}}
+{{ define "tpl" }}
+{{ $userRegTime     := qb "SELECT register_datetime FROM users WHERE id = ?" .Context.User.ID }}
+{{ $staffAppEnabled := qb "SELECT value_int FROM system_settings WHERE name = 'staff_applications_enabled'" }}
+{{ $isGod           := has .Context.User.Privileges 3145727 }}
+{{ $isStaff         := (hasAdmin .Context.User.Privileges) }}
+{{/* $accountage    := */}}
+
+	{{ if not .Context.User.ID }}
+	<div class="ui container">
+		<div class="ui error message"> 
+				{{ .T "You are not logged in." }}
+		</div>
+	</div>
+	{{ else if not ($staffAppEnabled.value_int.Bool) }}
+	<div class="ui container">
+		<div class="ui error message">
+			{{ .T "Applying for Staff is not possible at the moment." }}
+		</div>
+	</div>
+	{{ else }}
+	{{ $gqm := atoi (.Gin.Query "mode") }}
+	{{ $global := . }}
+	{{ with (.Get "users/full?id=%d" .Context.User.ID) }}
+		{{ $favouritemode := _or $gqm .favourite_mode }}
+		<script>
+			window.favouriteMode = {{ $favouritemode }};
+			window.userID = {{ .id }};
+		</script>
+
+	{{ if $isStaff }} {{/* Checks to see if a user is a Staff Member */}}
+	<div class="ui container">
+		<div class="ui segment">
+			<h1 class="ui center aligned header no bottom margin" style="margin: 0 auto; display: table;">
+				<i class="red heart icon" style="font-size: 90%;"></i> <div class="content">{{ $.T "You are a Staff Member!" }}</div>
+			</h1>
+			<div class="ui centered subtitle" style="font-size:1.2rem;">
+				{{ $.T "Thank you for helping the community! You do what we never could." | html }}
+			</div>
+		</div>
+	</div>
+	{{ end }}
+	<br>
+	<br> {{/* Begin "Apply for Staff" Page  */}}
+	<div class="ui container">
+		<div class="ui segments">
+			<div class="ui segment">
+				<h1 class="ui center aligned header">
+					{{ $.T "Apply for Staff" }}
+					<div class="sub header">
+						{{ $.T "So you want join us, huh?" }}
+					</div>
+				</h1>
+				<h4 class="ui horizontal divider header">
+					{{ $.T "What you should know:" }}
+				</h4>
+				<div class="ui internally celled stackable grid">
+					<div class="row">
+						<div class="four wide column">
+							<h3 class="ui header">{{ $.T "Rules" }}</h3>
+							{{ $.T "You should familiarize yourself with our <a href='https://atoka.pw/doc/rules'>rules</a>." | html }}
+						</div>
+						<div class="four wide column">
+							<h3 class="ui header">{{ $.T "Experience" }}</h3>
+							{{ $.T "You should have experience with the position you are applying for! It will greatly increase your chances of getting the position." }}
+						</div>
+						<div class="four wide column">
+							<h3 class="ui header">{{ $.T "Discord" }}</h3>
+							{{ $.T "You should have and be in our discord! Click <a href='https://discordapp.com/invite/abJ9TU8'>here</a> to join our Discord!" | html }}
+						</div>
+						<div class="four wide column">
+							<h3 class="ui header">{{ $.T "Account Age" }}</h3>
+							{{ $.T "Your account should be at least a month old. You signed up: <b>%s</b>." (time .registered_on) | html }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+
+	<div class="ui container">
+		<div class="ui segment">
+			{{ if $isStaff }}
+				<h1 class="ui center aligned header no bottom margin" style=" margin: 0 auto; display: table;">
+					<i class="red heart icon" style="font-size: 90%;"></i>
+					<div class="content">
+						{{ $.T "You are already a Staff Member!"}}
+					</div>
+				</h1>
+				<div class="ui centered subtitle" style="1.2rem;">
+					{{ $.T "Why do you want to apply again?" }}
+				</div>
+			{{ else }}
+			<h1 class="ui center aligned header">
+				{{ $.T "Available Positions" }}
+				<div class="sub header">
+					{{ $.T "The currently available positions!" }}
+				</div>
+				<h4 class="ui horizontal divider header">Application Forms:</h4>
+			</h1>
+			<div class="ui internally celled grid">
+				<div class="row">
+					<div class="centered eight wide column">
+						<a href="https://atoka.pw/apply/mod">
+							<button class="ui blue button">{{ $.T "Moderator" }}</button>
+						</a>
+					</div>
+					<div class="centered eight wide column">
+						<a href="https://atoka.pw/apply/bat">
+							<button class="ui blue button">{{ $.T "BAT" }}</button>
+						</a>
+					</div>
+				</div>
+			</div>
+			{{ end }}
+		</div>
+	</div>
+	<br>
+	<br>
+
+	{{ if $isGod }}
+	<div class="ui container">
+		<div class="ui segment">
+			<h1 class="ui center aligned header">
+				{{ $.T "View Responses" }}
+				<div class="sub header">
+					{{ $.T "Let's see who actually put effort in! >_>" }}
+				</div>
+				<h4 class="ui horizontal divider header">Application Forms:</h4>
+			</h1>
+			<div class="ui internally celled grid">
+				<div class="row">
+					<div class="centered eight wide column">
+						<a href="https://docs.google.com/forms/d/1uymNn1oA0Xdg4poY4Qad1ACHWLm6YKWk_yIlO_TIYeE/edit#responses">
+							<button class="ui blue button">{{ $.T "Moderator" }}</button>
+						</a>
+					</div>
+					<div class="centered eight wide column">
+						<a href="https://docs.google.com/forms/d/1wpxe6elRx9QQm5IsBDMdHvH01y06WBNnD0FPVuJztJk/edit#responses">
+							<button class="ui blue button">{{ $.T "BAT" }}</button>
+						</a>
+					</div>
+					<div class="sub header">
+						{{ $.T "Note: You must have access to Edit the Google Forms to see Responses!" }}
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	{{ else }}
+	{{ end }}
+	{{ end }}
+	{{ end }}
+{{ end }}

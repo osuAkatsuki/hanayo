@@ -1,7 +1,10 @@
+{{/*###
+Include=user_group.html
+*/}}
 {{ define "tpl" }}
 <div class="ui container">
 	{{ if .UserID }}
-		{{ $gqm := atoi (.Gin.Query "mode") }}
+		{{ $gqm    := atoi (.Gin.Query "mode") }}
 		{{ $global := . }}
 		{{ with (.Get "users/full?id=%d" .UserID) }}
 			{{ $favouritemode := _or $gqm .favourite_mode }}
@@ -9,9 +12,47 @@
 				window.favouriteMode = {{ $favouritemode }};
 				window.userID = {{ .id }};
 			</script>
+
+			{{/* Meta Data! OwO */}}
+			<head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<title>Atoka - The osu! private server for cheaters!</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<meta name="description" content="{{ .username }} is a Atoka Player from {{ country .country true }}." />
+			<meta name="keywords" content="" />
+			<meta name="author" content="" />
+
+			{{/* Twitter/Facebook Integration */}}
+			<meta property="og:title" content="{{ .username }}"/>
+			<meta property="og:image" content="http://a.atoka.pw/{{ $global.UserID }}"/>
+			<meta property="og:url" content="http://atoka.pw/u/{{ $global.UserID }}"/>
+			<meta property="og:site_name" content="Atoka"/>
+			<meta property="og:description" content="{{ .username }} is a Atoka Player from {{ country .country true }}."/>
+			<meta name="twitter:title" content="{{ .username }}" />
+			<meta name="twitter:image" content="http://a.atoka.pw/{{ $global.UserID }}" />
+			<meta name="twitter:url" content="http://atoka.pw/u/{{ $global.UserID }}" />
+			<meta name="twitter:card" content="" />
+			</head>
+
 			{{ if after .silence_info.end }}
 				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
 			{{ end }}
+
+			{{/* Never use IDs. Privileges are more reliable. */}}
+			{{ $phil   := has .id 1001 }}
+			{{ $night  := has .id 1002 }}
+			{{ $mirai  := has .id 999 }}
+			{{ $atoka  := has .id 998 }}
+			
+			{{/* Use these instead. Much more reliable. */}}
+			{{ $god      := has .privileges 3145727 }}
+			{{ $admin    := has .privileges 3063291 }}
+			{{ $bots     := has .privileges 1048575 }}
+			{{ $dev      := has .privileges 1043995 }}
+			{{ $chatmod  := has .privileges 2916575 }}
+			{{ $bat      := has .privileges 267 }}
+
 			{{ if hasAdmin $global.Context.User.Privileges }}
 				{{ $restr := not (has .privileges 1) }}
 				{{ $disab := not (has .privileges 2) }}
@@ -26,6 +67,19 @@
 					<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "restricted" | html }}.</div>
 				{{ else if $disab }}
 					<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "locked" | html }}.</div>
+				{{ else if $god }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>
+				{{ else if $bots }}
+					<div class="ui warning centered message">{{ $global.T "This is a <b>Bot</b> Account" | html }}.</div>
+				{{ else if $dev }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>
+				{{ else if $admin }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>				
+				{{ else if $chatmod }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>
+				{{ else if $bat }}
+					<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "Staff" | html }}.</div>
+				{{ else }}
 				{{ end }}
 			{{ end }}
 			{{ with $global.Get "users/userpage?id=%.0f" .id }}
@@ -43,14 +97,24 @@
 						{{ if eq $global.UserID $global.Context.User.ID }}
 							<a href="/settings/avatar">
 						{{ end }}
-								<img src="{{ config "AvatarURL" }}/{{ .id }}" alt="avatar" class="user avatar">
+								<img src="{{ config "AvatarURL" }}/{{ .id }}" alt="avatar" class="{{/*{{if $god}}rotation{{end}}*/}} user avatar">
 						{{ if eq $global.UserID $global.Context.User.ID }}
 							</a>
 						{{ end }}
 					</div>
 					<div class="table element">
 						<h1 class="ui header">
-							{{ .username }}
+                    	{{ if $god }}
+                    		<div class="owner">
+                        		<a href="/c/{{ .clan.id }}?mode=0">{{ .clan.tag }} </a> {{ .username }}
+                    		</div>
+                    	{{else if $dev}}
+                    		<div class="dev">
+                        		<a href="/c/{{ .clan.id }}?mode=0">{{ .clan.tag }} </a> {{ .username }}
+                    		</div>
+                    	{{ else }}
+                    		<a href="/c/{{ .clan.id }}?mode=0">{{ .clan.tag }} </a> {{ .username }}
+						{{ end }}
 						</h1>
 						{{ if .username_aka }}
 							<div class="subtitle">
@@ -83,7 +147,7 @@
 								</a>
 							{{ end }}
 							{{ if hasAdmin $global.Context.User.Privileges }}
-								<a href="https://old.ripple.moe/index.php?p=103&id={{ $global.UserID }}"
+								<a href="https://admin.atoka.pw/index.php?p=103&id={{ $global.UserID }}"
 									target="_blank" title="Quick edit" class="ui circular mini blue icon button">
 									<i class="folder open outline icon"></i>
 								</a>
@@ -102,10 +166,46 @@
 				<div class="ui three column divided stackable grid">
 					<div class="row">
 						<div class="column">
-							{{ $global.T "<b>%s</b> is a Ripple player from <b>%s</b>." .username (country .country true) | html }}
-							<br>{{ $global.T "They signed up on Ripple %s." (time $user.registered_on) | html }}
+							{{ if $god }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+                    		is a <i class="red lightning small icon"></i><b>God</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $bots }}
+                                                                                                                        {{ $global.T "<b>%s</b> " .username | html }}
+                                is a <i class="grey cogs small icon"></i><b>Bot</b>
+                                {{ $global.T " from <b>%s</b>." "Atokaland" | html }}
+
+							{{ else if $dev }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+							is a <i class="green code small icon"></i><b>Developer</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $admin }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+                    		is an <i class="yellow lightning small icon"></i><b>Administrator</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $chatmod }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+                    		is a <i class="purple star small icon"></i><b>Moderator</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $bat }}
+															{{ $global.T "<b>%s</b> " .username | html }}
+                    		is a <i class="orange music small icon"></i><b>BAT</b>
+                    		{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else }}
+															{{ $global.T "<b>%s</b> is a player from <b>%s</b>." .username (country .country true) | html }}
+							{{ end }}
+							{{ if $god }}
+							<br>{{ $global.T "They have been here since the beginning of time." | html }}
 							<br>{{ $global.T "Last seen: %s." (time $user.latest_activity) | html }}
 							<br>{{ with playstyle .play_style $global }}{{ $global.T "They play with %s." . }}{{ end }}
+							{{ else if $bots }}
+
+							{{ else }}
+							<br>{{ $global.T "They signed up on Atoka %s." (time $user.registered_on) | html }}
+							<br>{{ $global.T "Last seen: %s." (time $user.latest_activity) | html }}
+							<br>{{ with playstyle .play_style $global }}{{ $global.T "They play with %s." . }}{{ end }}
+							{{ end }}
+
 						</div>
 						<div class="column">
 							{{ if and (not .badges) (not .custom_badge) }}
@@ -114,13 +214,13 @@
 								<div class="ui grid">
 									{{ range .badges }}
 										<div class="eight wide centered column">
-											<i class="circular {{ faIcon .icon }} big icon"></i><br>
+											<i class="{{/*{{if $god}}rotation{{end}}*/}} circular {{ faIcon .icon }} big icon"></i><br>
 											<b>{{ .name }}</b>
 										</div>
 									{{ end }}
 									{{ with .custom_badge }}
 										<div class="eight wide centered column">
-											<i class="circular {{ faIcon .icon }} big icon"></i><br>
+											<i class="{{if $god}}rotation{{end}} circular {{ faIcon .icon }} big icon"></i><br>
 											<b><i>{{ .name }}</i></b>
 										</div>
 									{{ end }}
@@ -134,16 +234,21 @@
 										<tbody>
 											{{ with .global_leaderboard_rank }}
 												<tr>
-													<td><b>{{ $global.T "Global rank" }}</b></td>
+													<td><b>{{ $global.T "Global Rank" }}</b></td>
 													<td class="right aligned">#{{ . }}</td>
 												</tr>
 											{{ end }}
 											{{ with .country_leaderboard_rank }}
 												<tr>
-													<td><b>{{ $global.T "Country rank" }} &nbsp;{{ country $user.country false }}</b></td>
+													<td><b>{{ $global.T "Country Rank" }} &nbsp;{{ country $user.country false }}</b></td>
 													<td class="right aligned">#{{ . }}</td>
 												</tr>
 											{{ end }}
+											{{/* Added Clans to profile.html  */}}
+											<tr>
+												<td><b>{{ $global.T "Clan" }}</b></td>
+												<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode={{ $k }}">{{ $user.clan.name }}</a></td>
+											</tr>
 											<tr>
 												<td><b>{{ $global.T "PP" }}</b></td>
 												<td class="right aligned">{{ humanize .pp }}</td>
@@ -167,7 +272,8 @@
 											<tr>
 												<td><b>{{ $global.T "Total hits" }}</b></td>
 												<td class="right aligned">{{ humanize .total_hits }}</td>
-											</tr>									<tr>
+											</tr>
+											<tr>
 												<td><b>{{ $global.T "Accuracy" }}</b></td>
 												<td class="right aligned">{{ printf "%.2f" .accuracy }}%</td>
 											</tr>

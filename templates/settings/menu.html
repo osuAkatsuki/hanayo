@@ -2,6 +2,7 @@
 NoCompile=true
 */}}
 {{ define "settingsSidebar" }}
+{{ $d := qb "SELECT user, clan, perms FROM user_clans WHERE user = ? AND perms = 8 LIMIT 1" .Context.User.ID }}
 <div class="four wide column">
 	<div class="ui fluid vertical menu">
 		{{ navbarItem .Path (.T "Profile") "/settings" }}
@@ -12,15 +13,17 @@ NoCompile=true
 
 		{{ navbarItem .Path (.T "Password") "/settings/password" }}
 
-		{{ navbarItem .Path (.T "Two Factor Authentication") "/settings/2fa" }}
-
-		{{ navbarItem .Path (.T "Authorized applications") "/settings/authorized_applications" }}
+		{{ if $d }} {{/* Checks to see if user is an owns a clan.  */}}
+		{{ navbarItem .Path (.T "Clan Settings") "/settings/clansettings" }}		
+		{{ else }}
+		{{ navbarItem .Path (.T "<p title='You are not an Owner of a Clan.' style='color:#C0C0C0;'>Clan Settings</p>") ""  | html }}
+		{{ end }}
 
 		{{/* Stuff for donators */}}
 		{{ if has .Context.User.Privileges 4 }}
-			{{ navbarItem .Path (.T "Discord donor") "/settings/discord" }}
+			{{ navbarItem .Path (.T "Discord Donor") "/settings/discord" }}
 
-			{{ navbarItem .Path (.T "Profile background") "/settings/profbackground" }}
+			{{ navbarItem .Path (.T "Profile Background") "/settings/profbackground" }}
 
 		{{ end }}
 	</div>

@@ -8,11 +8,12 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>{{ if .TitleBar }}{{ .T .TitleBar }} - {{ end }}Ripple</title>
+		<title>{{ if .TitleBar }}{{ .T .TitleBar }} - {{ end }}Atoka</title>
 
 		<link rel="stylesheet" type="text/css" href="/static/{{ if $ds }}dark/{{ end }}semantic.min.css?{{ unixNano }}">
 		<link rel="stylesheet" type="text/css" href="/static/ripple.css?{{ unixNano }}">
 		<link rel="stylesheet" type="text/css" href="/static/snow/snow.css?{{ unixNano }}">
+		<link href="/static/css/beatmaps.dfc480ea.chunk.css" rel="stylesheet">
 	</head>
 	<body {{ if $ds }} class="ds"{{ end }}>
 		{{/*
@@ -53,7 +54,7 @@
 				<noscript>Research has proven this website works 10000% better if you have JavaScript enabled.</noscript>
 				{{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
 					<div class="ui warning message">
-						{{ $.T "Your account is currently in restricted mode. You will not be able to do certain actions, and your profile can only be seen by you and by Ripple's staff. If you believe we have mistaken putting you in restricted mode, or a month has passed since you first saw this, then you can send an appeal at <a href='https://support.ripple.moe'>support.ripple.moe</a>." | html }}
+						{{ $.T "Your account is currently in restricted mode. You will not be able to do certain actions, and your profile can only be seen by you and by Atoka's staff. If you believe we have mistaken putting you in restricted mode, or a month has passed since you first saw this, then you can send an appeal to <a href='mailto:support@atoka.pw'>support@atoka.pw</a>." | html }}
 					</div>
 				{{ end }}
 				{{ if .Messages }}
@@ -72,12 +73,12 @@
 				{{ end }}
 				{{ with $settings.game_maintenance.Int }}
 					<div class="ui warning message">
-						{{ $.T "Ripple's score submission is currently in maintenance mode. You will not be allowed to submit scores for the time being." }}
+						{{ $.T "Atoka's score submission is currently in maintenance mode. You will not be allowed to submit scores for the time being." }}
 					</div>
 				{{ end }}
 				{{ with $settings.website_maintenance.Int }}
 					<div class="ui warning message">
-						{{ $.T "The Ripple website is currently in maintenance mode. Only certain users are allowed to access the full website." }}
+						{{ $.T "The Atoka website is currently in maintenance mode. Only certain users are allowed to access the full website." }}
 					</div>
 				{{ end }}
 				</div>
@@ -87,15 +88,12 @@
 		</div>
 
 		<div class="footer">
-			{{ .T "&copy; 2015-%d Ripple, using Hanayo %s." (curryear) (version) | html }}
+		<center>
+			{{ .T "&copy; 2018-%d Atoka, using Hanayo %s." (curryear) (version) | html }}
 			<a href="/team" title="{{ .T "Who is working on this thing?" }}"><i class="users icon"></i>{{ .T "Team" }}</a> |
-			<a href="https://docs.ripple.moe" title="59 6f 75 27 72 65 20 73 6f 20 31 33 33 37 2e"><i class="wrench icon"></i>{{ .T "Developer docs" }}</a> |
-			<a href="/changelog" title="{{ .T "See what changed!" }}"><i class="bug icon"></i>{{ .T "Changelog" }}</a> |
-			<a href="https://blog.ripple.moe"><i class="anchor icon"></i>{{ .T "Blog" }}</a> |
-			<a href="http://status.ripple.moe"><i class="signal icon"></i>{{ .T "Status" }}</a> |
-			<a href="https://zxq.co/ripple" title="{{ .T "What's going on under the hood?"}}{{/*'"*/}}"><i class="git square icon"></i></a>
-			<a href="https://twitter.com/_ripple" title="{{ .T "Follow us on Twitter!" }}"><i class="twitter icon"></i></a>
-			<a href="https://reddit.com/r/osuripple" title="{{ .T "Share irrelevant opinions on reddit!" }}"><i class="reddit square icon"></i></a> |
+			<a href="https://github.com/osuatoka" title="{{ .T "What's going on under the hood?"}}{{/*'"*/}}"><i class="github icon"></i></a>
+			<a href="https://twitter.com/osuatoka" title="{{ .T "Follow us on Twitter!" }}"><i class="twitter icon"></i></a>
+			<a href="https://reddit.com/r/osuatoka" title="{{ .T "Share irrelevant opinions on reddit!" }}"><i class="reddit icon"></i></a> |
 			<div class="ui scrolling dropdown" style="margin-left: 5px;" id="language-selector">
 				{{ $lang := .Context.Language }}
 				{{ with $lang }}
@@ -111,6 +109,7 @@
 					{{ end }}
 				</div>
 			</div>
+		</center>
 		</div>
 		<script>
 			var hanayoConf = {

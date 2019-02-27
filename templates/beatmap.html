@@ -50,8 +50,9 @@
 									<a href="http://storage.ripple.moe/d/{{ .Beatmapset.ID }}?novideo" class="ui gray labeled icon button"><i class="download icon"></i>{{ $.T "download (no video)" }}</a>
 								{{ end }}
 								{{ if has $.Context.User.Privileges 256 }}
-									<a href="https://old.ripple.moe/index.php?p=124&bsid={{ .Beatmapset.ID }}" class="ui violet labeled icon button"><i class="thumbs up icon"></i>{{ $.T "Rank in RAP"}}</a>
+									<a href="https://admin.atoka.pw/index.php?p=124&bsid={{ .Beatmapset.ID }}" class="ui violet labeled icon button"><i class="thumbs up icon"></i>{{ $.T "Rank in RAP"}}</a>
 								{{ end }}
+									<a class="ui blue labeled icon button more" href="https://bloodcat.com/osu/preview.html#{{ .Beatmap.ID }}" target="popup" onclick="window.open('https://bloodcat.com/osu/preview.html#{{ .Beatmap.ID }}','name','width=600,height=400')"><i class="video icon"></i>{{ $.T "Preview Beatmap" }}</a>
 							</div>
 						</div>
 					</div>

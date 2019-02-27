@@ -1,6 +1,7 @@
 package fasthttp
 
 import (
+	"bufio"
 	"crypto/tls"
 	"fmt"
 	"io"
@@ -16,19 +17,118 @@ import (
 	"github.com/valyala/fasthttp/fasthttputil"
 )
 
+func TestClientDoWithCustomHeaders(t *testing.T) {
+	// make sure that the client sends all the request headers and body.
+	ln := fasthttputil.NewInmemoryListener()
+	c := &Client{
+		Dial: func(addr string) (net.Conn, error) {
+			return ln.Dial()
+		},
+	}
+
+	uri := "/foo/bar/baz?a=b&cd=12"
+	headers := map[string]string{
+		"Foo":          "bar",
+		"Host":         "xxx.com",
+		"Content-Type": "asdfsdf",
+		"a-b-c-d-f":    "",
+	}
+	body := "request body"
+
+	ch := make(chan error)
+	go func() {
+		conn, err := ln.Accept()
+		if err != nil {
+			ch <- fmt.Errorf("cannot accept client connection: %s", err)
+			return
+		}
+		br := bufio.NewReader(conn)
+
+		var req Request
+		if err = req.Read(br); err != nil {
+			ch <- fmt.Errorf("cannot read client request: %s", err)
+			return
+		}
+		if string(req.Header.Method()) != "POST" {
+			ch <- fmt.Errorf("unexpected request method: %q. Expecting %q", req.Header.Method(), "POST")
+			return
+		}
+		reqURI := req.RequestURI()
+		if string(reqURI) != uri {
+			ch <- fmt.Errorf("unexpected request uri: %q. Expecting %q", reqURI, uri)
+			return
+		}
+		for k, v := range headers {
+			hv := req.Header.Peek(k)
+			if string(hv) != v {
+				ch <- fmt.Errorf("unexpected value for header %q: %q. Expecting %q", k, hv, v)
+				return
+			}
+		}
+		cl := req.Header.ContentLength()
+		if cl != len(body) {
+			ch <- fmt.Errorf("unexpected content-length %d. Expecting %d", cl, len(body))
+			return
+		}
+		reqBody := req.Body()
+		if string(reqBody) != body {
+			ch <- fmt.Errorf("unexpected request body: %q. Expecting %q", reqBody, body)
+			return
+		}
+
+		var resp Response
+		bw := bufio.NewWriter(conn)
+		if err = resp.Write(bw); err != nil {
+			ch <- fmt.Errorf("cannot send response: %s", err)
+			return
+		}
+		if err = bw.Flush(); err != nil {
+			ch <- fmt.Errorf("cannot flush response: %s", err)
+			return
+		}
+
+		ch <- nil
+	}()
+
+	var req Request
+	req.Header.SetMethod("POST")
+	req.SetRequestURI(uri)
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
+	req.SetBodyString(body)
+
+	var resp Response
+
+	err := c.DoTimeout(&req, &resp, time.Second)
+	if err != nil {
+		t.Fatalf("error when doing request: %s", err)
+	}
+
+	select {
+	case <-ch:
+	case <-time.After(5 * time.Second):
+		t.Fatalf("timeout")
+	}
+}
+
 func TestPipelineClientDoSerial(t *testing.T) {
-	testPipelineClientDoConcurrent(t, 1, 0)
+	testPipelineClientDoConcurrent(t, 1, 0, 0)
 }
 
 func TestPipelineClientDoConcurrent(t *testing.T) {
-	testPipelineClientDoConcurrent(t, 10, 0)
+	testPipelineClientDoConcurrent(t, 10, 0, 1)
 }
 
 func TestPipelineClientDoBatchDelayConcurrent(t *testing.T) {
-	testPipelineClientDoConcurrent(t, 10, 5*time.Millisecond)
+	testPipelineClientDoConcurrent(t, 10, 5*time.Millisecond, 1)
 }
 
-func testPipelineClientDoConcurrent(t *testing.T, concurrency int, maxBatchDelay time.Duration) {
+func TestPipelineClientDoBatchDelayConcurrentMultiConn(t *testing.T) {
+	testPipelineClientDoConcurrent(t, 10, 5*time.Millisecond, 3)
+}
+
+func testPipelineClientDoConcurrent(t *testing.T, concurrency int, maxBatchDelay time.Duration, maxConns int) {
 	ln := fasthttputil.NewInmemoryListener()
 
 	s := &Server{
@@ -49,10 +149,10 @@ func testPipelineClientDoConcurrent(t *testing.T, concurrency int, maxBatchDelay
 		Dial: func(addr string) (net.Conn, error) {
 			return ln.Dial()
 		},
-		MaxIdleConnDuration: 23 * time.Millisecond,
-		MaxPendingRequests:  6,
-		MaxBatchDelay:       maxBatchDelay,
-		Logger:              &customLogger{},
+		MaxConns:           maxConns,
+		MaxPendingRequests: concurrency,
+		MaxBatchDelay:      maxBatchDelay,
+		Logger:             &customLogger{},
 	}
 
 	clientStopCh := make(chan struct{}, concurrency)
@@ -169,6 +269,181 @@ func TestClientDoTimeoutDisableNormalizing(t *testing.T) {
 	case <-serverStopCh:
 	case <-time.After(time.Second):
 		t.Fatalf("timeout")
+	}
+}
+
+func TestHostClientPendingRequests(t *testing.T) {
+	const concurrency = 10
+	doneCh := make(chan struct{})
+	readyCh := make(chan struct{}, concurrency)
+	s := &Server{
+		Handler: func(ctx *RequestCtx) {
+			readyCh <- struct{}{}
+			<-doneCh
+		},
+	}
+	ln := fasthttputil.NewInmemoryListener()
+	serverStopCh := make(chan struct{})
+	go func() {
+		if err := s.Serve(ln); err != nil {
+			t.Fatalf("unexpected error: %s", err)
+		}
+		close(serverStopCh)
+	}()
+
+	c := &HostClient{
+		Addr: "foobar",
+		Dial: func(addr string) (net.Conn, error) {
+			return ln.Dial()
+		},
+	}
+
+	pendingRequests := c.PendingRequests()
+	if pendingRequests != 0 {
+		t.Fatalf("non-zero pendingRequests: %d", pendingRequests)
+	}
+
+	resultCh := make(chan error, concurrency)
+	for i := 0; i < concurrency; i++ {
+		go func() {
+			req := AcquireRequest()
+			req.SetRequestURI("http://foobar/baz")
+			resp := AcquireResponse()
+
+			if err := c.DoTimeout(req, resp, 10*time.Second); err != nil {
+				resultCh <- fmt.Errorf("unexpected error: %s", err)
+				return
+			}
+
+			if resp.StatusCode() != StatusOK {
+				resultCh <- fmt.Errorf("unexpected status code %d. Expecting %d", resp.StatusCode(), StatusOK)
+				return
+			}
+			resultCh <- nil
+		}()
+	}
+
+	// wait while all the requests reach server
+	for i := 0; i < concurrency; i++ {
+		select {
+		case <-readyCh:
+		case <-time.After(time.Second):
+			t.Fatalf("timeout")
+		}
+	}
+
+	pendingRequests = c.PendingRequests()
+	if pendingRequests != concurrency {
+		t.Fatalf("unexpected pendingRequests: %d. Expecting %d", pendingRequests, concurrency)
+	}
+
+	// unblock request handlers on the server and wait until all the requests are finished.
+	close(doneCh)
+	for i := 0; i < concurrency; i++ {
+		select {
+		case err := <-resultCh:
+			if err != nil {
+				t.Fatalf("unexpected error: %s", err)
+			}
+		case <-time.After(time.Second):
+			t.Fatalf("timeout")
+		}
+	}
+
+	pendingRequests = c.PendingRequests()
+	if pendingRequests != 0 {
+		t.Fatalf("non-zero pendingRequests: %d", pendingRequests)
+	}
+
+	// stop the server
+	if err := ln.Close(); err != nil {
+		t.Fatalf("unexpected error: %s", err)
+	}
+	select {
+	case <-serverStopCh:
+	case <-time.After(time.Second):
+		t.Fatalf("timeout")
+	}
+}
+
+func TestHostClientMaxConnsWithDeadline(t *testing.T) {
+	var (
+		emptyBodyCount uint8
+		ln             = fasthttputil.NewInmemoryListener()
+		timeout        = 50 * time.Millisecond
+		wg             sync.WaitGroup
+	)
+
+	s := &Server{
+		Handler: func(ctx *RequestCtx) {
+			if len(ctx.PostBody()) == 0 {
+				emptyBodyCount++
+			}
+
+			ctx.WriteString("foo")
+		},
+	}
+	serverStopCh := make(chan struct{})
+	go func() {
+		if err := s.Serve(ln); err != nil {
+			t.Fatalf("unexpected error: %s", err)
+		}
+		close(serverStopCh)
+	}()
+
+	c := &HostClient{
+		Addr: "foobar",
+		Dial: func(addr string) (net.Conn, error) {
+			return ln.Dial()
+		},
+		MaxConns: 1,
+	}
+
+	for i := 0; i < 5; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+
+			req := AcquireRequest()
+			req.SetRequestURI("http://foobar/baz")
+			req.Header.SetMethod("POST")
+			req.SetBodyString("bar")
+			resp := AcquireResponse()
+
+			for {
+				if err := c.DoDeadline(req, resp, time.Now().Add(timeout)); err != nil {
+					if err == ErrNoFreeConns {
+						time.Sleep(time.Millisecond)
+						continue
+					}
+					t.Fatalf("unexpected error: %s", err)
+				}
+				break
+			}
+
+			if resp.StatusCode() != StatusOK {
+				t.Fatalf("unexpected status code %d. Expecting %d", resp.StatusCode(), StatusOK)
+			}
+
+			body := resp.Body()
+			if string(body) != "foo" {
+				t.Fatalf("unexpected body %q. Expecting %q", body, "abcd")
+			}
+		}()
+	}
+	wg.Wait()
+
+	if err := ln.Close(); err != nil {
+		t.Fatalf("unexpected error: %s", err)
+	}
+	select {
+	case <-serverStopCh:
+	case <-time.After(time.Second):
+		t.Fatalf("timeout")
+	}
+
+	if emptyBodyCount > 0 {
+		t.Fatalf("at least one request body was empty")
 	}
 }
 
@@ -508,16 +783,15 @@ func (r *readTimeoutConn) Close() error {
 	return nil
 }
 
-func TestClientIdempotentRequest(t *testing.T) {
+func TestClientNonIdempotentRetry(t *testing.T) {
 	dialsCount := 0
 	c := &Client{
 		Dial: func(addr string) (net.Conn, error) {
+			dialsCount++
 			switch dialsCount {
-			case 0:
-				dialsCount++
+			case 1, 2:
 				return &readErrorConn{}, nil
-			case 1:
-				dialsCount++
+			case 3:
 				return &singleReadConn{
 					s: "HTTP/1.1 345 OK\r\nContent-Type: foobar\r\nContent-Length: 7\r\n\r\n0123456",
 				}, nil
@@ -528,6 +802,61 @@ func TestClientIdempotentRequest(t *testing.T) {
 		},
 	}
 
+	// This POST must succeed, since the readErrorConn closes
+	// the connection before sending any response.
+	// So the client must retry non-idempotent request.
+	dialsCount = 0
+	statusCode, body, err := c.Post(nil, "http://foobar/a/b", nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %s", err)
+	}
+	if statusCode != 345 {
+		t.Fatalf("unexpected status code: %d. Expecting 345", statusCode)
+	}
+	if string(body) != "0123456" {
+		t.Fatalf("unexpected body: %q. Expecting %q", body, "0123456")
+	}
+
+	// Verify that idempotent GET succeeds.
+	dialsCount = 0
+	statusCode, body, err = c.Get(nil, "http://foobar/a/b")
+	if err != nil {
+		t.Fatalf("unexpected error: %s", err)
+	}
+	if statusCode != 345 {
+		t.Fatalf("unexpected status code: %d. Expecting 345", statusCode)
+	}
+	if string(body) != "0123456" {
+		t.Fatalf("unexpected body: %q. Expecting %q", body, "0123456")
+	}
+}
+
+func TestClientIdempotentRequest(t *testing.T) {
+	dialsCount := 0
+	c := &Client{
+		Dial: func(addr string) (net.Conn, error) {
+			dialsCount++
+			switch dialsCount {
+			case 1:
+				return &singleReadConn{
+					s: "invalid response",
+				}, nil
+			case 2:
+				return &writeErrorConn{}, nil
+			case 3:
+				return &readErrorConn{}, nil
+			case 4:
+				return &singleReadConn{
+					s: "HTTP/1.1 345 OK\r\nContent-Type: foobar\r\nContent-Length: 7\r\n\r\n0123456",
+				}, nil
+			default:
+				t.Fatalf("unexpected number of dials: %d", dialsCount)
+			}
+			panic("unreachable")
+		},
+	}
+
+	// idempotent GET must succeed.
 	statusCode, body, err := c.Get(nil, "http://foobar/a/b")
 	if err != nil {
 		t.Fatalf("unexpected error: %s", err)
@@ -541,17 +870,31 @@ func TestClientIdempotentRequest(t *testing.T) {
 
 	var args Args
 
+	// non-idempotent POST must fail on incorrect singleReadConn
 	dialsCount = 0
-	statusCode, body, err = c.Post(nil, "http://foobar/a/b", &args)
+	_, _, err = c.Post(nil, "http://foobar/a/b", &args)
 	if err == nil {
 		t.Fatalf("expecting error")
 	}
 
+	// non-idempotent POST must fail on incorrect singleReadConn
 	dialsCount = 0
-	statusCode, body, err = c.Post(nil, "http://foobar/a/b", nil)
+	_, _, err = c.Post(nil, "http://foobar/a/b", nil)
 	if err == nil {
 		t.Fatalf("expecting error")
 	}
+}
+
+type writeErrorConn struct {
+	net.Conn
+}
+
+func (w *writeErrorConn) Write(p []byte) (int, error) {
+	return 1, fmt.Errorf("error")
+}
+
+func (w *writeErrorConn) Close() error {
+	return nil
 }
 
 type readErrorConn struct {
@@ -593,6 +936,23 @@ func (r *singleReadConn) Close() error {
 	return nil
 }
 
+func TestClientHTTPSInvalidServerName(t *testing.T) {
+	addrHTTPS := "127.0.0.1:57794"
+	sHTTPS := startEchoServerTLS(t, "tcp", addrHTTPS)
+	defer sHTTPS.Stop()
+
+	var c Client
+
+	addr := "https://" + addrHTTPS
+
+	for i := 0; i < 10; i++ {
+		_, _, err := c.GetTimeout(nil, addr, time.Second)
+		if err == nil {
+			t.Fatalf("expecting TLS error")
+		}
+	}
+}
+
 func TestClientHTTPSConcurrent(t *testing.T) {
 	addrHTTP := "127.0.0.1:56793"
 	sHTTP := startEchoServer(t, "tcp", addrHTTP)
@@ -601,6 +961,12 @@ func TestClientHTTPSConcurrent(t *testing.T) {
 	addrHTTPS := "127.0.0.1:56794"
 	sHTTPS := startEchoServerTLS(t, "tcp", addrHTTPS)
 	defer sHTTPS.Stop()
+
+	c := &Client{
+		TLSConfig: &tls.Config{
+			InsecureSkipVerify: true,
+		},
+	}
 
 	var wg sync.WaitGroup
 	for i := 0; i < 4; i++ {
@@ -611,8 +977,8 @@ func TestClientHTTPSConcurrent(t *testing.T) {
 		}
 		go func() {
 			defer wg.Done()
-			testClientGet(t, &defaultClient, addr, 20)
-			testClientPost(t, &defaultClient, addr, 10)
+			testClientGet(t, c, addr, 20)
+			testClientPost(t, c, addr, 10)
 		}()
 	}
 	wg.Wait()
@@ -738,9 +1104,6 @@ func testClientGet(t *testing.T, c clientGetter, addr string, n int) {
 			t.Fatalf("unexpected status code: %d. Expecting %d", statusCode, StatusOK)
 		}
 		resultURI := string(body)
-		if strings.HasPrefix(uri, "https") {
-			resultURI = uri[:5] + resultURI[4:]
-		}
 		if resultURI != uri {
 			t.Fatalf("unexpected uri %q. Expecting %q", resultURI, uri)
 		}
@@ -873,9 +1236,9 @@ func startEchoServerExt(t *testing.T, network, addr string, isTLS bool) *testEch
 	if isTLS {
 		certFile := "./ssl-cert-snakeoil.pem"
 		keyFile := "./ssl-cert-snakeoil.key"
-		cert, err := tls.LoadX509KeyPair(certFile, keyFile)
-		if err != nil {
-			t.Fatalf("Cannot load TLS certificate: %s", err)
+		cert, err1 := tls.LoadX509KeyPair(certFile, keyFile)
+		if err1 != nil {
+			t.Fatalf("Cannot load TLS certificate: %s", err1)
 		}
 		tlsConfig := &tls.Config{
 			Certificates: []tls.Certificate{cert},

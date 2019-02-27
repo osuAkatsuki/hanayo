@@ -1,0 +1,52 @@
+{{/*###
+Handler=/apply/bat
+Include=../user_group.html
+TitleBar=Apply for BAT
+KyutGrill=homepage2.jpg
+*/}}
+{{ define "tpl" }}
+{{ $staffAppEnabled := qb "SELECT value_int FROM system_settings WHERE name = 'staff_applications_enabled'" }}
+{{ $isGod := has .Context.User.Privileges 3145727 }}
+{{ $isStaff := (hasAdmin .Context.User.Privileges) }}
+{{ $gqm := atoi (.Gin.Query "mode") }}
+{{ $global := . }}
+{{ with (.Get "users/full?id=%d" .Context.User.ID) }}
+{{ $favouritemode := _or $gqm .favourite_mode }}
+	{{ if $isStaff }} {{/* Checks to see if Staff, if so, redirect, if not, continue. */}}
+		<script>window.location = "/apply";</script>
+	{{ else }}
+	{{ if not $.Context.User.ID }}
+		<div class="ui container">
+			<div class="ui error message">
+				{{ $.T "You are not logged in." }}
+			</div>
+		</div>
+	{{ else if not ($staffAppEnabled.value_int.Bool) }}
+		<div class="ui container">
+			<div class="ui error message">
+				{{ $.T "Applying for Staff is not possible at the moment." }}
+			</div>
+		</div>
+	{{ else }}
+		<div class="ui container">
+			<div class="ui segments">
+				<div class="ui segment">
+					<h1 class="ui center aligned header">
+						{{ $.T "Apply for BAT" }}
+						<div class="sub header">
+							{{ $.T "So you want to rank maps, huh?" }}
+						</div>
+					</h1>
+					<h4 class="ui horizontal divider header">
+						{{ $.T "Application Form:" }}
+					</h4>
+					<div class="ui container center aligned iframe-container ifram-container-4x3">
+						<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeggimtgT5coPtEUuMuZP0mQ8nXSaP-YnozdzvobRDCKElBng/viewform?embedded=true">Loading...</iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{ end }}
+	{{ end }}
+{{ end }}
+{{ end }}

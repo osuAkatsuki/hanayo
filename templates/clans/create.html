@@ -1,0 +1,67 @@
+{{/*###
+TitleBar=Create a Clan
+KyutGrill=leaderboard2.jpg
+*/}}
+{{ define "tpl" }}
+
+    <div class="ui container">
+        <div class="ui warning message">
+	    <p>
+	       <center>
+		  <strong>
+		     {{ .T "Be careful! You can't change your Clan Tag, Name, Description, or Icon after Creation!" }}
+		     <br>{{ .T "We are working on a fix for this! Please be patient!" }}
+		  </strong>
+	       </center>
+	    </p>
+        </div>
+    </div>
+    <br>
+
+    <div class="ui container">
+        {{ $regEnabled := qb "SELECT value_int FROM system_settings WHERE name = 'ccreation_enabled'" }}
+        {{ $isClan := qb "SELECT user, clan FROM user_clans WHERE user = ?" .Context.User.ID }}
+        {{ if not .Context.User.ID }}
+            <div class="ui segment">
+                {{ .T "You need to login!" }}
+            </div>
+        {{ else if not ($regEnabled.value_int.Bool) }}
+            <div class="ui error message">
+                {{ .T "Sorry, it's not possible to create a clan at the moment. Please try again later. Usually this decision is made by the database." }}
+            </div>
+        {{ else if ($isClan) }}
+            <div class="ui segment">
+                {{ .T "You're already in a Clan." }}
+            </div>
+        {{ else }}
+            <div class="tiny container">
+                <div class="ui raised segments">
+                    <div class="ui segment">
+                        <form id="register-form" class="ui form" method="post" action="/clans/create">
+                            <div class="field">
+                                <label>{{ .T "Name (2 to 15 characters, alphanumeric, spaces, <code>_[]-</code>)" | html }}</label>
+                                <input tabindex="1" type="text" name="username" placeholder="{{ .T "Name" }}" value="{{ .FormData.username }}" required pattern="{2,15}$">
+                            </div>
+                            <div class="field">
+                                <label class="left aligned">{{ "Clantag (2 to 6 characters)" }}</label>
+                                <input tabindex="2" type="text" name="tag" placeholder="{{ "Clantag" }}" value="{{ .FormData.tag }}" pattern="{2,6}$">
+                            </div>
+                            <div class="field">
+                                <label>{{ .T "Description (optional)" }}</label>
+                                <input tabindex="3" type="text" name="password" placeholder="{{ .T "Description" }}" value="{{ .FormData.password }}">
+                            </div>
+                            <div class="field">
+                                <label>{{ .T "Icon [URL] (optional)" }}</label>
+                                <input tabindex="4" type="url" name="email" placeholder="{{ .T "Icon URL" }}" value="{{ .FormData.email }}">
+                            </div>
+                            {{ ieForm .Gin }}
+                        </form>
+                    </div>
+                    <div class="ui right aligned segment">
+                        <button tabindex="5" class="ui primary button" type="submit" form="register-form">{{ .T "Submit" }}</button>
+                    </div>
+                </div>
+            </div>
+        {{ end }}
+    </div>
+{{ end }}

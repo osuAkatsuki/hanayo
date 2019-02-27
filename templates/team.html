@@ -8,15 +8,22 @@ KyutGrill=team2.jpg
 <div class="ui container">
 	<div class="ui segments">
 		<div class="ui center aligned segment">
-			<h3>{{ .T "This is a list of the wonderful people who keep Ripple up and running and deal with its community." }}</h3>
+			<h3>{{ .T "This is a list of the wonderful people who keep Atoka up and running and deal with its community." }}</h3>
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Community Managers" }}</h1>
+			<h1 class="ui heading">{{ .T "Founders" }}</h1>
 			<p>
-				{{ .T "Community Managers deal with bans, silences, name changes and pretty much everything that has to do with the community." }}<br>
-				{{ .T "They take care of our Discord server and reply to emails sent to the support services (email and support.ripple.moe). Community Managers have a red name in the in-game chat." | html }}
+				{{ .T "This server only exists thanks to these two, not sure what they do, but they're here. They have a light blue name in the in-game chat." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
+			{{ template "userGroup" (.Get "badges/members?id=%d" 3) }}
+		</div>
+		<div class="ui center aligned segment">
+			<h1 class="ui heading">{{ .T "Administrators" }}</h1>
+			<p>
+				{{ .T "Administrators take care of the community, they also deal with bans, silences, name changes and pretty much everything that has to do with the community." }}<br>
+				{{ .T "They take care of our Discord server and reply to emails sent to the support services. Administrators have a red name in the in-game chat." | html }}
+			</p>
+			{{ template "userGroup" (.Get "badges/members?id=%d" 6) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Developers" }}</h1>
@@ -24,30 +31,37 @@ KyutGrill=team2.jpg
 				{{ .T "Developers add new features to the server, squash bugs, keep the server up and running and take care of its maintenance." }}<br>
 				{{ .T "They don't do anything related to the community. Developers have a blue name in the in-game chat." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 2) }}
+			{{ template "userGroup" (.Get "badges/members?id=%d" 3) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Chat Moderators" }}</h1>
+			<h1 class="ui heading">{{ .T "Moderators" }}</h1>
 			<p>
 				{{ .T "Chat moderators manage the chat to make sure The Law&trade; (the rules) is respected." | html }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
+			{{ template "userGroup" (.Get "badges/members?id=%d" 7) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "BATs" }}</h1>
 			<p>
 				{{ .T "BATs play beatmaps in the ranking queue and decide whether they are good enough to be ranked or not." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 5) }}
+			{{ template "userGroup" (.Get "badges/members?id=%d" 8) }}
 		</div>
 	</div>
 	<div class="ui segments">
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Special thanks" }}</h1>
-			<p>{{ .T "Here's a list of people who helped with Ripple." }}</p>
+			<p>{{ .T "Here's a list of people who helped with Atoka." }}</p>
 		</div>
 		<div class="ui segment">
 			<ul class="ui list">
+				<li>
+					{{ .T "<b>Justin | Enjuu!</b>, for helping out with well, basically everything! This guy is literally a god." | html }}
+				</li>
+				<li>
+					{{ .T "<b>r33int</b>, for the intial help with compiling Hanayo!" | html }}
+				</li>
+				<li>{{ .T "<b>Phil</b>, for hosting Atoka on his server." | html }}</li>
 				<li>
 					{{ .T "<b>Franc[e]sco/lolisamurai</b>, for <a href='https://github.com/Francesco149/oppai'>oppai</a>, used as standard pp calculator." | html }}<br>
 					oppai is licensed under GPL v3. Our implementation can be found <a href="https://zxq.co/ripple/lets/src/master/pp/rippoppai.py">here</a>.
@@ -64,14 +78,14 @@ KyutGrill=team2.jpg
 					{{ .T "<b>jrosdahl</b>, for <a href='https://github.com/jrosdahl/miniircd'>miniircd</a>, used as a base for our IRC server." | html }}<br>
 					miniircd is licensed under GPL v2. Our implementation can be found <a href="https://zxq.co/ripple/pep.py/src/master/irc/ircserver.py">here</a>.
 				</li>
-				<li>{{ .T "<b>Avail</b>, for having hosted Ripple on his server." | html }}</li>
-				<li>{{ .T "<b>Angela Guerra</b>, for designing the Ripple logo." | html }}</li>
-				<li>{{ .T "<b><a id='everyone' class='clickable'>Everyone</a></b> who has supported the Ripple project by donating or inviting other people." | html }}</li>
+				<li>{{ .T "Flame for the Clans System." | html }}</li>
+				<li>{{ .T "<a href='https://github.com/osuakatsuki/Charlotte'>Akatsuki</a> for Charlotte Bot." | html }}</li>
+				<li>{{ .T "<b>Everyone</b> who has supported the Atoka and Ripple projects by donating or inviting other people." | html }}</li>
 			</ul>
 		</div>
 	</div>
 	{{ $ := . }}
-	{{ .T "Looking for how you should contact our team? Check out <a href='https://support.ripple.moe'>this page</a>." | html }}
+	{{ .T "Looking for how you should contact our team? Check out <a href='https://discord.gg/abJ9TU8'>our discord</a>." | html }}
 	<div class="ui modal">
 		<div class="header"><h2 class="ui header">{{ .T "They told me these are very cool people." }}</h2></div>
 		{{ with .Get "users?sort=donor_expire,desc&l=52" }}

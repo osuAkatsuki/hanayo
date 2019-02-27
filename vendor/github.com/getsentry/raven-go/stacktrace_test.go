@@ -11,6 +11,16 @@ import (
 	"testing"
 )
 
+func init() {
+	thisFile, thisPackage = derivePackage()
+	functionNameTests = []FunctionNameTest{
+		{0, thisPackage, "TestFunctionName"},
+		{1, "testing", "tRunner"},
+		{2, "runtime", "goexit"},
+		{100, "", ""},
+	}
+}
+
 type FunctionNameTest struct {
 	skip int
 	pack string
@@ -26,7 +36,7 @@ var (
 func TestFunctionName(t *testing.T) {
 	for _, test := range functionNameTests {
 		pc, _, _, _ := runtime.Caller(test.skip)
-		pack, name := functionName(pc)
+		pack, name := functionName(runtime.FuncForPC(pc).Name())
 
 		if pack != test.pack {
 			t.Errorf("incorrect package; got %s, want %s", pack, test.pack)
@@ -59,7 +69,7 @@ func TestStacktrace(t *testing.T) {
 	if f.Module != thisPackage {
 		t.Error("incorrect Module:", f.Module)
 	}
-	if f.Lineno != 87 {
+	if f.Lineno != 97 {
 		t.Error("incorrect Lineno:", f.Lineno)
 	}
 	if f.ContextLine != "\treturn NewStacktrace(0, 2, []string{thisPackage})" {
@@ -116,16 +126,6 @@ func derivePackage() (file, pack string) {
 	return
 }
 
-func init() {
-	thisFile, thisPackage = derivePackage()
-	functionNameTests = []FunctionNameTest{
-		{0, thisPackage, "TestFunctionName"},
-		{1, "testing", "tRunner"},
-		{2, "runtime", "goexit"},
-		{100, "", ""},
-	}
-}
-
 // TestNewStacktrace_outOfBounds verifies that a context exceeding the number
 // of lines in a file does not cause a panic.
 func TestNewStacktrace_outOfBounds(t *testing.T) {
@@ -145,7 +145,7 @@ func TestNewStacktrace_noFrames(t *testing.T) {
 
 func TestFileContext(t *testing.T) {
 	// reset the cache
-	fileCache = make(map[string][][]byte)
+	loader := &fsLoader{cache: make(map[string][][]byte)}
 
 	tempdir, err := ioutil.TempDir("", "")
 	if err != nil {
@@ -176,13 +176,14 @@ func TestFileContext(t *testing.T) {
 		{noPermissionPath, 0, 0},
 	}
 	for i, test := range tests {
-		lines, index := fileContext(test.path, 1, 0)
+		lines, index := loader.Load(test.path, 1, 0)
 		if !(len(lines) == test.expectedLines && index == test.expectedIndex) {
 			t.Errorf("%d: fileContext(%#v, 1, 0) = %v, %v; expected len()=%d, %d",
 				i, test.path, lines, index, test.expectedLines, test.expectedIndex)
 		}
-		if len(fileCache) != i+1 {
-			t.Errorf("%d: result was not cached; len(fileCached)=%d", i, len(fileCache))
+		cacheLen := len(loader.cache)
+		if cacheLen != i+1 {
+			t.Errorf("%d: result was not cached; len=%d", i, cacheLen)
 		}
 	}
 }

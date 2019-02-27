@@ -266,6 +266,11 @@ func in(s string, ss []string) bool {
 
 var usernameRegex = regexp.MustCompile(`^[A-Za-z0-9 _\[\]-]{2,15}$`)
 var forbiddenUsernames = []string{
+	"nigger",
+	"phil",
+	"night",
+	"fuck",
+	"nig",
 	"peppy",
 	"rrtyui",
 	"cookiezi",

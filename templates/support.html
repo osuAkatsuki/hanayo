@@ -1,6 +1,6 @@
 {{/*###
 Handler=/donate
-TitleBar=Support Ripple
+TitleBar=Support Atoka
 KyutGrill=donate2.png
 AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.min.js
 */}}
@@ -14,7 +14,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 		{{ if .has_donor }}
 			<div class="ui segment">
 				<h1 class="ui center aligned header no bottom margin" style="margin: 0 auto; display: table;">
-					<i class="red heart icon" style="font-size: 90%;"></i> <div class="content">{{ $.T "You are a donor!" }}</div>
+					<i class="red heart icon" style="font-size: 90%;"></i> <div class="content">{{ $.T "You are a Donor!" }}</div>
 				</h1>
 				<div class="ui centered subtitle" style="font-size:1.2rem;">
 					{{ $.T "Your donor expires <b>%s</b>. No need to feel guilty for not having donated!" (time .expiration) | html }} &lt;3
@@ -24,7 +24,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 		<div class="ui segments">
 			<div class="ui segment">
 				<h2 class="ui header">
-					{{ $.T "Did you know?" }}
+					{{ $.T "Did You Know?" }}
 					<div class="sub header">
 						{{ if .has_donor }}{{ $.T "(Probably.)" }}{{ else }}{{ $.T "(Probably not.)" }}{{ end }}
 					</div>
@@ -32,16 +32,16 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 			</div>
 			<div class="ui segment">
 				<h3 class="ui header no top margin">
-					<i class="money icon"></i><div class="content">{{ $.T "Ripple is not cheap to run." }}</div>
+					<i class="money icon"></i><div class="content">{{ $.T "Atoka is not cheap to run." }}</div>
 				</h3>
 				<blockquote>
-					{{ $.T "While we provide this service for free, we still have to pay for it, and if we always took the money out of our own pockets, 1. we would be broke, 2. we wouldn't be able to upgrade our hardware to accomodate our users. While we do have loads of software optimisations that allow us to have Ripple run crazy fast while still being on not so high-end hardware, the more users we have, the higher-end our hardware needs to be. So we are asking you for help on this :)." }}
+					{{ $.T "While we provide this service for free, we still have to pay for it, and if we always took the money out of our own pockets, 1. we would be broke, 2. we wouldn't be able to upgrade our hardware to accomodate our users. While we do have loads of software optimisations that allow us to have Atoka run crazy fast while still being on not so high-end hardware, the more users we have, the higher-end our hardware needs to be. So we are asking you for help on this :)." }}
 				</blockquote>
 				<h3 class="ui header">
 					<i class="book icon"></i><div class="content">{{ $.T "We are still students." }}</div>
 				</h3>
 				<blockquote>
-					{{ $.T "Ripple developers, and most of the Ripple staff, do not have a day job. This means that we get most of our income as students from doing small jobs as \"freelancers\" every so often, or, you know, allowance." }}
+					{{ $.T "Atoka Developers, and most of the Atoka Staff, do not have a day job. This means that we get most of our income as students from doing small jobs as \"freelancers\" every so often, or, you know, allowance." }}
 				</blockquote>
 				<h3 class="ui header">
 					<i class="mouse pointer icon"></i><div class="content">{{ $.T "We do not have ads. And never will." }}</div>
@@ -56,45 +56,41 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 		</div>
 		<div class="ui segment">
 			<h1 class="ui center aligned header">
-				{{ $.T "So what can you do?" }}
+				{{ $.T "So What Can You Do?" }}
 				<div class="sub header">
 					{{ if .has_donor }}{{ $.T "Well, you can give us even more money." }}{{ else }}{{ $.T "Well, you can give us money." }}{{ end }}
 				</div>
 			</h1>
 			<h4 class="ui horizontal divider header">
-				{{ $.T "Here's what you get:" }}
+				{{ $.T "Here's What You Get:" }}
 			</h4>
 			<div class="ui internally celled stackable grid">
 				<div class="row">
 					<div class="four wide column">
-						<h3 class="ui header">{{ $.T "Yellow username" }}</h3>
+						<h3 class="ui header">{{ $.T "Yellow Username" }}</h3>
 						{{ $.T "Just like in osu!, you get a <b>shiny yellow username</b> in the in-game chat to show everyone you're a really cool dude who has helped us pay the server bills." | html }}
 					</div>
 					<div class="four wide column">
-						<h3 class="ui header">{{ $.T "Donor badge" }}</h3>
+						<h3 class="ui header">{{ $.T "Donor Badge" }}</h3>
 						{{ $.T "Again, just like in osu!, you will get a <b>donor badge</b> on your profile, to show everyone you're supporting us." | html }}
 					</div>
 					<div class="four wide column">
-						<h3 class="ui header">{{ $.T "Custom badge editor" }}</h3>
+						<h3 class="ui header">{{ $.T "Custom Badge Editor" }}</h3>
 						{{ $.T "You get to be able to create your <b>own personal badge</b>, with custom text and icon, to show off on your profile! Let the world know you're an anchor. Or prank people showing a spinnin' wheel with \"Loading...\"! Up to you." | html }}
 					</div>
 					<div class="four wide column">
-						<h3 class="ui header">{{ $.T "Friends ranking" }}</h3>
+						<h3 class="ui header">{{ $.T "Friends Ranking" }}</h3>
 						{{ $.T "<b>Competing with friends</b> is really cool, you can play on the leaderboard with someone more or less on your level, without getting crippling depression and RSI for not beating that pro!" | html }}
 					</div>
 				</div>
 				<div class="row">
 					<div class="four wide column">
-						<h3 class="ui header">{{ $.T "Discord privileges" }}</h3>
+						<h3 class="ui header">{{ $.T "Discord Privileges" }}</h3>
 						{{ $.T "You'll get exclusive access to the <b>\"#donators\"</b> text and voice channels, you'll be able to change your discord nickname and you'll get a custom role with custom username colour!" | html }}
 					</div>
 					<div class="four wide column">
-						<h3 class="ui header">{{ $.T "Profile background" }}</h3>
+						<h3 class="ui header">{{ $.T "Profile Background" }}</h3>
 						{{ $.T "Think about <b>spicing your profile up with some eggplants</b>? Got you covered! Having donor privileges, you get to be able to change your profile background." | html }}
-					</div>
-					<div class="four wide column">
-						<h3 class="ui header">{{ $.T "Account wipe" }}</h3>
-						{{ $.T "Want to start over one more time? With donor you can! Normally you can only <a href='https://support.ripple.moe' target='_blank'>request an account wipe</a> once, but having donated you'll be able to do it once again." | html }}
 					</div>
 					<div class="four wide column">
 						<h3 class="ui header">{{ $.T "More to come!" }}</h3>
@@ -104,10 +100,10 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 			</div>
 			{{ if $global.User.ID }}
 				<h4 class="ui horizontal divider header">
-					{{ $.T "And this is how you pay" }}
+					{{ $.T "And This Is How You Pay." }}
 				</h4>
 				<p>
-					{{ $.T "You may donate through either <b>PayPal</b> (or credit/debit card linked to PayPal) or <b>Bitcoin</b>. Use the slider below to choose the amount of months you'd like to have the donor benefits, and the cost will be instantly calculated. Remember that if, for instance, you choose to donate € 4 instead of € 3.51, you will only be given one donor month." | html }}
+					{{ $.T "You can donate with <b>PayPal</b>. Use the slider below to choose the amount of months you'd like to have the donor benefits, and the cost will be instantly calculated." | html }}
 				</p>
 				<div id="months-slider" style="margin: 0 auto; max-width: 500px"></div>
 				<br>
@@ -127,7 +123,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 								<input type="hidden" name="option_select{{ . }}" value="{{ $months }} month{{ if . }}s{{ end }}">
 								<input type="hidden" name="option_amount{{ . }}" value="{{ calculateDonorPrice $months }}">
 							{{ end }}
-							<input type="hidden" name="on1" value="Ripple user to give donor">
+							<input type="hidden" name="on1" value="Atoka user to give donor">
 							<input type="hidden" name="custom" value="username={{ $global.User.Username }}" id="ipn-username">
 							<input type="hidden" name="amount" value="{{ calculateDonorPrice 1 }}" id="paypal-amt">
 							<div class="ui fluid labeled action input">
@@ -139,7 +135,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 							</div>
 							{{ $ief }}
 							<input type="hidden"
-name="business" value="me@nyodev.xyz">
+							name="business" value="philvegas01@gmail.com">
+							<!-- README: value=" paypal email money goes to."  -->
 							<input type="hidden" name="cmd" value="_xclick">
 							<input type="hidden" name="lc" value="GB">
 							<input type="hidden" name="no_note" value="0">
@@ -147,23 +144,14 @@ name="business" value="me@nyodev.xyz">
 							<img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
 						</form>
 					</div>
-					<div class="column">
-						<h2 class="ui header">
-							<i class="bitcoin icon"></i>
-							{{ $.T "Bitcoin" }}
-						</h2>
-						<p><b>{{ $.T "Send %s BTC to this Bitcoin address:" "<span id=\"bitcoin-amt\"></span>" | html }}</b></p>
-						<p><code>{{ getBitcoinAddress }}</code></p>
-						<p>{{ $.T "Afterwards, <b>please send an email to <a href=\"mailto:howl@ripple.moe\">howl@ripple.moe</a></b> containing the transaction hash!" | html }}</p>
-					</div>
 				</div>
 				<h4 class="ui horizontal divider header">
-					{{ $.T "I've donated, now what?" }}
+					{{ $.T "I've Donated, Now What?" }}
 				</h4>
-				{{ $.T "You'll have to wait until we verify and process your payment. It can take up to <b>12 hours</b>. If 12 hours have passed and you still haven't received your Donor tag, contact a <b>Dev/Community Manager</b> in our Discord server or send an email to <b><a href=\"mailto:support@ripple.moe\">support@ripple.moe</a></b>. Once we have processed your payment, you'll receive an <b>email</b> to the address you've used to sign up and you'll get <b>all the donor privileges, except the Discord ones</b>. To get the Discord donor privileges, go <a href=\"/settings/discord\">here</a>." | html }}
+				{{ $.T "You'll have to wait until we verify and process your payment. It can take up to <b>12 hours</b>. If 12 hours have passed and you still haven't received your Donor tag, contact a <b>Dev/Community Manager</b> in our Discord server or send an email to <b><a href=\"mailto:support@atoka.pw\">support@atoka.pw</a></b>. Once we have processed your payment, you'll receive an <b>email</b> to the address you've used to sign up and you'll get <b>all the donor privileges, except the Discord ones</b>. To get the Discord donor privileges, go <a href=\"/settings/discord\">here</a>." | html }}
 			{{ else }}
 				<div class="ui divider"></div>
-				<h1 class="ui center aligned header">{{ $.T "Please log in to get supporter" }}</h1>
+				<h1 class="ui center aligned header">{{ $.T "You must be logged in to get supporter." }}</h1>
 			{{ end }}
 		</div>
 	{{ end }}
