@@ -59,6 +59,7 @@
 			</div>
 
 			{{ navbarItem .Path (.T "Donate" | printf "<i class=\"red heart icon\"></i>%s") "/donate" }}
+
 			{{ navbarItem .Path (.T "Apply" | printf "<i class=\"green pencil alternate icon\"></i>%s") "/apply" }}
 			{{ if $isAdmin }}{{ navbarItem .Path (.T "Admin Panel" | printf "<b>%s</b>") "https://admin.atoka.pw/index.php?p=100" }}{{ end }}
 		{{ end }}
