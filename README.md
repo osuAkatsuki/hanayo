@@ -7,11 +7,11 @@ This repository has a mirror [here](https://github.com/osuripple/hanayo). The or
 
 Stuff that we got working now!
 
-* Clans (I went big brain -Night)
-* Linking Discord (Website at least. in-game still broke asf.)
+* Clans
+* Linking Discord (for donors only)
 * Authorized Applications
 
-### Stuff that might not work.
+### Stuff that may not work.
 
 We'll update this repository when we get the below functions working properly.
 
