@@ -28,10 +28,10 @@
 					{{ navbarItem .Path (.T "Rules") "/doc/rules" }}
 					<div class="divider"></div>
 					{{ navbarItem .Path (.T "Documentation") "/doc" }}
-					{{ navbarItem .Path (.T "Server Switcher") "https://atoka.pw/static/atoka-server-switcher.exe" }}
+					{{ navbarItem .Path (.T "Server Switcher") "/static/switcher.exe" }}
+					{{ navbarItem .Path (.T "YouTube Channel") "https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" }}
 					<div class="divider"></div>
-					{{ navbarItem .Path (.T "Chat (Discord)") "https://discord.gg/abJ9TU8" }}
-					{{ navbarItem .Path (.T "Contact Support") "mailto:support@atoka.pw" }}
+					{{ navbarItem .Path (.T "Chat (Discord)") "https://discord.gg/5cBtMPW" }}
 				</div>
 			</div>
 			{{ if .Context.User.Username }}
@@ -39,7 +39,6 @@
 				<span>{{ .T "Beatmaps" }}</span>
 				<div class="menu">
 					{{ navbarItem .Path (.T "Listing") "/beatmaps" }}
-					{{ navbarItem .Path (.T "Rank Request") "/beatmaps/rank_request" }}
 				</div>
 			</div>
 			{{ end }}
@@ -67,7 +66,7 @@
 			{{ navbarItem .Path (.T "Apply" | printf "<i class=\"green pencil alternate icon\"></i>%s") "/apply" }}
 			{{ else }}
 			{{ end }}
-			{{ if $isAdmin }}{{ navbarItem .Path (.T "Admin Panel" | printf "<b>%s</b>") "https://admin.atoka.pw/index.php?p=100" }}{{ end }}
+			{{ if $isAdmin }}{{ navbarItem .Path (.T "Admin Panel" | printf "<b>%s</b>") "https://old.akatsuki.pw/index.php?p=100" }}{{ end }}
 		{{ end }}
 		<div class="firetrucking-right-menu">
 			{{ navbarItem .Path (printf "<span data-tooltip=\"Support us! (♥ω♥ ) ~♪\" data-position=\"bottom right\"><i class=\"red heart icon\"></i></span>") "/donate" }}

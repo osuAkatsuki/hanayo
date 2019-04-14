@@ -21,10 +21,20 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
 						<option value="0">{{ .T "None" }}</option>
 						<option value="1"{{ if eq $type 1 }} selected{{ end }}>{{ .T "Image" }}</option>
 						<option value="2"{{ if eq $type 2 }} selected{{ end }}>{{ .T "Solid colour" }}</option>
+						{{ if has .Context.User.Privileges 8388612 }}
+						<option value="3"{{ if eq $type 3 }} selected{{ end }}>{{ .T "Gif" }}</option>
+						{{ end }}
 					</select>
 				</p>
-				<div class="ui compact segment" id="image-background" style="margin: 0 auto; max-width: 400px; max-height: 700px;" data-type="1"{{ if ne $type 1 }} hidden{{ end }}>
+				<div class="ui compact segment" id="image-background" style="margin: 0 auto; max-width: 400px; max-height: 700px;" data-type="1"{{ if ne $type 1 }}hidden{{ end }}>
 					{{ if and (eq $type 1) $value }}
+						<img src="/static/profbackgrounds/{{ $value }}">
+					{{ else }}
+						No image selected
+					{{ end }}
+				</div>
+				<div class="ui compact segment" id="gif-background" style="margin: 0 auto; max-width: 400px; max-height: 700px;" data-type="3"{{ if ne $type 3 }}hidden{{ end }}>
+					{{ if and (eq $type 3) $value }}
 						<img src="/static/profbackgrounds/{{ $value }}">
 					{{ else }}
 						No image selected
@@ -67,6 +77,22 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
 						</button>
 					</p>
 				</form>
+				<form action="/settings/profbackground/3" method="post" enctype="multipart/form-data" class="little top margin ui form" data-type="3"{{ if ne $type 3 }} hidden{{ end }}>
+					{{ $csrf }}
+					<div class="ui buttons">
+						<label for="giffile" class="ui green labeled icon button">
+							<i class="file icon"></i>
+							{{ .T "Open File" }}
+						</label>
+						{{ ieForm .Gin }}
+						<button type="submit" class="ui right labeled blue icon button">
+							<i class="save icon"></i>
+							{{ .T "Save" }}
+						</button>
+					</div>
+					<input type="file" id="giffile" style="display:none" required accept="image/*" name="value">
+				</form>
+
 			</div>
 		</div>
 	</div>

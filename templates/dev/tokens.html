@@ -13,8 +13,8 @@ HugeHeadingRight=true
 		{{ template "devSidebar" . }}
 		<div class="twelve wide column">
 			<div class="ui segment">
-				From this page you can create, modify and delete your personal <a href="https://docs.ripple.moe/docs/api/appendix#authorization">API tokens</a>.<br>
-				{{ .T "The Ripple API is the system through which developers can create applications to interact with Ripple. <b>If you're asked to fill out an API token from this page, be wary and only actually create the token if you really trust the owner of the application.</b>" | html }}
+				From this page you can create, modify and delete your personal <a href="https://docs.akatsuki.pw/docs/api/appendix#authorization">API tokens</a>.<br>
+				{{ .T "The Akatsuki API is the system through which developers can create applications to interact with Akatsuki. <b>If you're asked to fill out an API token from this page, be wary and only actually create the token if you really trust the owner of the application.</b>" | html }}
 				<div class="ui divider"></div>
 				{{ $csrf := csrfGenerate .Context.User.ID }}
 				{{ $page := or (atoint (.Gin.Query "p")) 1 }}

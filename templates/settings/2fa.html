@@ -20,8 +20,31 @@ MinPrivileges=2
 					{{ .T "Two factor authentication is not enabled on your account." }}
 				</div>
 			{{ end }}
-			<div class="ui segments">
+			<div class="ui segments">	
 				{{ if eq $e 0 }}
+					<div class="ui segment">
+						<h1 class="ui header">
+							{{ .T "Telegram 2FA" }}
+						</h1>
+						{{ $token := get2faConfirmationToken .Context.User.ID }}
+						<p>{{ .T "To enable Telegram Two Factor Authentication, click this button, then click \"start\" on Telegram:" }}</p>
+						<p class="centered">
+							<a class="ui blue labeled icon button" href="http://t.me/ripple2fabot?start={{ $token }}">
+								<i class="send icon"></i>
+								{{ .T "Enable Telegram 2FA" }}
+							</a>
+						</p>
+						<p>{{ .T "If you don't have Telegram on the current device, you can either open this page from a device on which you have it, or scan this QR code:" }}</p>
+						<div class="ui compact segment" style="margin: 0 auto; display: table">
+							<img src="https://chart.googleapis.com/chart?chs=256x256&cht=qr&chl=http://telegram.me/ripple2fabot?start={{ $token }}&chld=L|1">
+						</div>
+						<p class="little top margin">
+							{{ .T "In case you don't have a way to scan QR codes or you simply can't be bothered to download an app that scans them, you can also open Telegram, start a conversation with <a href=\"http://telegram.me/ripple2fabot\"><b>@ripple2fabot</b></a> and send this message:" | html }}
+						</p>
+						<p class="centered">
+							<code>/start {{ $token }}</code>
+						</p>
+					</div>
 					<div class="ui segment">
 						<h1 class="ui header">
 							{{ .T "Google Authenticator (TOTP) based 2FA" }}
@@ -72,7 +95,7 @@ MinPrivileges=2
 								{{ .T "Google Authenticator recovery keys" }}
 							</h1>
 							<p>
-								{{ .T "These are the only thing that will let you get back into your Ripple account if you lose your device. Our suggestion is to paste them inside a document in your word processor (Microsoft Word, LibreOffice Writer), print them and store them in a safe place." }}
+								{{ .T "These are the only thing that will let you get back into your Akatsuki account if you lose your device. Our suggestion is to paste them inside a document in your word processor (Microsoft Word, LibreOffice Writer), print them and store them in a safe place." }}
 							</p>
 							<div class="ui four column grid">
 								{{ range getKeys .Context.User.ID }}

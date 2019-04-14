@@ -8,7 +8,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>{{ if .TitleBar }}{{ .T .TitleBar }} - {{ end }}Atoka</title>
+		<title>{{ if .TitleBar }}{{ .T .TitleBar }} - {{ end }}Akatsuki</title>
 
 		<link rel="stylesheet" type="text/css" href="/static/{{ if $ds }}dark/{{ end }}semantic.min.css?{{ unixNano }}">
 		<link rel="stylesheet" type="text/css" href="/static/ripple.css?{{ unixNano }}">
@@ -54,7 +54,7 @@
 				<noscript>Research has proven this website works 10000% better if you have JavaScript enabled.</noscript>
 				{{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
 					<div class="ui warning message">
-						{{ $.T "Your account is currently in restricted mode. You will not be able to do certain actions, and your profile can only be seen by you and by Atoka's staff. If you believe we have mistaken putting you in restricted mode, or a month has passed since you first saw this, then you can send an appeal to <a href='mailto:support@atoka.pw'>support@atoka.pw</a>." | html }}
+						{{ $.T "Your account is currently in restricted mode. You will not be able to perform certain actions, and your profile can only be seen by you and by Akatsuki's staff. If you believe this was a mistake, or have waited more than 2 months since your latest offense, you may appeal using <a href='https://goo.gl/forms/qDBIMgcvpFLWCNwf2'>this form</a>." | html }}
 					</div>
 				{{ end }}
 				{{ if .Messages }}
@@ -73,12 +73,12 @@
 				{{ end }}
 				{{ with $settings.game_maintenance.Int }}
 					<div class="ui warning message">
-						{{ $.T "Atoka's score submission is currently in maintenance mode. You will not be allowed to submit scores for the time being." }}
+						{{ $.T "Akatsuki's score submission is currently in maintenance mode. You will not be allowed to submit scores for the time being." }}
 					</div>
 				{{ end }}
 				{{ with $settings.website_maintenance.Int }}
 					<div class="ui warning message">
-						{{ $.T "The Atoka website is currently in maintenance mode. Only certain users are allowed to access the full website." }}
+						{{ $.T "The Akatsuki website is currently in maintenance mode. Only certain users are allowed to access the full website." }}
 					</div>
 				{{ end }}
 				</div>
@@ -98,7 +98,7 @@
 											<a href="/doc/rules">Rules</a>
 										</li> 
 										<li>
-											<a href="https://atoka.pw/static/atoka-server-switcher.exe">Switcher</a>
+											<a href="/static/switcher.exe">Switcher</a>
 										</li> 
 										<li>
 											<a href="/doc/connection_guide">How To Connect</a>
@@ -111,10 +111,10 @@
 									<a class="footer-title">Socials</a>
 									<ul style="list-style-type: none; padding: 0; margin: 0;">
 										<li>
-											<a href="https://www.youtube.com/channel/UCNuP9DpFmwem0GLN-0QsIlA" target="_blank">YouTube</a>
+											<a href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" target="_blank">YouTube</a>
 										</li>
 										<li>
-											<a href="https://discord.gg/abJ9TU8" target="_blank">Discord</a>
+											<a href="https://discord.gg/5cBtMPW" target="_blank">Discord</a>
 										</li>
 									</ul>
 								</div>
@@ -127,13 +127,12 @@
 											<a href="/team">Team</a>
 										</li>
 										<li>
-											<a href="https://github.com/osuatoka" target="_blank">Source Code</a>
+											<a href="https://github.com/osuAkatsuki" target="_blank">Source Code</a>
 										</li>
 									</ul>
 								</div>
 							</div>
 							<div class="footer-logo">
-								<span>osu!Atoka</span> 
 								<br>
 								<a class="subtitle"> private osu! server</a>
 							</div>

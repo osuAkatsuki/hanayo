@@ -1,0 +1,43 @@
+{{/*###
+Handler=/merge
+TitleBar=Merge
+KyutGrill=team2.jpg
+*/}}
+{{ define "tpl" }}
+
+<div class="ui container">
+	{{ if not .Context.User.ID }}
+	<div class="ui segment">
+		{{ .T "You have to log in!" }}
+	</div>
+	{{ else }}
+	<div class="tiny container">
+			<div class="ui raised segments">
+				<div class="ui segment">
+
+					<form id="mt-form" class="ui form" method="post" action="https://akatsuki.pw/merge">
+
+						<div class="field">
+							<p id="fooHolder"></p>
+							<label>{{ .T "Regular Username" }}</label>
+							<input tabindex="1" type="text" name="regular_username" placeholder="Regular {{ .T "Username" }}" value="{{ .FormData.regular_username }}" required>
+						</div>
+
+						<div class="field">
+							<label>{{ .T "Regular Password" }}</label>
+							<input tabindex="2" type="password" name="regular_password" placeholder="Regular {{ .T "Password" }}" value="{{ .FormData.regular_password }}" required>
+						</div>
+
+						{{ ieForm .Gin }}
+					</form>
+				</div>
+				<div class="ui right aligned segment">
+					<button tabindex="3" class="ui primary button" type="submit" form="mt-form">{{ .T "Merge" }}</button>
+				</div>
+			</div>
+		</div>
+
+</div>
+{{ end }}
+</div>
+{{ end }}

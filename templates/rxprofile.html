@@ -3,7 +3,7 @@
 	{{ if .UserID }}
 		{{ $gqm := atoi (.Gin.Query "mode") }}
 		{{ $global := . }}
-		{{ with (.Get "users/full?id=%d" .UserID) }}
+		{{ with (.Get "users/rxfull?id=%d" .UserID) }}
 			{{ $favouritemode := _or $gqm .favourite_mode }}
 			<script>
 				window.favouriteMode = {{ $favouritemode }};
@@ -122,7 +122,7 @@
 				</div>
 				<div class="magic table floating right">
 					<div class="table element">
-							
+
 						{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
 							<h1 data-mode="{{ $k }}"{{ if ne $k (int $favouritemode) }} hidden{{ end }}>{{ with and $v $v.global_leaderboard_rank }}#{{ . }}{{ else }}{{ $global.T "Unknown" }}{{ end }}</h1>
 						{{ end }}
@@ -156,6 +156,7 @@
 				
 					<a class="0 item" data-rx="0" href="/u/{{ $user.id }}">Regular</a>
 					<a class="1 item" data-rx="1" href="/rx/u/{{ $user.id }}">Relax</a>
+				
 			</div>
 
 			<div class="ui four item bottom attached menu" id="mode-menu">
@@ -229,12 +230,11 @@
 								{{ $global.T "This user hasn't got any badges!" }}
 							{{ else }}
 								<div class="ui grid">
-
+								
 									{{ range .badges }}
 										<div class="eight wide centered column">
 											<i class="circular {{ faIcon .icon }} big icon"></i><br>
 											<b>{{ .name }}</b>
-
 
 										</div>
 									{{ end }}
@@ -336,7 +336,6 @@
 					</table>
 				</div>
 			</div>
-
 		{{ end }}
 	{{ end }}
 </div>

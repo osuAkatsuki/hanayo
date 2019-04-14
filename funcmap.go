@@ -406,6 +406,10 @@ var funcMap = template.FuncMap{
 	"calculateDonorPrice": func(a float64) string {
 		return fmt.Sprintf("%.2f", math.Pow(a*30*0.2, 0.7))
 	},
+	// calculatePremiumPrice calculates the price of x premium months in euros.
+	"calculatePremiumPrice": func(a float64) string {
+		return fmt.Sprintf("%.2f", math.Pow(a * 68 * 0.15, 0.93))
+	},
 	// is2faEnabled checks 2fa is enabled for an user
 	"is2faEnabled": is2faEnabled,
 	// get2faConfirmationToken retrieves the current confirmation token for a certain user.

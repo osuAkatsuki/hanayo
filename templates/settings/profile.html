@@ -15,7 +15,7 @@ MinPrivileges=2
 					{{ $d := .Get "users/self/settings" }}
 					<h3 class="ui header">{{ .T "General" }}</h3>
 					<div class="field">
-						<label><a href="https://support.ripple.moe">{{ .T "Username" }}</a></label>
+						<label><a href="/help">{{ .T "Username" }}</a></label>
 						<input type="text" value="{{ .Context.User.Username }}" disabled>
 					</div>
 					<div class="field">
@@ -47,7 +47,6 @@ MinPrivileges=2
 						</div>
 						<div id="custom-badge-fields" {{ if not $d.custom_badge.show }}style="display: none"{{ end }} class="little top margin">
 							<p><a href="http://semantic-ui.com/elements/icon.html">{{ .T "Icon reference" }}</a></p>
-							<p>{{ .T "You can use the <code>rotation</code> class to make the badge rotate.<br>You can also use <code>red, orange, yellow, olive, green, teal, blue, violet, purple, pink, brown, grey, and black</code> classes to change the color of the badge." | html }}</p>
 							<div class="ui two column center aligned grid" style="margin-top: 0">
 								<div class="column">
 									<i class="circular {{ faIcon $d.custom_badge.icon }} big icon" id="badge-icon"></i><br>
@@ -73,14 +72,16 @@ MinPrivileges=2
 							</div>
 						{{ end }}
 					</div>
-{{/* Disabled because fuck light theme, its now forced down your throat. >:)
-					<h3 class="ui header">{{ .T "Preferences" }}</h3>
-					{{ $ds := band .ClientFlags 1 }}
+					<!--h3 class="ui header">{{ .T "Preferences" }}</h3><br>
+					<div class="ui three column grid" id="checkbox-grid">
 					<div class="ui checkbox">
-						<input type="checkbox" {{ if $ds }}checked{{ end }} id="dark-site">
-						<label>{{ .T "Dark site" }}</label>
-					</div>
-*/}}
+						{{ $checked := band (int $d.prefer_relax) }}
+						<input type="checkbox" data-sv="{{ if $checked }}1{{else}}0{{ end }}" {{ if $checked }}checked{{ end }}>
+							<label>b</label>
+						</div>
+
+					</div-->
+<br>
 					<div class="ui divider"></div>
 					<div style="text-align: right">
 						<button type="submit" class="ui blue button">{{ .T "Save" }}</button>

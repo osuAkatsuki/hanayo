@@ -288,6 +288,46 @@ var singlePageSnippets = {
     });
   },
 
+  "/premium" : function() {
+    var sl = $("#months-slider")[0];
+    noUiSlider.create(sl, {
+      start : [ 1 ],
+      step : 1,
+      connect : [ true, false ],
+      range : {
+        min : [ 1 ],
+        max : [ 24 ],
+      }
+    });
+    var rates = {};
+    var us = sl.noUiSlider;
+    var doneOne = false;
+    $.getJSON("/donate/rates", function(data) {
+      rates = data;
+      us.on('update', function() {
+        var months = us.get();
+        var priceEUR = Math.pow(months * 68 * 0.15, 0.93);
+        var priceBTC = priceEUR / rates.EUR;
+        var priceUSD = priceBTC * rates.USD;
+        $("#cost")
+          .html(T("<b>{{ months }}</b> month costs <b>€ {{ eur }}</b>", {
+            count : Math.round(+months),
+            months : (+months).toFixed(0),
+            eur : priceEUR.toFixed(2),
+          }) +
+                  "<br>" + T("($ {{ usd }} / BTC {{ btc }})", {
+              usd : priceUSD.toFixed(2),
+              btc : priceBTC.toFixed(10),
+            }));
+        $("input[name='os0']")
+          .attr("value",
+            (+months).toFixed(0) + " month" + (months == 1 ? "" : "s"));
+        $("#bitcoin-amt").text(priceBTC.toFixed(6));
+        $("#paypal-amt").val(priceEUR.toFixed(2));
+      });
+    });
+  },
+
   "/settings/avatar" : function() {
     $("#file")
       .change(function(e) {

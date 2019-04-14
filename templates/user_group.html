@@ -7,7 +7,7 @@ NoCompile=true
 		{{ $teamJSON := teamJSON }}
 		{{ range .members }}
 			{{/* ignore fokabot */}}
-			{{ if ne (int .id) 999 }}
+			{{ if ne (int .id) 0 }}
 				{{ $tj := index $teamJSON (print .id)}}
 				<div class="column">
 					<div class="ui left aligned fluid card">
