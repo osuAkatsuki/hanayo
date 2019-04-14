@@ -1,5 +1,4 @@
 {{/*###
-Handler=/
 TitleBar=Home Page
 KyutGrill=homepage2.jpg
 */}}
@@ -7,29 +6,13 @@ KyutGrill=homepage2.jpg
 {{ $cf := .ClientFlags }}
 {{ $ds := band $cf 1 }}
 {{ $   := . }}
+{{ .DisableHH }}
 <div class="ui container"> {{/* Custom Home Alert Message, Hard-Coded, will probably make it not hard-coded and work with Admin Panel when I have time, idk lol long ass comment boi! */}}
 	<div class="ui warning message">
 		<p>
 			<center>
 				<strong>
-					{{ .T "Staff Applications are now open, <a title='Apply for Staff!' href='/apply'>Apply</a> now!" | html }}
-					<br>{{ .T "What?! You don't know about our super-mega-puper discord server?! Join now! <a title='Our Discord!?!' href='https://discord.gg/abJ9TU8' target='_blank'>pew-pew</a>" | html }}
-					<br>{{ .T "New PP changes are officially live!" }}
-				</strong>
-			</center>
-		</p>
-	</div>
-</div>
-<br>
-
-<div class="ui container">
-	<div class="ui warning message">
-		<p>
-			<center>
-				<strong>
-					{{ .T "<a href='https://www.youtube.com/watch?v=-50NdPawLVY' target='_blank'>K**** is gone. ;)</a>" | html }}
-					<br>{{ .T "What?! You don't know about our super-mega-puper discord server?! Join now! <a href='https://discord.gg/abJ9TU8'>pew-pew</a>" | html }}
-					<br>{{ .T "Atoka is a work in progress, expect bugs!" }}
+					{{ .T "What?! You don't know about our super-mega-puper discord server?! Join now! <a title='Our Discord!?!' href='https://discord.gg/abJ9TU8' target='_blank'>pew-pew</a>" | html }}
 				</strong>
 			</center>
 		</p>
@@ -146,7 +129,7 @@ KyutGrill=homepage2.jpg
                        <i class="thumbs up icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                       {{ $d := (qb "SELECT ROUND(pp) AS pp, users.username, users.id FROM scores INNER JOIN users ON scores.userid = users.id WHERE scores.play_mode = 0 AND scores.completed = 3 AND users.privileges > 2 ORDER BY pp DESC LIMIT 1") }}
+                       {{ $d := (qb "SELECT ROUND(pp) AS pp, users.username, users.id FROM scores INNER JOIN users ON scores.userid = users.id WHERE scores.play_mode = 0 AND completed = 3 AND users.privileges > 2 ORDER BY pp DESC LIMIT 1") }}
                        <p class="status-head">{{ $d.pp }}pp</p>
                        <p class="status-head" style="font-size: 10px!important;">Done by <a href="/u/{{ $d.id }}">{{ $d.username }}</a></p>
                        <p class="status-footer">Top Score</p>

@@ -45,9 +45,9 @@
 						<div class="full-centered column">
 							<div class="ui vertical buttons">
 								<a href="osu://dl/{{ .Beatmapset.ID }}" class="ui pink labeled icon button"><i class="download icon"></i>{{ $.T "osu!direct" }}</a>
-								<a href="http://storage.ripple.moe/d/{{ .Beatmapset.ID }}" class="ui green labeled icon button"><i class="download icon"></i>{{ $.T "download" }}</a>
+								<a href="http://cg.mxr.lol/d/{{ .Beatmapset.ID }}" class="ui green labeled icon button"><i class="download icon"></i>{{ $.T "download" }}</a>
 								{{ if .Beatmapset.HasVideo }}
-									<a href="http://storage.ripple.moe/d/{{ .Beatmapset.ID }}?novideo" class="ui gray labeled icon button"><i class="download icon"></i>{{ $.T "download (no video)" }}</a>
+									<a href="http://cg.mxr.lol/d/{{ .Beatmapset.ID }}?novideo" class="ui gray labeled icon button"><i class="download icon"></i>{{ $.T "download (no video)" }}</a>
 								{{ end }}
 								{{ if has $.Context.User.Privileges 256 }}
 									<a href="https://admin.atoka.pw/index.php?p=124&bsid={{ .Beatmapset.ID }}" class="ui violet labeled icon button"><i class="thumbs up icon"></i>{{ $.T "Rank in RAP"}}</a>

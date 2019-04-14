@@ -161,7 +161,7 @@ ol.ui.list ol li,
   margin: 0em;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
 }
 
 /* Description */
@@ -181,28 +181,28 @@ ol.ui.list ol li,
 .ui.list .list > a.item,
 .ui.list > a.item {
   cursor: pointer;
-  color: #4183C4;
+  color: #68adf2;
 }
 .ui.list .list > a.item:hover,
 .ui.list > a.item:hover {
-  color: #1e70bf;
+  color: #51a0f0;
 }
 
 /* Linked Item Icons */
 .ui.list .list > a.item i.icon,
 .ui.list > a.item i.icon {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Header Link */
 .ui.list .list > .item a.header,
 .ui.list > .item a.header {
   cursor: pointer;
-  color: #4183C4 !important;
+  color: #68adf2 !important;
 }
 .ui.list .list > .item a.header:hover,
 .ui.list > .item a.header:hover {
-  color: #1e70bf !important;
+  color: #51a0f0 !important;
 }
 
 /* Floated Content */
@@ -319,11 +319,11 @@ ol.ui.list ol li,
 .ui.list .list > .disabled.item,
 .ui.list > .disabled.item {
   pointer-events: none;
-  color: rgba(40, 40, 40, 0.3) !important;
+  color: rgba(225, 225, 225, 0.3) !important;
 }
 .ui.inverted.list .list > .disabled.item,
 .ui.inverted.list > .disabled.item {
-  color: rgba(225, 225, 225, 0.3) !important;
+  color: rgba(40, 40, 40, 0.3) !important;
 }
 
 /*-------------------
@@ -332,7 +332,7 @@ ol.ui.list ol li,
 
 .ui.list .list > a.item:hover .icon,
 .ui.list > a.item:hover .icon {
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
 }
 
 
@@ -347,34 +347,34 @@ ol.ui.list ol li,
 
 .ui.inverted.list .list > a.item > .icon,
 .ui.inverted.list > a.item > .icon {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.4);
 }
 .ui.inverted.list .list > .item .header,
 .ui.inverted.list > .item .header {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.85);
 }
 .ui.inverted.list .list > .item .description,
 .ui.inverted.list > .item .description {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 /* Item Link */
 .ui.inverted.list .list > a.item,
 .ui.inverted.list > a.item {
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.85);
 }
 .ui.inverted.list .list > a.item:hover,
 .ui.inverted.list > a.item:hover {
-  color: #1e70bf;
+  color: #51a0f0;
 }
 
 /* Linking Content */
 .ui.inverted.list .item a:not(.ui) {
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
 }
 .ui.inverted.list .item a:not(.ui):hover {
-  color: #1e70bf !important;
+  color: #51a0f0 !important;
 }
 
 /*-------------------
@@ -404,40 +404,40 @@ ol.ui.list ol li,
 .ui.link.list .item,
 .ui.link.list a.item,
 .ui.link.list .item a:not(.ui) {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.5);
   -webkit-transition: 0.1s color ease;
   transition: 0.1s color ease;
 }
 .ui.link.list a.item:hover,
 .ui.link.list .item a:not(.ui):hover {
-  color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
 }
 .ui.link.list a.item:active,
 .ui.link.list .item a:not(.ui):active {
-  color: rgba(0, 0, 0, 0.9);
+  color: #ffffff;
 }
 .ui.link.list .active.item,
 .ui.link.list .active.item a:not(.ui) {
-  color: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
 }
 
 /* Inverted */
 .ui.inverted.link.list .item,
 .ui.inverted.link.list a.item,
 .ui.inverted.link.list .item a:not(.ui) {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.4);
 }
 .ui.inverted.link.list a.item:hover,
 .ui.inverted.link.list .item a:not(.ui):hover {
-  color: #ffffff;
+  color: rgba(0, 0, 0, 0.8);
 }
 .ui.inverted.link.list a.item:active,
 .ui.inverted.link.list .item a:not(.ui):active {
-  color: #ffffff;
+  color: rgba(0, 0, 0, 0.9);
 }
 .ui.inverted.link.list a.active.item,
 .ui.inverted.link.list .active.item a:not(.ui) {
-  color: #ffffff;
+  color: rgba(0, 0, 0, 0.95);
 }
 
 /*-------------------
@@ -450,7 +450,7 @@ ol.ui.list ol li,
   background: transparent;
   padding: 0.5em 0.5em;
   margin: 0em;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.5);
   border-radius: 0.5em;
   -webkit-transition: 0.1s color ease, 0.1s padding-left ease, 0.1s background-color ease;
   transition: 0.1s color ease, 0.1s padding-left ease, 0.1s background-color ease;
@@ -461,40 +461,40 @@ ol.ui.list ol li,
 }
 .ui.selection.list.list > .item:hover,
 .ui.selection.list > .item:hover {
-  background: rgba(0, 0, 0, 0.03);
-  color: rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 .ui.selection.list .list > .item:active,
 .ui.selection.list > .item:active {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.9);
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
 }
 .ui.selection.list .list > .item.active,
 .ui.selection.list > .item.active {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.95);
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
 }
 
 /* Inverted */
 .ui.inverted.selection.list > .item,
 .ui.inverted.selection.list > .item {
   background: transparent;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.4);
 }
 .ui.inverted.selection.list > .item:hover,
 .ui.inverted.selection.list > .item:hover {
-  background: rgba(255, 255, 255, 0.02);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.8);
 }
 .ui.inverted.selection.list > .item:active,
 .ui.inverted.selection.list > .item:active {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.9);
 }
 .ui.inverted.selection.list > .item.active,
 .ui.inverted.selection.list > .item.active {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.95);
 }
 
 /* Celled / Divided Selection List */
@@ -566,7 +566,7 @@ ul.ui.list li:before,
 ul.ui.list li:before,
 .ui.bulleted.list .list > a.item:before,
 .ui.bulleted.list > a.item:before {
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
 }
 ul.ui.list ul,
 .ui.bulleted.list .list {
@@ -588,7 +588,7 @@ ul.ui.horizontal.bulleted.list li:first-child,
 }
 ul.ui.horizontal.bulleted.list li::before,
 .ui.horizontal.bulleted.list > .item::before {
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
 }
 ul.ui.horizontal.bulleted.list li:first-child::before,
 .ui.horizontal.bulleted.list > .item:first-child::before {
@@ -628,14 +628,14 @@ ol.ui.list li:before,
   counter-increment: ordered;
   content: counters(ordered, ".") " ";
   text-align: right;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
   vertical-align: middle;
   opacity: 0.8;
 }
 ol.ui.inverted.list li:before,
 .ui.ordered.inverted.list .list > .item:before,
 .ui.ordered.inverted.list > .item:before {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 /* Value */

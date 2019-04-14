@@ -1,0 +1,26 @@
+{{/*###
+NoCompile=true
+*/}}
+{{ define "adminSidebar" }}
+<div class="four wide column">
+	<div class="ui fluid vertical menu">
+		{{ navbarItem .Path (.T "Dashboard") "/admin/dash" }}
+
+		{{ navbarItem .Path (.T "System Settings") "/admin/system" }}
+
+		{{ navbarItem .Path (.T "Bancho Settings") "/admin/bancho" }}
+
+		{{ navbarItem .Path (.T "Users") "/admin/users" }}
+
+		{{ navbarItem .Path (.T "Restore Scores") "/admin/scores" }}
+
+		{{ navbarItem .Path (.T "Badges") "/admin/badges" }}
+
+		{{ navbarItem .Path (.T "Rank Requests") "/admin/rankreq" }}
+
+		{{ navbarItem .Path (.T "Rank Beatmap Manually") "/admin/beatmap" }}
+
+		{{ navbarItem .Path (.T "Admin Log") "/admin/log" }}
+	</div>
+</div>
+{{ end }}

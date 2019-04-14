@@ -1,0 +1,195 @@
+.col-lg-6, .col-lg-12 {
+    padding-right: 2px !important;
+    padding-left: 2px !important;
+}
+body {
+    background-image: url(https://osu.gatari.pw/static/images/backgrounds/bg4.png);
+}
+button:focus {
+    outline: none;
+}
+.main-block {
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    background-color: #222;
+    margin-top: 140px;
+    align-items: flex-end;
+    height: 400px;
+    padding-right: 34px;
+    box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
+}
+.mirai {
+    background-image: url(/static/characters/mirai_resized.png);
+    background-repeat: no-repeat;
+    height: 545px;
+    width: 670px;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    height: 100%;
+    justify-content: center;
+}
+.status {
+    display: flex;
+    font-size: 14px;
+    font-weight: 500;
+}
+.text-lg {
+    font-size: 52px;
+    font-weight: 700;
+    margin-top: 26px;
+}
+.counter-text {
+    font-size: 16px;
+    color: #f6a;
+    font-weight: 600;
+}
+.text-sm {
+    font-size: 14px;
+    font-style: italic;
+}
+.home-btn {
+    background-image: url(https://osu.gatari.pw/static/images/icons/button.svg);
+    border: none;
+    background-size: 150%;
+    border-radius: 4px;
+    color: white;
+    text-shadow: -1px 2px 2px rgba(0, 0, 0, 0.11);
+    transition: 200ms box-shadow, 200ms background-position, 200ms margin-top, 200ms background-color;
+    cursor: pointer;
+    font-size: 16px;
+    font-style: italic;
+    padding: 12px;
+    padding-left: 22px;
+    padding-right: 22px;
+    text-align: center;
+}
+.btn-key {
+    background-color: #f6a;
+    box-shadow: 0 4px rgb(134, 56, 91), 0 2px 2px rgb(0, 0, 0);
+}
+.home-btn.btn-key:hover {
+    background-color: rgb(250, 128, 183);
+    background-position-x: -30px;
+    color: white;
+}
+.btn-how {
+    background-color: #2094ca;
+    box-shadow: 0 4px #2f537d, 0 2px 2px #000;
+}
+.home-btn.btn-how:hover {
+    background-color: #2eb1ee;
+    background-position-x: -30px;
+    color: white;
+}
+.buttons {
+    display: flex;
+    margin-top: 42px;
+    align-items: flex-start;
+    height: 50px;
+}
+.home-btn:active {
+    box-shadow: none;
+    margin-top: 4px;
+}
+.features {
+    background-color: #222222;
+    border-radius: 4px;
+    border: none;
+    font-size: 14px;
+    background-image: url(/static/images/backgrounds/home-btn.png);
+    color: white;
+    font-style: italic;
+    font-weight: 500;
+    padding: 4px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 18px;
+    background-repeat: no-repeat;
+    background-position-x: 31%;
+    background-position-y: bottom;
+    box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
+    transition: 200ms background-color;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+.features .logo {
+    margin-left: 12px;
+}
+.features:hover {
+    color: white;
+    background-color: #1b1b1b;
+}
+@media (max-width: 1200px) {
+    .mirai {
+        background-position-x: 110%;
+    }
+    .status {
+	visibility: hidden;
+    }
+}
+@media (max-width: 992px) {
+    .mirai {
+        height: 519px;
+        width: 675px;
+        background-position-x: -190%;
+    }
+    .status {
+    	visibility: hidden;
+    }
+}
+@media (max-width: 768px) {
+    .mirai {
+        display: none;
+    }
+    .main-block {
+        padding: 34px;
+        margin-top: 0px;
+    }
+    .text-sm{
+        text-align: center;
+    }
+    .text-lg{
+        margin-top: 0px;
+    }
+    .content{
+        align-items: center;
+    }
+    .main-block{
+        height: 380px;
+    }
+    .buttons{
+        margin-top: 36px;
+    }
+    .status {
+    	visibility: hidden;
+    }
+}
+@media (max-width: 576px) {
+    .main-block{
+        height: 420px;
+    }
+    .content{
+        justify-content: space-between;
+    }
+    .buttons{
+        flex-direction: column;
+        margin-top: 24px;
+        align-items: initial;
+        height: auto;
+    }
+    .home-btn{
+        margin-left: 0px !important;
+    }
+    .btn-key{
+        margin-bottom: 12px;
+    }
+    .status {
+	visibility: hidden;
+    }
+}

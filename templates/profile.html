@@ -195,7 +195,7 @@ Include=user_group.html
 															{{ $global.T "<b>%s</b> is a player from <b>%s</b>." .username (country .country true) | html }}
 							{{ end }}
 							{{ if $god }}
-							<br>{{ $global.T "They have been here since the beginning of time." | html }}
+							<br>{{ $global.T "<span data-tooltip='21 December 2018' data-position='top left'>They have been here since the beginning of time.</span>" | html }}
 							<br>{{ $global.T "Last seen: %s." (time $user.latest_activity) | html }}
 							<br>{{ with playstyle .play_style $global }}{{ $global.T "They play with %s." . }}{{ end }}
 							{{ else if $bots }}
@@ -245,10 +245,13 @@ Include=user_group.html
 												</tr>
 											{{ end }}
 											{{/* Added Clans to profile.html  */}}
+											{{ if $user.clan.id }}
 											<tr>
 												<td><b>{{ $global.T "Clan" }}</b></td>
 												<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode={{ $k }}">{{ $user.clan.name }}</a></td>
 											</tr>
+											{{ else }}
+											{{ end }}
 											<tr>
 												<td><b>{{ $global.T "PP" }}</b></td>
 												<td class="right aligned">{{ humanize .pp }}</td>

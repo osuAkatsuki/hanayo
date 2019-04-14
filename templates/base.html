@@ -86,47 +86,73 @@
 			</div>
 
 		</div>
-
-		<div class="footer">
-		<center>
-			{{ .T "&copy; 2018-%d Atoka, using Hanayo %s." (curryear) (version) | html }}
-			<a href="/team" title="{{ .T "Who is working on this thing?" }}"><i class="users icon"></i>{{ .T "Team" }}</a> |
-			<a href="https://github.com/osuatoka" title="{{ .T "What's going on under the hood?"}}{{/*'"*/}}"><i class="github icon"></i></a>
-			<a href="https://twitter.com/osuatoka" title="{{ .T "Follow us on Twitter!" }}"><i class="twitter icon"></i></a>
-			<a href="https://reddit.com/r/osuatoka" title="{{ .T "Share irrelevant opinions on reddit!" }}"><i class="reddit icon"></i></a> |
-			<div class="ui scrolling dropdown" style="margin-left: 5px;" id="language-selector">
-				{{ $lang := .Context.Language }}
-				{{ with $lang }}
-					{{ $info := languageInformationByNameShort . }}
-					<div class="text"><i class="{{ $info.CountryShort }} flag"></i>{{ $info.Name }}</div>
-				{{ else }}
-					<div class="default text">{{ .T "Language" }}</div>
-				{{ end }}
-				<i class="dropdown icon"></i>
-				<div class="menu">
-					{{ range languageInformation }}
-						<div class="{{ if eq .NameShort $lang }}selected {{ end }}item" data-lang="{{ .NameShort }}"><i class="{{ .CountryShort }} flag"></i>{{ .Name }}</div>
-					{{ end }}
+			<div class="footer-bg">
+				<div class="ui container">
+					<div class="ui internally celled grid">
+						<div class="row">
+							<div class="three wide column">
+								<div class="footer-info-block">
+									<a class="footer-title">Help</a> 
+									<ul style="list-style-type: none; padding: 0; margin: 0;">
+										<li>
+											<a href="/doc/rules">Rules</a>
+										</li> 
+										<li>
+											<a href="https://atoka.pw/static/atoka-server-switcher.exe">Switcher</a>
+										</li> 
+										<li>
+											<a href="/doc/connection_guide">How To Connect</a>
+										</li>
+									</ul>
+								</div> 
+							</div>
+							<div class="three wide column">
+								<div class="footer-info-block">
+									<a class="footer-title">Socials</a>
+									<ul style="list-style-type: none; padding: 0; margin: 0;">
+										<li>
+											<a href="https://www.youtube.com/channel/UCNuP9DpFmwem0GLN-0QsIlA" target="_blank">YouTube</a>
+										</li>
+										<li>
+											<a href="https://discord.gg/abJ9TU8" target="_blank">Discord</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="seven wide column">
+								<div class="footer-info-block">
+									<a class="footer-title">About Us</a>
+									<ul style="list-style-type: none; padding: 0; margin: 0;">
+										<li>
+											<a href="/team">Team</a>
+										</li>
+										<li>
+											<a href="https://github.com/osuatoka" target="_blank">Source Code</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="footer-logo">
+								<span>osu!Atoka</span> 
+								<br>
+								<a class="subtitle"> private osu! server</a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</center>
-		</div>
 		<script>
 			var hanayoConf = {
 				avatars:   {{ .Conf.AvatarURL }},
 				banchoAPI: {{ .Conf.BanchoAPI }},
 				baseAPI:   {{ .Conf.BaseAPIPublic }},
 				cheesegullAPI: {{ .Conf.CheesegullAPI }},
-				language:  {{ with $lang }}{{ . }}{{ else }}"en"{{ end }},
 			};
 			var currentUserID = {{ .Context.User.ID }};
 		</script>
 		{{/* If we got some more scripts to print, print'em */}}
 		<script src="//twemoji.maxcdn.com/2/twemoji.min.js?2.2"></script>
 		<script src="/static/dist.min.js?{{ unixNano }}"></script>
-		{{ with $lang }}
-			<script src="/static/timeago-locale/jquery.timeago.{{ . }}.js"></script>
-		{{ end }}
 		{{ if .Scripts }}
 			{{ range .Scripts }}
 				<script src="{{ . }}?{{ unixNano }}"></script>

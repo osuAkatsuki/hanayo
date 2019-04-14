@@ -1,4 +1,6 @@
 {{ define "navbar" }}
+{{ $staffApp := qb "SELECT name, value_int FROM system_settings WHERE NAME = 'staff_applications_enabled' AND value_int = '1' LIMIT 1;" }}
+{{ $ccEnabled := qb "SELECT name, value_int FROM system_settings WHERE NAME = 'ccreation_enabled' AND value_int = '1' LIMIT 1;" }}
 {{ $isRAP   := and (hasAdmin .Context.User.Privileges) (isRAP .Path) }}
 {{ $isAdmin := hasAdmin .Context.User.Privileges }}
 {{ $ds      := band .ClientFlags 1 }}
@@ -7,7 +9,7 @@
 <div class="ui secondary fixed-height stackable white background main menu no margin bottom{{ if .DisableHH }} dropped{{ end }}" id="navbar">
 	<div class="ui container">
 		<div class="item">
-			<b><a href="/" title="{{ .T "Home page" }}"><img class="ripple logo" src="/static/logos/text-{{ if $ds }}white{{ else }}black{{ end }}.png" alt="Ripple"></a></b>
+			<b><a href="/" title="{{ .T "Home page" }}"><img class="ripple logo" src="/static/logos/text-white.png" alt="Ripple"></a></b>
 		</div>
 		{{ if $isRAP }}
 			{{/*
@@ -19,10 +21,12 @@
 		{{ else }}
 			{{ navbarItem .Path (.T "Leaderboard") "/leaderboard" }}
 			<div class="ui dropdown item">
-				<span>{{ .T "Help" }}</span>
+				<span>{{ .T "Community" }}</span>
 				<div class="menu">
 					{{ navbarItem .Path (.T "About") "/about" }}
+					{{ navbarItem .Path (.T "Forums") "/forums" }}
 					{{ navbarItem .Path (.T "Rules") "/doc/rules" }}
+					<div class="divider"></div>
 					{{ navbarItem .Path (.T "Documentation") "/doc" }}
 					{{ navbarItem .Path (.T "Server Switcher") "https://atoka.pw/static/atoka-server-switcher.exe" }}
 					<div class="divider"></div>
@@ -34,7 +38,8 @@
 			<div class="ui dropdown item">
 				<span>{{ .T "Beatmaps" }}</span>
 				<div class="menu">
-					{{ navbarItem .Path (.T "Request beatmap ranking") "/beatmaps/rank_request" }}
+					{{ navbarItem .Path (.T "Listing") "/beatmaps" }}
+					{{ navbarItem .Path (.T "Rank Request") "/beatmaps/rank_request" }}
 				</div>
 			</div>
 			{{ end }}
@@ -57,18 +62,20 @@
 					{{ end }}
 				</div>
 			</div>
-
-			{{ navbarItem .Path (.T "Donate" | printf "<i class=\"red heart icon\"></i>%s") "/donate" }}
-
+			
+			{{ if $staffApp }}
 			{{ navbarItem .Path (.T "Apply" | printf "<i class=\"green pencil alternate icon\"></i>%s") "/apply" }}
+			{{ else }}
+			{{ end }}
 			{{ if $isAdmin }}{{ navbarItem .Path (.T "Admin Panel" | printf "<b>%s</b>") "https://admin.atoka.pw/index.php?p=100" }}{{ end }}
 		{{ end }}
 		<div class="firetrucking-right-menu">
+			{{ navbarItem .Path (printf "<span data-tooltip=\"Support us! (♥ω♥ ) ~♪\" data-position=\"bottom right\"><i class=\"red heart icon\"></i></span>") "/donate" }}
 			<div class="item">
 				<div class="ui search" id="user-search">
 					<div class="ui icon input">
 						<input class="prompt" type="text" placeholder="{{ .T "Looking for someone?" }}" id="user-search-input">
-						<i class="search link icon"></i>
+						<i class="blue search link icon"></i>
 					</div>
 				</div>
 			</div>

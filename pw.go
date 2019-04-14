@@ -65,13 +65,13 @@ func passwordReset(c *gin.Context) {
 	}
 
 	content := T(c,
-		"Hey %s! Someone, which we really hope was you, requested a password reset for your account. In case it was you, please <a href='%s'>click here</a> to reset your password on Ripple. Otherwise, silently ignore this email.",
+		"Hey %s! Someone, which we really hope was you, requested a password reset for your account. In case it was you, please <a href='%s'>click here</a> to reset your password on Atoka. Otherwise, silently ignore this email.",
 		username,
 		config.BaseURL+"/pwreset/continue?k="+key,
 	)
 	msg := mailgun.NewMessage(
 		config.MailgunFrom,
-		T(c, "Ripple password recovery instructions"),
+		T(c, "Atoka password recovery instructions"),
 		content,
 		email,
 	)
@@ -84,7 +84,7 @@ func passwordReset(c *gin.Context) {
 		return
 	}
 
-	addMessage(c, successMessage{T(c, "Done! You should shortly receive an email from us at the email you used to sign up on Ripple.")})
+	addMessage(c, successMessage{T(c, "Done! You should shortly receive an email from us at the email you used to sign up on Atoka.")})
 	getSession(c).Save()
 	c.Redirect(302, "/")
 }

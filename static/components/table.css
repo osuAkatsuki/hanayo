@@ -17,13 +17,13 @@
 /* Prototype */
 .ui.table {
   width: 100%;
-  background: #FFFFFF;
+  background: #4C4C4C;
   margin: 1em 0em;
   border: 1px solid rgba(34, 36, 38, 0.15);
   box-shadow: none;
   border-radius: 0.28571429rem;
   text-align: left;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
   border-collapse: separate;
   border-spacing: 0px;
 }
@@ -53,9 +53,9 @@
 }
 .ui.table thead th {
   cursor: auto;
-  background: #F9FAFB;
+  background: #424242;
   text-align: inherit;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
   padding: 0.92857143em 0.78571429em;
   vertical-align: inherit;
   font-style: none;
@@ -84,9 +84,9 @@
 .ui.table tfoot th {
   cursor: auto;
   border-top: 1px solid rgba(34, 36, 38, 0.15);
-  background: #F9FAFB;
+  background: #424242;
   text-align: inherit;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
   padding: 0.78571429em 0.78571429em;
   vertical-align: middle;
   font-style: normal;
@@ -236,31 +236,31 @@
   pointer-events: none;
   background: transparent;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.4);
-  box-shadow: -1px -1px 0px 1px #FFFFFF;
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: -1px -1px 0px 1px #4C4C4C;
 }
 .ui.definition.table tfoot:not(.full-width) th:first-child {
   pointer-events: none;
   background: transparent;
-  font-weight: rgba(0, 0, 0, 0.4);
+  font-weight: rgba(255, 255, 255, 0.5);
   color: normal;
-  box-shadow: 1px 1px 0px 1px #FFFFFF;
+  box-shadow: 1px 1px 0px 1px #4C4C4C;
 }
 
 /* Remove Border */
 .ui.celled.definition.table thead:not(.full-width) th:first-child {
-  box-shadow: 0px -1px 0px 1px #FFFFFF;
+  box-shadow: 0px -1px 0px 1px #4C4C4C;
 }
 .ui.celled.definition.table tfoot:not(.full-width) th:first-child {
-  box-shadow: 0px 1px 0px 1px #FFFFFF;
+  box-shadow: 0px 1px 0px 1px #4C4C4C;
 }
 
 /* Highlight Defining Column */
 .ui.definition.table tr td:first-child:not(.ignored),
 .ui.definition.table tr td.definition {
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(255, 255, 255, 0.1);
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
   text-transform: '';
   box-shadow: '';
   text-align: '';
@@ -292,12 +292,12 @@
 
 .ui.table tr.positive,
 .ui.table td.positive {
-  box-shadow: 0px 0px 0px #A3C293 inset;
+  box-shadow: 0px 0px 0px #668a53 inset;
 }
 .ui.table tr.positive,
 .ui.table td.positive {
-  background: #FCFFF5 !important;
-  color: #2C662D !important;
+  background: #2C662D !important;
+  color: #FCFFF5 !important;
 }
 
 /*--------------
@@ -306,12 +306,12 @@
 
 .ui.table tr.negative,
 .ui.table td.negative {
-  box-shadow: 0px 0px 0px #E0B4B4 inset;
+  box-shadow: 0px 0px 0px #9a4d4d inset;
 }
 .ui.table tr.negative,
 .ui.table td.negative {
-  background: #FFF6F6 !important;
-  color: #9F3A38 !important;
+  background: #6b201f !important;
+  color: #FFF6F6 !important;
 }
 
 /*--------------
@@ -320,12 +320,12 @@
 
 .ui.table tr.error,
 .ui.table td.error {
-  box-shadow: 0px 0px 0px #E0B4B4 inset;
+  box-shadow: 0px 0px 0px #9a4d4d inset;
 }
 .ui.table tr.error,
 .ui.table td.error {
-  background: #FFF6F6 !important;
-  color: #9F3A38 !important;
+  background: #6b201f !important;
+  color: #FFF6F6 !important;
 }
 
 /*--------------
@@ -334,12 +334,12 @@
 
 .ui.table tr.warning,
 .ui.table td.warning {
-  box-shadow: 0px 0px 0px #C9BA9B inset;
+  box-shadow: 0px 0px 0px #695b40 inset;
 }
 .ui.table tr.warning,
 .ui.table td.warning {
-  background: #FFFAF3 !important;
-  color: #573A08 !important;
+  background: #573A08 !important;
+  color: #FFFAF3 !important;
 }
 
 /*--------------
@@ -348,12 +348,12 @@
 
 .ui.table tr.active,
 .ui.table td.active {
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.87) inset;
+  box-shadow: 0px 0px 0px rgba(255, 255, 255, 0.93) inset;
 }
 .ui.table tr.active,
 .ui.table td.active {
   background: #E0E0E0 !important;
-  color: rgba(0, 0, 0, 0.87) !important;
+  color: rgba(255, 255, 255, 0.93) !important;
 }
 
 /*--------------
@@ -365,7 +365,7 @@
 .ui.table tr.disabled:hover,
 .ui.table tr:hover td.disabled {
   pointer-events: none;
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(225, 225, 225, 0.3);
 }
 
 
@@ -478,13 +478,13 @@
 
 .ui.selectable.table tbody tr:hover,
 .ui.table tbody tr td.selectable:hover {
-  background: rgba(0, 0, 0, 0.05) !important;
-  color: rgba(0, 0, 0, 0.95) !important;
+  background: rgba(255, 255, 255, 0.13) !important;
+  color: #ffffff !important;
 }
 .ui.selectable.inverted.table tbody tr:hover,
 .ui.inverted.table tbody tr td.selectable:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: #ffffff !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+  color: rgba(0, 0, 0, 0.95) !important;
 }
 
 /* Selectable Cell Link */
@@ -501,32 +501,32 @@
 .ui.selectable.table tr.error:hover,
 .ui.table tr td.selectable.error:hover,
 .ui.selectable.table tr:hover td.error {
-  background: #ffe7e7 !important;
-  color: #943634 !important;
+  background: #5f1c1c !important;
+  color: #ffe7e7 !important;
 }
 .ui.selectable.table tr.warning:hover,
 .ui.table tr td.selectable.warning:hover,
 .ui.selectable.table tr:hover td.warning {
-  background: #fff4e4 !important;
-  color: #493107 !important;
+  background: #493107 !important;
+  color: #fff4e4 !important;
 }
 .ui.selectable.table tr.active:hover,
 .ui.table tr td.selectable.active:hover,
 .ui.selectable.table tr:hover td.active {
   background: #E0E0E0 !important;
-  color: rgba(0, 0, 0, 0.87) !important;
+  color: rgba(255, 255, 255, 0.93) !important;
 }
 .ui.selectable.table tr.positive:hover,
 .ui.table tr td.selectable.positive:hover,
 .ui.selectable.table tr:hover td.positive {
-  background: #f7ffe6 !important;
-  color: #275b28 !important;
+  background: #275b28 !important;
+  color: #f7ffe6 !important;
 }
 .ui.selectable.table tr.negative:hover,
 .ui.table tr td.selectable.negative:hover,
 .ui.selectable.table tr:hover td.negative {
-  background: #ffe7e7 !important;
-  color: #943634 !important;
+  background: #5f1c1c !important;
+  color: #ffe7e7 !important;
 }
 
 /*-------------------
@@ -543,7 +543,7 @@
   width: calc(100% +  2px );
   max-width: calc(100% +  2px );
   box-shadow: none;
-  border: 1px solid #D4D4D5;
+  border: 1px solid #3A3A39;
 }
 .ui.attached + .ui.attached.table:not(.top) {
   border-top: none;
@@ -594,7 +594,7 @@
 /* Allow striped active hover */
 .ui.striped.selectable.selectable.selectable.table tbody tr.active:hover {
   background: #EFEFEF !important;
-  color: rgba(0, 0, 0, 0.95) !important;
+  color: #ffffff !important;
 }
 
 /*--------------
@@ -621,7 +621,7 @@
 }
 .ui.inverted.red.table {
   background-color: #DB2828 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Orange */
@@ -630,7 +630,7 @@
 }
 .ui.inverted.orange.table {
   background-color: #F2711C !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Yellow */
@@ -639,7 +639,7 @@
 }
 .ui.inverted.yellow.table {
   background-color: #FBBD08 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Olive */
@@ -648,7 +648,7 @@
 }
 .ui.inverted.olive.table {
   background-color: #B5CC18 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Green */
@@ -657,7 +657,7 @@
 }
 .ui.inverted.green.table {
   background-color: #21BA45 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Teal */
@@ -666,7 +666,7 @@
 }
 .ui.inverted.teal.table {
   background-color: #00B5AD !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Blue */
@@ -675,7 +675,7 @@
 }
 .ui.inverted.blue.table {
   background-color: #2185D0 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Violet */
@@ -684,7 +684,7 @@
 }
 .ui.inverted.violet.table {
   background-color: #6435C9 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Purple */
@@ -693,7 +693,7 @@
 }
 .ui.inverted.purple.table {
   background-color: #A333C8 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Pink */
@@ -702,7 +702,7 @@
 }
 .ui.inverted.pink.table {
   background-color: #E03997 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Brown */
@@ -711,7 +711,7 @@
 }
 .ui.inverted.brown.table {
   background-color: #A5673F !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Grey */
@@ -720,7 +720,7 @@
 }
 .ui.inverted.grey.table {
   background-color: #767676 !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /* Black */
@@ -729,7 +729,7 @@
 }
 .ui.inverted.black.table {
   background-color: #1B1C1D !important;
-  color: #FFFFFF !important;
+  color: #4C4C4C !important;
 }
 
 /*--------------
@@ -861,7 +861,7 @@
   cursor: pointer;
   white-space: nowrap;
   border-left: 1px solid rgba(34, 36, 38, 0.15);
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
 }
 .ui.sortable.table thead th:first-child {
   border-left: none;
@@ -895,17 +895,17 @@
 /* Hover */
 .ui.sortable.table th.disabled:hover {
   cursor: auto;
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(225, 225, 225, 0.3);
 }
 .ui.sortable.table thead th:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
 }
 
 /* Sorted */
 .ui.sortable.table thead th.sorted {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.95);
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
 }
 .ui.sortable.table thead th.sorted:after {
   display: inline-block;
@@ -913,20 +913,20 @@
 
 /* Sorted Hover */
 .ui.sortable.table thead th.sorted:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.95);
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
 }
 
 /* Inverted */
 .ui.inverted.sortable.table thead th.sorted {
-  background: rgba(255, 255, 255, 0.15) -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05));
-  background: rgba(255, 255, 255, 0.15) linear-gradient(transparent, rgba(0, 0, 0, 0.05));
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.15) -webkit-linear-gradient(transparent, rgba(255, 255, 255, 0.13));
+  background: rgba(0, 0, 0, 0.15) linear-gradient(transparent, rgba(255, 255, 255, 0.13));
+  color: rgba(0, 0, 0, 0.95);
 }
 .ui.inverted.sortable.table thead th:hover {
-  background: rgba(255, 255, 255, 0.08) -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05));
-  background: rgba(255, 255, 255, 0.08) linear-gradient(transparent, rgba(0, 0, 0, 0.05));
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.08) -webkit-linear-gradient(transparent, rgba(255, 255, 255, 0.13));
+  background: rgba(0, 0, 0, 0.08) linear-gradient(transparent, rgba(255, 255, 255, 0.13));
+  color: rgba(0, 0, 0, 0.8);
 }
 .ui.inverted.sortable.table thead th {
   border-left-color: transparent;
@@ -941,13 +941,13 @@
 /* Text Color */
 .ui.inverted.table {
   background: #333333;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.85);
   border: none;
 }
 .ui.inverted.table th {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.25);
   border-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.85);
 }
 .ui.inverted.table tr td {
   border-color: rgba(255, 255, 255, 0.1) !important;
@@ -957,17 +957,17 @@
 .ui.inverted.table tr.disabled:hover td,
 .ui.inverted.table tr:hover td.disabled {
   pointer-events: none;
-  color: rgba(225, 225, 225, 0.3);
+  color: rgba(40, 40, 40, 0.3);
 }
 
 /* Definition */
 .ui.inverted.definition.table tfoot:not(.full-width) th:first-child,
 .ui.inverted.definition.table thead:not(.full-width) th:first-child {
-  background: #FFFFFF;
+  background: #4C4C4C;
 }
 .ui.inverted.definition.table tr td:first-child {
-  background: rgba(255, 255, 255, 0.02);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.95);
 }
 
 /*--------------
@@ -1002,7 +1002,7 @@
   background: transparent;
 }
 .ui.basic.striped.table tbody tr:nth-child(2n) {
-  background-color: rgba(0, 0, 0, 0.05) !important;
+  background-color: rgba(255, 255, 255, 0.13) !important;
 }
 
 /* Very Basic */

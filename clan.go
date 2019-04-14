@@ -112,7 +112,7 @@ func clanPage(c *gin.Context) {
 
 	data.TitleBar = T(c, "%s's Clan Page", clanName)
 	data.DisableHH = true
-	// data.Scripts = append(data.Scripts, "/static/profile.js")
+	data.Scripts = append(data.Scripts, "/static/profile.js")
 }
 
 func checkCount(rows *sql.Rows) (count int) {
@@ -299,4 +299,3 @@ func resolveInvite(c string)(int) {
 	fmt.Println(clanid)
 	return clanid
 }
-

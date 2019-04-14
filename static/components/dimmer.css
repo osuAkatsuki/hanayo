@@ -55,7 +55,7 @@
 .ui.dimmer > .content > * {
   display: table-cell;
   vertical-align: middle;
-  color: #FFFFFF;
+  color: #4C4C4C;
 }
 
 /* Loose Coupling */
@@ -154,7 +154,7 @@ body.dimmable > .dimmer {
   background-color: rgba(255, 255, 255, 0.85);
 }
 .ui.inverted.dimmer > .content > * {
-  color: #FFFFFF;
+  color: #4C4C4C;
 }
 
 /*--------------

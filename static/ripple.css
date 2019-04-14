@@ -1,3 +1,57 @@
+@media (max-width: 576px){
+    .row {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+}
+.footer-bg {
+    text-shadow: -1px 2px 2px rgba(0, 0, 0, 0.33);
+    background: 
+    linear-gradient(
+      rgba(255, 255, 255, 0.03), 
+      rgba(255, 255, 255, 0.03)
+    ),
+    url(https://osu.gatari.pw/static/images/backgrounds/bg2.png);
+    height: 180px;
+    margin: 0px 0px -30px 0px !important;
+    padding: 25px 0px 0px 0px;
+    text-align: center;
+    flex: 0 0 auto;
+    left: 0;
+    bottom: 0;
+}
+.footer-info-block {
+    color: #2eb1ee;
+    padding-top: 24px;
+    float: left;
+    font-size: 14px;
+    padding-right: 24px;
+    text-align: left;
+}
+
+.footer-info-block a{
+    color: #2eb1ee !important;
+}
+
+.footer-logo {
+    color: white;
+    font-size: 30px;
+    padding-top: 24px;
+    text-align: right;
+    height: 100px;
+}
+
+.footer-logo>.subtitle{
+    font-size: 18px;
+    float: right;
+}
+
+.footer-info-block>.footer-title{
+    color: white !important; 
+    font-size: 20px; 
+    font-weight: 600; 
+}
+
 ripple.logo {
 	padding-top: 4px;
 }
@@ -77,7 +131,7 @@ a.inherit:hover {
 
 .footer {
 	border-top: 1px solid #bbb;
-	padding: 10px 20px;
+	padding: 25px 20px;
 }
 
 .top.right.icon {
@@ -143,10 +197,14 @@ a.inherit:hover {
 }
 
 .white.background {
-	background-color: #FFF !important;
+    background-image: url(https://osu.gatari.pw/static/images/icons/button.svg);
+    background-color: #2eb1ee;
+    box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }
 body.ds .white.background {
-	background-color: #454545 !important;
+    background-image: url(https://osu.gatari.pw/static/images/icons/button.svg);
+    background-color: #2eb1ee;
+    box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }
 
 .user.avatar {
@@ -190,10 +248,10 @@ body.ds .white.background {
 }
 
 .subtitle, .about.title {
-	color: rgba(0,0,0,.6);
+	color: rgba(255,255,255,.8);
 }
 .subtitle b {
-	color: rgba(0,0,0,.87);
+	color: rgba(255,255,255,.94);
 }
 
 /* ds = Dark Site */

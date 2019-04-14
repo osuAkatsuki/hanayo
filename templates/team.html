@@ -32,6 +32,7 @@ KyutGrill=team2.jpg
 				{{ .T "They don't do anything related to the community. Developers have a blue name in the in-game chat." }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 3) }}
+			{{ template "userGroup" (.Get "badges/members?id=%d" 14) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Moderators" }}</h1>
@@ -78,8 +79,9 @@ KyutGrill=team2.jpg
 					{{ .T "<b>jrosdahl</b>, for <a href='https://github.com/jrosdahl/miniircd'>miniircd</a>, used as a base for our IRC server." | html }}<br>
 					miniircd is licensed under GPL v2. Our implementation can be found <a href="https://zxq.co/ripple/pep.py/src/master/irc/ircserver.py">here</a>.
 				</li>
-				<li>{{ .T "Flame for the Clans System." | html }}</li>
-				<li>{{ .T "<a href='https://github.com/osuakatsuki/Charlotte'>Akatsuki</a> for Charlotte Bot." | html }}</li>
+				<li>{{ .T "<b>Flame</b> for the Clans System." | html }}</li>
+				<li>{{ .T "<b>Akatsuki</b> for <a href='https://github.com/osuakatsuki/Charlotte'>Charlotte Bot</a>." | html }}</li>
+				<li>{{ .T "<b><a href='https://osu.gatari.pw/'>osu!gatari</a></b> for some of our website elements." | html }}</li>
 				<li>{{ .T "<b>Everyone</b> who has supported the Atoka and Ripple projects by donating or inviting other people." | html }}</li>
 			</ul>
 		</div>

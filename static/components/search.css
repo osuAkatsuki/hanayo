@@ -27,9 +27,9 @@
   line-height: 1.2142em;
   padding: 0.67861429em 1em;
   font-size: 1em;
-  background: #FFFFFF;
+  background: #333333;
   border: 1px solid rgba(34, 36, 38, 0.15);
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
   box-shadow: 0em 0em 0em 0em transparent inset;
   -webkit-transition: background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease;
   transition: background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease;
@@ -58,12 +58,12 @@
   -webkit-transform-origin: center top;
           transform-origin: center top;
   white-space: normal;
-  background: #FFFFFF;
+  background: #3f3f3f;
   margin-top: 0.5em;
   width: 18em;
   border-radius: 0.28571429rem;
   box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15);
-  border: 1px solid #D4D4D5;
+  border: 1px solid #3A3A39;
   z-index: 998;
 }
 .ui.search > .results > :first-child {
@@ -83,7 +83,7 @@
   overflow: hidden;
   font-size: 1em;
   padding: 0.85714286em 1.14285714em;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
   line-height: 1.33;
   border-bottom: 1px solid rgba(34, 36, 38, 0.1);
 }
@@ -118,12 +118,12 @@
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 1em;
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(255, 255, 255, 0.9);
 }
 .ui.search > .results .result .description {
   margin-top: 0;
   font-size: 0.92857143em;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.7);
 }
 .ui.search > .results .result .price {
   float: right;
@@ -141,21 +141,21 @@
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 1rem;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
 }
 .ui.search > .results > .message .description {
   margin-top: 0.25rem;
   font-size: 1em;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
 }
 
 /* View All Results */
 .ui.search > .results > .action {
   display: block;
   border-top: none;
-  background: #F3F4F5;
+  background: #333333;
   padding: 0.92857143em 1em;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
   font-weight: bold;
   text-align: center;
 }
@@ -172,8 +172,8 @@
 
 .ui.search > .prompt:focus {
   border-color: rgba(34, 36, 38, 0.35);
-  background: #FFFFFF;
-  color: rgba(0, 0, 0, 0.95);
+  background: #333333;
+  color: #ffffff;
 }
 
 /*--------------------
@@ -216,7 +216,7 @@
 
 .ui.search > .results .result:hover,
 .ui.category.search > .results .category .result:hover {
-  background: #F9FAFB;
+  background: #424242;
 }
 .ui.search .action:hover {
   background: #E0E0E0;
@@ -227,23 +227,23 @@
 ---------------*/
 
 .ui.category.search > .results .category.active {
-  background: #F3F4F5;
+  background: #333333;
 }
 .ui.category.search > .results .category.active > .name {
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.93);
 }
 .ui.search > .results .result.active,
 .ui.category.search > .results .category .result.active {
   position: relative;
   border-left-color: rgba(34, 36, 38, 0.1);
-  background: #F3F4F5;
+  background: #333333;
   box-shadow: none;
 }
 .ui.search > .results .result.active .title {
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(255, 255, 255, 0.9);
 }
 .ui.search > .results .result.active .description {
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 
@@ -295,7 +295,7 @@
 
 /* Category */
 .ui.category.search > .results .category {
-  background: #F3F4F5;
+  background: #333333;
   box-shadow: none;
   border-bottom: 1px solid rgba(34, 36, 38, 0.1);
   -webkit-transition: background 0.1s ease, border-color 0.1s ease;
@@ -317,7 +317,7 @@
 
 /* Category Result */
 .ui.category.search > .results .category .result {
-  background: #FFFFFF;
+  background: #4C4C4C;
   margin-left: 100px;
   border-left: 1px solid rgba(34, 36, 38, 0.15);
   border-bottom: 1px solid rgba(34, 36, 38, 0.1);
@@ -339,7 +339,7 @@
   float: left;
   padding: 0.4em 1em;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 

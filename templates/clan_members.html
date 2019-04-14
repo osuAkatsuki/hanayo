@@ -8,6 +8,8 @@ NoCompile=true
 		{{ range .members }}
 			{{/* ignore fokabot */}}
 			{{ if ne (int .id) 999 }}
+			{{/* ignore restricted */}}
+			{{ if ne (int .privileges) 2 }}
 				{{ $tj := index $teamJSON (print .id)}}
 				<div class="column">
 					<div class="ui left aligned fluid card">
@@ -35,8 +37,8 @@ NoCompile=true
 					</div>
 				</div>
 			{{ end }}
+		    {{ end }}
 		{{ end }}
 	</div>
 {{ end }}
 {{ end }}
-

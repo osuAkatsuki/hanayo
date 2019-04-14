@@ -268,6 +268,9 @@ func generateEngine() *gin.Engine {
 		twoFALock,
 	)
 
+	r.GET("/", homepagePage)
+	r.GET("/about", aboutPage)
+
 	r.Static("/static", "static")
 	r.StaticFile("/favicon.ico", "static/favicon.ico")
 
@@ -278,7 +281,8 @@ func generateEngine() *gin.Engine {
 	r.POST("/register", registerSubmit)
 	r.GET("/register/verify", verifyAccount)
 	r.GET("/register/welcome", welcome)
-	r.POST("/clans/create", ccreate)
+
+	r.GET("/clans/create", ccreate)
 	r.POST("/clans/create", ccreateSubmit)
 	r.POST("/settings/clansettings", createInvite)
 	r.POST("/settings/clansettings/k", clanKick)
@@ -341,5 +345,5 @@ func generateEngine() *gin.Engine {
 }
 
 const alwaysRespondText = `Ooops! Looks like something went really wrong while trying to process your request.
-Perhaps report this to a Atoka developer?
+Perhaps report this to a Ripple developer?
 Retrying doing again what you were trying to do might work, too.`

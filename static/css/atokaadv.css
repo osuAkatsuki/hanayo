@@ -1,0 +1,175 @@
+body{
+	background-image:url(https://osu.gatari.pw/static/images/backgrounds/bg4.png);
+	color:#fff
+}
+#AtokaAdv .container{
+	text-shadow:-1px 2px 2px rgba(0,0,0,.33)
+}
+.col-lg-12{
+	padding-left:0;
+	padding-right:0
+}
+.head-block{
+	box-shadow:-1px 2px 2px 1px rgba(0,0,0,.11);
+	padding:42px;
+	border-top-right-radius:4px;
+	border-top-left-radius:4px;
+	background-image:url(/static/images/atokaadv-banner.png);
+	background-size:cover;
+	display:flex;
+	flex-direction:column;
+	height:360px;
+	outline: none;
+	border: 2px solid #222;
+}
+.head-text{
+	font-size:36px;
+	font-weight:600
+}
+.head-text2{
+	margin-top:24px;
+	max-width:590px
+}
+@media(max-width:992px){
+	.head-text2{
+		margin:0;
+		max-width:100%
+}
+	.head-block{
+		height:auto
+}
+	.sm-block.sm-bg4 .sm-block-header{
+		background-position-x:-766px!important
+}
+}
+.main-block{
+	box-shadow:-1px 2px 2px 1px rgba(0,0,0,.11);
+	padding:42px;
+	background-size:cover;
+	display:flex;
+	flex-direction:column;
+	margin-top:4px;
+	background-image:url(/static/images/doc-bg.png);
+	outline: none;
+	border: 2px solid #222;
+}
+.main-block-pos-right{
+	align-items:flex-end
+}
+.main-text-lg{
+	font-size:28px;
+	font-weight:600
+}
+.main-text-sm{
+	font-size:16px;
+	margin-top:16px;
+	max-width:720px
+}
+.main-text-sm-right-align{
+	text-align:right
+}
+.main-bg-closed{
+	background-image:url(https://osu.gatari.pw/static/images/banners/gatariadv-closed-banner.jpg)
+}
+.main-bg-direct{
+	background-image:url(/static/images/osu!direct-bg.png);
+}
+.main-bg-clan{
+	background-image:url(/static/images/clans-bg.png);
+}
+.main-bg-social{
+	background-image:url(/static/images/admin-bg.png);
+}
+.main-bg-mod{
+	background-image:url(/static/images/mod-bg.png);
+}
+.main-bg-rank{
+	background-image:url(/static/images/rank-bg.png);
+}
+.main-bg-achievements{
+	background-image:url(/static/images/achievements-bg.png);
+}
+.main-bg-listing{
+	background-image:url(/static/images/listing-bg.png)
+}
+@media(max-width:768px){
+	.main-bg-social{
+		background-position-x:50%
+}
+	.main-bg-direct{
+		background-position-x:50%
+}
+	.main-text-sm-right-align{
+		text-align:left
+}
+	.main-block-pos-right{
+		align-items:flex-start
+}
+	.sm-block.sm-bg4 .sm-block-header{
+		background-position-x:-576px!important
+}
+}
+.sm-block{
+	display:flex;
+	flex-direction:column;
+	height:280px;
+	justify-content:space-between;
+	align-items:center;
+	text-align:center;
+	margin-top:6px;
+	box-shadow:-1px 2px 2px 1px rgba(0,0,0,.11);
+	background-color:#fff;
+	color:#333;
+	text-shadow:none
+}
+.sm-block.sm-bg2 .sm-block-header{
+	background-position-x:-272px
+}
+.sm-block.sm-bg3 .sm-block-header{
+	background-position-x:-544px
+}
+.sm-block.sm-bg4 .sm-block-header{
+	background-position-x:-816px
+}
+.col-lg-3{
+	padding:0 5px
+}
+.sm-block-header{
+	background-image:url(https://osu.gatari.pw/static/images/doc-bg.jpg);
+	color:#fff;
+	display:flex;
+	padding-bottom:30px;
+	padding-top:30px;
+	align-items:center;
+	flex-direction:column;
+	justify-content:center;
+	width:100%;
+	margin-bottom:6px;
+	border-bottom:4px solid #f6a
+}
+.sm-content{
+	display:flex;
+	height:100%;
+	align-items:center;
+	overflow:hidden
+}
+.sm-content img{
+	max-width:100%
+}
+.sm-title{
+	font-size:14px;
+	font-weight:500;
+	margin-top:7px
+}
+.sm-icon{
+	font-size:18px
+}
+#AtokaAdv .container:last-child{
+	border-bottom-right-radius:4px;
+	border-bottom-left-radius:4px
+}
+.row.row-mrg{
+	margin-left:-5px;
+	margin-right:-5px
+}
+

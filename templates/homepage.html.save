@@ -1,0 +1,157 @@
+{{/*###
+TitleBar=Home Page
+KyutGrill=homepage2.jpg
+*/}}
+{{ define "tpl" }}
+{{ $cf := .ClientFlags }}
+{{ $ds := band $cf 1 }}
+{{ $   := . }}
+{{ .DisableHH }}
+<div class="ui container"> {{/* Custom Home Alert Message, Hard-Coded, will probably make it not hard-coded and work with Admin Panel when I have time, idk lol long ass comment boi! */}}
+	<div class="ui warning message">
+		<p>
+			<center>
+				<strong>
+					{{ .T "What?! You don't know about our super-mega-puper discord server?! Join now! <a title='Our Discord!?!' href='https://discord.gg/abJ9TU8' target='_blank'>pew-pew</a>" | html }}
+					<br>{{ .T "New PP changes are officially live!" }}
+				</strong>
+			</center>
+		</p>
+	</div>
+</div>
+<br>
+
+<div class="ui container">
+	<div class="ui center aligned segment">
+		<img class="rotation" src="/static/logos/logo{{ if $ds }}-dark{{ end }}.png">
+	</div>
+	{{ $set := systemSettings "website_home_alert" }}
+	{{ with $set.website_home_alert.String }}
+		<div class="ui warning message">
+			{{ . | html }}
+		</div>
+	{{ end }}
+	{{/* Not logged in block */}}
+	{{ if not .Context.User.ID }}
+			<div class="ui segment">
+			<h1 class="ui header">{{ .T "Welcome to Atoka." }}</h1>
+			<p>
+				{{ .T "You look new here. Allow us to introduce you to what Atoka is." }}
+			</p>
+			<p>
+				{{ .T "Atoka is a private osu! server, featuring multiplayer, PP, a very active community and a development team going strong implementing new features and squashing bugs. <a href='/about'>You can check out even more features here.</a> It has also a very friendly community, and it's <a href='https://github.com/osuatoka/'>open source!</a> Just so you know, <b>we currently have %s users online and %s registered users!</b>" (rediget "ripple:online_users") (rediget "ripple:registered_users") | html }}
+			</p>
+			<h3 class="ui header center aligned">{{ .T "What are you waiting for? Join Atoka! It's risk-free: you won't get your account banned on the official server if you play on Atoka.<br>You can also switch anytime between the official osu! server and Atoka!" | html }}</h3>
+		</div>
+	{{ else }}
+		<div class="ui segment">
+			<h1 class="ui header">{{ .T "Hello, %s!" .Context.User.Username }}</h1>
+			<p>
+				{{ .T "Welcome back to Atoka. Nice day to farm a few pp maps, isn't it?" | html }}
+			</p>
+		</div>
+	{{ end }}
+
+	<div class="ui purple center aligned segment">
+		<h1 class="ui center aligned header">{{ .T "Featured Video" }}</h1>
+		<div class="column twelve wide">
+			{{/* Grab the latest video from Atoka Replays YouTube Channel */}}
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+			<script src="../static/js/featured_video.js"></script>
+			<iframe height="315" width="50%" id="featured_video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			{{/* V That's the most wack line of a mix of html and template, I have ever written -Night V */}}
+			<p>{{ .T "Thanks to My Angel DT! <3<br><b>Note: This takes up to 4 hours after upload to update due to YouTube's API.<br>Also due to NGINX and Cloudflare's cache.</b>" | html }}</p>
+		</div>
+	</div>
+
+	{{/* Global Statistics */}}
+        <div class="ui stackable four grid">
+            <div class="five wide column">
+                <div class="ui blue segment">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <i class="user icon status-icon"></i>
+                        </div>
+                        <div class="twelve wide column">
+                            <p class="status-head">{{ rediget "ripple:online_users" }} / {{ rediget "ripple:registered_users" }}</p>
+                            <p class="status-footer">Online / Registered</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	    <div class="five wide column">
+	       <div class="ui orange segment">
+	          <div class="ui grid">
+                     <div class="four wide column">
+                         <i class="user plus icon status-icon"></i>
+		     </div>
+                     <div class="twelve wide column">
+		         {{ range $key, $value := (qb "SELECT username FROM users ORDER BY id DESC LIMIT 1") }}
+                         <p class="status-head">{{ $value }}</p>
+                         {{ end }}
+		         <p class="status-footer">Latest Player</p>
+		     </div>
+	         </div>
+	     </div>
+	</div>
+
+            <div class="six wide column">
+                <div class="ui green segment">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <i class="angle right icon status-icon"></i>
+                        </div>
+                        <div class="twelve wide column">
+                            <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
+                            <p class="status-footer">Submitted Scores</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="five wide column">
+		<div class="ui red segment">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <i class="thumbs down icon status-icon"></i>
+                        </div>
+                        <div class="twelve wide column">
+                            {{ range $key, $value := (qb "SELECT COUNT(*) FROM users WHERE privileges < 1") }}
+                            <p class="status-head">{{ $value }}</p>
+                            {{ end }}
+                            <p class="status-footer">Banned Players</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="five wide column">
+	       <div class="ui yellow segment">
+                 <div class="ui grid">
+                    <div class="four wide column">
+                       <i class="thumbs up icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                       {{ $d := (qb "SELECT ROUND(pp) AS pp, users.username, users.id FROM scores INNER JOIN users ON scores.userid = users.id WHERE scores.play_mode = 0 AND completed = 3 AND users.privileges > 2 ORDER BY pp DESC LIMIT 1") }}
+                       <p class="status-head">{{ $d.pp }}pp</p>
+                       <p class="status-head" style="font-size: 10px!important;">Done by <a href="/u/{{ $d.id }}">{{ $d.username }}</a></p>
+                       <p class="status-footer">Top Score</p>
+                    </div>
+                 </div>
+              </div>
+            </div>
+	    <div class="six wide column">
+               <div class="ui pink segment">
+                  <div class="ui grid">
+                     <div class="four wide column">
+                        <i class="angle double right icon status-icon"></i>
+                     </div>
+                     <div class="twelve wide column">
+                        {{ $value := (qb "SELECT ROUND(SUM(scores.pp)) AS pp FROM scores INNER JOIN users ON scores.userid = users.id WHERE scores.completed = 3 AND scores.play_mode = 0 AND users.privileges > 2") }}
+                        <p class="status-head">{{ $value.pp }}</p>
+                        <p class="status-footer">Total PP</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+	</div> {{/* Global Stats end past this /div */}}
+</div>
+{{ end }}
