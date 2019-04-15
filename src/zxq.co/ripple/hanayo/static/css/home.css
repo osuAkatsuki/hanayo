@@ -3,7 +3,7 @@
     padding-left: 2px !important;
 }
 body {
-    background-image: url(https://osu.gatari.pw/static/images/backgrounds/bg4.png);
+    background-image: url(/static/images/backgrounds/bg4.png);
 }
 button:focus {
     outline: none;
@@ -20,7 +20,7 @@ button:focus {
     box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }
 .mirai {
-    background-image: url(https://lol.namir.in/static/characters/mirai_resized.png);
+    background-image: url(/static/characters/mirai_resized.png);
     background-repeat: no-repeat;
     height: 545px;
     width: 670px;
@@ -52,7 +52,7 @@ button:focus {
     font-style: italic;
 }
 .home-btn {
-    background-image: url(https://osu.gatari.pw/static/images/icons/button.svg);
+    background-image: url(/static/images/icons/button.svg);
     border: none;
     background-size: 150%;
     border-radius: 4px;
@@ -100,7 +100,7 @@ button:focus {
     border-radius: 4px;
     border: none;
     font-size: 14px;
-    background-image: url(https://lol.namir.in/static/images/backgrounds/home-btn.png);
+    background-image: url(/static/images/backgrounds/home-btn.png);
     color: white;
     font-style: italic;
     font-weight: 500;

@@ -21,7 +21,6 @@ import (
 	"github.com/thehowl/qsql"
 	"gopkg.in/mailgun/mailgun-go.v1"
 	"gopkg.in/redis.v5"
-	"zxq.co/ripple/agplwarning"
 	"zxq.co/ripple/hanayo/modules/btcaddress"
 	"zxq.co/ripple/hanayo/modules/btcconversions"
 	"zxq.co/ripple/hanayo/routers/oauth"
@@ -37,21 +36,20 @@ var startTime = time.Now()
 var (
 	config struct {
 		// Essential configuration that must be always checked for every environment.
-		ListenTo      string `description:"ip:port from which to take requests."`
-		Unix          bool   `description:"Whether ListenTo is an unix socket."`
-		DSN           string `description:"MySQL server DSN"`
-		RedisEnable   bool
-		AvatarURL     string
-		BaseURL       string
-		API           string
-		BanchoAPI     string
+		ListenTo    string `description:"ip:port from which to take requests."`
+		Unix        bool   `description:"Whether ListenTo is an unix socket."`
+		DSN         string `description:"MySQL server DSN"`
+		RedisEnable bool
+		AvatarURL   string
+		BaseURL     string
+		API         string
+		BanchoAPI   string
 		CheesegullAPI string
-		APISecret     string
-		Offline       bool `description:"If this is true, files will be served from the local server instead of the CDN."`
+		APISecret   string
+		Offline     bool `description:"If this is true, files will be served from the local server instead of the CDN."`
 
 		MainRippleFolder string `description:"Folder where all the non-go projects are contained, such as old-frontend, lets, ci-system. Used for changelog."`
 		AvatarsFolder    string `description:"location folder of avatars, used for placing the avatars from the avatar change page."`
-		ClanAvatarsFolder string `description:"location folder of clan avatars, used for placing the clan avatars from the clan avatar change page."`
 
 		CookieSecret string
 
@@ -99,14 +97,9 @@ var (
 )
 
 func main() {
-	err := agplwarning.Warn("ripple", "Hanayo")
-	if err != nil {
-		fmt.Println(err)
-	}
-
 	fmt.Println("hanayo " + version)
 
-	err = conf.Load(&config, "hanayo.conf")
+	err := conf.Load(&config, "hanayo.conf")
 	switch err {
 	case nil:
 		// carry on
@@ -121,16 +114,16 @@ func main() {
 	var configDefaults = map[*string]string{
 		&config.ListenTo:         ":45221",
 		&config.CookieSecret:     rs.String(46),
-		&config.AvatarURL:        "https://a.ripple.moe",
-		&config.BaseURL:          "https://ripple.moe",
-		&config.BanchoAPI:        "https://c.ripple.moe",
-		&config.CheesegullAPI:    "https://storage.ripple.moe/api",
+		&config.AvatarURL:        "https://a.akatsuki.pw",
+		&config.BaseURL:          "https://akatsuki.pw",
+		&config.BanchoAPI:        "https://c.akatsuki.pw",
+		&config.CheesegullAPI:    "https://cg.mxr.lol/api",
 		&config.API:              "http://localhost:40001/api/v1/",
 		&config.APISecret:        "Potato",
 		&config.IP_API:           "https://ip.zxq.co",
 		&config.DiscordServer:    "#",
-		&config.MainRippleFolder: "/home/ripple/ripple",
-		&config.MailgunFrom:      `"Ripple" <noreply@ripple.moe>`,
+		&config.MainRippleFolder: "/home/akatsuki",
+		&config.MailgunFrom:      `"Akatsuki" <noreply@akatsuki.pw>`,
 	}
 	for key, value := range configDefaults {
 		if *key == "" {
@@ -268,11 +261,11 @@ func generateEngine() *gin.Engine {
 		twoFALock,
 	)
 
-	r.GET("/", homepagePage)
-	r.GET("/about", aboutPage)
-
 	r.Static("/static", "static")
 	r.StaticFile("/favicon.ico", "static/favicon.ico")
+
+	r.GET("/", homepagePage)
+	r.GET("/about", aboutPage)
 
 	r.POST("/login", loginSubmit)
 	r.GET("/logout", logout)
@@ -284,13 +277,10 @@ func generateEngine() *gin.Engine {
 
 	r.GET("/clans/create", ccreate)
 	r.POST("/clans/create", ccreateSubmit)
-	r.POST("/settings/clansettings", createInvite)
-	r.POST("/settings/clansettings/k", clanKick)
-	r.GET("/clans/invite/:inv", clanInvite)
-	r.POST("/c/:cid", leaveClan)
-	r.GET("/c/:cid", clanPage)
-
+	
 	r.GET("/u/:user", userProfile)
+	r.GET("/rx/u/:user", relaxProfile)
+	r.GET("/c/:cid", clanPage)
 	r.GET("/b/:bid", beatmapInfo)
 
 	r.POST("/pwreset", passwordReset)
@@ -313,9 +303,14 @@ func generateEngine() *gin.Engine {
 	r.POST("/settings/avatar", avatarSubmit)
 	r.POST("/settings/2fa/disable", disable2fa)
 	r.POST("/settings/2fa/totp", totpSetup)
+	r.POST("/settings/flag", changeFlag)
+	r.POST("/settings/username", changeName)
 	r.GET("/settings/discord/finish", discordFinish)
 	r.POST("/settings/profbackground/:type", profBackground)
-
+	r.POST("/settings/clansettings", createInvite)
+	r.POST("settings/clansettings/k", clanKick)
+    r.GET("/clans/invite/:inv", clanInvite)
+    r.POST("/c/:cid", leaveClan)
 	r.POST("/dev/tokens/create", createAPIToken)
 	r.POST("/dev/tokens/delete", deleteAPIToken)
 	r.POST("/dev/tokens/edit", editAPIToken)
@@ -333,10 +328,6 @@ func generateEngine() *gin.Engine {
 
 	r.Any("/blog/*url", blogRedirect)
 
-	r.GET("/help", func(c *gin.Context) {
-		c.Redirect(301, "https://support.ripple.moe")
-	})
-
 	loadSimplePages(r)
 
 	r.NoRoute(notFound)
@@ -345,5 +336,5 @@ func generateEngine() *gin.Engine {
 }
 
 const alwaysRespondText = `Ooops! Looks like something went really wrong while trying to process your request.
-Perhaps report this to a Ripple developer?
+Perhaps report this to a Akatsuki developer?
 Retrying doing again what you were trying to do might work, too.`

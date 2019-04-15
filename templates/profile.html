@@ -15,14 +15,14 @@
 			{{ end }}
 
 			{{ $cmyui  := has .id 1001 }}
-			{{ $solis  := has .id 1000 }}
-			{{ $charlotte  := has .id 999 }}
+			{{ $rumoi  := has .id 1000 }}
 			
 			{{ $super := has .privileges 15728639 }}
 			{{ $dev  := has .privileges 11534335 }}
 			{{ $premium := has .privileges 8388615 }}
 			{{ $admin  := has .privileges 7262715 }}
 			{{ $chatmod  := has .privileges 786499 }}
+			{{ $qat := has .privileges 16777483 }}
 			{{ $bn  := has .privileges 267 }}
 			
 			{{ if hasAdmin $global.Context.User.Privileges }}
@@ -167,11 +167,11 @@
 				<div class="ui three column divided stackable grid">
 					<div class="row">
 						<div class="column">
-								{{if $super }}
+								{{if $cmyui }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is an <i class="pink code small icon"></i><b>Owner</b> 
+								 is the <i class="pink code small icon"></i><b>Head Dev and Founder</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
-								{{else if $dev}}
+								{{else if $rumoi}}
 								{{ $global.T "<b>%s</b> " .username | html }}
 								 is a <i class="blue code small icon"></i><b>Developer</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
@@ -181,7 +181,11 @@
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 								{{else if $chatmod}}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="blue star small icon"></i><b>Chat Mod</b> 
+								 is a <i class="blue star small icon"></i><b>Chat moderator</b> 
+								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+								{{else if $qat}}
+								{{ $global.T "<b>%s</b> " .username | html }}
+								 is a <i class="orange cogs small icon"></i><b>QAT member</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 								{{else if $bn}}
 								{{ $global.T "<b>%s</b> " .username | html }}
@@ -199,54 +203,48 @@
 							<br>{{ with playstyle .play_style $global }}{{ $global.T "They play with %s." . }}{{ end }}
 							<br>
 							<br>
-						<div class="column">	
-							{{ if and (not .tbadges)}}
-							{{ $global.T "This user hasn't got any badges!" }}
+						<div class="column">
+							<table class="ui very basic two column compact table nopad">
+								<tbody>
+									<tr>
+										<div class="ui grid">
+											{{ range .tbadges }}
+											<br><br><br>
+											<div class="three wide">
+												<img src="{{.icon }}" title="{{.name }}"></img>
+												<br>
+											</div>
+											{{ end }}
+										</div>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 
+					<div class="column">
+						{{ if and (not .badges) (not .custom_badge) }}
+							{{ $global.T "This user hasn't got any badges!" }}
 						{{ else }}
-						<table class="ui very basic two column compact table nopad">
-							<tbody>
-								<tr>
 							<div class="ui grid">
-								{{ range .tbadges }}
-								<br><br><br>
-									<div class="three wide">
-										<img src="{{.icon }}" title="{{.name }}"></img><br>
+
+								{{ range .badges }}
+									<div class="eight wide centered column">
+										<i class="circular {{ faIcon .icon }} big icon"></i><br>
+										<b>{{ .name }}</b>
+
 
 									</div>
 								{{ end }}
+								{{ with .custom_badge }}
+									<div class="eight wide centered column">
+										<i class="circular {{ faIcon .icon }} big icon"></i><br>
+										<b><i>{{ .name }}</i></b>
+									</div>
+								{{ end }}
 							</div>
-								</tr>
-							</tbody>
-						</table>
-
 						{{ end }}
 					</div>
-
-						</div>
-						<div class="column">
-							{{ if and (not .badges) (not .custom_badge) }}
-								{{ $global.T "This user hasn't got any badges!" }}
-							{{ else }}
-								<div class="ui grid">
-
-									{{ range .badges }}
-										<div class="eight wide centered column">
-											<i class="circular {{ faIcon .icon }} big icon"></i><br>
-											<b>{{ .name }}</b>
-
-
-										</div>
-									{{ end }}
-									{{ with .custom_badge }}
-										<div class="eight wide centered column">
-											<i class="circular {{ faIcon .icon }} big icon"></i><br>
-											<b><i>{{ .name }}</i></b>
-										</div>
-									{{ end }}
-								</div>
-							{{ end }}
-						</div>
 
 						<div class="column">
 							{{ range $k, $v := (slice .std .taiko .ctb .mania) }}

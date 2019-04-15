@@ -253,9 +253,9 @@ var funcMap = template.FuncMap{
 	// modes returns an array containing all the modes (in their string representation).
 	"modes": func() []string {
 		return []string{
-			"osu! standard",
-			"Taiko",
-			"Catch the Beat",
+			"osu!",
+			"osu!taiko",
+			"osu!catch",
 			"osu!mania",
 		}
 	},
@@ -404,7 +404,7 @@ var funcMap = template.FuncMap{
 	},
 	// calculateDonorPrice calculates the price of x donor months in euros.
 	"calculateDonorPrice": func(a float64) string {
-		return fmt.Sprintf("%.2f", math.Pow(a*30*0.2, 0.7))
+		return fmt.Sprintf("%.2f", math.Pow(a * 30 * 0.2, 0.72))
 	},
 	// calculatePremiumPrice calculates the price of x premium months in euros.
 	"calculatePremiumPrice": func(a float64) string {

@@ -23,24 +23,18 @@
 			<div class="ui dropdown item">
 				<span>{{ .T "Community" }}</span>
 				<div class="menu">
-					{{ navbarItem .Path (.T "About") "/about" }}
+					{{/* navbarItem .Path (.T "About") "/about" }}
 					{{ navbarItem .Path (.T "Forums") "/forums" }}
 					{{ navbarItem .Path (.T "Rules") "/doc/rules" }}
 					<div class="divider"></div>
-					{{ navbarItem .Path (.T "Documentation") "/doc" }}
+					{{ navbarItem .Path (.T "Documentation") "/doc" */}}
 					{{ navbarItem .Path (.T "Server Switcher") "/static/switcher.exe" }}
 					{{ navbarItem .Path (.T "YouTube Channel") "https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" }}
-					<div class="divider"></div>
 					{{ navbarItem .Path (.T "Chat (Discord)") "https://discord.gg/5cBtMPW" }}
 				</div>
 			</div>
 			{{ if .Context.User.Username }}
-			<div class="ui dropdown item">
-				<span>{{ .T "Beatmaps" }}</span>
-				<div class="menu">
-					{{ navbarItem .Path (.T "Listing") "/beatmaps" }}
-				</div>
-			</div>
+				{{ navbarItem .Path (.T "Beatmaps") "/beatmaps" }}
 			{{ end }}
 
 			 <div class="ui dropdown item">
@@ -61,11 +55,7 @@
 					{{ end }}
 				</div>
 			</div>
-			
-			{{ if $staffApp }}
-			{{ navbarItem .Path (.T "Apply" | printf "<i class=\"green pencil alternate icon\"></i>%s") "/apply" }}
-			{{ else }}
-			{{ end }}
+			{{ navbarItem .Path (.T "Server Switcher" | printf "<i class=\"blue cloud download icon\"></i>%s") "/static/switcher.exe" }}
 			{{ if $isAdmin }}{{ navbarItem .Path (.T "Admin Panel" | printf "<b>%s</b>") "https://old.akatsuki.pw/index.php?p=100" }}{{ end }}
 		{{ end }}
 		<div class="firetrucking-right-menu">

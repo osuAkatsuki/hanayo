@@ -4,20 +4,6 @@
 {{ $cf := .ClientFlags }}
 {{ $ds := band $cf 1 }}
 {{ $   := . }}
-<div class="ui container"> {{/* Custom Home Alert Message, Hard-Coded, will probably make it not hard-coded and work with Admin Panel when I have time, idk lol long ass comment boi! */}}
-    <div class="ui info message">
-        <p>
-            <center>
-                <strong>
-                    {{ .T "What?! You don't know about our super-mega-puper discord server?! Join now! <a title='Our Discord!?!' href='https://discord.gg/abJ9TU8' target='_blank'>pew-pew</a>" | html }}
-                </strong>
-            </center>
-        </p>
-    </div>
-</div>
-
-<br><br>
-
 <div class="ui container">
     <div id="content">
         <div id="home">
@@ -57,12 +43,12 @@
     </div>
     {{ $set := systemSettings "website_home_alert" }}
     {{ with $set.website_home_alert.String }}
-        <div class="ui warning message">
-            {{ . | html }}
-        </div>
+    <div class="ui warning message">
+        {{ . | html }}
+    </div>
     {{ end }}
 
-    <div class="ui purple center aligned segment">
+    <!--div class="ui purple center aligned segment">
         <h1 class="ui center aligned header">{{ .T "Featured Video" }}</h1>
         <div class="column twelve wide">
             {{/* Grab the latest video from Akatsuki Replays YouTube Channel */}}
@@ -72,98 +58,100 @@
             {{/* V That's the most wack line of a mix of html and template, I have ever written -Night V */}}
             <p>{{ .T "Thanks to My Angel DT! <3<br><b>Note: This takes up to 4 hours after upload to update due to YouTube's API.<br>Also due to NGINX and Cloudflare's cache.</b>" | html }}</p>
         </div>
-    </div>
+    </div-->
+
+    <br>
 
     {{/* Global Statistics */}}
-        <div class="ui stackable four grid">
-            <div class="five wide column">
-                <div class="ui blue segment">
-                    <div class="ui grid">
-                        <div class="four wide column">
-                            <i class="user icon status-icon"></i>
-                        </div>
-                        <div class="twelve wide column">
-                {{ range $key, $value := (qb "SELECT COUNT(*) FROM users WHERE privileges >= 3") }}
-                            <p class="status-head">{{ rediget "ripple:online_users" }} / {{ $value }}</p>
-                {{ end }}
-                            <p class="status-footer">Online / Registered</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="ui stackable four grid">
         <div class="five wide column">
-           <div class="ui orange segment">
-              <div class="ui grid">
-                     <div class="four wide column">
-                         <i class="user plus icon status-icon"></i>
-             </div>
-                     <div class="twelve wide column">
-                 {{ range $key, $value := (qb "SELECT username FROM users WHERE privileges >=3 ORDER BY id DESC LIMIT 1") }}
-                         <p class="status-head">{{ $value }}</p>
-                         {{ end }}
-                 <p class="status-footer">Latest Player</p>
-             </div>
-             </div>
-         </div>
-    </div>
-
-            <div class="six wide column">
-                <div class="ui green segment">
-                    <div class="ui grid">
-                        <div class="four wide column">
-                            <i class="angle right icon status-icon"></i>
-                        </div>
-                        <div class="twelve wide column">
-                            <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
-                            <p class="status-footer">Submitted Scores</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="five wide column">
-        <div class="ui red segment">
-                    <div class="ui grid">
-                        <div class="four wide column">
-                            <i class="thumbs down icon status-icon"></i>
-                        </div>
-                        <div class="twelve wide column">
-                            {{ range $key, $value := (qb "SELECT COUNT(*) FROM users WHERE privileges = 2") }}
-                            <p class="status-head">{{ $value }}</p>
-                            {{ end }}
-                            <p class="status-footer">Restricted Players</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="five wide column">
-           <div class="ui yellow segment">
-                 <div class="ui grid">
+            <div class="ui blue segment">
+                <div class="ui grid">
                     <div class="four wide column">
-                       <i class="thumbs up icon status-icon"></i>
+                        <i class="user icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                       {{ $d := (qb "SELECT ROUND(pp) AS pp, users.username, users.id FROM scores INNER JOIN users ON scores.userid = users.id WHERE scores.play_mode = 0 AND completed = 3 AND users.privileges > 2 ORDER BY pp DESC LIMIT 1") }}
-                       <p class="status-head">{{ $d.pp }}pp</p>
-                       <p class="status-head" style="font-size: 10px!important;">Done by <a href="/u/{{ $d.id }}">{{ $d.username }}</a></p>
-                       <p class="status-footer">Top Score</p>
+                        {{ range $key, $value := (qb "SELECT COUNT(*) FROM users WHERE privileges & 1 > 0") }}
+                        <p class="status-head">{{ rediget "ripple:online_users" }} / {{ $value }}</p>
+                        {{ end }}
+                        <p class="status-footer">Online / Registered users</p>
                     </div>
-                 </div>
-              </div>
+                </div>
             </div>
+        </div>
+        <div class="five wide column">
+            <div class="ui orange segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="user plus icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        {{ range $key, $value := (qb "SELECT username FROM users WHERE privileges & 1 ORDER BY id DESC LIMIT 1") }}
+                        <p class="status-head">{{ $value }}</p>
+                        {{ end }}
+                    <p class="status-footer">Latest player</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="six wide column">
-               <div class="ui pink segment">
-                  <div class="ui grid">
-                     <div class="four wide column">
-                        <i class="angle double right icon status-icon"></i>
-                     </div>
-                     <div class="twelve wide column">
-                        {{ $value := (qb "SELECT ROUND(SUM(scores.pp)) AS pp FROM scores INNER JOIN users ON scores.userid = users.id WHERE scores.completed = 3 AND scores.play_mode = 0 AND users.privileges > 2") }}
-                        <p class="status-head">{{ $value.pp }}</p>
-                        <p class="status-footer">Total PP</p>
-                     </div>
-                  </div>
-               </div>
+            <div class="ui red segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="thumbs up outline icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        {{ $d := (qb "SELECT ROUND(scores_relax.pp) AS pp, users.username, scores_relax.userid FROM scores_relax LEFT JOIN beatmaps ON beatmaps.beatmap_md5 = scores_relax.beatmap_md5 LEFT JOIN users ON users.id = scores_relax.userid WHERE users.privileges & 1 > 0 AND scores_relax.completed = 3 AND scores_relax.play_mode = 0 AND beatmaps.ranked = 2 ORDER BY scores_relax.pp DESC LIMIT 1") }}
+                       <p class="status-head">{{ $d.pp }}pp</p>
+                       <p class="status-footer">Top score (Relax)</p>
+                       <p class="status-head" style="font-size: 12px!important;">Done by <a href="/rx/u/{{ $d.userid }}">{{ $d.username }}</a></p>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="five wide column">
+            <div class="ui pink segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="angle double right icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        <!--p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p-->
+                        <p class="status-head">{{ .T "123123123" }}</p>
+                        <p class="status-footer">Total scores (Vanilla)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="five wide column">
+            <div class="ui yellow segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="angle right icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        <!--p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p-->
+                        <p class="status-head">{{ .T "123123123" }}</p>
+                        <p class="status-footer">Total scores (Relax)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="six wide column">
+            <div class="ui green segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="thumbs up icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        {{ $d := (qb "SELECT ROUND(scores.pp) AS pp, users.username, scores.userid FROM scores LEFT JOIN beatmaps ON beatmaps.beatmap_md5 = scores.beatmap_md5 LEFT JOIN users ON users.id = scores.userid WHERE users.privileges & 1 > 0 AND scores.completed = 3 AND scores.play_mode = 0 AND beatmaps.ranked = 2 ORDER BY scores.pp DESC LIMIT 1") }}
+                       <p class="status-head">{{ $d.pp }}pp</p>
+                       <p class="status-footer">Top score (Vanilla)</p>
+                       <p class="status-head" style="font-size: 12px!important;">Done by <a href="/u/{{ $d.userid }}">{{ $d.username }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div> {{/* Global Stats end past this /div */}}
 </div>
 {{ end }}

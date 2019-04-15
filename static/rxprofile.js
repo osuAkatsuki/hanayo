@@ -3,8 +3,8 @@ $(document).ready(function() {
   var wl = window.location;
   var newPathName = wl.pathname;
   // userID is defined in profile.html
-  if (newPathName.split("/")[2] != userID) {
-    newPathName = "/u/" + userID;
+  if (newPathName.split("/")[3] != userID) {
+    newPathName = "/rx/u/" + userID;
   }
   // if there's no mode parameter in the querystring, add it
   if (wl.search.indexOf("mode=") === -1)
@@ -225,6 +225,7 @@ function loadScoresPage(type, mode) {
     mode: mode,
     p: page,
     l: 20,
+	rx: 1,
     id: userID,
   }, function(r) {
     if (r.scores == null) {

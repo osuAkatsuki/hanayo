@@ -11,7 +11,7 @@
       rgba(255, 255, 255, 0.03), 
       rgba(255, 255, 255, 0.03)
     ),
-    url(https://osu.gatari.pw/static/images/backgrounds/bg2.png);
+    url(/static/images/backgrounds/bg2.png);
     height: 180px;
     margin: 0px 0px -30px 0px !important;
     padding: 25px 0px 0px 0px;
@@ -21,7 +21,7 @@
     bottom: 0;
 }
 .footer-info-block {
-    color: #2eb1ee;
+    color: #384c98;
     padding-top: 24px;
     float: left;
     font-size: 14px;
@@ -30,7 +30,7 @@
 }
 
 .footer-info-block a{
-    color: #2eb1ee !important;
+    color: #384c98 !important;
 }
 
 .footer-logo {
@@ -126,7 +126,7 @@ a.inherit:hover {
 }
 
 .main.wrapper {
-	min-height: calc(100vh - 43px);
+	min-height: calc(85vh - 39px);
 }
 
 .footer {
@@ -197,13 +197,13 @@ a.inherit:hover {
 }
 
 .white.background {
-    background-image: url(https://osu.gatari.pw/static/images/icons/button.svg);
-    background-color: #2eb1ee;
+    background-image: url(/static/images/icons/button.svg);
+    background-color: #384c98;
     box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }
 body.ds .white.background {
-    background-image: url(https://osu.gatari.pw/static/images/icons/button.svg);
-    background-color: #2eb1ee;
+    background-image: url(/static/images/icons/button.svg);
+    background-color: #384c98;
     box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }
 

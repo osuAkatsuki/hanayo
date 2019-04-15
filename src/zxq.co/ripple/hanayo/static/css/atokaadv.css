@@ -1,5 +1,5 @@
 body{
-	background-image:url(https://osu.gatari.pw/static/images/backgrounds/bg4.png);
+	background-image:url(/static/images/backgrounds/bg4.png);
 	color:#fff
 }
 #AtokaAdv .container{
@@ -69,7 +69,7 @@ body{
 	text-align:right
 }
 .main-bg-closed{
-	background-image:url(https://osu.gatari.pw/static/images/banners/gatariadv-closed-banner.jpg)
+	background-image:url(/static/images/banners/gatariadv-closed-banner.jpg)
 }
 .main-bg-direct{
 	background-image:url(/static/images/osu!direct-bg.png);
@@ -135,7 +135,7 @@ body{
 	padding:0 5px
 }
 .sm-block-header{
-	background-image:url(https://osu.gatari.pw/static/images/doc-bg.jpg);
+	background-image:url(/static/images/doc-bg.jpg);
 	color:#fff;
 	display:flex;
 	padding-bottom:30px;

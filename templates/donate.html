@@ -1,0 +1,42 @@
+{{/*###
+Handler=/donate
+TitleBar=Support osu!Akatsuki
+KyutGrill=donate.jpg
+*/}}
+{{ define "tpl" }}
+{{ $global := .Context }}
+{{ $ := $ }}
+<style>
+    .thumb-wrap {
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 30px;
+        height: 0;
+        overflow: hidden;
+    }
+    .thumb-wrap iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<center>
+<div class="ui container">
+    <div class="ui segment">
+        <h1 class="ui header">{{ $.T "Thank you for your consideration in supporting Akatsuki!" | html }}</h1>
+        <hr/>
+        <p>{{ $.T "We have two 'tiers' of supporter levels for akatsuki; both loaded with tons of perks for us to show our appreciation for your support <3." | html }}</p>
+        <h3 class="ui center" style="text-align: center;">{{ $.T "Feel free to check out the pages below to explore the perks." | html }}</h3>
+        <div class="ui center aligned segment box-none">
+            <div class="ui buttons">
+                <a href="/support" class="ui green button">Supporter</a>
+                <div class="or kr-or"></div>
+                <a href="/premium" class="ui pink button">Premium</a>
+            </div>
+        </div>
+    </div>
+</div>
+</center>
+{{ end }}

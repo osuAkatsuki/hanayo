@@ -11,7 +11,7 @@
       rgba(255, 255, 255, 0.03), 
       rgba(255, 255, 255, 0.03)
     ),
-    url(https://osu.gatari.pw/static/images/backgrounds/bg2.png);
+    url(/static/images/backgrounds/bg2.png);
     height: 180px;
     margin: 0px 0px -30px 0px !important;
     padding: 25px 0px 0px 0px;
@@ -197,12 +197,12 @@ a.inherit:hover {
 }
 
 .white.background {
-    background-image: url(https://osu.gatari.pw/static/images/icons/button.svg);
+    background-image: url(/static/images/icons/button.svg);
     background-color: #2eb1ee;
     box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }
 body.ds .white.background {
-    background-image: url(https://osu.gatari.pw/static/images/icons/button.svg);
+    background-image: url(/static/images/icons/button.svg);
     background-color: #2eb1ee;
     box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }

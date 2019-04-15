@@ -67,7 +67,7 @@
 				{{ end }}
 				{{ $settings := systemSettings "website_maintenance" "game_maintenance" "website_global_alert" }}
 				{{ with $settings.website_global_alert.String }}
-					<div class="ui warning message">
+					<div class="ui info message">
 						{{ . | html }}
 					</div>
 				{{ end }}
@@ -133,7 +133,8 @@
 								</div>
 							</div>
 							<div class="footer-logo">
-								<br>
+								<span>osu!Akatsuki</span> 
+								<br><br>
 								<a class="subtitle"> private osu! server</a>
 							</div>
 						</div>
