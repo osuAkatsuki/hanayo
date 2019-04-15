@@ -1,0 +1,113 @@
+{{/*###
+Handler=/admin/dash
+Include=menu.html
+TitleBar=Admin - Dashboard
+KyutGrill=homepage2.jpg
+*/}}
+{{ define "tpl" }}
+{{ $totalPPQuery := qb "SELECT ROUND(SUM(scores.pp)) AS pp FROM scores INNER JOIN users ON scores.userid = users.id WHERE scores.completed = 3 AND scores.play_mode = 0 AND users.privileges > 2" }}
+{{ $submittedScoresFull := qb "SELECT COUNT(*) FROM scores LIMIT 1" }}
+{{ $totalScoresFull := qb "SELECT SUM(playcount_std) + SUM(playcount_taiko) + SUM(playcount_ctb) + SUM(playcount_mania) FROM users_stats WHERE 1" }}
+{{ $recentPlays := qb "SELECT beatmaps.song_name, scores.beatmap_md5, users.username, scores.userid, scores.time, scores.score, scores.pp, scores.play_mode, scores.mods FROM scores LEFT JOIN beatmaps ON beatmaps.beatmap_md5 = scores.beatmap_md5 LEFT JOIN users ON users.id = scores.userid ORDER BY scores.id DESC LIMIT 10" }}
+{{ $topPlays := qb "SELECT beatmaps.song_name, scores.beatmap_md5, users.username, scores.userid, scores.time, scores.score, scores.pp, scores.play_mode, scores.mods FROM scores LEFT JOIN beatmaps ON beatmaps.beatmap_md5 = scores.beatmap_md5 LEFT JOIN users ON users.id = scores.userid WHERE users.privileges & 1 > 0 ORDER BY scores.pp DESC LIMIT 10" }}
+
+<div class="ui container">
+	<div class="ui stackable grid">
+		{{ template "adminSidebar" . }}
+		<div class="twelve wide column">
+			<div class="ui center aligned segment">
+				<div class="ui stackable four grid">
+					<div class="five wide column">
+						<div class="ui blue segment">
+							<div class="ui grid">
+								<div class="four wide column">
+									<i class="user icon status-icon"></i>
+								</div>
+								<div class="twelve wide column">
+									<p class="status-head">{{ rediget "ripple:online_users" }}</p>
+									<p class="status-footer">Online Users</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="six wide column">
+						<div class="ui green segment">
+							<div class="ui grid">
+								<div class="four wide column">
+									<i class="angle right icon status-icon"></i>
+								</div>
+								<div class="twelve wide column">
+									<p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
+									<p class="status-footer">Submitted Scores</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="five wide column">
+						<div class="ui pink segment">
+							<div class="ui grid">
+								<div class="four wide column">
+									<i class="angle double right icon status-icon"></i>
+								</div>
+								<div class="twelve wide column">
+						                        <p class="status-head">{{ $totalPPQuery.pp }}</p>
+									<p class="status-footer">Total PP</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+{{/*			{{/* Recent Plays Table */}}
+			<div class="ui center aligned segment">
+				<table class="ui celled table">
+					<thead>
+						<tr>
+							<th>Recent Plays</th>
+							<th>Beatmap</th>
+							<th>Mode</th>
+							<th>Sent</th>
+							<th>Score</th>
+							<th>PP</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="ui green">	
+							<td>{{ $recentPlays.username }}</td>
+							<td>{{ $recentPlays.song_name }}</td>
+							<td>{{ $recentPlays.play_mode }}</td>
+							<td>{{ $recentPlays.time }}</td>
+							<td>{{ $recentPlays.score }}</td>
+							<td>{{ $recentPlays.pp }}</td>
+						</tr>
+					</tbody>
+				</table>
+				{{/* Top Plays Table */}}
+				<table class="ui celled table">
+					<thead>
+						<tr>
+							<th>Top Plays</th>
+							<th>Beatmap</th>
+							<th>Mode</th>
+							<th>Sent</th>
+							<th>Score</th>
+							<th>PP</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="ui green">
+							<td>{{ $topPlays.username }}</td>
+							<td>{{ $topPlays.song_name }}</td>
+							<td>{{ $topPlays.play_mode }}</td>
+							<td>{{ $topPlays.time }}</td>
+							<td>{{ $topPlays.score }}</td>
+							<td>{{ $topPlays.pp }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{{ end }}

@@ -1,0 +1,54 @@
+{{/*###
+Handler=/settings/flag
+TitleBar=Change Flag
+KyutGrill=settings2.jpg
+Include=menu.html
+MinPrivileges=4
+AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jquery.minicolors.min.js
+*/}}
+{{ define "tpl" }}
+<div class="ui container">
+	<div class="ui stackable grid">
+		{{ template "settingsSidebar" . }}
+		<div class="twelve wide column">
+			<div class="ui center aligned segment">
+				<font size=6 style="margin-left:-80%;">Username</font><br><br>
+				{{ $u := qb "SELECT username FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
+			{{ $n := or $u.username.String "" }}
+				<form id="username-form" class="ui form" method="post" action="/settings/username">
+						<div class="field">
+						<label>{{ .T "Username (2 to 15 characters, alphanumeric, spaces, <code>_[]-</code>)" | html }}</label>
+							<input tabindex="1" type="text" name="name" placeholder="{{ .T "Username" }}" value="{{ .FormData.username }}" required pattern="^[A-Za-z0-9 _\[\]-]{2,15}$">
+						</div>
+						{{ ieForm .Gin }}
+					</form>
+				<div class="ui right aligned segment">
+					<button tabindex="2" class="ui primary button" type="submit" form="username-form">{{ .T "Save" }}</button>
+				</div>
+				<font size=6 style="margin-left:-88%;">Flag</font>
+				<br><br>
+				
+				{{ $global := . }}
+					{{ $d := qb "SELECT country FROM users_stats WHERE id = ? LIMIT 1" .Context.User.ID }}
+					{{ $type  := or $d.country.String "" }}
+				<form id="register-form" class="ui form" method="post" action="/settings/flag">
+					
+						<select class="ui dropdown" name="country">
+							{{ range (.Get "countries").countries }}
+								<option name="flag" value="{{ .code }}"><a>{{ $global.T "<b>%s</b>" (country .code true) | html }}</a></option>
+							{{ end }}
+						</select>
+						
+						{{ ieForm .Gin }}
+					</form>
+				
+				<div class="ui right aligned segment">
+					<button tabindex="4" class="ui primary button" type="submit" form="register-form">{{ .T "Save" }}</button>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jquery.minicolors.min.css">
+{{ end }}
