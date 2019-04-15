@@ -1,4 +1,4 @@
-# Hanayo v1.8.6 - Modified for the osu! private server: Atoka
+# Hanayo v1.8.6 - Modified for the osu! private server: Akatsuki
 
 This repository has a mirror [here](https://github.com/osuripple/hanayo). The original repo is still [here](https://zxq.co/ripple/hanayo).
 
@@ -18,7 +18,7 @@ We'll update this repository when we get the below functions working properly.
 * Two Factor Authentication
 
 Sorry for the broken stuff,
-Atoka
+Akatsuki
 
 ## To fellow developers: this is not how you do it!
 

@@ -118,6 +118,16 @@ var singlePageSnippets = {
         page = 1;
         loadLeaderboard();
       });
+  $("#rx-menu .item")
+      .click(function(e) {
+        e.preventDefault();
+        $("#rx-menu .active.item").removeClass("active");
+        $(this).addClass("active");
+        country = "";
+        page = 1;
+    rx = $(this).data("rx");
+        loadLeaderboard();
+      });
   },
 
   "/friends" : function() {
