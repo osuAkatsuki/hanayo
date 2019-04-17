@@ -179,15 +179,19 @@ i18next.on('loaded', function(loaded) {
 function initialiseScores(el, mode) {
 	el.attr("data-loaded", "1");
 	var best = defaultScoreTable.clone(true).addClass("orange");
+	var first = defaultScoreTable.clone(true).addClass("blue");
 	var recent = defaultScoreTable.clone(true).addClass("blue");
 	best.attr("data-type", "best");
+	first.attr("data-type", "first");
 	recent.attr("data-type", "recent");
 	recent.addClass("no bottom margin");
 	el.append($("<div class='ui segments no bottom margin' />").append(
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Best scores") + "</h2>", best),
+		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + "</h2>", first),
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Recent scores") + "</h2>", recent)
 	));
 	loadScoresPage("best", mode);
+	loadScoresPage("first", mode);
 	loadScoresPage("recent", mode);
 };
 function loadMoreClick() {
@@ -201,10 +205,10 @@ function loadMoreClick() {
 }
 // currentPage for each mode
 var currentPage = {
-	0: {best: 0, recent: 0},
-	1: {best: 0, recent: 0},
-	2: {best: 0, recent: 0},
-	3: {best: 0, recent: 0},
+	0: {best: 0, recent: 0, first: 0},
+	1: {best: 0, recent: 0, first: 0},
+	2: {best: 0, recent: 0, first: 0},
+	3: {best: 0, recent: 0, first: 0}
 };
 var scoreStore = {};
 function loadScoresPage(type, mode) {
@@ -219,6 +223,7 @@ function loadScoresPage(type, mode) {
 		mode: mode,
 		p: page,
 		l: 20,
+		rx 1,
 		id: userID,
 	}, function(r) {
 		if (r.scores == null) {
@@ -227,10 +232,14 @@ function loadScoresPage(type, mode) {
 		}
 		r.scores.forEach(function(v, idx){
 			scoreStore[v.id] = v;
-			var scoreRank = getRank(mode, v.mods, v.accuracy, v.count_300, v.count_100, v.count_50, v.count_miss);
+			if (v.completed == 0) {
+				var scoreRank = 'F'
+			} else {
+				var scoreRank = getRank(mode, v.mods, v.accuracy, v.count_300, v.count_100, v.count_50, v.count_miss);
+			}
 			table.append($("<tr class='new score-row' data-scoreid='" + v.id + "' />").append(
 				$(
-					"<td><img src='/static/ranking-icons/" + scoreRank + ".svg' class='score rank' alt='" + scoreRank + "'> " +
+					"<td><img src='/static/ranking-icons/" + scoreRank + ".png' class='score rank' alt='" + scoreRank + "'> " +
 					escapeHTML(v.beatmap.song_name) + " <b>" + getScoreMods(v.mods) + "</b> <i>(" + v.accuracy.toFixed(2) + "%)</i><br />" +
 					"<div class='subtitle'><time class='new timeago' datetime='" + v.time + "'>" + v.time + "</time></div></td>"
 				),

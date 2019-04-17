@@ -39,70 +39,68 @@ $(document).ready(function() {
     });
 });
 
-
 function initialiseAchievements() {
-	api('users/achievements' + (currentUserID == userID ? '?all' : ''),
-		{id: userID}, function (resp) {
-		var achievements = resp.achievements;
-		// no achievements -- show default message
-		if (achievements.length === 0) {
-			$("#achievements")
-				.append($("<div class='ui sixteen wide column'>")
-					.text(T("Nothing here. Yet.")));
-			$("#load-more-achievements").remove();
-			return;
-		}
+  api('users/achievements' + (currentUserID == userID ? '?all' : ''),
+    {id: userID}, function (resp) {
+    var achievements = resp.achievements;
+    // no achievements -- show default message
+    if (achievements.length === 0) {
+      $("#achievements")
+        .append($("<div class='ui sixteen wide column'>")
+          .text(T("Nothing here. Yet.")));
+      $("#load-more-achievements").remove();
+      return;
+    }
 
-		var displayAchievements = function(limit, achievedOnly) {
-			var $ach = $("#achievements").empty();
-			limit = limit < 0 ? achievements.length : limit;
-			var shown = 0;
-			for (var i = 0; i < achievements.length; i++) {
-				var ach = achievements[i];
-				if (shown >= limit || (achievedOnly && !ach.achieved)) {
-					continue;
-				}
-				shown++;
-				$ach.append(
-					$("<div class='ui two wide column'>").append(
-						$("<img src='https://s.ripple.moe/images/medals-" +
-							"client/" + ach.icon + ".png' alt='" + ach.name +
-							"' class='" +
-							(!ach.achieved ? "locked-achievement" : "achievement") +
-							"'>").popup({
-							title: ach.name,
-							content: ach.description,
-							position: "bottom center",
-							distanceAway: 10
-						})
-					)
-				);
-			}
-			// if we've shown nothing, and achievedOnly is enabled, try again
-			// this time disabling it.
-			if (shown == 0 && achievedOnly) {
-				displayAchievements(limit, false);
-			}
-		};
+    var displayAchievements = function(limit, achievedOnly) {
+      var $ach = $("#achievements").empty();
+      limit = limit < 0 ? achievements.length : limit;
+      var shown = 0;
+      for (var i = 0; i < achievements.length; i++) {
+        var ach = achievements[i];
+        if (shown >= limit || (achievedOnly && !ach.achieved)) {
+          continue;
+        }
+        shown++;
+        $ach.append(
+          $("<div class='ui two wide column'>").append(
+            $("<img src='https://s.ripple.moe/images/medals-" +
+              "client/" + ach.icon + ".png' alt='" + ach.name +
+              "' class='" +
+              (!ach.achieved ? "locked-achievement" : "achievement") +
+              "'>").popup({
+              title: ach.name,
+              content: ach.description,
+              position: "bottom center",
+              distanceAway: 10
+            })
+          )
+        );
+      }
+      // if we've shown nothing, and achievedOnly is enabled, try again
+      // this time disabling it.
+      if (shown == 0 && achievedOnly) {
+        displayAchievements(limit, false);
+      }
+    };
 
-		// only 8 achievements - we can remove the button completely, because
-		// it won't be used (no more achievements).
-		// otherwise, we simply remove the disabled class and add the click handler
-		// to activate it.
-		if (achievements.length <= 8) {
-			$("#load-more-achievements").remove();
-		} else {
-			$("#load-more-achievements")
-				.removeClass("disabled")
-				.click(function() {
-				$(this).remove();
-				displayAchievements(-1, false);
-			});
-		}
-		displayAchievements(8, true);
-	});
+    // only 8 achievements - we can remove the button completely, because
+    // it won't be used (no more achievements).
+    // otherwise, we simply remove the disabled class and add the click handler
+    // to activate it.
+    if (achievements.length <= 8) {
+      $("#load-more-achievements").remove();
+    } else {
+      $("#load-more-achievements")
+        .removeClass("disabled")
+        .click(function() {
+        $(this).remove();
+        displayAchievements(-1, false);
+      });
+    }
+    displayAchievements(8, true);
+  });
 }
-
 
 function initialiseFriends() {
   var b = $("#add-friend-button");
@@ -134,7 +132,7 @@ function setFriend(i) {
     break;
   case 2:
     b
-      .addClass("pink")
+      .addClass("red")
       .attr("title", T("Unmutual friend"))
       .html("<i class='heart icon'></i>");
     break;
@@ -145,7 +143,7 @@ function friendClick() {
   var t = $(this);
   if (t.hasClass("loading")) return;
   t.addClass("loading");
-  api("friends/" + (t.attr("data-friends") == 1 ? "del" : "add"), {user: +userID}, setFriendOnResponse, true);
+  api("friends/" + (t.attr("data-friends") == 1 ? "del" : "add"), {user: userID}, setFriendOnResponse, true);
 }
 
 var defaultScoreTable;
@@ -225,7 +223,7 @@ function loadScoresPage(type, mode) {
     mode: mode,
     p: page,
     l: 20,
-	rx: 1,
+    rx 1,
     id: userID,
   }, function(r) {
     if (r.scores == null) {
@@ -235,37 +233,7 @@ function loadScoresPage(type, mode) {
     r.scores.forEach(function(v, idx){
       scoreStore[v.id] = v;
       if (v.completed == 0) {
-      	/*
-      	We
-      	definitely
-      	don't
-      	not
-      	define
-      	it
-      	here
-      	then
-      	name
-      	the
-      	image
-      	undefined.png
-      	nope
-      	not
-      	us
-      	not
-      	us
-      	here
-      	at
-      	akatsuki
-      	we
-      	wouldn't
-      	dare
-      	do
-      	that
-      	no
-      	fucking
-      	way
-      	bro
-      	*/
+        var scoreRank = 'F'
       } else {
         var scoreRank = getRank(mode, v.mods, v.accuracy, v.count_300, v.count_100, v.count_50, v.count_miss);
       }
@@ -275,7 +243,7 @@ function loadScoresPage(type, mode) {
           escapeHTML(v.beatmap.song_name) + " <b>" + getScoreMods(v.mods) + "</b> <i>(" + v.accuracy.toFixed(2) + "%)</i><br />" +
           "<div class='subtitle'><time class='new timeago' datetime='" + v.time + "'>" + v.time + "</time></div></td>"
         ),
-        $("<td><b>" + ppOrScore(v.pp, v.score) + "</b> " + weightedPP(type, page, idx, v.pp) +  (v.completed == 3 ? "<br>" + downloadStar(v.id) : "") +  "</td>")
+        $("<td><b>" + ppOrScore(v.pp, v.score) + "</b> " + weightedPP(type, page, idx, v.pp) +  (v.completed == 3 ? "<br>" + downloadStar(v.id) : "") + "</td>")
       ));
     });
     $(".new.timeago").timeago().removeClass("new");
@@ -312,17 +280,17 @@ function viewScoreInfo() {
 
   // data to be displayed in the table.
   var data = {
-    "Points":       addCommas(s.score),
-    "PP":           addCommas(s.pp),
+    "Points":      addCommas(s.score),
+    "PP":          addCommas(s.pp),
     "Beatmap":      "<a href='/b/" + s.beatmap.beatmap_id + "'>" + escapeHTML(s.beatmap.song_name) + "</a>",
-    "Accuracy":     s.accuracy + "%",
+    "Accuracy":    s.accuracy + "%",
     "Max combo":    addCommas(s.max_combo) + "/" + addCommas(s.beatmap.max_combo)
                       + (s.full_combo ? " " + T("(full combo)") : ""),
-    "Difficulty":   T("{{ stars }} star", {
+    "Difficulty":  T("{{ stars }} star", {
       stars: s.beatmap.difficulty2[modesShort[s.play_mode]],
       count: Math.round(s.beatmap.difficulty2[modesShort[s.play_mode]]),
    }),
-    "Mods":         getScoreMods(s.mods, true),
+    "Mods":        getScoreMods(s.mods, true),
   };
 
   // hits data
@@ -341,8 +309,8 @@ function viewScoreInfo() {
 
   data = $.extend(data, hd, {
     "Ranked?":      T(s.completed == 3 ? "Yes" : "No"),
-    "Achieved":     s.time,
-    "Mode":         modes[s.play_mode],
+    "Achieved":    s.time,
+    "Mode":        modes[s.play_mode],
   });
 
   var els = [];
@@ -395,126 +363,74 @@ var modeTranslations = [
   ]
 ];
 
-// helper functions copied from user.js in old-frontend
-function getScoreMods(m, noplus) {
-	var r = [];
-  // has nc => remove dt
-  if ((m & 512) == 512)
-    m = m & ~64;
-  // has pf => remove sd
-  if ((m & 16384) == 16384)
-    m = m & ~32;
-  modsString.forEach(function(v, idx) {
-    var val = 1 << idx;
-    if ((m & val) > 0)
-      r.push(v);
-  });
-	if (r.length > 0) {
-		return (noplus ? "" : "+ ") + r.join(", ");
-	} else {
-		return (noplus ? T('None') : '');
-	}
-}
-
-var modsString = [
-  "NF",
-	"EZ",
-	"TS",
-	"HD",
-	"HR",
-	"SD",
-	"DT",
-	"RX",
-	"HT",
-	"NC",
-	"FL",
-	"AU", // Auto.
-	"SO",
-	"AP", // Autopilot.
-	"PF",
-	"K4",
-	"K5",
-	"K6",
-	"K7",
-	"K8",
-	"FI",
-	"RN", // Random
-	"LM", // LastMod. Cinema?
-	"K9",
-	"K0",
-	"K1",
-	"K3",
-	"K2",
-];
-
 function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
-	var total = c300+c100+c50+cmiss;
+  var total = c300+c100+c50+cmiss;
 
   // Hidden | Flashlight | FadeIn
-	var hdfl = (mods & (1049608)) > 0;
+  var hdfl = (mods & (1049608)) > 0;
 
-	var ss = hdfl ? "SSHD" : "SS";
-	var s = hdfl ? "SHD" : "S";
+  var ss = hdfl ? "SSHD" : "SS";
+  var s = hdfl ? "SHD" : "S";
 
-	switch(gameMode) {
-		case 0:
-		case 1:
-			var ratio300 = c300 / total;
-			var ratio50 = c50 / total;
+  switch(gameMode) {
+    case 0:
+    case 1:
+      var ratio300 = c300 / total;
+      var ratio50 = c50 / total;
 
-			if (ratio300 == 1)
-				return ss;
+      if (ratio300 == 1)
+        return ss;
 
-			if (ratio300 > 0.9 && ratio50 <= 0.01 && cmiss == 0)
-				return s;
+      if (ratio300 > 0.9 && ratio50 <= 0.01 && cmiss == 0)
+        return s;
 
-			if ((ratio300 > 0.8 && cmiss == 0) || (ratio300 > 0.9))
-				return "A";
+      if ((ratio300 > 0.8 && cmiss == 0) || (ratio300 > 0.9))
+        return "A";
 
-			if ((ratio300 > 0.7 && cmiss == 0) || (ratio300 > 0.8))
-				return "B";
+      if ((ratio300 > 0.7 && cmiss == 0) || (ratio300 > 0.8))
+        return "B";
 
-			if (ratio300 > 0.6)
-				return "C";
+      if (ratio300 > 0.6)
+        return "C";
 
-			return "D";
+      return "D";
 
-		case 2:
-			if (acc == 100)
-				return ss;
+    case 2:
+      if (acc == 100)
+        return ss;
 
-			if (acc > 98)
-				return s;
+      if (acc > 98)
+        return s;
 
-			if (acc > 94)
-				return "A";
+      if (acc > 94)
+        return "A";
 
-			if (acc > 90)
-				return "B";
+      if (acc > 90)
+        return "B";
 
-			if (acc > 85)
-				return "C";
+      if (acc > 85)
+        return "C";
 
-			return "D";
+      return "D";
 
-		case 3:
-			if (acc == 100)
-				return ss;
+    case 3:
+      if (acc == 100)
+        return ss;
 
-			if (acc > 95)
-				return s;
+      if (acc > 95)
+        return s;
 
-			if (acc > 90)
-				return "A";
+      if (acc > 90)
+        return "A";
 
-			if (acc > 80)
-				return "B";
+      if (acc > 80)
+        return "B";
 
-			if (acc > 70)
-				return "C";
+      if (acc > 70)
+        return "C";
 
-			return "D";
-	}
+      return "D";
+  }
 }
 
 function ppOrScore(pp, score) {
@@ -526,5 +442,5 @@ function ppOrScore(pp, score) {
 function beatmapLink(type, id) {
   if (type == "s")
     return "<a href='/s/" + id + "'>" + id + '</a>';
-  return "<a href='/b/" + id + "'>" + id + '</a>';  
+  return "<a href='/b/" + id + "'>" + id + '</a>';
 }
