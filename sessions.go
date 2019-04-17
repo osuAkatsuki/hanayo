@@ -101,7 +101,6 @@ func getMessages(c *gin.Context) []message {
 	sess := getSession(c)
 	messagesRaw := sess.Get("messages")
 	if messagesRaw == nil {
-		sess.Delete("messages")
 		return nil
 	}
 	sess.Delete("messages")
