@@ -18,4 +18,5 @@ func aboutPage(c *gin.Context) {
 func homepagePage(c *gin.Context) {
 	defer resp(c, 200, "homepage.html", data)
 	data.DisableHH = true
+	getMessages(c)
 }
