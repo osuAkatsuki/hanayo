@@ -223,7 +223,7 @@ function loadScoresPage(type, mode) {
     mode: mode,
     p: page,
     l: 20,
-    rx 1,
+    rx: 1,
     id: userID,
   }, function(r) {
     if (r.scores == null) {
