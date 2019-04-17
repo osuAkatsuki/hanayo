@@ -233,40 +233,10 @@ function loadScoresPage(type, mode) {
     }
     r.scores.forEach(function(v, idx){
       scoreStore[v.id] = v;
-      if (v.completed == 0) {
-      	/*
-      	We
-      	definitely
-      	don't
-      	not
-      	define
-      	it
-      	here
-      	then
-      	name
-      	the
-      	image
-      	undefined.png
-      	nope
-      	not
-      	us
-      	not
-      	us
-      	here
-      	at
-      	akatsuki
-      	we
-      	wouldn't
-      	dare
-      	do
-      	that
-      	no
-      	fucking
-      	way
-      	bro
-      	*/
-      } else {
+      if (v.completed != 0) {
         var scoreRank = getRank(mode, v.mods, v.accuracy, v.count_300, v.count_100, v.count_50, v.count_miss);
+      } else {
+        var scoreRank = "F";
       }
       table.append($("<tr class='new score-row' data-scoreid='" + v.id + "' />").append(
         $(
