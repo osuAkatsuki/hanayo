@@ -325,7 +325,7 @@ func generateEngine() *gin.Engine {
 
 	r.Any("/blog/*url", blogRedirect)
 
-	r.GET("/", homepagePage)
+	//r.GET("/", homepagePage)
 	r.GET("/about", aboutPage)
 
 	loadSimplePages(r)
