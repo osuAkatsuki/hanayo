@@ -39,6 +39,7 @@ $(document).ready(function() {
     });
 });
 
+
 function initialiseAchievements() {
   api('users/achievements' + (currentUserID == userID ? '?all' : ''),
     {id: userID}, function (resp) {
@@ -280,17 +281,17 @@ function viewScoreInfo() {
 
   // data to be displayed in the table.
   var data = {
-    "Points":      addCommas(s.score),
-    "PP":          addCommas(s.pp),
-    "Beatmap":      "<a href='/b/" + s.beatmap.beatmap_id + "'>" + escapeHTML(s.beatmap.song_name) + "</a>",
-    "Accuracy":    s.accuracy + "%",
-    "Max combo":    addCommas(s.max_combo) + "/" + addCommas(s.beatmap.max_combo)
-                      + (s.full_combo ? " " + T("(full combo)") : ""),
-    "Difficulty":  T("{{ stars }} star", {
-      stars: s.beatmap.difficulty2[modesShort[s.play_mode]],
-      count: Math.round(s.beatmap.difficulty2[modesShort[s.play_mode]]),
+    "Points":   addCommas(s.score),
+    "PP":     addCommas(s.pp),
+    "Beatmap":    "<a href='/b/" + s.beatmap.beatmap_id + "'>" + escapeHTML(s.beatmap.song_name) + "</a>",
+    "Accuracy":   s.accuracy + "%",
+    "Max combo":  addCommas(s.max_combo) + "/" + addCommas(s.beatmap.max_combo)
+              + (s.full_combo ? " " + T("(full combo)") : ""),
+    "Difficulty": T("{{ stars }} star", {
+              stars: s.beatmap.difficulty2[modesShort[s.play_mode]],
+              count: Math.round(s.beatmap.difficulty2[modesShort[s.play_mode]]),
    }),
-    "Mods":        getScoreMods(s.mods, true),
+    "Mods":     getScoreMods(s.mods, true),
   };
 
   // hits data
