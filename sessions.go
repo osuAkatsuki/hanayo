@@ -101,9 +101,8 @@ func getMessages(c *gin.Context) []message {
 	sess := getSession(c)
 	messagesRaw := sess.Get("messages")
 	if messagesRaw == nil {
-		addMessage(c, warningMessage{T(c, "test lol")})
-		messagesRawYT := sess.Get("messages")
-		return messagesRawYT.([]message)
+		sess.Delete("messages")
+		return nil
 	}
 	sess.Delete("messages")
 	return messagesRaw.([]message)
