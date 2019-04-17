@@ -100,11 +100,10 @@ func addMessage(c *gin.Context, m message) {
 func getMessages(c *gin.Context) []message {
 	sess := getSession(c)
 	messagesRaw := sess.Get("messages")
+	/* Okay so basically it is always returning nil, even when it is not? Okay! Fuck you go!
 	if messagesRaw == nil {
-		addMessage(c, warningMessage{T(c, "test lol")})
-		messagesRawYT := sess.Get("messages")
-		return messagesRawYT.([]message)
-	}
+		return nil
+	}*/
 	sess.Delete("messages")
 	return messagesRaw.([]message)
 }
