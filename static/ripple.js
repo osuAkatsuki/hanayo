@@ -256,7 +256,7 @@ var singlePageSnippets = {
       });
   },
 
-  "/donate" : function() {
+  "/support" : function() {
     var sl = $("#months-slider")[0];
     noUiSlider.create(sl, {
       start : [ 1 ],
@@ -264,7 +264,7 @@ var singlePageSnippets = {
       connect : [ true, false ],
       range : {
         min : [ 1 ],
-        max : [ 24 ],
+        max : [ 36 ],
       }
     });
     var rates = {};
@@ -306,7 +306,7 @@ var singlePageSnippets = {
       connect : [ true, false ],
       range : {
         min : [ 1 ],
-        max : [ 24 ],
+        max : [ 36 ],
       }
     });
     var rates = {};
@@ -594,9 +594,9 @@ function api(endpoint, data, success, failure, post) {
 };
 
 var modes = {
-  0 : "osu! standard",
-  1 : "Taiko",
-  2 : "Catch the Beat",
+  0 : "osu!",
+  1 : "osu!taiko",
+  2 : "osu!catch",
   3 : "osu!mania",
 };
 var modesShort = {

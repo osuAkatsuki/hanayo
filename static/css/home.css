@@ -129,6 +129,7 @@ button:focus {
 }
 @media (max-width: 1200px) {
     .mirai {
+        width: 210%;
         background-position-x: 110%;
     }
     .status {

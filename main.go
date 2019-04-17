@@ -264,9 +264,6 @@ func generateEngine() *gin.Engine {
 	r.Static("/static", "static")
 	r.StaticFile("/favicon.ico", "static/favicon.ico")
 
-	r.GET("/", homepagePage)
-	r.GET("/about", aboutPage)
-
 	r.POST("/login", loginSubmit)
 	r.GET("/logout", logout)
 
@@ -327,6 +324,9 @@ func generateEngine() *gin.Engine {
 	r.GET("/donate/rates", btcconversions.GetRates)
 
 	r.Any("/blog/*url", blogRedirect)
+
+	r.GET("/", homepagePage)
+	r.GET("/about", aboutPage)
 
 	loadSimplePages(r)
 
