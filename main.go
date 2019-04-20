@@ -267,6 +267,8 @@ func generateEngine() *gin.Engine {
 	r.POST("/login", loginSubmit)
 	r.GET("/logout", logout)
 
+	r.GET("/", homepagePage)
+
 	r.GET("/register", register)
 	r.POST("/register", registerSubmit)
 	r.GET("/register/verify", verifyAccount)

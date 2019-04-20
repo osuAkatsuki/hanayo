@@ -8,15 +8,11 @@
 			<script>
 				window.favouriteMode = {{ $favouritemode }};
 				window.userID = {{ .id }};
-
 			</script>
 			{{ if after .silence_info.end }}
 				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
 			{{ end }}
 
-			{{ $cmyui  := has .id 1001 }}
-			{{ $rumoi  := has .id 1000 }}
-			
 			{{ $super := has .privileges 15728639 }}
 			{{ $dev  := has .privileges 11534335 }}
 			{{ $premium := has .privileges 8388615 }}
@@ -24,12 +20,11 @@
 			{{ $chatmod  := has .privileges 786499 }}
 			{{ $qat := has .privileges 16777483 }}
 			{{ $bn  := has .privileges 267 }}
-			
+
 			{{ if hasAdmin $global.Context.User.Privileges }}
 				{{ $restr := not (has .privileges 1) }}
 				{{ $disab := not (has .privileges 2) }}
 				{{ $pend  := has .privileges 1048576 }}
-
 
 				{{ if and $disab $restr }}
 					{{ if $pend }}
@@ -153,10 +148,8 @@
 			</div>
 			{{ $user := . }}
 			<div class="ui two item bottom attached menu" id="rx-menu">
-				
 					<a class="0 item" data-rx="0" href="/u/{{ $user.id }}">Regular</a>
 					<a class="1 item" data-rx="1" href="/rx/u/{{ $user.id }}">Relax</a>
-				
 			</div>
 
 			<div class="ui four item bottom attached menu" id="mode-menu">
@@ -168,13 +161,9 @@
 				<div class="ui three column divided stackable grid">
 					<div class="row">
 						<div class="column">
-								{{if $cmyui }}
+								{{if $super }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is the <i class="pink code small icon"></i><b>Head Dev and Founder</b> 
-								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
-								{{else if $rumoi}}
-								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="blue code small icon"></i><b>Developer</b> 
+								 is the <i class="pink code small icon"></i><b>Head Developer</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 								{{else if $admin}}
 								{{ $global.T "<b>%s</b> " .username | html }}
