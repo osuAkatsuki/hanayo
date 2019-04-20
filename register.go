@@ -50,9 +50,28 @@ func registerSubmit(c *gin.Context) {
 		return
 	}
 
+	/* beta keys
+	key := strings.TrimSpace(c.PostForm("key"))
+	if db.QueryRow("SELECT 1 FROM beta_keys WHERE key = ?", c.PostForm("key")).
+		Scan(new(int)) ==  sql.ErrNoRows {
+		registerResp(c, errorMessage{T(c, "Your key is invalid!")})
+		return
+	}
+	*/
+
 	// check whether an username is e.g. cookiezi, shigetora, peppy, wubwoofwolf, loctav
 	if in(strings.ToLower(username), forbiddenUsernames) {
 		registerResp(c, errorMessage{T(c, "You're not allowed to register with that username.")})
+		return
+	}
+	// check if key is required for login and if passed
+	if keyRequired() && c.PostForm("key") == "" {
+		registerResp(c, errorMessage{T(c, "Please pass a valid key.")})
+		return
+	}
+	// check if given key is valid
+	if !checkKey(c.PostForm("key")) && keyRequired() {
+		registerResp(c, errorMessage{T(c, "Please pass a valid key.")})
 		return
 	}
 
@@ -121,15 +140,22 @@ func registerSubmit(c *gin.Context) {
 	lid, _ := res.LastInsertId()
 
 	db.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);", lid, username)
-
+	db.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);", lid, username)
+	/* Beta Keys
+	db.Exec("UPDATE `beta_keys` set used = 1 where key = ?", key)
+	
+	// Ripple Gay Bot
 	schiavo.CMs.Send(fmt.Sprintf("User (**%s** | %s) registered from %s", username, c.PostForm("email"), clientIP(c)))
+	*/
+	// delete the key c
+	db.Exec("DELETE FROM beta_keys WHERE beta_key = ?", c.PostForm("key"))
 
 	setYCookie(int(lid), c)
 	logIP(c, int(lid))
 
 	rd.Incr("ripple:registered_users")
 
-	addMessage(c, successMessage{T(c, "You have been successfully registered on Ripple! You now need to verify your account.")})
+	addMessage(c, successMessage{T(c, "You have been successfully registered on Akatsuki!")})
 	getSession(c).Save()
 	c.Redirect(302, "/register/verify?u="+strconv.Itoa(int(lid)))
 }
@@ -148,6 +174,20 @@ func registrationsEnabled() bool {
 	var enabled bool
 	db.QueryRow("SELECT value_int FROM system_settings WHERE name = 'registrations_enabled'").Scan(&enabled)
 	return enabled
+}
+
+func keyRequired() bool {
+	var enabled bool
+	db.QueryRow("SELECT value_int FROM system_settings WHERE name = 'regkey_required'").Scan(&enabled)
+	return enabled
+}
+
+func checkKey(passed string) bool {
+	if db.QueryRow("SELECT beta_key FROM beta_keys WHERE beta_key = ?", passed).Scan(new(int)) != sql.ErrNoRows {
+			return true
+		} else {
+			return false
+		}
 }
 
 func verifyAccount(c *gin.Context) {
@@ -266,67 +306,253 @@ func in(s string, ss []string) bool {
 
 var usernameRegex = regexp.MustCompile(`^[A-Za-z0-9 _\[\]-]{2,15}$`)
 var forbiddenUsernames = []string{
-	"nigger",
-	"phil",
-	"night",
-	"fuck",
-	"nig",
-	"peppy",
-	"rrtyui",
-	"cookiezi",
-	"azer",
-	"loctav",
-	"banchobot",
-	"happystick",
-	"doomsday",
-	"sharingan33",
-	"andrea",
-	"cptnxn",
-	"reimu-desu",
-	"hvick225",
-	"_index",
-	"my aim sucks",
-	"kynan",
-	"rafis",
-	"sayonara-bye",
-	"thelewa",
-	"wubwoofwolf",
-	"millhioref",
-	"tom94",
-	"tillerino",
-	"clsw",
-	"spectator",
-	"exgon",
-	"axarious",
-	"angelsim",
-	"recia",
-	"nara",
-	"emperorpenguin83",
-	"bikko",
-	"xilver",
-	"vettel",
-	"kuu01",
-	"_yu68",
-	"tasuke912",
-	"dusk",
-	"ttobas",
-	"velperk",
-	"jakads",
-	"jhlee0133",
-	"abcdullah",
-	"yuko-",
-	"entozer",
-	"hdhr",
-	"ekoro",
-	"snowwhite",
-	"osuplayer111",
-	"musty",
-	"nero",
-	"elysion",
-	"ztrot",
-	"koreapenguin",
-	"fort",
-	"asphyxia",
-	"niko",
-	"shigetora",
+    "rrtyui",
+    "cookiezi",
+    "azer",
+    "happystick",
+    "doomsday",
+    "sharingan33",
+    "andrea",
+    "cptnxn",
+    "reimu-desu",
+    "hvick225",
+    "_index",
+    "my aim sucks",
+    "kynan",
+    "rafis",
+    "sayonara-bye",
+    "thelewa",
+    "wubwoofwolf",
+    "millhioref",
+    "tom94",
+    "clsw",
+    "spectator",
+    "exgon",
+    "axarious",
+    "angelsim",
+    "recia",
+    "nara",
+    "emperorpenguin83",
+    "bikko",
+    "xilver",
+    "vettel",
+    "kuu01",
+    "_yu68",
+    "tasuke912",
+    "dusk",
+    "ttobas",
+    "velperk",
+    "jakads",
+    "jhlee0133",
+    "abcdullah",
+    "yuko-",
+    "entozer",
+    "hdhr",
+    "ekoro",
+    "snowwhite",
+    "osuplayer111",
+    "musty",
+    "nero",
+    "elysion",
+    "ztrot",
+    "koreapenguin",
+    "fort",
+    "asphyxia",
+    "niko",
+    "shigetora",
+    "kaoru",
+    "Smoothieworld",
+    "toy",
+    "[toy]",
+    "ozzyozrock",
+    "fieryrage",
+    "gosy777",
+    "zyph",
+    "beasttrollmc",
+    "adamqs",
+    "karthy",
+    "fenrir",
+    "rohulk",
+    "_ryuk",
+    "spajder",
+    "fartownik",
+    "cxu",
+    "dunois",
+    "ner0",
+    "wiltchq",
+    "-gn",
+    "cinia pacifica",
+    "yaong",
+    "zeluar",
+    "dsan",
+    "dustice",
+    "rucker",
+    "firebat92",
+    "avenging_goose",
+    "idke",
+    "vaxei",
+    "seouless",
+    "spare",
+    "totoki",
+    "rustbell",
+    "emilia",
+    "reimu-desu",
+    "tiger claw",
+    "boggles",
+    "thepoon",
+    "the poon",
+    "loli_silica",
+    "bahamete",
+    "bikko",
+    "la valse",
+    "thelewa",
+    "firstus",
+    "ritzeh",
+    "kablaze",
+    "peppy",
+    "loctav",
+    "banchobot",
+    "millhioref",
+    "ephemeral",
+    "flyte",
+    "nanaya",
+    "RBRat3",
+    "smoogipoooo",
+    "tom94",
+    "yelle",
+    "ztrot",
+    "zallius",
+    "deadbeat",
+    "shaRPLL",
+    "shaRPII",
+    "shARPIL",
+    "shARPLI",
+    "Blaizer",
+    "Damnae",
+    "Daru",
+    "Echo",
+    "fly a kite",
+    "marcin",
+    "mm201",
+    "nekodex",
+    "rbrat3",
+    "thevileone",
+    "alumentorz",
+    "fort",
+    "11t",
+    "captin1",
+    "kroytz",
+    "cryo[iceeicee]",
+    "Akali",
+    "professionalbox",
+    "Fantazy",
+    "Sing",
+    "toybot",
+    "goldenwolf",
+    "handsome",
+    "Raikozen",
+    "cherry blossom",
+    "monstrata",
+    "Ascendence",
+    "doorfin",
+    "barkingmaddog",
+    "Karen",
+    "crystal",
+    "vert",
+    "halfslashed",
+    "kloyd",
+    "djpop",
+    "cyclone",
+    "guy",
+    "sakura",
+    "spectator",
+    "pishifat",
+    "ktgster",
+    "skystar",
+    "o9kami",
+    "09kami",
+    "Nathan",
+    "ely",
+    "hollow wings",
+    "val0108",
+    "blue dragon",
+    "tillerino",
+    "mikuia",
+    "ameo",
+    "tatsumaki",
+    "cmyui",
+    "solis",
+    "rumoi",
+    "frostidrinks",
+    "cursordance",
+    "paparkes",
+    "daniel",
+    "flyingtuna",
+    "walkingtuna",
+    "nathan on osu",
+    "justice",
+    "child",
+    "eb",
+    "kalzo",
+    "ebenezer",
+    "solomon",
+    "murmurtwins",
+    "ggm9",
+    "kaguya",
+    "unspoken mattay",
+    "mattay",
+    "parkourwizard",
+    "woey",
+    "trafis",
+    "klug",
+    "c o i n",
+    "varvalian",
+    "mismagius",
+    "nameless player",
+    "mbmasher",
+    "okinamo",
+    "knalli",
+    "obtio",
+    "konnan",
+    "ppy",
+    "nejzha",
+    "kochiya",
+    "haruki",
+    "kaguya",
+    "miniature lamp",
+    "phabled",
+    "hentai",
+    "coletaku",
+    "zoom",
+    "mathyu",
+    "windshear",
+    "roma4ka",
+    "bad girl",
+    "arfung",
+    "skyapple",
+    "hotzi6",
+    "joueur de visee",
+    "ted",
+    "willcookie",
+    "zerrah",
+    "-ristuki",
+    "yuudachi",
+    "idealism",
+    "shiiiiiii",
+    "shayell",
+    "parky",
+    "torahiko",
+    "digidrake",
+    "a12456",
+    "chal",
+    "mathi",
+    "relaxingtuna",
+    "eriksu",
+    "firedigger",
+    "-hibiki-",
+    "notititititi",
+    "mysliderbreak",
+    "qsc20010",
+    "curry3521",
+    "s1ck",
 }
