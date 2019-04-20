@@ -13,17 +13,17 @@ button:focus {
     display: flex;
     justify-content: center;
     background-color: #222;
-    margin-top: 140px;
+    margin-top: 110px;
     align-items: flex-end;
-    height: 400px;
+    height: 260px;
     padding-right: 34px;
     box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }
-.mirai {
-    background-image: url(/static/characters/mirai_resized.png);
+.quaver {
+    background-image: url(/static/characters/quaver.png);
     background-repeat: no-repeat;
-    height: 545px;
-    width: 670px;
+    height: 363px;
+    width: 915px;
 }
 .content {
     display: flex;
@@ -41,6 +41,7 @@ button:focus {
     font-size: 52px;
     font-weight: 700;
     margin-top: 26px;
+    text-shadow: 3px 3px #000000;
 }
 .counter-text {
     font-size: 16px;
@@ -50,6 +51,7 @@ button:focus {
 .text-sm {
     font-size: 14px;
     font-style: italic;
+    text-shadow: 2px 2px #000000;
 }
 .home-btn {
     background-image: url(/static/images/icons/button.svg);
@@ -126,25 +128,26 @@ button:focus {
     background-color: #1b1b1b;
 }
 @media (max-width: 1200px) {
-    .mirai {
+    .quaver {
+        width: 210%;
         background-position-x: 110%;
     }
     .status {
-	visibility: hidden;
+    visibility: hidden;
     }
 }
 @media (max-width: 992px) {
-    .mirai {
+    .quaver {
         height: 519px;
         width: 675px;
         background-position-x: -190%;
     }
     .status {
-    	visibility: hidden;
+        visibility: hidden;
     }
 }
 @media (max-width: 768px) {
-    .mirai {
+    .quaver {
         display: none;
     }
     .main-block {
@@ -161,18 +164,18 @@ button:focus {
         align-items: center;
     }
     .main-block{
-        height: 380px;
+        height: 260px;
     }
     .buttons{
         margin-top: 36px;
     }
     .status {
-    	visibility: hidden;
+        visibility: hidden;
     }
 }
 @media (max-width: 576px) {
     .main-block{
-        height: 420px;
+        height: 360px;
     }
     .content{
         justify-content: space-between;
@@ -190,6 +193,6 @@ button:focus {
         margin-bottom: 12px;
     }
     .status {
-	visibility: hidden;
+    visibility: hidden;
     }
 }

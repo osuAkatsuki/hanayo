@@ -19,8 +19,8 @@ button:focus {
     padding-right: 34px;
     box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
 }
-.mirai {
-    background-image: url(/static/characters/mirai_resized.png);
+.quaver {
+    background-image: url(/static/characters/quaver.png);
     background-repeat: no-repeat;
     height: 363px;
     width: 915px;
@@ -128,7 +128,7 @@ button:focus {
     background-color: #1b1b1b;
 }
 @media (max-width: 1200px) {
-    .mirai {
+    .quaver {
         width: 210%;
         background-position-x: 110%;
     }
@@ -137,7 +137,7 @@ button:focus {
     }
 }
 @media (max-width: 992px) {
-    .mirai {
+    .quaver {
         height: 519px;
         width: 675px;
         background-position-x: -190%;
@@ -147,7 +147,7 @@ button:focus {
     }
 }
 @media (max-width: 768px) {
-    .mirai {
+    .quaver {
         display: none;
     }
     .main-block {
