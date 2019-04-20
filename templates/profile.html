@@ -288,6 +288,10 @@
 												<td><b>{{ $global.T "Accuracy" }}</b></td>
 												<td class="right aligned">{{ printf "%.2f" .accuracy }}%</td>
 											</tr>
+											<tr>
+												<td><b>{{ $global.T "Followers" }}</b></td>
+												<td class="right aligned">{{ humanize $user.followers }}</td>
+											</tr>
 										</tbody>
 									</table>
 									<div class="ui blue progress little margin top" data-percent="{{ levelPercent .level }}">
