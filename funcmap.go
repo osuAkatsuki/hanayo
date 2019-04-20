@@ -136,6 +136,11 @@ var funcMap = template.FuncMap{
 		t, _ := time.Parse(time.RFC3339, s)
 		return t
 	},
+	"playtimeConv": func(f float64) string {
+		hours := f / 3600
+		days := f / 86400
+		return fmt.Sprintf("%.2f hours (%.1f days)", hours, days)
+	},
 	// band is a bitwise AND.
 	"band": func(i1 int, i ...int) int {
 		for _, el := range i {
