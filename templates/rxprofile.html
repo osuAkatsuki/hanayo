@@ -9,6 +9,27 @@
 				window.favouriteMode = {{ $favouritemode }};
 				window.userID = {{ .id }};
 			</script>
+
+			<head>
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="{{ .username }} is an Akatsuki player from {{ country .country true }}." />
+				<meta name="keywords" content="" />
+				<meta name="author" content="" />
+
+				{{/* Twitter/Facebook Integration */}}
+				<meta property="og:title" content="{{ .username }}"/>
+				<meta property="og:image" content="http://a.akatsuki.pw/{{ $global.UserID }}"/>
+				<meta property="og:url" content="http://akatsuki.pw/rx/u/{{ $global.UserID }}"/>
+				<meta property="og:site_name" content="Akatsuki"/>
+				<meta property="og:description" content="{{ .username }} is an Akatsuki player from {{ country .country true }}.\nPP: {{ .pp }}"/>
+				<meta name="twitter:title" content="{{ .username }}" />
+				<meta name="twitter:image" content="http://a.akatsuki.pw/{{ $global.UserID }}" />
+				<meta name="twitter:url" content="http://akatsuki.pw/rx/u/{{ $global.UserID }}" />
+				<meta name="twitter:card" content="" />
+			</head>
+
 			{{ if after .silence_info.end }}
 				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
 			{{ end }}
@@ -171,11 +192,11 @@
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 								{{else if $chatmod}}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="blue star small icon"></i><b>Chat moderator</b> 
+								 is a <i class="blue star small icon"></i><b>Chat Moderator</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 								{{else if $qat}}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="orange cogs small icon"></i><b>QAT member</b> 
+								 is a <i class="orange cogs small icon"></i><b>QAT Member</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 								{{else if $bn}}
 								{{ $global.T "<b>%s</b> " .username | html }}
@@ -183,7 +204,7 @@
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 								{{else if $premium}}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="yellow credit card small icon"></i><b>Premium member</b> 
+								 is a <i class="yellow credit card small icon"></i><b>Premium Member</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else }}
 								{{ $global.T "<b>%s</b> is a player from <b>%s</b>." .username (country .country true) | html }}
