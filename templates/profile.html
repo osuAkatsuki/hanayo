@@ -9,6 +9,31 @@
 				window.favouriteMode = {{ $favouritemode }};
 				window.userID = {{ .id }};
 			</script>
+
+			<head>
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
+					<div data-mode="{{ $k }}" {{ if ne $k (int $favouritemode) }} hidden{{ end }}>
+						<meta name="description" content="{{ .username }} is an Akatsuki player from.\ntest" />
+					</div>
+				{{ end }}
+				<meta name="keywords" content="" />
+				<meta name="author" content="" />
+
+				{{/* Twitter/Facebook Integration */}}
+				<meta property="og:title" content="{{ .username }}"/>
+				<meta property="og:image" content="http://a.akatsuki.pw/{{ $global.UserID }}"/>
+				<meta property="og:url" content="http://akatsuki.pw/u/{{ $global.UserID }}"/>
+				<meta property="og:site_name" content="Akatsuki"/>
+				<meta property="og:description" content="{{ .username }} is an Akatsuki player from {{ country .country true }}.\nPP: {{ .pp }}"/>
+				<meta name="twitter:title" content="{{ .username }}" />
+				<meta name="twitter:image" content="http://a.akatsuki.pw/{{ $global.UserID }}" />
+				<meta name="twitter:url" content="http://akatsuki.pw/u/{{ $global.UserID }}" />
+				<meta name="twitter:card" content="" />
+			</head>
+
 			{{ if after .silence_info.end }}
 				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
 			{{ end }}
