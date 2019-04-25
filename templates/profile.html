@@ -16,8 +16,7 @@
 				<meta name="viewport" content="width=device-width, initial-scale=1">
 				{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
 					<div data-mode="{{ $k }}" {{ if ne $k (int $favouritemode) }} hidden{{ end }}>
-						<meta name="description" content="{{ .username }} is an Akatsuki player from
-						.\ntest" />
+						<meta name="description" content="{{ .username }} is an Akatsuki player from {{ country .country true }}.              test" />
 					</div>
 				{{ end }}
 				<meta name="keywords" content="" />
