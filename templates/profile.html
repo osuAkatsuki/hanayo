@@ -14,11 +14,8 @@
 				<meta charset="utf-8">
 				<meta http-equiv="X-UA-Compatible" content="IE=edge">
 				<meta name="viewport" content="width=device-width, initial-scale=1">
-				{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
-					<div data-mode="{{ $k }}" {{ if ne $k (int $favouritemode) }} hidden{{ end }}>
-						<meta name="description" content="{{ .username }} is an Akatsuki player from {{ country .country true }} {{ .pp }}" />
-					</div>
-				{{ end }}
+				<meta name="description" content="{{ .username }} is an Akatsuki player." />
+				</div>
 				<meta name="keywords" content="" />
 				<meta name="author" content="" />
 
