@@ -23,7 +23,7 @@ button:focus {
     background-image: url(/static/characters/quaver.png);
     background-repeat: no-repeat;
     height: 363px;
-    width: 915px;
+    width: 1196px;
 }
 .content {
     display: flex;
@@ -129,8 +129,8 @@ button:focus {
 }
 @media (max-width: 1200px) {
     .quaver {
-        width: 210%;
-        background-position-x: 110%;
+        width: 140%;
+        background-position-x: 20%;
     }
     .status {
 	visibility: hidden;

@@ -4,6 +4,26 @@
 {{ $cf := .ClientFlags }}
 {{ $ds := band $cf 1 }}
 {{ $   := . }}
+
+<head>
+    {{/* Meta tags */}}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="osu!Akatsuki is an osu! private server featuring both relax and vanilla osu!, integrated into a single server; Each style with it's own individual PP system, PP & score sorted leaderboards, fully-functioning multiplayer and spectation, and a massive dedicated community between both our osu! and discord servers." />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+
+    {{/* Twitter/Facebook Integration */}}
+    <meta property="og:image" content="/static/logos/logo.png"/>
+    <meta property="og:url" content="http://akatsuki.pw/"/>
+    <meta property="og:site_name" content="Akatsuki"/>
+    <meta property="og:description" content="osu!Akatsuki is an osu! private server featuring both relax and vanilla osu!, integrated into a single server; Each style with it's own individual PP system, PP & score sorted leaderboards, fully-functioning multiplayer and spectation, and a massive dedicated community between both our osu! and discord servers."/>
+    <meta name="twitter:image" content="/static/logos/logo.png" />
+    <meta name="twitter:url" content="http://akatsuki.pw/" />
+    <meta name="twitter:card" content="" />
+</head>
+
 <div class="ui container">
     <div id="content">
         <div id="home">
@@ -29,7 +49,7 @@
                             </span>
                             <br>
                             <span class="text-sm">
-                                Welcome {{ if not .Context.User.ID }}{{ else }}back {{ end }}to the best osu! private server, Akatsuki! On this website you will find all the information regarding the osu!Akatsuki server: players, leaderboards, beatmaps, how to start playing, and much more. {{ if not .Context.User.ID }}{{ else }}But you probably already knew that.{{ end }}
+                                <b>Welcome {{ if not .Context.User.ID }}{{ else }}back {{ end }}to osu!Akatsuki.</b> We are an osu! private server featuring both relax and vanilla osu!, integrated into a single server; Each style with it's own individual PP system, PP & score sorted leaderboards, fully-functioning multiplayer and spectation, and a massive dedicated community between both our osu! and discord servers.
                             </span>
                             <div class="buttons">
                                 <a href="{{ if not .Context.User.ID }}/register{{ else }}/u/{{ .Context.User.ID }}{{ end }}" class="home-btn btn-key">{{ if not .Context.User.ID }} register here {{else}} view profile {{ end }} </a>
@@ -53,14 +73,14 @@
     {{/* Global Statistics */}}
     <div class="ui stackable four grid">
         <div class="five wide column">
-            <div class="ui pink segment">
+            <div class="ui yellow segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="angle double right icon status-icon"></i>
+                        <i class="angle right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
-                        <p class="status-footer">Total scores (Vanilla)</p>
+                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
+                        <p class="status-footer">Total scores (Relax)</p>
                     </div>
                 </div>
             </div>
@@ -81,14 +101,14 @@
             </div>
         </div>
         <div class="five wide column">
-            <div class="ui yellow segment">
+            <div class="ui pink segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="angle right icon status-icon"></i>
+                        <i class="angle double right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
-                        <p class="status-footer">Total scores (Relax)</p>
+                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
+                        <p class="status-footer">Total scores (Vanilla)</p>
                     </div>
                 </div>
             </div>
