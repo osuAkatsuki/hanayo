@@ -1,11 +1,9 @@
 {{ define "navbar" }}
-{{ $staffApp := qb "SELECT name, value_int FROM system_settings WHERE NAME = 'staff_applications_enabled' AND value_int = '1' LIMIT 1;" }}
 {{ $ccEnabled := qb "SELECT name, value_int FROM system_settings WHERE NAME = 'ccreation_enabled' AND value_int = '1' LIMIT 1;" }}
 {{ $isRAP   := and (hasAdmin .Context.User.Privileges) (isRAP .Path) }}
 {{ $isAdmin := hasAdmin .Context.User.Privileges }}
-{{ $ds      := band .ClientFlags 1 }}
 {{ $isClan := qb "SELECT user, clan FROM user_clans WHERE user = ?" .Context.User.ID }}
-{{ $d := qb "SELECT user, clan, perms FROM user_clans WHERE user = ? AND perms = 8 LIMIT 1" .Context.User.ID }}
+{{ $clanLeader := qb "SELECT user, clan, perms FROM user_clans WHERE user = ? AND perms = 8 LIMIT 1" .Context.User.ID }}
 <div class="ui secondary fixed-height stackable white background main menu no margin bottom{{ if .DisableHH }} dropped{{ end }}" id="navbar">
 	<div class="ui container">
 		<div class="item">
@@ -21,14 +19,12 @@
 		{{ else }}
 			{{ navbarItem .Path (.T "Leaderboard") "/leaderboard" }}
 			<div class="ui dropdown item">
-				<span>{{ .T "Community" }}</span>
+				<span>{{ .T "Information" }}</span>
 				<div class="menu">
-					{{/* navbarItem .Path (.T "About") "/about" }}
-					{{ navbarItem .Path (.T "Forums") "/forums" }}
-					{{ navbarItem .Path (.T "Rules") "/doc/rules" }}
-					<div class="divider"></div>
-					{{ navbarItem .Path (.T "Documentation") "/doc" */}}
 					{{ navbarItem .Path (.T "Server Switcher") "/static/switcher.exe" }}
+					{{/* navbarItem .Path (.T "About Akatsuki") "/about" */}}
+					{{ navbarItem .Path (.T "Documentation") "/doc" }}
+					{{ navbarItem .Path (.T "Rules") "/doc/rules" }}
 					{{ navbarItem .Path (.T "YouTube Channel") "https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" }}
 					{{ navbarItem .Path (.T "Chat (Discord)") "https://discord.gg/5cBtMPW" }}
 				</div>
@@ -48,7 +44,7 @@
 					{{ navbarItem .Path (.T "Create") "/clans/create" }}
 					{{ end }}
 
-					{{ if $d }} {{/* Checks to see if the user owns a clan.  */}}
+					{{ if $clanLeader }} {{/* Checks to see if the user owns a clan.  */}}
 					{{ navbarItem .Path (.T "Clan Settings") "/settings/clansettings" }}
 					{{ else }}
 					{{ navbarItem .Path (.T "<p title='You are not an Owner of a Clan.'  style='color: #C0C0C0;'>Clan Settings</p>") ""  | html }}
