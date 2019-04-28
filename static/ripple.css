@@ -454,59 +454,66 @@ a.camouflaged:hover {
 	margin: 0 auto;
 }
 
-.owner {
+.premium
+{
+	color: yellow;
+	text-shadow: -2px -2px 0 #0033CC;
+}
+
+.owner
+{
   
-  font-size:30px;
-  
-  -webkit-animation: rainbow 2s infinite; 
-  -ms-animation: rainbow 2s infinite; 
-  animation: rainbow 2s infinite; 
+  -webkit-animation: rainbow 3s infinite; 
+  -ms-animation: rainbow 3s infinite; 
+  animation: rainbow 3s infinite; 
 }
 
 /* Chrome, Safari, Opera */
-@-webkit-keyframes rainbow{
-  0%{color: orange;}	
-  10%{color: purple;}	
+@-webkit-keyframes rainbow
+{
+	0%{color: orange;}
+	10%{color: purple;}
 	20%{color: red;}
-  30%{color: CadetBlue;}
+	30%{color: CadetBlue;}
 	40%{color: yellow;}
-  50%{color: coral;}
+	50%{color: coral;}
 	60%{color: green;}
-  70%{color: cyan;}
-  80%{color: DeepPink;}
-  90%{color: DodgerBlue;}
+	70%{color: cyan;}
+	80%{color: DeepPink;}
+	90%{color: DodgerBlue;}
 	100%{color: orange;}
 }
 
 /* Internet Explorer */
-@-ms-keyframes rainbow{
-  0%{color: orange;}	
-  10%{color: purple;}	
+@-ms-keyframes rainbow
+{
+	0%{color: orange;}
+	10%{color: purple;}
 	20%{color: red;}
-  30%{color: CadetBlue;}
+	30%{color: CadetBlue;}
 	40%{color: yellow;}
-  50%{color: coral;}
+	50%{color: coral;}
 	60%{color: green;}
-  70%{color: cyan;}
-  80%{color: DeepPink;}
-  90%{color: DodgerBlue;}
+	70%{color: cyan;}
+	80%{color: DeepPink;}
+	90%{color: DodgerBlue;}
 	100%{color: orange;}
 }
 
 /* Standard Syntax */
-@keyframes rainbow{
-  0%{color: orange;}	
-  10%{color: purple;}	
+@keyframes rainbow
+{
+	0%{color: orange;}
+	10%{color: purple;}
 	20%{color: red;}
-  30%{color: CadetBlue;}
+	30%{color: CadetBlue;}
 	40%{color: yellow;}
-  50%{color: coral;}
+	50%{color: coral;}
 	60%{color: green;}
-  70%{color: cyan;}
-  80%{color: DeepPink;}
-  90%{color: DodgerBlue;}
+	70%{color: cyan;}
+	80%{color: DeepPink;}
+	90%{color: DodgerBlue;}
 	100%{color: orange;}
-    
 }
 
 .dev
