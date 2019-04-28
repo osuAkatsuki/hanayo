@@ -215,24 +215,24 @@
 							<br>{{ with playstyle .play_style $global }}{{ $global.T "They play with %s." . }}{{ end }}
 							<br>
 							<br>
-						<div class="column">
-							<table class="ui very basic two column compact table nopad">
-								<tbody>
-									<tr>
-										<div class="ui grid">
-											{{ range .tbadges }}
-											<br><br><br>
-											<div class="three wide">
-												<img src="{{.icon }}" title="{{.name }}"></img>
-												<br>
+							<div class="column">
+								<table class="ui very basic two column compact table nopad">
+									<tbody>
+										<tr>
+											<div class="ui grid">
+												{{ range .tbadges }}
+												<br><br><br>
+												<div class="three wide">
+													<img src="{{.icon }}" title="{{.name }}"></img>
+													<br>
+												</div>
+												{{ end }}
 											</div>
-											{{ end }}
-										</div>
-									</tr>
-								</tbody>
-							</table>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
-					</div>
 
 					<div class="column">
 						{{ if and (not .badges) (not .custom_badge) }}

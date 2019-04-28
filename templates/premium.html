@@ -12,7 +12,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 	{{ $ief := ieForm .Gin }}
 		<div class="ui segment">
 			<h1 class="ui center aligned header">
-				{{ $.T "So, what makes it better than Supporter?" }}
+				{{ $.T "So, what makes it so <i>Premium</i>?" }}
 				<div class="sub header">
 					{{ $.T "Well, it has many additional perks." }}
 				</div>
@@ -100,7 +100,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 				</h4>
 				<p>
 				<center>
-				{{ $.T "<b>You'll have to wait until we verify and process your payment. It can take up to <b>12 hours</b>. If 12 hours have passed and you still haven't received your Premium tag, contact <b>cmyui</b> in our <a href='https://discord.gg/5cBtMPW'>Discord server</a> or send an email to <b>cmyuiosu@gmail.com</b>" | html }}
+				{{ $.T "<b>You'll have to wait until we verify and process your payment. It can take up to <b>12 hours</b> (although it is usually quite a bit faster than this). If 12 hours have passed and you still haven't received your supporter tag, contact <b>cmyui#0425</b> in our <a href='https://discord.gg/5cBtMPW'>Discord server</a> or send an email to <b>cmyuiosu@gmail.com</b>" | html }}
 				<br><br>
 				{{ $.T "Disclaimer: Donations are <b>non-refundable</b>, and do not exempt users from the Akatsuki rules. You will still be treated equally to regular users, but maybe with a bit more love <3." | html}}
 				</center>
@@ -110,5 +110,5 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 				<h1 class="ui center aligned header">{{ $.T "Please log in before purchasing premium." }}</h1>
 			{{ end }}
 		</div>
-	</div>
-{{ end }}
+	{{ end }}
+</div>
