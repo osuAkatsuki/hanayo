@@ -39,7 +39,7 @@
 			{{ $dev  := has .privileges 11534335 }}
 			{{ $premium := has .privileges 8388615 }}
 			{{ $admin  := has .privileges 7262715 }}
-			{{ $chatmod  := has .privileges 786499 }}
+			{{ $mod  := has .privileges 786499 }}
 			{{ $qat := has .privileges 16777483 }}
 			{{ $bn  := has .privileges 267 }}
 
@@ -191,9 +191,9 @@
 								{{ $global.T "<b>%s</b> " .username | html }}
 								 is an <i class="red lightning small icon"></i><b>Administrator</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
-								{{else if $chatmod}}
+								{{else if $mod}}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="blue star small icon"></i><b>Chat Moderator</b> 
+								 is a <i class="blue star small icon"></i><b>Moderator</b> 
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 								{{else if $qat}}
 								{{ $global.T "<b>%s</b> " .username | html }}

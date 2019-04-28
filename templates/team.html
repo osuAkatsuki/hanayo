@@ -13,29 +13,29 @@ KyutGrill=team2.jpg
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Founder & Head Developer" }}</h1>
 			<p>
-				{{ .T "Essentially a developer, and community manager combined, who works on everything from managing the team to making this page look pretty." }}
+				{{ .T "Essentially a developer, and community manager combined, who works on everything from managing the team to making this page look pretty. He has a darker blue colour in the in-game chat." }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 35) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Community Managers" }}</h1>
+			<h1 class="ui heading">{{ .T "Administrators" }}</h1>
 			<p>
-				{{ .T "Community Managers deal with bans, silences, name changes and pretty much everything that has to do with the community." }}<br>
-				{{ .T "They take care of our Discord server, and keep the community free of rule breakers. Community Managers have a red name in the in-game chat." | html }}
+				{{ .T "Administrators deal with bans, silences, name changes and pretty much everything that has to do with the community." }}<br>
+				{{ .T "They take care of our Discord server, and keep the community free of rule breakers. They have a light blue colour in the in-game chat." | html }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Developers" }}</h1>
 			<p>
-				{{ .T "Developers add new features to the server, squash bugs, keep the server up and running and take care of its maintenance. Developers have a blue name in the in-game chat." }}<br>
+				{{ .T "Developers add new features to the server, squash bugs, keep the server up and running and take care of its maintenance. Developers have a darker blue name in the in-game chat." }}<br>
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 2) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Chat Moderators" }}</h1>
+			<h1 class="ui heading">{{ .T "Moderators" }}</h1>
 			<p>
-				{{ .T "Chat moderators manage the chat to make sure The Law&trade; (the rules) is respected. Chat Moderators have a red name in the in-game chat." | html }}
+				{{ .T "Moderators manage the chat to make sure The Law&trade; (the rules) is respected. They have a red name in the in-game chat." | html }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
 		</div>
