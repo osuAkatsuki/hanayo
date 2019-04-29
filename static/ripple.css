@@ -483,8 +483,24 @@ a.camouflaged:hover {
   text-shadow: -2px -2px 0px #0033cc;
 }
 
-/*
-Chrome, Safari, Opera
+.rainbow
+{
+	font-size: 28px;
+	-webkit-animation: rainbow 3s infinite;
+	-ms-animation: rainbow 3s infinite;
+	animation: rainbow 3s infinite;
+	text-shadow: -2px -2px 0px #0033cc;
+}
+
+.gold
+{
+	font-size: 28px;
+	color: gold;
+	text-shadow: -2px -2px 0px #0033cc;
+}
+
+
+/*Chrome, Safari, Opera*/
 @-webkit-keyframes rainbow
 {
 	0%{color: orange;}
@@ -500,7 +516,7 @@ Chrome, Safari, Opera
 	100%{color: orange;}
 }
 
-Internet Explorer
+/*Internet Explorer*/
 @-ms-keyframes rainbow
 {
 	0%{color: orange;}
@@ -516,7 +532,7 @@ Internet Explorer
 	100%{color: orange;}
 }
 
-Standard Syntax
+/*Standard Syntax*/
 @keyframes rainbow
 {
 	0%{color: orange;}
@@ -530,7 +546,7 @@ Standard Syntax
 	80%{color: DeepPink;}
 	90%{color: DodgerBlue;}
 	100%{color: orange;}
-}*/
+}
 
 .dev
 {
