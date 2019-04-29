@@ -17,6 +17,7 @@ const (
 	TapX
 	Vive
 	Oculus
+	Spectator
 )
 
 // Styles are string representations of the various playstyles someone can have.
@@ -29,6 +30,7 @@ var Styles = [...]string{
 	"Tap-X",
 	"HTC Vive",
 	"Oculus Rift",
+	"Spectator",
 }
 
 // String is the string representation of a playstyle.
