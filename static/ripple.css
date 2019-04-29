@@ -456,19 +456,35 @@ a.camouflaged:hover {
 
 .premium
 {
-	color: yellow;
+	color: #ffdf2e; /*ingame "Supporter" colour*/
+	text-shadow: -2px -2px 0 #0033CC;
+}
+
+.mod
+{
+	color: orangered; /*ingame "BAT" colour*/
+	text-shadow: -2px -2px 0 #0033CC;
+}
+
+.admin
+{
+	color: #b7e8ff; /*ingame "Friend" colour*/
 	text-shadow: -2px -2px 0 #0033CC;
 }
 
 .owner
 {
-  
-  -webkit-animation: rainbow 3s infinite; 
-  -ms-animation: rainbow 3s infinite; 
-  animation: rainbow 3s infinite; 
+  /*
+  -webkit-animation: rainbow 3s infinite;
+  -ms-animation: rainbow 3s infinite;
+  animation: rainbow 3s infinite;
+  */
+  color: #a6d0ff; /*ingame "Peppy" colour*/
+  text-shadow: -2px -2px 0px #0033cc;
 }
 
-/* Chrome, Safari, Opera */
+/*
+Chrome, Safari, Opera
 @-webkit-keyframes rainbow
 {
 	0%{color: orange;}
@@ -484,7 +500,7 @@ a.camouflaged:hover {
 	100%{color: orange;}
 }
 
-/* Internet Explorer */
+Internet Explorer
 @-ms-keyframes rainbow
 {
 	0%{color: orange;}
@@ -500,7 +516,7 @@ a.camouflaged:hover {
 	100%{color: orange;}
 }
 
-/* Standard Syntax */
+Standard Syntax
 @keyframes rainbow
 {
 	0%{color: orange;}
@@ -514,7 +530,7 @@ a.camouflaged:hover {
 	80%{color: DeepPink;}
 	90%{color: DodgerBlue;}
 	100%{color: orange;}
-}
+}*/
 
 .dev
 {
