@@ -1,36 +1,34 @@
-// Package playstyle provides an enum for Ripple's playstyles.
+// Package playstyle provides an enum for Akatsuki's playstyles.
 package playstyle
 
 import "strings"
 
-// PlayStyle is a bitwise enum containing the instruments a Ripple user likes
+// PlayStyle is a bitwise enum containing the instruments a Akatsuki user likes
 // to play with.
 type PlayStyle int
 
-// various playstyles on ripple.
+// Various playstyles on Akatsuki.
 const (
 	Mouse int = 1 << iota
 	Tablet
-	Keyboard
+	TouchscreenKB
 	Touchscreen
-	Spoon
-	LeapMotion
-	OculusRift
-	Dick
-	Eggplant
+	MouseOnly
+	TapX
+	Vive
+	Oculus
 )
 
 // Styles are string representations of the various playstyles someone can have.
 var Styles = [...]string{
-	"Mouse",
-	"Tablet",
-	"Keyboard",
-	"Touchscreen",
-	"Spoon",
-	"Leap motion",
-	"Oculus rift",
-	"Dick",
-	"Eggplant",
+	"Mouse & Keyboard",
+	"Tablet & Keyboard",
+	"Touchscreen & Keyboard",
+	"Touchscreen Only",
+	"Mouse Only",
+	"Tap-X",
+	"HTC Vive",
+	"Oculus Rift",
 }
 
 // String is the string representation of a playstyle.
