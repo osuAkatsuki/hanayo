@@ -454,109 +454,85 @@ a.camouflaged:hover {
 	margin: 0 auto;
 }
 
-.premium
+.supporter
 {
 	color: #ffdf2e; /*ingame "Supporter" colour*/
-	text-shadow: -2px -2px 0 #0033CC;
+	text-shadow: -2px -2px 0px #0033CC;
 }
 
-.mod
+.premium
 {
-	color: orangered; /*ingame "BAT" colour*/
-	text-shadow: -2px -2px 0 #0033CC;
-}
-
-.admin
-{
-	color: #b7e8ff; /*ingame "Friend" colour*/
-	text-shadow: -2px -2px 0 #0033CC;
-}
-
-.owner
-{
-  /*
-  -webkit-animation: rainbow 3s infinite;
-  -ms-animation: rainbow 3s infinite;
-  animation: rainbow 3s infinite;
-  */
-  color: #a6d0ff; /*ingame "Peppy" colour*/
-  text-shadow: -2px -2px 0px #0033cc;
-}
-
-.rainbow
-{
-	font-size: 28px;
 	-webkit-animation: rainbow 3s infinite;
 	-ms-animation: rainbow 3s infinite;
 	animation: rainbow 3s infinite;
 	text-shadow: -2px -2px 0px #0033cc;
 }
 
-.gold
+.mod
 {
-	font-size: 28px;
-	color: gold;
-	text-shadow: -2px -2px 0px #0033cc;
+	color: orangered; /*ingame "BAT" colour*/
+	text-shadow: -2px -2px 0px #0033CC;
 }
 
+.admin
+{
+	color: #b7e8ff; /*ingame "Friend" colour*/
+	text-shadow: -2px -2px 0px #0033CC;
+}
 
-/*Chrome, Safari, Opera*/
+.dev
+{
+  color: #a6d0ff; /*ingame "Peppy" colour*/
+  text-shadow: -2px -2px 0px #0033cc;
+}
+
+/* Premium stuff */
+/* Chrome, Safari, Opera */
 @-webkit-keyframes rainbow
 {
 	0%{color: orange;}
 	10%{color: purple;}
 	20%{color: red;}
-	30%{color: CadetBlue;}
+	30%{color: cadetblue;}
 	40%{color: yellow;}
 	50%{color: coral;}
 	60%{color: green;}
 	70%{color: cyan;}
-	80%{color: DeepPink;}
-	90%{color: DodgerBlue;}
+	80%{color: deeppink;}
+	90%{color: dodgerblue;}
 	100%{color: orange;}
 }
 
-/*Internet Explorer*/
+/* Internet Explorer */
 @-ms-keyframes rainbow
 {
 	0%{color: orange;}
 	10%{color: purple;}
 	20%{color: red;}
-	30%{color: CadetBlue;}
+	30%{color: cadetblue;}
 	40%{color: yellow;}
 	50%{color: coral;}
 	60%{color: green;}
 	70%{color: cyan;}
-	80%{color: DeepPink;}
-	90%{color: DodgerBlue;}
+	80%{color: deeppink;}
+	90%{color: dodgerblue;}
 	100%{color: orange;}
 }
 
-/*Standard Syntax*/
+/* Standard Syntax */
 @keyframes rainbow
 {
 	0%{color: orange;}
 	10%{color: purple;}
 	20%{color: red;}
-	30%{color: CadetBlue;}
+	30%{color: cadetblue;}
 	40%{color: yellow;}
 	50%{color: coral;}
 	60%{color: green;}
 	70%{color: cyan;}
-	80%{color: DeepPink;}
-	90%{color: DodgerBlue;}
+	80%{color: deeppink;}
+	90%{color: dodgerblue;}
 	100%{color: orange;}
-}
-
-.dev
-{
-    color: Orange;
-    text-shadow:
-    -1px -1px 0 #104e8b,
-    1px -1px 0 #104e8b,
-    -1px 1px 0 #104e8b,
-    1px 1px 0 #104e8b;
-    
 }
 
 /* column in a grid which is both vertically and horizontally centered */
