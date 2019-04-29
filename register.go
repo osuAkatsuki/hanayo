@@ -555,4 +555,7 @@ var forbiddenUsernames = []string{
     "qsc20010",
     "curry3521",
     "s1ck",
+    "itswinter",
+    "remillia",
+    "astar",
 }
