@@ -133,7 +133,7 @@ function setFriend(i) {
     break;
   case 2:
     b
-      .addClass("red")
+      .addClass("pink")
       .attr("title", T("Unmutual friend"))
       .html("<i class='heart icon'></i>");
     break;
