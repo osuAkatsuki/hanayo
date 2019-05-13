@@ -9,11 +9,17 @@ KyutGrill=leaderboard2.jpg
 	{{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
 	<script>
 		var favouriteMode = {{ $favMode }};
+		var rx = {{ .Gin.Query "rx" | atoint | atLeastOne }};
 		var page = {{ .Gin.Query "p" | atoint | atLeastOne }};
 		var country = {{ .Gin.Query "country" }}.toLowerCase();
 		if (country.length != 2)
 			country = "";
 	</script>
+	<div class="ui two item menu" id="rx-menu">
+			<a class="0 item" data-rx="0" href="/scoreleaderboard?rx=0">Regular</a>
+			<a class="1 item" data-rx="1" href="/scoreleaderboard?rx=1">Relax</a>
+	</div>
+	
 	<div class="ui four item menu" id="mode-menu">
 		{{ range $k, $v := modes }}
 			<a class="{{ favMode $favMode $k }}item" data-mode="{{ $k }}" href="/scoreleaderboard?mode={{ $k }}">{{ $v }}</a>

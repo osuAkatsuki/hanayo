@@ -5,7 +5,6 @@ KyutGrill=team2.jpg
 */}}
 {{ define "tpl" }}
 <div class="ui container">
-	{{ $user := . }}
 	{{ $favModeRaw := .Get "users/self/favourite_mode" }}
 	{{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
 	<script>

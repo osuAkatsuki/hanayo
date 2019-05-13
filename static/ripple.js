@@ -130,6 +130,87 @@ var singlePageSnippets = {
       });
   },
 
+  "/scoreleaderboard" : function() {
+    page = page === 0 ? 1 : page;
+
+    function loadScoreLeaderboard() {
+      var wl = window.location;
+      window.history.replaceState(
+        '', document.title,
+        wl.pathname + "?mode=" + favouriteMode + "&p=" + page +
+              (country != "" ? "&country=" + encodeURI(country) : "") +
+              wl.hash);
+      api("scoreleaderboard", {
+        mode : favouriteMode,
+        p : page,
+        l : 50,
+        country : country,
+      },
+      function(data) {
+        var tb = $(".ui.table tbody");
+        tb.find("tr").remove();
+        if (data.users == null) {
+          disableSimplepagButtons(true);
+          data.users = [];
+        }
+        var i = 0;
+        data.users.forEach(function(v) {
+          tb.append($("<tr />").append(
+            $("<td />").text("#" + ((page - 1) * 50 + (++i))),
+            $("<td />").html("<a href='/u/" + v.id +
+                                   "' title='View profile'><i class='" +
+                                   v.country.toLowerCase() + " flag'></i>" +
+                                   escapeHTML(v.username) + "</a>"),
+            $("<td />").html(
+              "<b>" + addCommas(v.chosen_mode.ranked_score)),
+            $("<td />").text(v.chosen_mode.accuracy.toFixed(2) + "%"),
+            // bonus points if you get the undertale joke
+            $("<td />").html(addCommas(v.chosen_mode.playcount) +
+                                   " <i title='" + T("Why, LOVE, of course!") +
+                                   "'>(lv. " + v.chosen_mode.level.toFixed(0) +
+                                   ")</i>")));
+        });
+        disableSimplepagButtons(data.users.length < 50);
+      });
+    }
+
+    // country stuff
+    $("#country-chooser-modal")
+      .click(function() {
+        $(".ui.modal").modal("show");
+      });
+    $(".lb-country")
+      .click(function() {
+        country = $(this).data("country");
+        page = 1;
+        $(".ui.modal").modal("hide");
+        loadScoreLeaderboard();
+      });
+
+    loadScoreLeaderboard();
+    setupSimplepag(loadScoreLeaderboard);
+    $("#mode-menu .item")
+      .click(function(e) {
+        e.preventDefault();
+        $("#mode-menu .active.item").removeClass("active");
+        $(this).addClass("active");
+        favouriteMode = $(this).data("mode");
+        country = "";
+        page = 1;
+        loadScoreLeaderboard();
+      });
+  $("#rx-menu .item")
+      .click(function(e) {
+        e.preventDefault();
+        $("#rx-menu .active.item").removeClass("active");
+        $(this).addClass("active");
+        country = "";
+        page = 1;
+    rx = $(this).data("rx");
+        loadScoreLeaderboard();
+      });
+  },
+
   "/friends" : function() {
     $(".smalltext.button")
       .click(function() {
