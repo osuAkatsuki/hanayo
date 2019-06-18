@@ -12,7 +12,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 	{{ $ief := ieForm .Gin }}
 		<div class="ui segment">
 			<h1 class="ui center aligned header">
-				{{ $.T "So, what makes it so <i>Premium</i>?" }}
+				{{ $.T "So, what makes it so <i>Premium</i>?" | html }}
 				<div class="sub header">
 					{{ $.T "Well, it has many additional perks." }}
 				</div>
