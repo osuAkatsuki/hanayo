@@ -3,20 +3,20 @@
 	<!-->div class="ui segment">
 		{{ .T "Your account has been created, however it still <b>needs to be verified!</b> Please log in into <b><u>osu! (the game)</u></b> using your account. <b>There is <u>no email confirmation</u> at the moment. All you need to do is connect to Akatsuki from the osu! client!</b> If you're having trouble, <a href='/doc/1'>follow this guide</a>." | html }}
 	</div-->
-	<div class="ui centered error  message">
-		{{ .T "<b class='big text'>Do not let anyone except yourself log into your Akatsuki account!</b><br> Get on our <a href='%s'>Discord server's</a> #help channel instead (after following the steps on this page) so that we can help you out if you have trouble connecting." (config "DiscordServer") | html }}
-	</div>
+	<!-->div class="ui centered error message">
+		{{ .T "<b class='big text'>Do not let anyone except yourself log into your Akatsuki account!</b><br> Join our <a href='%s'>Discord server</a> and move to the #help channel instead (after following the steps on this page) so that we can help you out if you have trouble connecting." (config "DiscordServer") | html }}
+	</div-->
 	<div class="ui segment">
-		<h1 class="ui heading">{{ .T "The Guide (<a href='/doc/connection_guide' target='_blank'>Windows</a>, <a href='/doc/linux' target='_blank'>Linux</a>). TL;DR version below." | html }}</h1>
+		<h1 class="ui heading">{{ .T "<a href='/doc/connection_guide' target='_blank'>The Guide</a>. TL;DR version below." | html }}</h1>
 		<ol class="ui list">
 			<li><a href="/static/switcher.exe"><b>{{ .T "Download the server switcher" }}</b></a></li>
-			<li>{{ .T "Extract it, disable your antivirus, execute <i>switcher.exe</i> <b>as administrator</b>" | html }}</li>
-			<li>{{ .T "Click on <b>Connect to Akatsuki</b>, then <b>Ok/Yes</b>" | html }}</li>
-			<li>{{ .T "Make sure the switcher says you're connected to <b>Akatsuki</b>" | html }}</li>
-			<li>{{ .T "If it says something about read-only mode, go to <code>C:\\Windows\\System32\\Drivers\\etc</code>, open the hosts' file Properties and make sure it's not set to \"Read only\"." | html }}</li>
+			<li>{{ .T "Extract it, disable your antivirus, execute <i>switcher.exe</i> <b>as administrator</b>." | html }}</li>
+			<li>{{ .T "Click on <b>On/Off</b>, then <b>Install certificate</b>." | html }}</li>
+			<li>{{ .T "Make sure the switcher says \"You are playing on <b>Akatsuki</b>.\"" | html }}</li>
+			<li>{{ .T "If it says something about read-only mode, you most likely have an antivirus program of some sort blocking access for us to write to <code>C:\\Windows\\System32\\Drivers\\etc</code>." | html }}</li>
 		</ol>
 		<p>
-			{{ .T "If you're still having trouble, then again, get on our <a href='%s'>Discord server's</a> #help channel. To have a better chance to be answered, say \"apples\" anywhere in your messages so that we know you have actually read this." (config "DiscordServer") | html }}
+			{{ .T "If you're still having trouble, then again, join our <a href='%s'>Discord server</a> and move to the #help channel. Please provide as much information as you can in your message." (config "DiscordServer") | html }}
 		</p>
 	</div>
 	<!-->div class="ui center aligned segment">

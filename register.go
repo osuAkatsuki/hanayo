@@ -160,7 +160,7 @@ func registerSubmit(c *gin.Context) {
 
 	rd.Incr("ripple:registered_users")
 
-	addMessage(c, successMessage{T(c, "You have been successfully registered on Akatsuki!")})
+	//addMessage(c, successMessage{T(c, "You have been successfully registered on Akatsuki!")})
 	getSession(c).Save()
 	c.Redirect(302, "/register/verify?u="+strconv.Itoa(int(lid)))
 }
@@ -220,7 +220,7 @@ func verifyAccount(c *gin.Context) {
 	addMessage(c, successMessage{T(c, "You have been successfully registered on Akatsuki!")})
 
 	resp(c, 200, "register/verify.html", &baseTemplateData{
-		TitleBar:       "Verify account",
+		TitleBar:       "Welcome to Akatsuki!",
 		HeadingOnRight: true,
 		KyutGrill:      "welcome.jpg",
 	})
