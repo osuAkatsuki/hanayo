@@ -1,8 +1,8 @@
 {{ define "tpl" }}
 <div class="ui container">
-	<div class="ui segment">
+	<!-->div class="ui segment">
 		{{ .T "Your account has been created, however it still <b>needs to be verified!</b> Please log in into <b><u>osu! (the game)</u></b> using your account. <b>There is <u>no email confirmation</u> at the moment. All you need to do is connect to Akatsuki from the osu! client!</b> If you're having trouble, <a href='/doc/1'>follow this guide</a>." | html }}
-	</div>
+	</div-->
 	<div class="ui centered error  message">
 		{{ .T "<b class='big text'>Do not let anyone except yourself log into your Akatsuki account!</b><br> Get on our <a href='%s'>Discord server's</a> #help channel instead (after following the steps on this page) so that we can help you out if you have trouble connecting." (config "DiscordServer") | html }}
 	</div>
@@ -19,9 +19,9 @@
 			{{ .T "If you're still having trouble, then again, get on our <a href='%s'>Discord server's</a> #help channel. To have a better chance to be answered, say \"apples\" anywhere in your messages so that we know you have actually read this." (config "DiscordServer") | html }}
 		</p>
 	</div>
-	<div class="ui center aligned segment">
+	<!-->div class="ui center aligned segment">
 		<h1 class="ui heading">{{ .T "Waiting for verification" }}</h1>
 		<i class="circle notched huge loading icon"></i>
-	</div>
+	</div-->
 </div>
 {{ end }}

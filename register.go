@@ -217,6 +217,8 @@ func verifyAccount(c *gin.Context) {
 		//return
 	}*/
 
+	addMessage(c, successMessage{T(c, "You have been successfully registered on Akatsuki!")})
+
 	resp(c, 200, "register/verify.html", &baseTemplateData{
 		TitleBar:       "Verify account",
 		HeadingOnRight: true,
