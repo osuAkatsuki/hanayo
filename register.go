@@ -135,28 +135,17 @@ func registerSubmit(c *gin.Context) {
 		return
 	}
 
-	res, err := db.Exec(`INSERT INTO users(username, username_safe, password_md5, salt, email, register_datetime, privileges, password_version) VALUES (?, ?, ?, '', ?, ?, ?, 2);`,
-		username, safeUsername(username), pass, c.PostForm("email"), time.Now().Unix(), common.UserPrivilegeNormal + common.UserPrivilegePublic)
+	res, err := db.Exec(`INSERT INTO users(username, username_safe, password_md5, salt, email, register_datetime, privileges, password_version, latest_activity) VALUES (?, ?, ?, '', ?, ?, ?, 2, ?);`,
+		username, safeUsername(username), pass, c.PostForm("email"), time.Now().Unix(), common.UserPrivilegeNormal + common.UserPrivilegePublic, time.Now().Unix())
 	if err != nil {
 		registerResp(c, errorMessage{T(c, "Whoops, an error slipped in. You might have been registered, though. I don't know.")})
 		return
 	}
 	lid, _ := res.LastInsertId()
 
-	db.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style,
-									   ranked_score_std, playcount_std, total_score_std,
-									   ranked_score_taiko, playcount_taiko, total_score_taiko,
-									   ranked_score_ctb, playcount_ctb, total_score_ctb,
-									   ranked_score_mania, playcount_mania, total_score_mania, country)
-									   VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	db.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
 
-	db.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style,
-									ranked_score_std, playcount_std, total_score_std,
-									ranked_score_taiko, playcount_taiko, total_score_taiko,
-									ranked_score_ctb, playcount_ctb, total_score_ctb,
-									ranked_score_mania, playcount_mania, total_score_mania, country)
-									VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
-
+	db.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
 	/* Beta Keys
 	db.Exec("UPDATE `beta_keys` set used = 1 where key = ?", key)
 	
@@ -164,7 +153,7 @@ func registerSubmit(c *gin.Context) {
 	schiavo.CMs.Send(fmt.Sprintf("User (**%s** | %s) registered from %s", username, c.PostForm("email"), clientIP(c)))
 	*/
 	// delete the key c
-	db.Exec("DELETE FROM beta_keys WHERE beta_key = ?", c.PostForm("key"))
+	//db.Exec("DELETE FROM beta_keys WHERE beta_key = ?", c.PostForm("key"))
 
 	setYCookie(int(lid), c)
 	logIP(c, int(lid))
@@ -212,6 +201,7 @@ func verifyAccount(c *gin.Context) {
 		return
 	}
 
+	/*
 	i, ret := checkUInQS(c)
 	if ret {
 		return
@@ -221,11 +211,11 @@ func verifyAccount(c *gin.Context) {
 	var rPrivileges uint64
 	db.Get(&rPrivileges, "SELECT privileges FROM users WHERE id = ?", i)
 	if common.UserPrivileges(rPrivileges)&common.UserPrivilegePendingVerification == 0 {
-		addMessage(c, warningMessage{T(c, "Nope.")})
+		//addMessage(c, warningMessage{T(c, "Nope.")})
 		sess.Save()
-		c.Redirect(302, "/")
-		return
-	}
+		//c.Redirect(302, "/")
+		//return
+	}*/
 
 	resp(c, 200, "register/verify.html", &baseTemplateData{
 		TitleBar:       "Verify account",
