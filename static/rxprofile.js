@@ -180,19 +180,19 @@ i18next.on('loaded', function(loaded) {
 function initialiseScores(el, mode) {
   el.attr("data-loaded", "1");
   var best = defaultScoreTable.clone(true).addClass("orange");
-  var first = defaultScoreTable.clone(true).addClass("blue");
+  //var first = defaultScoreTable.clone(true).addClass("blue");
   var recent = defaultScoreTable.clone(true).addClass("blue");
   best.attr("data-type", "best");
-  first.attr("data-type", "first");
+  //first.attr("data-type", "first");
   recent.attr("data-type", "recent");
   recent.addClass("no bottom margin");
   el.append($("<div class='ui segments no bottom margin' />").append(
     $("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Best scores") + "</h2>", best),
-    $("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + "</h2>", first),
+    //$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + "</h2>", first),
     $("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Recent scores") + "</h2>", recent)
   ));
   loadScoresPage("best", mode);
-  loadScoresPage("first", mode);
+  //loadScoresPage("first", mode);
   loadScoresPage("recent", mode);
 };
 function loadMoreClick() {
@@ -206,10 +206,10 @@ function loadMoreClick() {
 }
 // currentPage for each mode
 var currentPage = {
-  0: {best: 0, recent: 0, first: 0},
-  1: {best: 0, recent: 0, first: 0},
-  2: {best: 0, recent: 0, first: 0},
-  3: {best: 0, recent: 0, first: 0}
+  0: {best: 0, recent: 0/*, first: 0*/},
+  1: {best: 0, recent: 0/*, first: 0*/},
+  2: {best: 0, recent: 0/*, first: 0*/},
+  3: {best: 0, recent: 0/*, first: 0*/}
 };
 var scoreStore = {};
 function loadScoresPage(type, mode) {
