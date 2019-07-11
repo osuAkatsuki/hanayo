@@ -334,5 +334,5 @@ var forbiddenUsernames = []string{
 	"konnan", "ppy", "nejzha", "kochiya", "haruki", "kaguya", "miniature lamp", "phabled", "hentai", "coletaku", "zoom", "mathyu", "windshear",
 	"roma4ka", "bad girl", "arfung", "skyapple", "hotzi6", "joueur de visee", "ted", "willcookie", "zerrah", "-ristuki", "yuudachi", "idealism",
 	"shiiiiiii", "shayell", "parky", "torahiko", "digidrake", "a12456", "chal", "mathi", "relaxingtuna", "eriksu", "firedigger", "-hibiki-",
-	"notititititi", "mysliderbreak", "qsc20010", "curry3521", "s1ck", "itswinter", "remillia", "astar",
+	"notititititi", "mysliderbreak", "qsc20010", "curry3521", "s1ck", "itswinter", "remillia", "astar", "aika", "ruri",
 }

@@ -42,8 +42,7 @@ func userProfile(c *gin.Context) {
 			c.Error(err)
 		}
 	}
-	if db.QueryRow("SELECT 1 FROM users_stats WHERE id = ? AND prefer_relax = 1", userID).
-		Scan(new(int)) != sql.ErrNoRows {
+	if db.QueryRow("SELECT 1 FROM users_stats WHERE id = ? AND prefer_relax = 1", userID).Scan(new(int)) != sql.ErrNoRows {
 		getSession(c).Save()
 		c.Redirect(302, "/rx/u/"+strconv.Itoa(userID))
 		return
