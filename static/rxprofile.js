@@ -264,7 +264,7 @@ function downloadStar(id) {
 function weightedPP(type, page, idx, pp) {
   if (type != "best" || pp == 0)
     return "";
-  var perc = Math.pow(0.95, ((page - 1) * 20) + idx);
+  var perc = Math.pow(0.95, ((page - 1) * 10) + idx);
   var wpp = pp * perc;
   return "<i title='Weighted PP, " + Math.round(perc*100) + "%'>(" + wpp.toFixed(2) + "pp)</i>";
 }
