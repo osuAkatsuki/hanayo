@@ -17,7 +17,7 @@ button:focus {
     align-items: flex-end;
     height: 260px;
     padding-right: 34px;
-    box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
+    box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.51);
 }
 .quaver {
     background-image: url(/static/characters/quaver.png);

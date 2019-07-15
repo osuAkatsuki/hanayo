@@ -15433,6 +15433,7 @@ ol.ui.horizontal.list li:before,
 
 .ui.segment:first-child {
   margin-top: 0em;
+  box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.51);
 }
 
 .ui.segment:last-child {
