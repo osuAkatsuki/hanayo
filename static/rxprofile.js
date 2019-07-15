@@ -223,7 +223,7 @@ function loadScoresPage(type, mode) {
   api("users/scores/" + type, {
     mode: mode,
     p: page,
-    l: 20,
+    l: 10,
     rx: 1,
     id: userID,
   }, function(r) {
