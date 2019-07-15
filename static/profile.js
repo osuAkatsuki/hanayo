@@ -252,7 +252,7 @@ function loadScoresPage(type, mode) {
 			e.stopPropagation();
 		}).removeClass("new");
 		var enable = true;
-		if (r.scores.length != 20)
+		if (r.scores.length != 10)
 			enable = false;
 		disableLoadMoreButton(type, mode, enable);
 	});
