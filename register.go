@@ -59,7 +59,7 @@ func registerSubmit(c *gin.Context) {
 	}
 	*/
 
-	// check whether an username is e.g. cookiezi, shigetora, peppy, wubwoofwolf, loctav
+	// check whether an username is in forbidden usernames.
 	if in(strings.ToLower(username), forbiddenUsernames) {
 		registerResp(c, errorMessage{T(c, "You're not allowed to register with that username.")})
 		return
@@ -334,5 +334,5 @@ var forbiddenUsernames = []string{
 	"konnan", "ppy", "nejzha", "kochiya", "haruki", "kaguya", "miniature lamp", "phabled", "hentai", "coletaku", "zoom", "mathyu", "windshear",
 	"roma4ka", "bad girl", "arfung", "skyapple", "hotzi6", "joueur de visee", "ted", "willcookie", "zerrah", "-ristuki", "yuudachi", "idealism",
 	"shiiiiiii", "shayell", "parky", "torahiko", "digidrake", "a12456", "chal", "mathi", "relaxingtuna", "eriksu", "firedigger", "-hibiki-",
-	"notititititi", "mysliderbreak", "qsc20010", "curry3521", "s1ck", "itswinter", "remillia", "astar", "aika", "ruri",
+	"notititititi", "mysliderbreak", "qsc20010", "curry3521", "s1ck", "itswinter", "remillia", "astar", "aika", "ruri", "cpugeek",
 }
