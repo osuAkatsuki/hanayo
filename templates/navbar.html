@@ -25,13 +25,13 @@
 					{{ navbarItem .Path (.T "Documentation") "/doc" }}
 					{{ navbarItem .Path (.T "Rules") "/doc/rules" }}
 					{{ navbarItem .Path (.T "YouTube Channel") "https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" }}
-					{{ navbarItem .Path (.T "Chat (Discord)") "https://discord.gg/5cBtMPW" }}
 				</div>
 			</div>
 			{{/* if .Context.User.Username}}
 				{{ navbarItem .Path (.T "Beatmaps") "/beatmaps" }}
 			{{ end */}}
 
+			{{ navbarItem .Path (.T "Discord") "https://discord.gg/5cBtMPW" }}
 			{{ navbarItem .Path (.T "Server Switcher" | printf "<i class=\"green cloud download icon\"></i>%s") "/static/switcher.exe" }}
 			{{ if $isAdmin }}{{ navbarItem .Path (.T "Admin Panel" | printf "<b>%s</b>") "https://old.akatsuki.pw/index.php?p=100" }}{{ end }}
 		{{ end }}
