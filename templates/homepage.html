@@ -134,7 +134,7 @@
                         <i class="thumbs up icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ $d := (qb "SELECT ROUND(scores.pp) AS pp, users.username, scores.userid FROM scores LEFT JOIN beatmaps ON beatmaps.beatmap_md5 = scores.beatmap_md5 LEFT JOIN users ON users.id = scores.userid WHERE scores.pp < 1200 users.privileges & 1 > 0 AND scores.completed = 3 AND scores.play_mode = 0 AND beatmaps.ranked = 2 ORDER BY scores.pp DESC LIMIT 1") }}
+                        {{ $d := (qb "SELECT ROUND(scores.pp) AS pp, users.username, scores.userid FROM scores LEFT JOIN beatmaps ON beatmaps.beatmap_md5 = scores.beatmap_md5 LEFT JOIN users ON users.id = scores.userid WHERE scores.pp < 1200 AND users.privileges & 1 > 0 AND scores.completed = 3 AND scores.play_mode = 0 AND beatmaps.ranked = 2 ORDER BY scores.pp DESC LIMIT 1") }}
                        <p class="status-head">{{ $d.pp }}pp</p>
                        <p class="status-footer">Top score (Vanilla)</p>
                        <p class="status-head" style="font-size: 12px!important;">Done by <a href="/u/{{ $d.userid }}">{{ $d.username }}</a></p>
