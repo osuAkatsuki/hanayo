@@ -37,9 +37,8 @@
 
 			{{ $super := has .privileges 15728639 }}
 			{{ $dev  := has .privileges 11534335 }}
-			{{ $admin  := has .privileges 7262715 }}
-			{{ $mod  := has .privileges 786499 }}
-			{{ $qat := has .privileges 16777483 }}
+			{{ $admin  := has .privileges 11457023 }}
+			{{ $mod  := has .privileges 786507 }}
 			{{ $bn  := has .privileges 267 }}
 			{{ $premium := has .privileges 8388615 }}
 			{{ $supporter := has .privileges 4 }}
@@ -135,7 +134,7 @@
 							<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username }}
 						{{ end }}
 						</h1>
-						
+
 						{{ with bget "isOnline?id=%.0f" .id }}
 							<div class="subtitle">
 								<i class="{{ if .result }}green{{ else }}red{{ end }} circle icon"></i>
@@ -192,35 +191,31 @@
 						<div class="column">
 							{{ if $super }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is the <i class="blue code small icon"></i><b>Head Developer</b> 
+								 is the <i class="blue code small icon"></i><b>Head Developer</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $dev }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is an <i class="blue code small icon"></i><b>Developer</b> 
+								 is an <i class="blue code small icon"></i><b>Developer</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $admin }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is an <i class="red lightning small icon"></i><b>Administrator</b> 
+								 is an <i class="red lightning small icon"></i><b>Administrator</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $mod }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="blue star small icon"></i><b>Moderator</b> 
-								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
-							{{ else if $qat }}
-								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="orange cogs small icon"></i><b>QAT Member</b> 
+								 is a <i class="blue star small icon"></i><b>Moderator</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $bn }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="orange universal access small icon"></i><b>Nominator</b> 
+								 is a <i class="orange universal access small icon"></i><b>Nominator</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $premium }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="yellow credit card small icon"></i><b>Premium Member</b> 
+								 is a <i class="yellow credit card small icon"></i><b>Premium Member</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $supporter }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="pink heart small icon"></i><b>Supporter</b> 
+								 is a <i class="pink heart small icon"></i><b>Supporter</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else }}
 								{{ $global.T "<b>%s</b> is a player from <b>%s</b>." .username (country .country true) | html }}
@@ -254,7 +249,7 @@
 							{{ $global.T "This user hasn't got any badges!" }}
 						{{ else }}
 							<div class="ui grid">
-							
+
 								{{ range .badges }}
 									<div class="eight wide centered column">
 										<i class="circular {{ faIcon .icon }} big icon"></i><br>
