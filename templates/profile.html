@@ -278,14 +278,18 @@
 											{{ end }}
 											{{ with .country_leaderboard_rank }}
 												<tr>
-													<td><b>{{ $global.T "Country rank" }} &nbsp;{{ country $user.country false }}</b></td>
+													<td><b>{{ $global.T "Country rank" }} &nbsp;
+														<a href="/leaderboard?mode={{ $k }}&country={{ $user.country }}">
+															</a>{{ country $user.country false }}
+														</a>
+													</b></td>
 													<td class="right aligned">#{{ . }}</td>
 												</tr>
 											{{ end }}
-											<!-->tr>
+											<!--tr>
 												<td><b>{{ $global.T "Clan" }}</b></td>
 												<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode={{ $k }}">{{ $user.clan.name }}</a></td>
-											</tr-->
+											<tr-->
 											<tr>
 												<td><b>{{ $global.T "PP" }}</b></td>
 												<td class="right aligned">{{ humanize .pp }}</td>

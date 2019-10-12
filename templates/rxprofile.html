@@ -244,28 +244,28 @@
 							</div>
 						</div>
 
-					<div class="column">
-						{{ if and (not .badges) (not .custom_badge) }}
-							{{ $global.T "This user hasn't got any badges!" }}
-						{{ else }}
-							<div class="ui grid">
+						<div class="column">
+							{{ if and (not .badges) (not .custom_badge) }}
+								{{ $global.T "This user hasn't got any badges!" }}
+							{{ else }}
+								<div class="ui grid">
 
-								{{ range .badges }}
-									<div class="eight wide centered column">
-										<i class="circular {{ faIcon .icon }} big icon"></i><br>
-										<b>{{ .name }}</b>
+									{{ range .badges }}
+										<div class="eight wide centered column">
+											<i class="circular {{ faIcon .icon }} big icon"></i><br>
+											<b>{{ .name }}</b>
 
-									</div>
-								{{ end }}
-								{{ with .custom_badge }}
-									<div class="eight wide centered column">
-										<i class="circular {{ faIcon .icon }} big icon"></i><br>
-										<b><i>{{ .name }}</i></b>
-									</div>
-								{{ end }}
-							</div>
-						{{ end }}
-					</div>
+										</div>
+									{{ end }}
+									{{ with .custom_badge }}
+										<div class="eight wide centered column">
+											<i class="circular {{ faIcon .icon }} big icon"></i><br>
+											<b><i>{{ .name }}</i></b>
+										</div>
+									{{ end }}
+								</div>
+							{{ end }}
+						</div>
 
 						<div class="column">
 							{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
@@ -280,14 +280,18 @@
 											{{ end }}
 											{{ with .country_leaderboard_rank }}
 												<tr>
-													<td><b>{{ $global.T "Country rank" }} &nbsp;{{ country $user.country false }}</b></td>
+													<td><b>{{ $global.T "Country rank" }} &nbsp;
+														<a href="/leaderboard?mode={{ $k }}&country={{ $user.country }}">
+															</a>{{ country $user.country false }}
+														</a>
+													</b></td>
 													<td class="right aligned">#{{ . }}</td>
 												</tr>
 											{{ end }}
-											<!-->tr>
+											<!--tr>
 												<td><b>{{ $global.T "Clan" }}</b></td>
 												<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode={{ $k }}">{{ $user.clan.name }}</a></td>
-											</tr-->
+											<tr-->
 											<tr>
 												<td><b>{{ $global.T "PP" }}</b></td>
 												<td class="right aligned">{{ humanize .pp }}</td>
@@ -309,8 +313,8 @@
 												<td class="right aligned">{{ playtimeConv .playtime }}</td>
 											</tr>
 											<tr>
-												<td><b>{{ $global.T "Playtime" }}</b></td>
-												<td class="right aligned">{{ playtimeConv .playtime }}</td>
+												<td><b>{{ $global.T "Total Playtime" }}</b></td>
+												<td class="right aligned">{{ playtimeConv .total_playtime }}</td>
 											</tr>
 											<tr>
 												<td><b>{{ $global.T "Replays watched" }}</b></td>
