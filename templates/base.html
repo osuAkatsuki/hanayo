@@ -119,7 +119,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="seven wide column">
+							<div class="three wide column">
 								<div class="footer-info-block">
 									<a class="footer-title">About Us</a>
 									<ul style="list-style-type: none; padding: 0; margin: 0;">
@@ -132,6 +132,30 @@
 									</ul>
 								</div>
 							</div>
+							<div class="three wide column" style="padding-top: 3em;">
+								<div class="dropup dropup-language dropup-block">
+									{{ $lang := .Context.Language }}
+									<div class="language">
+									{{ with $lang }}
+										{{ $info := languageInformationByNameShort . }}
+										{{ $info.Name }}
+										<img src="/static/images/flags/{{ $info.CountryShort }}.png" class="dropup-flags">
+									{{ else }}
+										English
+										<img src="https://osu.gatari.pw/static/images/flags/US.png" class="dropup-flags">
+									{{ end }}
+									</div>
+									<div class="dropup-content">
+										{{ range languageInformation }}
+											<li class="language-select {{ if eq .NameShort $lang }}selected{{ end }}" data-lang="{{ .NameShort }}">
+												{{ .Name }}
+												<img src="/static/images/flags/{{ .CountryShort }}.png" class="dropup-flags">
+											</li>
+										{{ end }}
+									</div>
+								</div>
+							</div>
+							<div class="one wide column" style="box-shadow: 0 0 0 0;"></div>
 							<div class="footer-logo">
 								<span>osu!Akatsuki</span> 
 								<br><br>
