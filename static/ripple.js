@@ -609,7 +609,7 @@ $(document)
     $.timeago.settings.allowFuture = true;
     $("time.timeago").timeago();
 
-    $("#language-selector .item")
+    $("#language-select")
       .click(function() {
         var lang = $(this).data("lang");
         document.cookie = "language=" + lang + ";path=/;max-age=31536000";
