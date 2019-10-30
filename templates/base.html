@@ -174,15 +174,6 @@
 			};
 			var currentUserID = {{ .Context.User.ID }};
 		</script>
-		<script>
-			$(".language-select").on('click', function(event){
-    				event.stopPropagation();
-   				event.stopImmediatePropagation();
-				var lang = $(this).data("lang");
-        			document.cookie = "language=" + lang + ";path=/;max-age=31536000";
-				window.location.reload();
-			});
-		</script>
 		{{/* If we got some more scripts to print, print'em */}}
 		<script src="//twemoji.maxcdn.com/2/twemoji.min.js?2.2"></script>
 		<script src="/static/dist.min.js?{{ unixNano }}"></script>
