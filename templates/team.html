@@ -1,107 +1,106 @@
 {{/*###
-Handler=/team
-TitleBar=Team
-Include=user_group.html
-KyutGrill=team2.jpg
-*/}}
-{{ define "tpl" }}
-<div class="ui container">
-	<div class="ui segments">
-		<div class="ui center aligned segment">
-			<h3>{{ .T "This is a list of the wonderful people who keep Akatsuki up and running and take pride in its community." }}</h3>
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Founder & Head Developer" }}</h1>
-			<p>
-				{{ .T "Essentially a developer, and community manager combined, who works on everything from managing the team to making this page look pretty. He has a darker blue colour in the in-game chat." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 35) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Administrators" }}</h1>
-			<p>
-				{{ .T "Administrators deal with bans, silences, name changes and pretty much everything that has to do with the community." }}<br>
-				{{ .T "They take care of our Discord server, and keep the community free of rule breakers. They have a light blue colour in the in-game chat." | html }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Developers" }}</h1>
-			<p>
-				{{ .T "Developers add new features to the server, squash bugs, keep the server up and running and take care of its maintenance. Developers have a darker blue name in the in-game chat." }}<br>
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 2) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Moderators" }}</h1>
-			<p>
-				{{ .T "Moderators manage the chat to make sure The Law&trade; (the rules) is respected. They have a red name in the in-game chat." | html }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Quality Assurance Team" }}</h1>
-			<p>
-				{{ .T "QATs make the final decision on whether maps are to have their ranked statuses changed after the Beatmap Nominators vote upon them." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 77) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Beatmap Nominators" }}</h1>
-			<p>
-				{{ .T "BNs vote on requested by the community to have their ranked statuses changed." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 53) }}
-		</div>
-		<!-->div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Akatsuki People" }}</h1>
-			<p>
-				{{ .T "These members help manage Akatsuki's YouTube channel; uploading plays, and keep it running nice and smooth." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 76) }}
-		</div-->
-	</div>
-	<div class="ui segments">
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Special thanks" }}</h1>
-			<p>{{ .T "Here's a list of people who helped with Akatsuki" }}</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 42) }}
-		</div>
-		<div class="ui segment">
-			<ul class="ui list">
-				<li>
-					{{ .T "<b>Franc[e]sco/lolisamurai</b>, for <a href='https://github.com/Francesco149/oppai'>oppai</a>, used as standard pp calculator." | html }}<br>
-					oppai is licensed under GPL v3. Our implementation can be found <a href="https://github.com/osuAkatsuki/lets/src/master/pp/rippoppai.py">here</a>.
-				</li>
-				<li>
-					{{ .T "<b>Tom94</b>, for <a href='https://github.com/ppy/osu-performance'>osu-performance</a>, used as a reference for our mania pp calculator." | html }}<br>
-					osu-performance is licensed under AGPL v3. Our implementation can be found <a href="https://github.com/osuAkatsuki/lets/src/master/pp/wifipiano2.py">here</a>.
-				</li>
-				<li>{{ .T "<b><a href='http://ripple.moe/'>Ripple</a></b>, for the frontend base and api." | html }}</li>
-				<li>{{ .T "<b><a href='http://gatari.pw/'>Gatari</a></b> and <b><a href='http://atoka.pw/'>Atoka</a></b>, for the resources for our current frontend." | html }}</li>
-				<li>{{ .T "<b><a href='http://akatsuki.pw/u/1000'>rumoi</b></a>, for his amazing work on the anticheat and help as a Developer." | html }}</li>
-				<li>{{ .T "<b><a href='http://akatsuki.pw/u/1400'>maxi</b></a>, for allowing us to use his beatmap mirror." | html }}</li>
-				<li>{{ .T "<b><a href='http://akatsuki.pw/u/1317'>Ewick</a></b>, for designing the Akatsuki logo." | html }}</li>
-				<li>{{ .T "<b><a id='everyone' class='clickable'>Everyone</a></b> who has supported Akatsuki by donating." | html }}</li>
-			</ul>
-		</div>
-	</div>
-	{{ $ := . }}
-	{{ .T "Looking for how you should contact our team? Feel free to <a href='https://discord.gg/5cBtMPW'>join our discord</a> for support." | html }}
-	<div class="ui modal">
-		<div class="header"><h2 class="ui header">{{ .T "They told me these are very cool people." }}</h2></div>
-			<div class="content">
-				{{ template "userGroup" (.Get "badges/members?id=%d" 59) }}
-				<!-- Probably most shit coded part of Hanayo -->
-				<br>
-				<div class="centered">
-					<br><br>
-					<b>{{ $.T "Do you want to be in this list?" }}</b><br>
-					<a href="/premium"><b>{{ $.T "Become a premium member!" }}</b></a><br>
-					<i>{{ $.T "(You get other cool perks too)" }}</i>
-				</div>
+	Handler=/team
+	TitleBar=Team
+	Include=user_group.html
+	KyutGrill=team2.jpg
+	*/}}
+	{{ define "tpl" }}
+	<div class="ui container">
+		<div class="ui segments">
+			<div class="ui center aligned segment">
+				<h3>{{ .T "This is a list of the wonderful people who keep Akatsuki up and running and take pride in its community." }}</h3>
 			</div>
+			<div class="ui center aligned segment">
+				<h1 class="ui heading">{{ .T "Founder & Head Developer" }}</h1>
+				<p>
+					{{ .T "Essentially a developer, and community manager combined, who works on everything from managing the team to making this page look pretty. He has a darker blue colour in the in-game chat." }}
+				</p>
+				{{ template "userGroup" (.Get "badges/members?id=%d" 35) }}
+			</div>
+			<div class="ui center aligned segment">
+				<h1 class="ui heading">{{ .T "Administrators" }}</h1>
+				<p>
+					{{ .T "Administrators deal with bans, silences, name changes and pretty much everything that has to do with the community." }}<br>
+					{{ .T "They take care of our Discord server, and keep the community free of rule breakers. They have a light blue colour in the in-game chat." | html }}
+				</p>
+				{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
+			</div>
+			<div class="ui center aligned segment">
+				<h1 class="ui heading">{{ .T "Developers" }}</h1>
+				<p>
+					{{ .T "Developers add new features to the server, squash bugs, keep the server up and running and take care of its maintenance. Developers have a darker blue name in the in-game chat." }}<br>
+				</p>
+				{{ template "userGroup" (.Get "badges/members?id=%d" 2) }}
+			</div>
+			<div class="ui center aligned segment">
+				<h1 class="ui heading">{{ .T "Moderators" }}</h1>
+				<p>
+					{{ .T "Moderators manage the chat to make sure The Law&trade; (the rules) is respected. They have a red name in the in-game chat." | html }}
+				</p>
+				{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
+			</div>
+			<div class="ui center aligned segment">
+				<h1 class="ui heading">{{ .T "Quality Assurance Team" }}</h1>
+				<p>
+					{{ .T "QATs make the final decision on whether maps are to have their ranked statuses changed after the Beatmap Nominators vote upon them." }}
+				</p>
+				{{ template "userGroup" (.Get "badges/members?id=%d" 77) }}
+			</div>
+			<div class="ui center aligned segment">
+				<h1 class="ui heading">{{ .T "Beatmap Nominators" }}</h1>
+				<p>
+					{{ .T "BNs vote on requested by the community to have their ranked statuses changed." }}
+				</p>
+				{{ template "userGroup" (.Get "badges/members?id=%d" 53) }}
+			</div>
+			<!-->div class="ui center aligned segment">
+				<h1 class="ui heading">{{ .T "Akatsuki People" }}</h1>
+				<p>
+					{{ .T "These members help manage Akatsuki's YouTube channel; uploading plays, and keep it running nice and smooth." }}
+				</p>
+				{{ template "userGroup" (.Get "badges/members?id=%d" 76) }}
+			</div-->
+		</div>
+		<div class="ui segments">
+			<div class="ui center aligned segment">
+				<h1 class="ui heading">{{ .T "Special thanks" }}</h1>
+				<p>{{ .T "Here's a list of people who helped with Akatsuki" }}</p>
+				{{ template "userGroup" (.Get "badges/members?id=%d" 42) }}
+			</div>
+			<div class="ui segment">
+				<ul class="ui list">
+					<li>
+						{{ .T "<b>Franc[e]sco/lolisamurai</b>, for <a href='https://github.com/Francesco149/oppai'>oppai</a>, used as standard pp calculator." | html }}<br>
+						oppai is licensed under GPL v3. Our implementation can be found <a href="https://github.com/osuAkatsuki/lets/src/master/pp/rippoppai.py">here</a>.
+					</li>
+					<li>
+						{{ .T "<b>Tom94</b>, for <a href='https://github.com/ppy/osu-performance'>osu-performance</a>, used as a reference for our mania pp calculator." | html }}<br>
+						osu-performance is licensed under AGPL v3. Our implementation can be found <a href="https://github.com/osuAkatsuki/lets/src/master/pp/wifipiano2.py">here</a>.
+					</li>
+					<li>{{ .T "<b><a href='https://ripple.moe/'>Ripple</a></b>, for the frontend base and api." | html }}</li>
+					<li>{{ .T "<b><a href='https://gatari.pw/'>Gatari</a></b> and <b><a href='https://atoka.pw/'>Atoka</a></b>, for the resources for our current frontend." | html }}</li>
+					<li>{{ .T "<b><a href='https://akatsuki.pw/u/1776'>Mempler</a></b>, for his continuous work on <a href='https://pisstau.be/'>pisstau.be</a>, which we use as our beatmap mirror." | html }}</li>
+					<li>{{ .T "<b><a href='https://akatsuki.pw/u/1000'>rumoi</a></b>, for his work on the anticheat." | html }}</li>
+					<li>{{ .T "<b><a href='https://akatsuki.pw/u/1317'>Ewick</a></b>, for designing the Akatsuki logo." | html }}</li>
+					<li>{{ .T "<b><a id='everyone' class='clickable'>Everyone</a></b> who has supported Akatsuki by donating." | html }}</li>
+				</ul>
+			</div>
+		</div>
+		{{ $ := . }}
+		{{ .T "Looking for how you should contact our team? Feel free to <a href='https://discord.gg/5cBtMPW'>join our discord</a> for support." | html }}
+		<div class="ui modal">
+			<div class="header"><h2 class="ui header">{{ .T "They told me these are very cool people." }}</h2></div>
+				<div class="content">
+					{{ template "userGroup" (.Get "badges/members?id=%d" 59) }}
+					<!-- Probably most shit coded part of Hanayo -->
+					<br>
+					<div class="centered">
+						<br><br>
+						<b>{{ $.T "Do you want to be in this list?" }}</b><br>
+						<a href="/premium"><b>{{ $.T "Become a premium member!" }}</b></a><br>
+						<i>{{ $.T "(You get other cool perks too)" }}</i>
+					</div>
+				</div>
+		</div>
 	</div>
-</div>
-{{ end }}
-
+	{{ end }}
