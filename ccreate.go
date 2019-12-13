@@ -67,9 +67,10 @@ func ccreateSubmit(c *gin.Context) {
 	}
 	lid, _ := res.LastInsertId()
 
-	db.Exec("INSERT INTO `user_clans`(user, clan, perms) VALUES (?, ?, 8);", getContext(c).User.ID, lid)
-
-
+	// db.Exec("INSERT INTO `user_clans`(user, clan, perms) VALUES (?, ?, 8);", getContext(c).User.ID, lid)
+	usq := " SET clan = ? WHERE id = ?"
+	db.Exec("UPDATE users_stats" + usq, lid, getContext(c).User.ID)
+	db.Exec("UPDATE rx_stats" + usq, lid, getContext(c).User.ID)
 
 	addMessage(c, successMessage{T(c, "Clan created.")})
 	getSession(c).Save()
