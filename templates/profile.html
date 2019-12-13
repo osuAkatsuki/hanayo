@@ -87,49 +87,49 @@
 						{{ if $dev }}
 							{{ if .username_aka }}
 							<div class="dev">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username_aka }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
 							</div>
 							{{ else }}
 							<div class="dev">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
 							</div>
 							{{ end }}
 						{{ else if $admin }}
 							{{ if .username_aka }}
 							<div class="admin">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username_aka }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
 							</div>
 							{{ else }}
 							<div class="admin">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
 							</div>
 							{{ end }}
 						{{ else if $mod }}
 							{{ if .username_aka }}
 							<div class="mod">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username_aka }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
 							</div>
 							{{ else }}
 							<div class="mod">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
 							</div>
 							{{ end }}
 						{{ else if $premium }}
 							{{ if .username_aka }}
 							<div class="premium">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username_aka }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
 							</div>
 							{{ else }}
 							<div class="premium">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
 							</div>
 							{{ end }}
 						{{ else if $supporter }}
 							<div class="supporter">
-								<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username }}
+								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
 							</div>
 						{{ else }}
-							<!-->td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td-->{{ .username }}
+							<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
 						{{ end }}
 						</h1>
 
@@ -286,10 +286,10 @@
 													<td class="right aligned">#{{ . }}</td>
 												</tr>
 											{{ end }}
-											<!--tr>
+											<tr>
 												<td><b>{{ $global.T "Clan" }}</b></td>
 												<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode={{ $k }}">{{ $user.clan.name }}</a></td>
-											<tr-->
+											<tr>
 											<tr>
 												<td><b>{{ $global.T "PP" }}</b></td>
 												<td class="right aligned">{{ humanize .pp }}</td>

@@ -1,9 +1,11 @@
 {{ define "navbar" }}
 {{ $isRAP   := and (hasAdmin .Context.User.Privileges) (isRAP .Path) }}
 {{ $isAdmin := hasAdmin .Context.User.Privileges }}
-{{/* $ccEnabled := qb "SELECT name, value_int FROM system_settings WHERE NAME = 'ccreation_enabled' AND value_int = '1' LIMIT 1;" }}
+
+{{ $ccEnabled := qb "SELECT name, value_int FROM system_settings WHERE NAME = 'ccreation_enabled' AND value_int = '1' LIMIT 1;" }}
 {{ $isClan := qb "SELECT user, clan FROM user_clans WHERE user = ?" .Context.User.ID }}
-{{ $clanLeader := qb "SELECT user, clan, perms FROM user_clans WHERE user = ? AND perms = 8 LIMIT 1" .Context.User.ID */}}
+{{ $clanLeader := qb "SELECT user, clan, perms FROM user_clans WHERE user = ? AND perms = 8 LIMIT 1" .Context.User.ID }}
+
 <div class="ui secondary fixed-height stackable white background main menu no margin bottom{{ if .DisableHH }} dropped{{ end }}" id="navbar">
 	<div class="ui container">
 		<div class="item">
@@ -30,6 +32,27 @@
 			{{/* if .Context.User.Username}}
 				{{ navbarItem .Path (.T "Beatmaps") "/beatmaps" }}
 			{{ end */}}
+
+			<div class="ui dropdown item">
+				<span>{{ .T "Clans" }}</span>
+				<div class="menu">
+					{{ navbarItem .Path (.T "Leaderboard") "/clans?mode=0" }}
+
+					{{ if $ccEnabled }}
+						{{ if $isClan }} {{/* Checks to see if the user is in a clan.  */}}
+						{{ navbarItem .Path (.T "<p title='You are already in a Clan.' style='color: #C0C0C0;'>Create</p>") "" | html }}
+						{{ else }}
+						{{ navbarItem .Path (.T "Create") "/clans/create" }}
+						{{ end }}
+					{{ end }}
+
+					{{ if $clanLeader }} {{/* Checks to see if the user owns a clan.  */}}
+					{{ navbarItem .Path (.T "Clan Settings") "/settings/clansettings" }}
+					{{ else }}
+					{{ navbarItem .Path (.T "<p title='You are not an Owner of a Clan.'  style='color: #C0C0C0;'>Clan Settings</p>") ""  | html }}
+					{{ end }}
+				</div>
+			</div>
 
 			{{ navbarItem .Path (.T "Discord") "https://discord.gg/5cBtMPW" }}
 			{{ navbarItem .Path (.T "Server Switcher" | printf "<i class=\"green cloud download icon\"></i>%s") "/static/switcher.exe" }}
