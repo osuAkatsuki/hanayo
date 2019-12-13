@@ -44,34 +44,36 @@ Include=clan_members.html
 								<tbody>
 								{{ with (.Get "clans/stats?id=%d&m=%d&rx=%d" .ClanID (.Gin.Query "mode") (.Gin.Query "rx"))}}
 									<td></td>
-									<tr>
-											<td><b>{{ $global.T "Global Rank" }}</b></td>
-											<td class="right aligned">#{{ humanize .chosen_mode.global_leaderboard_rank }}</td>
-									</tr>
+									{{ with .chosen_mode.global_leaderboard_rank }}
+										<tr>
+											<td><b>{{ $global.T "Global rank" }}</b></td>
+											<td class="right aligned">#{{ . }}</td>
+										</tr>
+									{{ end }}
 									<tr>
 										<td><b>{{ $global.T "PP" }}</b></td>
-										<td class="right aligned">{{ humanize .chosen_mode.pp }}</td>
+										<td class="right aligned">{{ .chosen_mode.pp }}</td>
 									</tr>
 									<tr>
 										<td><b>{{ $global.T "Ranked Score" }}</b></td>
-										<td class="right aligned">{{ humanize .chosen_mode.ranked_score }}</td>
+										<td class="right aligned">{{ .chosen_mode.ranked_score }}</td>
 									</tr>
 									
 									<tr>
 										<td><b>{{ $global.T "Total Score" }}</b></td>
-										<td class="right aligned">{{ humanize .chosen_mode.total_score }}</td>
+										<td class="right aligned">{{ .chosen_mode.total_score }}</td>
 									</tr>
 									<tr>
 										<td><b>{{ $global.T "Total Playcount" }}</b></td>
-										<td class="right aligned">{{ humanize .chosen_mode.playcount }}</td>
+										<td class="right aligned">{{ .chosen_mode.playcount }}</td>
 									</tr>
 									<tr>
 										<td><b>{{ $global.T "Total Replays Watched" }}</b></td>
-										<td class="right aligned">{{ humanize .chosen_mode.replays_watched }}</td>
+										<td class="right aligned">{{ .chosen_mode.replays_watched }}</td>
 									</tr>
 									<tr>
 										<td><b>{{ $global.T "Total Hits" }}</b></td>
-										<td class="right aligned">{{ humanize .chosen_mode.total_hits }}</td>
+										<td class="right aligned">{{ .chosen_mode.total_hits }}</td>
 									</tr>
 									{{end}}
 			
