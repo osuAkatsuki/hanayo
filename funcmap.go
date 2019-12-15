@@ -20,11 +20,11 @@ import (
 	"github.com/russross/blackfriday"
 	"github.com/thehowl/qsql"
 	"golang.org/x/oauth2"
-	"zxq.co/ripple/go-discord-oauth"
+	discordoauth "zxq.co/ripple/go-discord-oauth"
 	"zxq.co/ripple/hanayo/modules/bbcode"
 	"zxq.co/ripple/hanayo/modules/btcaddress"
 	"zxq.co/ripple/hanayo/modules/doc"
-	"zxq.co/ripple/hanayo/modules/fa-semantic-mappings"
+	fasuimappings "zxq.co/ripple/hanayo/modules/fa-semantic-mappings"
 	"zxq.co/ripple/playstyle"
 	"zxq.co/ripple/rippleapi/common"
 )
@@ -135,12 +135,7 @@ var funcMap = template.FuncMap{
 	"nativeTime": func(s string) time.Time {
 		t, _ := time.Parse(time.RFC3339, s)
 		return t
-	},/*
-	"playtimeConv": func(f float64) string {
-		hours := f / 3600
-		days := f / 86400
-		return fmt.Sprintf("%.2f hours (%.1f days)", hours, days)
-	},*/
+	},
 	"playtimeConv": func(input float64) string {
 		/* Thanks to Night(#1429) for this! */
 
@@ -427,11 +422,11 @@ var funcMap = template.FuncMap{
 	},
 	// calculateDonorPrice calculates the price of x donor months in euros.
 	"calculateDonorPrice": func(a float64) string {
-		return fmt.Sprintf("%.2f", math.Pow(a * 30 * 0.2, 0.72))
+		return fmt.Sprintf("%.2f", math.Pow(a*30*0.2, 0.72))
 	},
 	// calculatePremiumPrice calculates the price of x premium months in euros.
 	"calculatePremiumPrice": func(a float64) string {
-		return fmt.Sprintf("%.2f", math.Pow(a * 68 * 0.15, 0.93))
+		return fmt.Sprintf("%.2f", math.Pow(a*68*0.15, 0.93))
 	},
 	// is2faEnabled checks 2fa is enabled for an user
 	"is2faEnabled": is2faEnabled,
@@ -521,7 +516,7 @@ var funcMap = template.FuncMap{
 	"htmlescaper": template.HTMLEscaper,
 }
 
-var localeLanguages = []string{/*"de", "pl", "it", "es", "ru", "fr", "nl", "ro", "fi", "sv", "vi", "ko"*/}
+var localeLanguages = []string{"de", "pl", "it", "es", "ru", "fr", "nl", "ro", "fi", "sv", "vi", "ko"}
 
 var hanayoStarted = time.Now().UnixNano()
 

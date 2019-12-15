@@ -23,23 +23,29 @@ func leaveClan(c *gin.Context) {
 		resp403(c)
 		return
 	}
-	if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ? AND perms = 8", getContext(c).User.ID, i).
+	//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ? AND perms = 8", getContext(c).User.ID, i).
+	if db.QueryRow("SELECT 1 FROM users WHERE id = ? and clan_id = ? and clan_privileges = 8", getContext(c).User.ID, i).
 		Scan(new(int)) == sql.ErrNoRows {
 		// check if a nigga the clan
-		if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
+		//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
+		if db.QueryRow("SELECT 1 FROM users WHERE id = ? AND clan_id = ?", getContext(c).User.ID, i).
 			Scan(new(int)) == sql.ErrNoRows {
 			addMessage(c, errorMessage{T(c, "Unexpected Error...")})
 			return
 		}
 		// idk how the fuck this gonna work but fuck it
 
-		db.Exec("DELETE FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i)
+		//xfer to new highest perm user?
+
+		//db.Exec("DELETE FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i)
+		db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 0 WHERE id = ? AND clan = ?", getContext(c).User.ID, i) // 2nd check pointlesstm
 		addMessage(c, successMessage{T(c, "Left clan.")})
 		getSession(c).Save()
 		c.Redirect(302, "/c/"+i)
 	} else {
 		//check if user even in clan!!!
-		if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
+		//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
+		if db.QueryRow("SELECT 1 FROM users WHERE id = ? and clan_id = ?", getContext(c).User.ID, i).
 			Scan(new(int)) == sql.ErrNoRows {
 			addMessage(c, errorMessage{T(c, "Unexpected Error...")})
 			return
@@ -52,7 +58,8 @@ func leaveClan(c *gin.Context) {
 		db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 0 WHERE clan_id = ?", i)
 
 		// Delete clan invite link.
-		db.Exec("DELETE FROM clans_invites WHERE clan = ? LIMIT 1", i)
+		// Un-used because invites are now stored in `clans`.
+		//db.Exec("DELETE FROM clans_invites WHERE clan = ? LIMIT 1", i)
 
 		addMessage(c, successMessage{T(c, "Disbanded Clan.")})
 		getSession(c).Save()
@@ -77,7 +84,7 @@ func clanPage(c *gin.Context) {
 			c.Error(err)
 		}
 	} else {
-		err := db.QueryRow(`SELECT id, name, description, icon FROM clans WHERE id = ? LIMIT 1`, i).Scan(&clanID, &clanName, &clanDescription, &clanIcon)
+		err := db.QueryRow("SELECT id, name, description, icon FROM clans WHERE id = ? LIMIT 1", i).Scan(&clanID, &clanName, &clanDescription, &clanIcon)
 		switch {
 		case err == nil:
 		case err == sql.ErrNoRows:
@@ -151,13 +158,13 @@ func createInvite(c *gin.Context) {
 			return
 		}
 
-		// Dont limit to 1 JUST INCASE there are extras..
-		db.Exec("DELETE FROM clans_invites WHERE clan = ?", clan)
+		//db.Exec("DELETE FROM clans_invites WHERE clan = ?", clan)
 
 		var s string
 		s = randSeq(8)
 
-		db.Exec("INSERT INTO clans_invites(clan, invite) VALUES (?, ?)", clan, s)
+		db.Exec("UPDATE clans SET invite = ? WHERE clan = ?", s, clan)
+		//db.Exec("INSERT INTO clans_invites(clan, invite) VALUES (?, ?)", clan, s)
 	} else {
 		var clan int
 		db.QueryRow("SELECT clan_id FROM users WHERE id = ? AND clan_privileges = 8 LIMIT 1", ctx.User.ID).Scan(&clan)
@@ -234,7 +241,7 @@ func clanInvite(c *gin.Context) {
 	// All checks passed.
 	// Insert the user into the clan.
 	db.Exec("UPDATE users SET clan_id = ?, clan_privileges = 1 WHERE id = ?", res, getContext(c).User.ID)
-	//db.Exec("INSERT INTO `user_clans`(user, clan, perms) VALUES (?, ?, 1);", getContext(c).User.ID, res)
+	//db.Exec("INSERT INTO user_clans(user, clan, perms) VALUES (?, ?, 1);", getContext(c).User.ID, res)
 
 	addMessage(c, successMessage{T(c, "Joined clan.")})
 	getSession(c).Save()
@@ -270,7 +277,7 @@ func clanKick(c *gin.Context) {
 	}
 
 	//db.Exec("DELETE FROM user_clans WHERE user = ? LIMIT 1", member)
-	db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 1 WHERE user = ? LIMIT 1", member)
+	db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 0 WHERE user = ? LIMIT 1", member)
 
 	addMessage(c, successMessage{T(c, "Success.")})
 	getSession(c).Save()
@@ -279,7 +286,8 @@ func clanKick(c *gin.Context) {
 
 func resolveInvite(c string) int {
 	var clanid int
-	row := db.QueryRow("SELECT clan FROM clans_invites WHERE invite = ?", c)
+	//row := db.QueryRow("SELECT clan FROM clans_invites WHERE invite = ?", c)
+	row := db.QueryRow("SELECT clan FROM clans where invite = ?", c)
 	err := row.Scan(&clanid)
 
 	if err != nil {

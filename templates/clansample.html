@@ -34,97 +34,90 @@ Include=clan_members.html
 			<a class="mode item" href="/c/{{ .id }}?mode=3">osu!mania</a>
 		</div>
 		<div class="ui segment">
-				<div class="ui two column divided stackable grid">
-					<div class="row">
-						<div class="column">
+			<div class="ui two column divided stackable grid">
+				<div class="row">
+					<div class="column">
 
-								{{ (.description | htmlescaper) }}
-							{{ end }}
-							<br><br><table class="ui very basic two column compact table nopad">
-								<tbody>
-								{{ with (.Get "clans/stats?id=%d&m=%d&rx=%d" .ClanID (.Gin.Query "mode") (.Gin.Query "rx"))}}
-									<td></td>
-									{{ with .chosen_mode.global_leaderboard_rank }}
-										<tr>
-											<td><b>{{ $global.T "Global rank" }}</b></td>
-											<td class="right aligned">#{{ . }}</td>
-										</tr>
-									{{ end }}
-									<tr>
-										<td><b>{{ $global.T "PP" }}</b></td>
-										<td class="right aligned">{{ .chosen_mode.pp }}</td>
-									</tr>
-									<tr>
-										<td><b>{{ $global.T "Ranked Score" }}</b></td>
-										<td class="right aligned">{{ .chosen_mode.ranked_score }}</td>
-									</tr>
-									
-									<tr>
-										<td><b>{{ $global.T "Total Score" }}</b></td>
-										<td class="right aligned">{{ .chosen_mode.total_score }}</td>
-									</tr>
-									<tr>
-										<td><b>{{ $global.T "Total Playcount" }}</b></td>
-										<td class="right aligned">{{ .chosen_mode.playcount }}</td>
-									</tr>
-									<tr>
-										<td><b>{{ $global.T "Total Replays Watched" }}</b></td>
-										<td class="right aligned">{{ .chosen_mode.replays_watched }}</td>
-									</tr>
-									<tr>
-										<td><b>{{ $global.T "Total Hits" }}</b></td>
-										<td class="right aligned">{{ .chosen_mode.total_hits }}</td>
-									</tr>
-									{{end}}
-			
-								</tbody>
-							</table>
-						</div>
-						<div class="column">
-						{{ if $global.Context.User.ID }}
-							{{ $d := qb "SELECT user, clan, perms FROM user_clans WHERE user = ? LIMIT 1" .Context.User.ID }}
-							{{ $tc := qb "SELECT id, clan FROM users_stats WHERE id = ? AND clan = ? LIMIT 1" .Context.User.ID .ClanID }}
-							{{$p := qb "SELECT id FROM clans WHERE id = ? AND owner = ? LIMIT 1" .ClanID .Context.User.ID }}
-							{{ $uc := or $d.clan.Int -1 }}
-								{{ if $d }}
-									{{ if $tc }}
-										{{ if $p }}
-											<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
-												{{ ieForm .Gin }}
-											</form>
-											<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.5)" type="submit" form="register-form">{{ .T "Disband Clan" }}</button></div>
-										{{ else }}
-											<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
-												{{ ieForm .Gin }}
-											</form>
-											<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.3)" type="submit" form="register-form">{{ .T "Leave Clan" }}</button></div>
-										{{ end }}
-									{{ else }}
-										<div class="ui one item menu" id="join-menu"><a class="item" style="background-color:rgba(255,0,0,.3)">Already joined a clan</a></div>
-									{{end}}
-								{{ else }}
-
-								{{ end }}
-						{{ else }}
-						<div class="ui one item menu" id="join-menu"><a class="item" href="/login" style="background-color:rgba(0,128,255,.3)">Please login to join a clan</a></div>
-						
+							{{ (.description | htmlescaper) }}
 						{{ end }}
-							<h1 class="ui heading">{{ .T "Clan Owner" }}</h1>
-							<p>
-								{{ .T "The leader of the clan." }}<br>
-							</p>
-							
-						</div>
+						<br><br><table class="ui very basic two column compact table nopad">
+							<tbody>
+							{{ with (.Get "clans/stats?id=%d&m=%d&rx=%d" .ClanID (.Gin.Query "mode") (.Gin.Query "rx")) }}
+								<td></td>
+								{{ with .chosen_mode.global_leaderboard_rank }}
+									<tr>
+										<td><b>{{ $global.T "Global rank" }}</b></td>
+										<td class="right aligned">#{{ . }}</td>
+									</tr>
+								{{ end }}
+								<tr>
+									<td><b>{{ $global.T "PP" }}</b></td>
+									<td class="right aligned">{{ .chosen_mode.pp }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Ranked Score" }}</b></td>
+									<td class="right aligned">{{ .chosen_mode.ranked_score }}</td>
+								</tr>
+
+								<tr>
+									<td><b>{{ $global.T "Total Score" }}</b></td>
+									<td class="right aligned">{{ .chosen_mode.total_score }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Total Playcount" }}</b></td>
+									<td class="right aligned">{{ .chosen_mode.playcount }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Total Replays Watched" }}</b></td>
+									<td class="right aligned">{{ .chosen_mode.replays_watched }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Total Hits" }}</b></td>
+									<td class="right aligned">{{ .chosen_mode.total_hits }}</td>
+								</tr>
+							{{end}}
+							</tbody>
+						</table>
+					</div>
+					<div class="column">
+						{{ if $global.Context.User.ID }}
+						<!-- Get clan data -->
+						{{ $d := qb "SELECT clan_id, clan_privileges FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
+
+						<!-- User is in this clan -->
+						{{ if eq $d.clan_id.Int .ClanID }}
+							{{ if eq $d.clan_privileges.Int 8 }}
+								<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
+									{{ ieForm .Gin }}
+								</form>
+								<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.5)" type="submit" form="register-form">{{ .T "Disband Clan" }}</button></div>
+							{{ else }}
+								<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
+									{{ ieForm .Gin }}
+								</form>
+								<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.3)" type="submit" form="register-form">{{ .T "Leave Clan" }}</button></div>
+							{{ end }}
+						{{ end }}
+					{{ else }}
+						<div class="ui one item menu" id="join-menu"><a class="item" href="/login" style="background-color:rgba(0,128,255,.3)">Please login to join a clan</a></div>
+					{{ end }}
+
+						<h1 class="ui heading">{{ .T "Clan Owner" }}</h1>
+						<p>
+							{{ .T "The leader of the clan." }}<br>
+						</p>
+
 					</div>
 				</div>
-				<div class="ui aligned segment">
-					<h1 class="ui heading">{{ .T "Members" }}</h1>
-					<p>
-						{{ .T "The members of the clan." }}<br>
-					</p>
-						{{ template "clanMembers" (.Get "clans/members?id=%d" .ClanID) }}
-				</div>
 			</div>
-		{{ end }}
+			<div class="ui aligned segment">
+				<h1 class="ui heading">{{ .T "Members" }}</h1>
+				<p>
+					{{ .T "The members of the clan." }}<br>
+				</p>
+					{{ template "clanMembers" (.Get "clans/members?id=%d" .ClanID) }}
+			</div>
+		</div>
+	{{ end }}
 </div>
 {{ end }}
