@@ -1,1 +1,0 @@
-ALTER TABLE sets ADD FULLTEXT(artist, title, creator, source, tags);

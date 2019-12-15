@@ -1,1 +1,0 @@
-ALTER TABLE sets DROP INDEX artist;
