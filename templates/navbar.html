@@ -2,10 +2,9 @@
 {{ $isRAP   := and (hasAdmin .Context.User.Privileges) (isRAP .Path) }}
 {{ $isAdmin := hasAdmin .Context.User.Privileges }}
 
-{{ $ccEnabled := qb "SELECT name, value_int FROM system_settings WHERE NAME = 'ccreation_enabled' AND value_int = '1' LIMIT 1;" }}
-{{ $isClan := qb "SELECT user, clan FROM user_clans WHERE user = ?" .Context.User.ID }}
-{{ $clanLeader := qb "SELECT user, clan, perms FROM user_clans WHERE user = ? AND perms = 8 LIMIT 1" .Context.User.ID }}
-
+{{ $ccEnabled := qb "SELECT 1 FROM system_settings WHERE name = 'ccreation_enabled' AND value_int = 1 LIMIT 1" }}
+{{ $isClan := qb "SELECT 1 FROM users WHERE id = ? AND clan_id <> 0" .Context.User.ID }}
+{{ $clanLeader := qb "SELECT 1 FROM users WHERE id = ? AND clan_privileges = 8 LIMIT 1" .Context.User.ID }}
 <div class="ui secondary fixed-height stackable white background main menu no margin bottom{{ if .DisableHH }} dropped{{ end }}" id="navbar">
 	<div class="ui container">
 		<div class="item">

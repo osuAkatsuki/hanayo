@@ -26,24 +26,22 @@ func leaveClan(c *gin.Context) {
 	//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ? AND perms = 8", getContext(c).User.ID, i).
 	if db.QueryRow("SELECT 1 FROM users WHERE id = ? and clan_id = ? and clan_privileges = 8", getContext(c).User.ID, i).
 		Scan(new(int)) == sql.ErrNoRows {
-		// check if a nigga the clan
-		//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
-		if db.QueryRow("SELECT 1 FROM users WHERE id = ? AND clan_id = ?", getContext(c).User.ID, i).
-			Scan(new(int)) == sql.ErrNoRows {
-			addMessage(c, errorMessage{T(c, "Unexpected Error...")})
-			return
-		}
-		// idk how the fuck this gonna work but fuck it
 
-		//xfer to new highest perm user?
+		//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
+
+		//if db.QueryRow("SELECT 1 FROM users WHERE id = ? AND clan_id = ?", getContext(c).User.ID, i).
+		//	Scan(new(int)) == sql.ErrNoRows {
+		//	addMessage(c, errorMessage{T(c, "Unexpected Error...")})
+		//	return
+		//}
 
 		//db.Exec("DELETE FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i)
-		db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 0 WHERE id = ? AND clan = ?", getContext(c).User.ID, i) // 2nd check pointlesstm
+		db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 0 WHERE id = ?", getContext(c).User.ID) // 2nd check pointlesstm
 		addMessage(c, successMessage{T(c, "Left clan.")})
 		getSession(c).Save()
 		c.Redirect(302, "/c/"+i)
 	} else {
-		//check if user even in clan!!!
+
 		//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
 		if db.QueryRow("SELECT 1 FROM users WHERE id = ? and clan_id = ?", getContext(c).User.ID, i).
 			Scan(new(int)) == sql.ErrNoRows {
@@ -108,7 +106,7 @@ func clanPage(c *gin.Context) {
 	}
 
 	if getContext(c).User.Privileges&1 > 0 {
-		if db.QueryRow("SELECT 1 FROM clans WHERE clan = ?", clanID).Scan(new(string)) != sql.ErrNoRows {
+		if db.QueryRow("SELECT 1 FROM clans WHERE id = ?", clanID).Scan(new(string)) != sql.ErrNoRows {
 			var bg string
 			db.QueryRow("SELECT background FROM clans WHERE id = ?", clanID).Scan(&bg)
 			data.KyutGrill = bg
@@ -163,7 +161,7 @@ func createInvite(c *gin.Context) {
 		var s string
 		s = randSeq(8)
 
-		db.Exec("UPDATE clans SET invite = ? WHERE clan = ?", s, clan)
+		db.Exec("UPDATE clans SET invite = ? WHERE id = ?", s, clan)
 		//db.Exec("INSERT INTO clans_invites(clan, invite) VALUES (?, ?)", clan, s)
 	} else {
 		var clan int

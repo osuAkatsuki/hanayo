@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"database/sql"
+	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
-	"regexp"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,7 +32,6 @@ func ccreateSubmit(c *gin.Context) {
 		return
 	}
 
-
 	// check whether name already exists
 	if db.QueryRow("SELECT 1 FROM clans WHERE name = ?", c.PostForm("username")).
 		Scan(new(int)) != sql.ErrNoRows {
@@ -46,15 +45,14 @@ func ccreateSubmit(c *gin.Context) {
 		ccreateResp(c, errorMessage{T(c, "A clan with that tag already exists!")})
 		return
 	}
-	
-	
+
 	// recaptcha verify
 
 	tag := "0"
-		if c.PostForm("tag") != "" {
-			tag = c.PostForm("tag")
-		}
-	
+	if c.PostForm("tag") != "" {
+		tag = c.PostForm("tag")
+	}
+
 	// The actual registration.
 
 	res, err := db.Exec(`INSERT INTO clans(name, description, icon, tag)
@@ -67,9 +65,8 @@ func ccreateSubmit(c *gin.Context) {
 	}
 	lid, _ := res.LastInsertId()
 
-	db.Exec("INSERT INTO `user_clans`(user, clan, perms) VALUES (?, ?, 8);", getContext(c).User.ID, lid)
-
-
+	//db.Exec("INSERT INTO `user_clans`(user, clan, perms) VALUES (?, ?, 8);", getContext(c).User.ID, lid)
+	db.Exec("UPDATE users SET clan_id = ?, clan_privileges = 8 WHERE id = ?", lid, getContext(c).User.ID)
 
 	addMessage(c, successMessage{T(c, "Clan created.")})
 	getSession(c).Save()
@@ -93,7 +90,6 @@ func ccreationEnabled() bool {
 }
 
 // Check User In Query Is Same As User In Y Cookie
-
 
 func ccin(s string, ss []string) bool {
 	for _, x := range ss {

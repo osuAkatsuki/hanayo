@@ -2,21 +2,18 @@
 NoCompile=true
 */}}
 {{ define "settingsSidebar" }}
-{{ $d := qb "SELECT user, clan, perms FROM user_clans WHERE user = ? AND perms = 8 LIMIT 1" .Context.User.ID }}
+{{ $d := or (qb "SELECT 1 FROM users WHERE clan_id = ? AND clan_privileges = 8" .Context.User.ID).clan_id.Int -1 }}
 <div class="four wide column">
 	<div class="ui fluid vertical menu">
 		{{ navbarItem .Path (.T "Profile") "/settings" }}
-
 		{{ navbarItem .Path (.T "Userpage") "/settings/userpage" }}
-
 		{{ navbarItem .Path (.T "Avatar") "/settings/avatar" }}
-
 		{{ navbarItem .Path (.T "Password") "/settings/password" }}
 
 		{{ if $d }} {{/* Checks to see if user is an owns a clan.  */}}
-		{{ navbarItem .Path (.T "Clan Settings") "/settings/clansettings" }}		
+			{{ navbarItem .Path (.T "Clan Settings") "/settings/clansettings" }}
 		{{ else }}
-		{{ navbarItem .Path (.T "<p title='You are not an Owner of a Clan.' style='color:#C0C0C0;'>Clan Settings</p>") ""  | html }}
+			{{ navbarItem .Path (.T "<p title='Only the leader of the clan can access the settings page.' style='color:#C0C0C0;'>Clan Settings</p>") ""  | html }}
 		{{ end }}
 
 		{{/* Stuff for donators */}}
