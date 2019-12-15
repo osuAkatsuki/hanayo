@@ -6,9 +6,9 @@
 }
 .footer-bg {
     text-shadow: -1px 2px 2px rgba(0, 0, 0, 0.33);
-    background: 
+    background:
     linear-gradient(
-      rgba(255, 255, 255, 0.03), 
+      rgba(255, 255, 255, 0.03),
       rgba(255, 255, 255, 0.03)
     ),
     url(/static/images/backgrounds/bg2.png);
@@ -47,9 +47,9 @@
 }
 
 .footer-info-block>.footer-title{
-    color: white !important; 
-    font-size: 20px; 
-    font-weight: 600; 
+    color: white !important;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 ripple.logo {
@@ -184,7 +184,7 @@ a.inherit:hover {
 .status-head {
   padding:0;
   margin: 0;
-  text-align: right; 
+  text-align: right;
   font-size: 30px;
 }
 .status-footer {
@@ -597,8 +597,9 @@ img.locked-achievement:hover {
     padding-top: 8px;
     width: 170px;
     float: right;
-	position: relative;
+	position: absolute;
 }
+
 .language {
     font-size: 14px;
     background-color: rgba(15,15,15,1);
@@ -610,7 +611,6 @@ img.locked-achievement:hover {
     justify-content: center;
     align-items: center;
 }
-
 
 .dropup-content {
     display: none;
