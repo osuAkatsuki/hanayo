@@ -454,34 +454,29 @@ a.camouflaged:hover {
 	margin: 0 auto;
 }
 
-.supporter
-{
+.supporter {
 	color: #ffdf2e; /*ingame "Supporter" colour*/
 	text-shadow: -2px -2px 0px #0033CC;
 }
 
-.premium
-{
+.premium {
 	-webkit-animation: rainbow 3s infinite;
 	-ms-animation: rainbow 3s infinite;
 	animation: rainbow 3s infinite;
 	text-shadow: -2px -2px 0px #0033cc;
 }
 
-.mod
-{
+.mod {
 	color: orangered; /*ingame "BAT" colour*/
 	text-shadow: -2px -2px 0px #0033CC;
 }
 
-.admin
-{
+.admin {
 	color: #b7e8ff; /*ingame "Friend" colour*/
 	text-shadow: -2px -2px 0px #0033CC;
 }
 
-.dev
-{
+.dev {
   color: #a6d0ff; /*ingame "Peppy" colour*/
   text-shadow: -2px -2px 0px #0033cc;
 }
