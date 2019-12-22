@@ -37,8 +37,8 @@
 
 			{{ $super := has .privileges 15728639 }}
 			{{ $dev  := has .privileges 11534335 }}
-			{{ $admin  := has .privileges 11457023 }}
-			{{ $mod  := has .privileges 786507 }}
+			{{ $admin  := has .privileges 11522559 }}
+			{{ $cm  := has .privileges 790635 }}
 			{{ $bn  := has .privileges 267 }}
 			{{ $premium := has .privileges 8388615 }}
 			{{ $supporter := has .privileges 4 }}
@@ -104,7 +104,7 @@
 								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
 							</div>
 							{{ end }}
-						{{ else if $mod }}
+						{{ else if $cm }}
 							{{ if .username_aka }}
 							<div class="mod">
 								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
@@ -201,7 +201,7 @@
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $mod }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="red star small icon"></i><b>Moderator</b>
+								 is a <i class="red star small icon"></i><b>Community Manager</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $bn }}
 								{{ $global.T "<b>%s</b> " .username | html }}

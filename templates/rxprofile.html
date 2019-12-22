@@ -37,8 +37,8 @@
 
 			{{ $super := has .privileges 15728639 }}
 			{{ $dev  := has .privileges 11534335 }}
-			{{ $admin  := has .privileges 11457023 }}
-			{{ $mod  := has .privileges 786507 }}
+			{{ $admin  := has .privileges 11522559 }}
+			{{ $cm  := has .privileges 790635 }}
 			{{ $bn  := has .privileges 267 }}
 			{{ $premium := has .privileges 8388615 }}
 			{{ $supporter := has .privileges 4 }}
@@ -201,9 +201,9 @@
 								{{ $global.T "<b>%s</b> " .username | html }}
 								 is an <i class="blue lightning small icon"></i><b>Administrator</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
-							{{ else if $mod }}
+							{{ else if $cm }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="red star small icon"></i><b>Moderator</b>
+								 is a <i class="red star small icon"></i><b>Community Manager</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $bn }}
 								{{ $global.T "<b>%s</b> " .username | html }}
