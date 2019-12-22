@@ -11,13 +11,6 @@ KyutGrill=team2.jpg
 			<h3>{{ .T "This is a list of the wonderful people who keep Akatsuki up and running and take pride in its community." }}</h3>
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Founder & Head Developer" }}</h1>
-			<p>
-				{{ .T "Essentially a developer, and community manager combined, who works on everything from managing the team to making this page look pretty. He has a darker blue colour in the in-game chat." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 35) }}
-		</div>
-		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Administrators" }}</h1>
 			<p>
 				{{ .T "Administrators deal with bans, silences, name changes and pretty much everything that has to do with the community." }}<br>
@@ -33,23 +26,16 @@ KyutGrill=team2.jpg
 			{{ template "userGroup" (.Get "badges/members?id=%d" 2) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Moderators" }}</h1>
+			<h1 class="ui heading">{{ .T "Community Managers" }}</h1>
 			<p>
-				{{ .T "Moderators manage the chat to make sure The Law&trade; (the rules) is respected. They have a red name in the in-game chat." | html }}
+				{{ .T "Community Managers deal with basic restrictions, player reports, moderate the chat channels, and make sure The Law&trade; (the rules) is respected. They have a red name in the in-game chat." | html }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Quality Assurance Team" }}</h1>
-			<p>
-				{{ .T "QATs make the final decision on whether maps are to have their ranked statuses changed after the Beatmap Nominators vote upon them." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 77) }}
-		</div>
-		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Beatmap Nominators" }}</h1>
 			<p>
-				{{ .T "BNs vote on requested by the community to have their ranked statuses changed." }}
+				{{ .T "Beatmap Nominators handle all beatmap related inquiries; such as ranked requests." }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 53) }}
 		</div>

@@ -35,12 +35,11 @@
 				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
 			{{ end }}
 
-			{{ $super := has .privileges 15728639 }}
-			{{ $dev  := has .privileges 11534335 }}
-			{{ $admin  := has .privileges 11522559 }}
-			{{ $cm  := has .privileges 790635 }}
-			{{ $bn  := has .privileges 267 }}
-			{{ $premium := has .privileges 8388615 }}
+			{{ $dev       := has .privileges 15728639 }}
+			{{ $admin     := has .privileges 11522559 }}
+			{{ $cm        := has .privileges 790635 }}
+			{{ $bn        := has .privileges 267 }}
+			{{ $premium   := has .privileges 8388615 }}
 			{{ $supporter := has .privileges 4 }}
 
 			{{ if hasAdmin $global.Context.User.Privileges }}
@@ -187,11 +186,7 @@
 				<div class="ui three column divided stackable grid">
 					<div class="row">
 						<div class="column">
-							{{ if $super }}
-								{{ $global.T "<b>%s</b> " .username | html }}
-								 is the <i class="blue code small icon"></i><b>Head Developer</b>
-								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
-							{{ else if $dev }}
+							{{ if $dev }}
 								{{ $global.T "<b>%s</b> " .username | html }}
 								 is an <i class="blue code small icon"></i><b>Developer</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
