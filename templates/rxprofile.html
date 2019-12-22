@@ -190,7 +190,7 @@
 						<div class="column">
 							{{ if $dev }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is an <i class="blue code small icon"></i><b>Developer</b>
+								 is a <i class="blue code small icon"></i><b>Developer</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $admin }}
 								{{ $global.T "<b>%s</b> " .username | html }}
@@ -206,14 +206,14 @@
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $premium }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="yellow credit card small icon"></i><b>Premium Member</b>
+								 is a <i class="yellow credit card small icon"></i><b>Premium member</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $supporter }}
 								{{ $global.T "<b>%s</b> " .username | html }}
 								 is a <i class="pink heart small icon"></i><b>Supporter</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else }}
-								{{ $global.T "<b>%s</b> is a player from <b>%s</b>." .username (country .country true) | html }}
+								{{ $global.T "<b>%s</b> is a member from <b>%s</b>." .username (country .country true) | html }}
 							{{ end }}
 							<br>{{ $global.T "They registered %s." (time $user.registered_on) | html }}
 							<br>{{ $global.T "Last seen: %s." (time $user.latest_activity) | html }}
