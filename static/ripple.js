@@ -354,7 +354,7 @@ var singlePageSnippets = {
       rates = data;
       us.on('update', function() {
         var months = us.get();
-        var priceEUR = Math.pow(months * 30 * 0.2, 0.70);
+        var priceEUR = Math.pow(months * 20 * 0.2, 0.70);//30
         var priceBTC = priceEUR / rates.EUR;
         var priceUSD = priceBTC * rates.USD;
         $("#cost")
@@ -397,7 +397,7 @@ var singlePageSnippets = {
       rates = data;
       us.on('update', function() {
         var months = us.get();
-        var priceEUR = Math.pow(months * 68 * 0.15, 0.93);
+        var priceEUR = Math.pow(months * 44 * 0.15, 0.93);//68
         var priceBTC = priceEUR / rates.EUR;
         var priceUSD = priceBTC * rates.USD;
         $("#cost")
@@ -642,7 +642,7 @@ function api(endpoint, data, success, failure, post) {
   }
 
   var errorMessage =
-      "An error occurred while contacting the Ripple API. Please report this to a Ripple developer.";
+      "An error occurred while contacting the Akatsuki API. Please report this to a Akatsuki developer.";
 
   $.ajax({
     method : (post ? "POST" : "GET"),
