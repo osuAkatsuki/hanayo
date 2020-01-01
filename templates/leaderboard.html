@@ -7,10 +7,12 @@ KyutGrill=team2.jpg
 <div class="ui container">
 	{{ $favModeRaw := .Get "users/self/favourite_mode" }}
 	{{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
+	{{ $sort := or (.Gin.Query "sort") "pp" }}
 	<script>
 		var favouriteMode = {{ $favMode }};
-		var rx = {{ .Gin.Query "rx" | atoint | atLeastOne }};
+		var rx = {{ or (.Gin.Query "rx") 0 }};
 		var page = {{ .Gin.Query "p" | atoint | atLeastOne }};
+		var sort = {{ $sort }}
 		var country = {{ .Gin.Query "country" }}.toLowerCase();
 		if (country.length != 2)
 			country = "";
@@ -37,7 +39,7 @@ KyutGrill=team2.jpg
 			<tr>
 				<th class="two wide"> {{ .T "Rank" }} </th>
 				<th class="four wide">{{ .T "Player" }} </th>
-				<th class="four wide">{{ .T "PP/Score" }} </th>
+				<th class="four wide"> {{ if eq $sort "score" }}Score (Performance){{ else }}Performance (Score){{ end }} </th>
 				<th class="three wide">{{ .T "Accuracy" }} </th>
 				<th class="three wide">{{ .T "Playcount" }} </th>
 			</tr>

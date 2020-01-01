@@ -18,7 +18,13 @@
 				the current Admin Panel's sidebar.
 			*/}}
 		{{ else }}
-			{{ navbarItem .Path (.T "Leaderboard") "/leaderboard" }}
+			<div class="ui dropdown item">
+				<span>{{ .T "Leaderboard" }}</span>
+				<div class="menu">
+					{{ navbarItem .Path (.T "Performance") "/leaderboard" }}
+					{{ navbarItem .Path (.T "Score") "/leaderboard?sort=score" }}
+				</div>
+			</div>
 			<div class="ui dropdown item">
 				<span>{{ .T "Information" }}</span>
 				<div class="menu">
