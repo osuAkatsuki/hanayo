@@ -1,123 +1,111 @@
 {{/*###
-Include=clan_members.html
+Include=clan_member.html
 */}}
 {{ define "tpl" }}
 <div class="ui container">
-
 	{{ if .ClanID }}
-		{{ $gqm := .Gin.Query "mode" }}
 		{{ $global := . }}
-		{{ $favouritemode := $gqm }}
+		{{ $favModeRaw := .Get "users/self/favourite_mode" }}
+		{{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
+		{{ $rx := or (atoi (.Gin.Query "rx")) 0 }}
 		{{ with (.Get "clans?id=%d" .ClanID).clan }}
-		<div class="ui top attached segment overflow auto aligned">
-			<div class="magic table">
-				{{ if .icon }}
-				<div class="table element">
-					<img src="{{ .icon }}" alt="icon" class="clan icon" style="border-radius:5%; height:90px;">
-				</div>
-				{{ end }}
-				<div class="table element">
-					<h1 class="ui header">
-
-						{{ .name }}
-					</h1>
-					<div class="subtitle">
-						{{ .tag }}
+			<script>
+				window.favouriteMode = {{ $favMode }};
+				window.rx = {{ $rx }};
+				window.clanID = {{ .id }};
+			</script>
+			<div class="ui top attached segment overflow auto aligned">
+				<div class="magic table">
+					{{ if ne .icon "" }}
+					<div class="table element">
+						<img src="{{ .icon }}" alt="icon" class="clan icon" style="border-radius:5%; height:90px;">
 					</div>
-				</div>
-			</div>
-		</div>
-		<div class="ui four item bottom attached menu" id="mode-menu">
-			<a class="mode item" href="/c/{{ .id }}?mode=0">osu!</a>
-			<a class="mode item" href="/c/{{ .id }}?mode=1">osu!taiko</a>
-			<a class="mode item" href="/c/{{ .id }}?mode=2">osu!catch</a>
-			<a class="mode item" href="/c/{{ .id }}?mode=3">osu!mania</a>
-		</div>
-		<div class="ui segment">
-			<div class="ui two column divided stackable grid">
-				<div class="row">
-					<div class="column">
-
-							{{ (.description | htmlescaper) }}
-						{{ end }}
-						<br><br><table class="ui very basic two column compact table nopad">
-							<tbody>
-							{{ with (.Get "clans/stats?id=%d&m=%d&rx=%d" .ClanID (.Gin.Query "mode") (.Gin.Query "rx")) }}
-								<td></td>
-								{{ with .chosen_mode.global_leaderboard_rank }}
-									<tr>
-										<td><b>{{ $global.T "Global rank" }}</b></td>
-										<td class="right aligned">#{{ . }}</td>
-									</tr>
-								{{ end }}
-								<tr>
-									<td><b>{{ $global.T "PP" }}</b></td>
-									<td class="right aligned">{{ .chosen_mode.pp }}</td>
-								</tr>
-								<tr>
-									<td><b>{{ $global.T "Ranked Score" }}</b></td>
-									<td class="right aligned">{{ .chosen_mode.ranked_score }}</td>
-								</tr>
-
-								<tr>
-									<td><b>{{ $global.T "Total Score" }}</b></td>
-									<td class="right aligned">{{ .chosen_mode.total_score }}</td>
-								</tr>
-								<tr>
-									<td><b>{{ $global.T "Total Playcount" }}</b></td>
-									<td class="right aligned">{{ .chosen_mode.playcount }}</td>
-								</tr>
-								<tr>
-									<td><b>{{ $global.T "Total Replays Watched" }}</b></td>
-									<td class="right aligned">{{ .chosen_mode.replays_watched }}</td>
-								</tr>
-								<tr>
-									<td><b>{{ $global.T "Total Hits" }}</b></td>
-									<td class="right aligned">{{ .chosen_mode.total_hits }}</td>
-								</tr>
-							{{end}}
-							</tbody>
-						</table>
-					</div>
-					<div class="column">
-						{{ if $global.Context.User.ID }}
-						<!-- Get clan data -->
-						{{ $d := qb "SELECT clan_id, clan_privileges FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
-
-						<!-- User is in this clan -->
-						{{ if eq $d.clan_id.Int .ClanID }}
-							{{ if eq $d.clan_privileges.Int 8 }}
-								<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
-									{{ ieForm .Gin }}
-								</form>
-								<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.5)" type="submit" form="register-form">{{ .T "Disband Clan" }}</button></div>
-							{{ else }}
-								<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
-									{{ ieForm .Gin }}
-								</form>
-								<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.3)" type="submit" form="register-form">{{ .T "Leave Clan" }}</button></div>
-							{{ end }}
-						{{ end }}
-					{{ else }}
-						<div class="ui one item menu" id="join-menu"><a class="item" href="/login" style="background-color:rgba(0,128,255,.3)">Please login to join a clan</a></div>
 					{{ end }}
-
-						<h1 class="ui heading">{{ .T "Clan Owner" }}</h1>
-						<p>
-							{{ .T "The leader of the clan." }}<br>
-						</p>
-
+					<div class="table element">
+						<h1 class="ui header">
+							{{ .name }}
+						</h1>
+						<div class="subtitle">
+							{{ .tag }}
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="ui aligned segment">
-				<h1 class="ui heading">{{ .T "Members" }}</h1>
-				<p>
-					{{ .T "The members of the clan." }}<br>
-				</p>
-					{{ template "clanMembers" (.Get "clans/members?id=%d" .ClanID) }}
+			<div class="ui two item bottom attached menu" id="rx-menu">
+				<a class="0 item{{ if (not $rx) }} active{{ end }}" data-rx="0" href="/c/{{ .id }}?rx=0">Vanilla</a>
+				<a class="1 item{{ if $rx }} active{{ end }}" data-rx="1" href="/c/{{ .id }}?rx=1">Relax</a>
 			</div>
-		</div>
+			{{ $clan := . }}
+			<div class="ui four item bottom attached menu" id="mode-menu">
+				{{ range $k, $v := modes }}
+					<a class="{{ favMode $favMode $k }}item" data-mode="{{ $k }}" href="/c/{{ $clan.id }}?mode={{ $k }}">{{ $v }}</a>
+				{{ end }}
+			</div>
+			<div class="ui segment">
+				<div class="ui two column divided stackable grid">
+					<div class="row">
+						<div class="column">
+							{{ (.description | htmlescaper) }}
+							<br><br>
+							{{ range $k, $v := modes }}
+								<div data-mode="{{ $k }}" {{ if or (ne $k (int $favMode)) ($rx) }}hidden{{ end }}>
+									<table class="ui very basic two column compact table nopad">
+										<tbody id="{{ $k }}">
+										</tbody>
+									</table>
+								</div>
+							{{ end }}
+							{{ range $k, $v := modes }}
+								<div data-mode="{{ $k }}r" {{ if or (ne $k (int $favMode)) (not $rx) }}hidden{{ end }}>
+									<table class="ui very basic two column compact table nopad">
+										<tbody id="{{ $k }}r">
+										</tbody>
+									</table>
+								</div>
+							{{ end }}
+						</div>
+						<div class="column">
+							{{ if $global.Context.User.ID }}
+							<!-- Get clan data -->
+							{{ $d := qb "SELECT clan_id, clan_privileges FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
+
+							<!-- User is in this clan -->
+							{{ if eq $d.clan_id.Int .ClanID }}
+								{{ if eq $d.clan_privileges.Int 8 }}
+									<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
+										{{ ieForm .Gin }}
+									</form>
+									<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.5)" type="submit" form="register-form">{{ .T "Disband Clan" }}</button></div>
+								{{ else }}
+									<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
+										{{ ieForm .Gin }}
+									</form>
+									<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.3)" type="submit" form="register-form">{{ .T "Leave Clan" }}</button></div>
+								{{ end }}
+							{{ end }}
+						{{ else }}
+							<div class="ui one item menu" id="join-menu"><a class="item" href="/login" style="background-color:rgba(0,128,255,.3)">Please login to join a clan</a></div>
+						{{ end }}
+
+							<h1 class="ui heading">{{ $global.T "Clan Owner" }}</h1>
+							<p>
+								{{ $.T "The leader of the clan." }}<br>
+							</p>
+							<div class="ui two column center aligned stackable grid">
+								{{ template "clanMember" ($.Get "users?id=%v" $clan.owner) }}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui aligned segment">
+					<h1 class="ui heading">{{ $.T "Members" }}</h1>
+					<p>
+						{{ $.T "The members of the clan." }}<br>
+					</p>
+					{{ template "clanMembers" ($.Get "clans/members?id=%v" (int $.ClanID)) }}
+				</div>
+			</div>
+		{{ end }}
 	{{ end }}
 </div>
 {{ end }}

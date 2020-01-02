@@ -1,0 +1,36 @@
+{{/*###
+NoCompile=true
+*/}}
+{{ define "clanMember" }}
+	{{ if . }}
+		<div class="column">
+			<div class="ui left aligned fluid card">
+				<div class="image">
+					<img src="{{ config "AvatarURL" }}/{{ .id }}" alt="Avatar">
+				</div>
+				<div class="content">
+					<a class="header" href="/u/{{ .id }}">{{ country .country false }}{{ .username }}</a>
+				</div>
+				<div class="extra content">
+					<div title="Registered">
+						<i class="sign in icon"></i>
+						{{ time .registered_on }}
+					</div>
+				</div>
+			</div>
+		</div>
+	{{ end }}
+{{ end }}
+
+{{ define "clanMembers" }}
+	{{ with .clan }}
+		{{ $c := . }}
+		<div class="ui three column center aligned stackable grid">
+			{{ range .members }}
+				{{ if ne .id $c.owner }}
+					{{ template "clanMember" . }}
+				{{ end }}
+			{{ end }}
+		</div>
+	{{ end }}
+{{ end }}

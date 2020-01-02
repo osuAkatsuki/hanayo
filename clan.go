@@ -69,32 +69,23 @@ func clanPage(c *gin.Context) {
 	var (
 		clanID          int
 		clanName        string
-		clanDescription string
-		clanIcon        string
 	)
 
 	// ctx := getContext(c)
 
 	i := c.Param("cid")
 	if _, err := strconv.Atoi(i); err != nil {
-		err := db.QueryRow("SELECT id, name, description, icon FROM clans WHERE name = ? LIMIT 1", i).Scan(&clanID, &clanName, &clanDescription, &clanIcon)
+		err := db.QueryRow("SELECT id, name FROM clans WHERE name = ? LIMIT 1", i).Scan(&clanID, &clanName)
 		if err != nil && err != sql.ErrNoRows {
 			c.Error(err)
 		}
 	} else {
-		err := db.QueryRow("SELECT id, name, description, icon FROM clans WHERE id = ? LIMIT 1", i).Scan(&clanID, &clanName, &clanDescription, &clanIcon)
-		switch {
-		case err == nil:
-		case err == sql.ErrNoRows:
-			err := db.QueryRow("SELECT id, name, description, icon FROM clans WHERE name = ? LIMIT 1", i).Scan(&clanID, &clanName, &clanDescription, &clanIcon)
-			if err != nil && err != sql.ErrNoRows {
-				c.Error(err)
-			}
-		default:
+		err := db.QueryRow("SELECT id, name FROM clans WHERE id = ? LIMIT 1", i).Scan(&clanID, &clanName)
+		if err != nil && err != sql.ErrNoRows {
 			c.Error(err)
 		}
 	}
-
+	
 	data := new(clanData)
 	data.ClanID = clanID
 	defer resp(c, 200, "clansample.html", data)
@@ -105,7 +96,7 @@ func clanPage(c *gin.Context) {
 		return
 	}
 
-	if getContext(c).User.Privileges&1 > 0 {
+	if (getContext(c).User.Privileges & 1) != 0 {
 		if db.QueryRow("SELECT 1 FROM clans WHERE id = ?", clanID).Scan(new(string)) != sql.ErrNoRows {
 			var bg string
 			db.QueryRow("SELECT background FROM clans WHERE id = ?", clanID).Scan(&bg)
@@ -116,7 +107,7 @@ func clanPage(c *gin.Context) {
 
 	data.TitleBar = T(c, "%s's Clan Page", clanName)
 	data.DisableHH = true
-	data.Scripts = append(data.Scripts, "/static/profile.js")
+	data.Scripts = append(data.Scripts, "/static/clan.js")
 }
 
 func checkCount(rows *sql.Rows) (count int) {
