@@ -8,14 +8,14 @@ $(document).ready(function() {
 	}
 	
 	// todo: same for relax check /// build proper path (using doubled replaceState can confuse users)
-	//var b = false;
+	var b = false;
 	if (wl.search.indexOf("mode=") === -1) {
 		newPathName += "?mode=" + favouriteMode;
-		//b = true;
+		b = true;
 	}
 	if (wl.search.indexOf("rx=") === -1) {
 		newPathName += (b ? '&' : '?') + "rx=" + rx;
-		//b = true;
+		b = true;
 	}
 		
 	/*if (!b && wl.pathname != newPathName)

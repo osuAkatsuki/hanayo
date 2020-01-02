@@ -23,14 +23,14 @@ NoCompile=true
 {{ end }}
 
 {{ define "clanMembers" }}
+	<div class="ui three column center aligned stackable grid" id="members">
 	{{ with .clan }}
 		{{ $c := . }}
-		<div class="ui three column center aligned stackable grid">
-			{{ range .members }}
-				{{ if ne .id $c.owner }}
-					{{ template "clanMember" . }}
-				{{ end }}
+		{{ range .members }}
+			{{ if ne .id $c.owner }}
+				{{ template "clanMember" . }}
 			{{ end }}
-		</div>
+		{{ end }}
 	{{ end }}
+	</div>
 {{ end }}
