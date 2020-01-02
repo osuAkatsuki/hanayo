@@ -70,7 +70,7 @@ Include=clan_member.html
 							{{ $d := qb "SELECT clan_id, clan_privileges FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
 
 							<!-- User is in this clan -->
-							{{ if eq $d.clan_id.Int .ClanID }}
+							{{ if eq $d.clan_id.Int $.ClanID }}
 								{{ if eq $d.clan_privileges.Int 8 }}
 									<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
 										{{ ieForm .Gin }}
