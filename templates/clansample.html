@@ -66,26 +66,26 @@ Include=clan_member.html
 						</div>
 						<div class="column">
 							{{ if $global.Context.User.ID }}
-							<!-- Get clan data -->
-							{{ $d := qb "SELECT clan_id, clan_privileges FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
+								<!-- Get clan data -->
+								{{ $d := qb "SELECT clan_id, clan_privileges FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
 
-							<!-- User is in this clan -->
-							{{ if eq $d.clan_id.Int $.ClanID }}
-								{{ if eq $d.clan_privileges.Int 8 }}
-									<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
-										{{ ieForm .Gin }}
-									</form>
-									<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.5)" type="submit" form="register-form">{{ .T "Disband Clan" }}</button></div>
-								{{ else }}
-									<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
-										{{ ieForm .Gin }}
-									</form>
-									<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.3)" type="submit" form="register-form">{{ .T "Leave Clan" }}</button></div>
+								<!-- User is in this clan -->
+								{{ if eq (or $d.clan_id.Int 0) $.ClanID }}
+									{{ if eq $d.clan_privileges.Int 8 }}
+										<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
+											{{ ieForm .Gin }}
+										</form>
+										<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.5)" type="submit" form="register-form">{{ .T "Disband Clan" }}</button></div>
+									{{ else }}
+										<form id="register-form" class="ui form" method="post" action="/c/{{ .ClanID }}">
+											{{ ieForm .Gin }}
+										</form>
+										<div class="ui one item menu"><button tabindex="1" class="ui primary button" style="background-color:rgba(255,0,0,.3)" type="submit" form="register-form">{{ .T "Leave Clan" }}</button></div>
+									{{ end }}
 								{{ end }}
+							{{ else }}
+								<div class="ui one item menu" id="join-menu"><a class="item" href="/login" style="background-color:rgba(0,128,255,.3)">Please login to join a clan</a></div>
 							{{ end }}
-						{{ else }}
-							<div class="ui one item menu" id="join-menu"><a class="item" href="/login" style="background-color:rgba(0,128,255,.3)">Please login to join a clan</a></div>
-						{{ end }}
 
 							<h1 class="ui heading">{{ $global.T "Clan Owner" }}</h1>
 							<p>
