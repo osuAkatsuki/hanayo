@@ -1,16 +1,16 @@
 var modesSet = new Array(7).fill(false);
 $(document).ready(function() {
 	var wl = window.location;
-	var newPathName = wl.pathname;
+	var newPathName = wl.pathname + wl.search;
 
 	if (newPathName.split('/')[2] != clanID) {
-		newPathName = "/c/" + clanID;
+		newPathName = "/c/" + clanID + wl.search;
 	}
 	
 	// todo: same for relax check /// build proper path (using doubled replaceState can confuse users)
-	var b = false;
+	var b = wl.search.length !== 0;
 	if (wl.search.indexOf("mode=") === -1) {
-		newPathName += "?mode=" + favouriteMode;
+		newPathName += (b ? '&' : '?') + "mode=" + favouriteMode;
 		b = true;
 	}
 	if (wl.search.indexOf("rx=") === -1) {
@@ -21,7 +21,7 @@ $(document).ready(function() {
 	/*if (!b && wl.pathname != newPathName)
 		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
 	else*/
-		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
+		window.history.replaceState('', document.title, newPathName + wl.hash);
 	
 	/*if (wl.search.indexOf("rx=") === -1) {
 		
@@ -69,6 +69,7 @@ $(document).ready(function() {
 			thiss.text("Leave");
 			thiss.attr("id", "leave-btn");
 			thiss.css("background-color", "rgba(255,0,0,.3)");
+			thiss.unbind();
 			showMessage("success", "Successfully joined " + t.clan.name);
 			modesSet = new Array(7).fill(false);
 			api("users", { id: currentUserID }, function(r) {
@@ -76,6 +77,20 @@ $(document).ready(function() {
 			});
 			setMode(favouriteMode, rx != 0);
 		}, !0)
+	});
+	
+	$("#leave-btn>.item").click(function(e) {
+		e.preventDefault();
+		if (!currentUserID) return;
+		var thiss = $(this);
+		api("clans/leave", { id: clanID }, function(t) {
+			if (t.message === "disbanded") {
+				location.replace("/");
+			} else {
+				location.replace("/c/" + clanID);
+			}
+			showMessage("success", "Successfully left.");
+		}, !0);
 	});
 });
 

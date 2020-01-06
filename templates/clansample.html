@@ -7,7 +7,7 @@ Include=clan_member.html
 		{{ $global := . }}
 		{{ $favModeRaw := .Get "users/self/favourite_mode" }}
 		{{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
-		{{ $rx := or (atoi (.Gin.Query "rx")) 0 }}
+		{{ $rx := _or (atoi (.Gin.Query "rx")) (has .ClientFlags 2) }} <!-- idk (it works) -->
 		{{ with (.Get "clans?id=%d" .ClanID).clan }}
 			<script>
 				window.favouriteMode = {{ $favMode }};
