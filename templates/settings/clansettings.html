@@ -40,9 +40,6 @@ Include=menu.html
 							{{ end }}
 							{{ ieForm .Gin }}
 						</form>
-						<script>
-							$("form").submit(function(e){e.preventDefault();var t=formToObject($(this)),n=$(this);return api("clans/settings",t,function(e){if(e.message==="tag already exists"){showMessage("error","A clan with that tag already exists!"),n.removeClass("loading");return}showMessage("success","Clan Settings have been saved."),n.removeClass("loading")},!0),!1})
-						</script>
 						<br>
 						<button tabindex="5" class="ui primary button" type="submit" form="register-form">{{ .T "Save" }}</button>
 					</div>
