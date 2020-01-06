@@ -9,57 +9,57 @@ Include=menu.html
 		{{ template "settingsSidebar" . }}
 		<div class="twelve wide column">
 			<div class="ui segment">
-				{{ $d := or (qb "SELECT users.clan_id FROM users WHERE users.clan_privileges = 8 AND users.id = ? LIMIT 1;" .Context.User.ID).clan_id.Int -1 }}
+				{{ $d := or (qb "SELECT id FROM clans WHERE owner = ? LIMIT 1;" .Context.User.ID).id.Int 0 }}
 				{{ if $d }}
 					<font size="6">Clan Settings</font>
 					<br><br>
 					<div class="ui center aligned segment">
-						{{ $o := (.Get "clans/isclan?uid=%d" .Context.User.ID).clan.clan }}
-						{{ $c := qb "SELECT * FROM clans WHERE id = ? LIMIT 1" $o }}
+						{{ $c := qb "SELECT * FROM clans WHERE id = ?" $d }}
 						{{ $tag := or $c.tag.String "" }}
 						{{ $desc := or $c.description.String "" }}
 						{{ $icon := or $c.icon.String "" }}
 						{{ $bg := or $c.background.String "" }}
-						<form id="register-form" class="ui form" method="post" action="/settings/clansettings">
+						<form id="register-form" class="ui form">
 							<div class="field">
-								<label class="left aligned">{{ "Clantag (2 to 6 characters)" }}</label>
-								<input tabindex="1" type="text" name="tag" placeholder="{{ "Clantag" }}" value="{{ $tag }}" pattern="{2,6}$">
+								<label class="left aligned">(2 to 6 characters)</label>
+								<input tabindex="1" type="text" name="tag" placeholder="Clantag" value="{{ $tag }}">
 							</div>
 							<div class="field">
-								<label class="left aligned">{{ "Description (optional)" }}</label>
-								<input tabindex="2" type="text" name="password" placeholder="{{ "Description" }}" value="{{ $desc }}">
+								<label class="left aligned">Description (optional)</label>
+								<input tabindex="2" type="text" name="desc" placeholder="Description" value="{{ $desc }}">
 							</div>
 							<div class="field">
 								<label class="left aligned">{{ "Icon [URL] (optional)" }}</label>
-								<input tabindex="3" type="url" name="email" placeholder="{{ "Icon URL" }}" value="{{ $icon }}">
+								<input tabindex="3" type="url" name="icon" placeholder="Icon URL" value="{{ $icon }}">
 							</div>
 							{{ if has .Context.User.Privileges 8388612 }}
 								<div class="field">
 								<label class="left aligned">{{ "Background [URL] (optional)" }}</label>
-								<input tabindex="4" type="url" name="bg" placeholder="{{ "Background URL" }}" value="{{ $bg }}">
+								<input tabindex="4" type="url" name="bg" placeholder="Background URL" value="{{ $bg }}">
 							</div>
 							{{ end }}
 							{{ ieForm .Gin }}
 						</form>
+						<script>
+							$("form").submit(function(e){e.preventDefault();var t=formToObject($(this)),n=$(this);return api("clans/settings",t,function(e){if(e.message==="tag already exists"){showMessage("error","A clan with that tag already exists!"),n.removeClass("loading");return}showMessage("success","Clan Settings have been saved."),n.removeClass("loading")},!0),!1})
+						</script>
 						<br>
 						<button tabindex="5" class="ui primary button" type="submit" form="register-form">{{ .T "Save" }}</button>
 					</div>
 					<br><font size="6">Invite</font>
 					<br><br>
-					<center><div class="ui two item menu" id="join-menu">
-					{{ with .Get "clans/getinvite?id=%d" .Context.User.ID }}
-						<input class="item" type="text" value="https://akatsuki.pw/clans/invite/{{ .invite }}" href="https://akatsuki.pw/clans/invite/{{ .invite }}" style="background-color:rgba(0,0,0,.6)" disabled></input>
-					{{ end }}
+					<center><div class="ui one item menu">
+					{{ $inv := qb "SELECT invite FROM clans WHERE id = ?" $d }}
+					<input id="invin" class="item" type="text" value="https://akatsuki.pw/clans/invite/{{ $inv.invite }}" style="background-color:rgba(0,0,0,.6)" disabled></input>
 					</div>
-					<br><form action="/settings/clansettings" method="POST">
-							{{ ieForm .Gin }}
-							<button type="submit" class="ui right green button">
-								{{ .T "Generate a new invite!" }}
-							</button>
-						</form>
+						<button id="ginvite" class="ui right green button">
+							{{ .T "Generate a new invite!" }}
+						</button>
 					<br>
-					{{ $members := (qb "SELECT COUNT(id) AS c FROM users WHERE clan_id = ? LIMIT 1" $d).c.Int }}
-					<font size="6">Members: {{ $members }}</font>
+					<br>
+					<br>
+					{{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $d) }}
+					<font size="6">Members: {{ $members.c }}</font>
 					<br>
 					{{ range (.Get "clans/members?id=%d&r=%d" $d 1).members }}
 					<form id="kick-form" class="ui form" method="post" action="/settings/clansettings/k">
