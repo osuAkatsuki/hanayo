@@ -3,9 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"math/rand"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,55 +12,6 @@ import (
 type clanData struct {
 	baseTemplateData
 	ClanID int
-}
-
-func leaveClan(c *gin.Context) {
-	i := c.Param("cid")
-	// login check
-	if getContext(c).User.ID == 0 {
-		resp403(c)
-		return
-	}
-	//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ? AND perms = 8", getContext(c).User.ID, i).
-	if db.QueryRow("SELECT 1 FROM users WHERE id = ? and clan_id = ? and clan_privileges = 8", getContext(c).User.ID, i).
-		Scan(new(int)) == sql.ErrNoRows {
-
-		//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
-
-		//if db.QueryRow("SELECT 1 FROM users WHERE id = ? AND clan_id = ?", getContext(c).User.ID, i).
-		//	Scan(new(int)) == sql.ErrNoRows {
-		//	addMessage(c, errorMessage{T(c, "Unexpected Error...")})
-		//	return
-		//}
-
-		//db.Exec("DELETE FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i)
-		db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 0 WHERE id = ?", getContext(c).User.ID) // 2nd check pointlesstm
-		addMessage(c, successMessage{T(c, "Left clan.")})
-		getSession(c).Save()
-		c.Redirect(302, "/c/"+i)
-	} else {
-
-		//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND clan = ?", getContext(c).User.ID, i).
-		if db.QueryRow("SELECT 1 FROM users WHERE id = ? and clan_id = ?", getContext(c).User.ID, i).
-			Scan(new(int)) == sql.ErrNoRows {
-			addMessage(c, errorMessage{T(c, "Unexpected Error...")})
-			return
-		}
-
-		// Delete clan.
-		db.Exec("DELETE FROM clans WHERE id = ? LIMIT 1", i)
-
-		// Remove all members from clan.
-		db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 0 WHERE clan_id = ?", i)
-
-		// Delete clan invite link.
-		// Un-used because invites are now stored in `clans`.
-		//db.Exec("DELETE FROM clans_invites WHERE clan = ? LIMIT 1", i)
-
-		addMessage(c, successMessage{T(c, "Disbanded Clan.")})
-		getSession(c).Save()
-		c.Redirect(302, "/clans?mode=0")
-	}
 }
 
 func clanPage(c *gin.Context) {
@@ -120,69 +69,6 @@ func checkCount(rows *sql.Rows) (count int) {
 	return count
 }
 
-var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-func randSeq(n int) string {
-	rand.Seed(time.Now().UnixNano() + int64(3))
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letters[rand.Intn(len(letters))]
-	}
-	return string(b)
-}
-
-func createInvite(c *gin.Context) {
-	ctx := getContext(c)
-	if string(c.PostForm("password")) == "" && string(c.PostForm("email")) == "" && string(c.PostForm("tag")) == "" && string(c.PostForm("bg")) == "" {
-
-		if ctx.User.ID == 0 {
-			resp403(c)
-			return
-		}
-
-		var clan int
-		db.QueryRow("SELECT clan_id FROM users WHERE id = ? AND clan_privileges = 8 LIMIT 1", ctx.User.ID).Scan(&clan)
-		if clan == 0 {
-			resp403(c)
-			return
-		}
-
-		//db.Exec("DELETE FROM clans_invites WHERE clan = ?", clan)
-
-		var s string
-		s = randSeq(8)
-
-		db.Exec("UPDATE clans SET invite = ? WHERE id = ?", s, clan)
-		//db.Exec("INSERT INTO clans_invites(clan, invite) VALUES (?, ?)", clan, s)
-	} else {
-		var clan int
-		db.QueryRow("SELECT clan_id FROM users WHERE id = ? AND clan_privileges = 8 LIMIT 1", ctx.User.ID).Scan(&clan)
-		//db.QueryRow("SELECT clan FROM user_clans WHERE user = ? AND perms = 8 LIMIT 1", ctx.User.ID).Scan(&clan)
-		if clan == 0 {
-			resp403(c)
-			return
-		}
-
-		tag := "0"
-		if c.PostForm("tag") != "" {
-			tag = c.PostForm("tag")
-		}
-
-		if db.QueryRow("SELECT 1 FROM clans WHERE tag = ? AND id != ?", c.PostForm("tag"), clan).
-			Scan(new(int)) != sql.ErrNoRows {
-			resp403(c)
-			addMessage(c, errorMessage{T(c, "A clan with that tag already exists...")})
-			return
-		}
-
-		db.Exec("UPDATE clans SET description = ?, icon = ?, tag = ?, background = ? WHERE id = ?",
-			c.PostForm("password"), c.PostForm("email"), tag, c.PostForm("bg"), clan)
-	}
-	addMessage(c, successMessage{T(c, "Success")})
-	getSession(c).Save()
-	c.Redirect(302, "/settings/clansettings")
-}
-
 func clanInvite(c *gin.Context) {
 	i := c.Param("inv")
 
@@ -237,46 +123,10 @@ func clanInvite(c *gin.Context) {
 	c.Redirect(302, "/c/"+s)
 }
 
-func clanKick(c *gin.Context) {
-	if getContext(c).User.ID == 0 {
-		resp403(c)
-		return
-	}
-
-	if db.QueryRow("SELECT 1 FROM users WHERE id = ? AND clan_privileges = 8", getContext(c).User.ID).
-		Scan(new(int)) == sql.ErrNoRows {
-		resp403(c)
-		return
-	}
-
-	member, err := strconv.ParseInt(c.PostForm("member"), 10, 32)
-	if err != nil {
-		fmt.Println(err)
-	}
-	if member == 0 {
-		resp403(c)
-		return
-	}
-
-	//if db.QueryRow("SELECT 1 FROM user_clans WHERE user = ? AND perms = 1", member).
-	if db.QueryRow("SELECT 1 FROM users WHERE id = ? AND clan_privileges = 1", member).
-		Scan(new(int)) == sql.ErrNoRows {
-		resp403(c)
-		return
-	}
-
-	//db.Exec("DELETE FROM user_clans WHERE user = ? LIMIT 1", member)
-	db.Exec("UPDATE users SET clan_id = 0, clan_privileges = 0 WHERE user = ? LIMIT 1", member)
-
-	addMessage(c, successMessage{T(c, "Success.")})
-	getSession(c).Save()
-	c.Redirect(302, "/settings/clansettings")
-}
-
 func resolveInvite(c string) int {
 	var clanid int
 	//row := db.QueryRow("SELECT clan FROM clans_invites WHERE invite = ?", c)
-	row := db.QueryRow("SELECT clan FROM clans where invite = ?", c)
+	row := db.QueryRow("SELECT id FROM clans where invite = ?", c)
 	err := row.Scan(&clanid)
 
 	if err != nil {
