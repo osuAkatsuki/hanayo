@@ -9,7 +9,7 @@ NoCompile=true
 					<img src="{{ config "AvatarURL" }}/{{ .id }}" alt="Avatar">
 				</div>
 				<div class="content">
-					<a class="header" href="/u/{{ .id }}">{{ with .country }}{{ country .country false }}{{ end }}{{ .username }}</a>
+					<a class="header" href="/u/{{ .id }}">{{ if .country }}{{ country .country false }}{{ end }}{{ .username }}</a>
 				</div>
 				<div class="extra content">
 					<div title="Registered">
