@@ -173,7 +173,7 @@
 			</div>
 			{{ $user := . }}
 			<div class="ui two item bottom attached menu" id="rx-menu">
-					<a class="0 item" data-rx="0" href="/u/{{ $user.id }}">Regular</a>
+					<a class="0 item" data-rx="0" href="/u/{{ $user.id }}">Vanilla</a>
 					<a class="1 item" data-rx="1" href="/rx/u/{{ $user.id }}">Relax</a>
 			</div>
 
@@ -284,7 +284,7 @@
 											<tr>
 												<td><b>{{ $global.T "Clan" }}</b></td>
 												<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode={{ $k }}">{{ $user.clan.name }}</a></td>
-											<tr>
+											</tr>
 											<tr>
 												<td><b>{{ $global.T "PP" }}</b></td>
 												<td class="right aligned">{{ humanize .pp }}</td>
