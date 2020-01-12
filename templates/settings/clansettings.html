@@ -47,7 +47,7 @@ Include=menu.html
 					<br><br>
 					<center><div class="ui one item menu">
 					{{ $inv := qb "SELECT invite FROM clans WHERE id = ?" $d }}
-					<input id="invin" class="item" type="text" value="https://akatsuki.pw/clans/invite/{{ $inv.invite }}" style="background-color:rgba(0,0,0,.6)" disabled></input>
+					<input id="invin" class="item" type="text" value="https://akatsuki.pw/invite/{{ $inv.invite }}" style="background-color:rgba(0,0,0,.6)" disabled></input>
 					</div>
 						<button id="ginvite" class="ui right green button">
 							{{ .T "Generate a new invite!" }}
