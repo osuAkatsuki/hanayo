@@ -21,16 +21,16 @@ Include=menu.html
 						{{ $bg := or $c.background.String "" }}
 						<form id="register-form" class="ui form">
 							<div class="field">
-								<label class="left aligned">(2 to 6 characters)</label>
-								<input tabindex="1" type="text" name="tag" placeholder="Clantag" value="{{ $tag }}">
+								<label class="left aligned">Clantag (2 to 6 characters)</label>
+								<input tabindex="1" type="text" name="tag" placeholder="{{ $tag }}">
 							</div>
 							<div class="field">
 								<label class="left aligned">Description (optional)</label>
-								<input tabindex="2" type="text" name="desc" placeholder="Description" value="{{ $desc }}">
+								<input tabindex="2" type="text" name="desc" placeholder="{{ $desc }}">
 							</div>
 							<div class="field">
 								<label class="left aligned">{{ "Icon [URL] (optional)" }}</label>
-								<input tabindex="3" type="url" name="icon" placeholder="Icon URL" value="{{ $icon }}">
+								<input tabindex="3" type="url" name="icon" placeholder="{{ if $icon }}{{ $icon }}{{ else }}Icon{{ end }}">
 							</div>
 							{{ if has .Context.User.Privileges 8388612 }}
 								<div class="field">
