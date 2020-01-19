@@ -58,17 +58,28 @@ Include=menu.html
 					{{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $d) }}
 					<font size="6">Members: {{ $members.c }}</font>
 					<br>
-					{{ range (.Get "clans/members?id=%d&r=%d" $d 1).members }}
-					<form id="kick-form" class="ui form" method="post" action="/settings/clansettings/k">
-						<div class="column">
-						<div class="ui left aligned fluid card">
-							<div class="content">
-								<a href="/u/{{ .id }}"><a class="header" href="/u/{{ .id }}">{{ country .country false }}{{ .username }}</a> <button name="member" value="{{ .id }}" class="ui right green button" style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"> Kick </button></a>
-							</div>
-						</div>
-					</div>
-					</form>
+					{{ $ := . }}
+					{{ range (.Get "clans/members?id=%d" $d).clan.members }}
+						{{ if ne (int .id) (int $.Context.User.ID) }}
+							<form id="kick-form" class="ui form">
+								<div class="column">
+									<div class="ui left aligned fluid card">
+										<div class="content">
+											<a href="/u/{{ .id }}"><a class="header" href="/u/{{ .id }}">{{ country .country false }}{{ .username }}</a> <button name="member" value={{ .id }} class="ui right green button" style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"> Kick </button></a>
+										</div>
+									</div>
+								</div>
+							</form>
+						{{ end }}
 					{{ end }}
+					<script>
+						$("button[name = 'member']").click(function(e) {
+							e.preventDefault();
+							api("clans/kick", { user:  parseInt($(this).val()) }, function(t) {
+								window.location.reload();
+							}, !0)
+						});
+					</script>
 					{{ else }}
 					<font size="3">You haven't joined a clan yet, or you aren't the owner of your current one.</font>
 				{{ end }}
