@@ -117,8 +117,8 @@ func main() {
 		&config.AvatarURL:        "https://a.akatsuki.pw",
 		&config.BaseURL:          "https://akatsuki.pw",
 		&config.BanchoAPI:        "https://c.akatsuki.pw",
-		&config.CheesegullAPI:    "https://cg.mxr.lol/api",
-		&config.API:              "http://localhost:40001/api/v1/",
+		&config.CheesegullAPI:    "https://pisstau.be/api",
+		&config.API:              "https://localhost:40001/api/v1/",
 		&config.APISecret:        "Potato",
 		&config.IP_API:           "https://ip.zxq.co",
 		&config.DiscordServer:    "#",
@@ -276,7 +276,7 @@ func generateEngine() *gin.Engine {
 
 	r.GET("/clans/create", ccreate)
 	r.POST("/clans/create", ccreateSubmit)
-	
+
 	r.GET("/u/:user", userProfile)
 	r.GET("/rx/u/:user", relaxProfile)
 	r.GET("/c/:cid", clanPage)
