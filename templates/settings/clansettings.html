@@ -21,16 +21,16 @@ Include=menu.html
 						{{ $bg := or $c.background.String "" }}
 						<form id="register-form" class="ui form">
 							<div class="field">
-								<label class="left aligned">(2 to 6 characters)</label>
-								<input tabindex="1" type="text" name="tag" placeholder="Clantag" value="{{ $tag }}">
+								<label class="left aligned">Clantag (2 to 6 characters)</label>
+								<input tabindex="1" type="text" name="tag" placeholder="{{ $tag }}">
 							</div>
 							<div class="field">
 								<label class="left aligned">Description (optional)</label>
-								<input tabindex="2" type="text" name="desc" placeholder="Description" value="{{ $desc }}">
+								<input tabindex="2" type="text" name="desc" placeholder="{{ $desc }}">
 							</div>
 							<div class="field">
 								<label class="left aligned">{{ "Icon [URL] (optional)" }}</label>
-								<input tabindex="3" type="url" name="icon" placeholder="Icon URL" value="{{ $icon }}">
+								<input tabindex="3" type="url" name="icon" placeholder="{{ if $icon }}{{ $icon }}{{ else }}Icon{{ end }}">
 							</div>
 							{{ if has .Context.User.Privileges 8388612 }}
 								<div class="field">
@@ -47,7 +47,7 @@ Include=menu.html
 					<br><br>
 					<center><div class="ui one item menu">
 					{{ $inv := qb "SELECT invite FROM clans WHERE id = ?" $d }}
-					<input id="invin" class="item" type="text" value="https://akatsuki.pw/clans/invite/{{ $inv.invite }}" style="background-color:rgba(0,0,0,.6)" disabled></input>
+					<input id="invin" class="item" type="text" value="https://akatsuki.pw/invite/{{ $inv.invite }}" style="background-color:rgba(0,0,0,.6)" disabled></input>
 					</div>
 						<button id="ginvite" class="ui right green button">
 							{{ .T "Generate a new invite!" }}
@@ -58,17 +58,28 @@ Include=menu.html
 					{{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $d) }}
 					<font size="6">Members: {{ $members.c }}</font>
 					<br>
-					{{ range (.Get "clans/members?id=%d&r=%d" $d 1).members }}
-					<form id="kick-form" class="ui form" method="post" action="/settings/clansettings/k">
-						<div class="column">
-						<div class="ui left aligned fluid card">
-							<div class="content">
-								<a href="/u/{{ .id }}"><a class="header" href="/u/{{ .id }}">{{ country .country false }}{{ .username }}</a> <button name="member" value="{{ .id }}" class="ui right green button" style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"> Kick </button></a>
-							</div>
-						</div>
-					</div>
-					</form>
+					{{ $ := . }}
+					{{ range (.Get "clans/members?id=%d" $d).clan.members }}
+						{{ if ne (int .id) (int $.Context.User.ID) }}
+							<form id="kick-form" class="ui form">
+								<div class="column">
+									<div class="ui left aligned fluid card">
+										<div class="content">
+											<a href="/u/{{ .id }}"><a class="header" href="/u/{{ .id }}">{{ country .country false }}{{ .username }}</a> <button name="member" value={{ .id }} class="ui right green button" style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"> Kick </button></a>
+										</div>
+									</div>
+								</div>
+							</form>
+						{{ end }}
 					{{ end }}
+					<script>
+						$("button[name = 'member']").click(function(e) {
+							e.preventDefault();
+							api("clans/kick", { user:  parseInt($(this).val()) }, function(t) {
+								window.location.reload();
+							}, !0)
+						});
+					</script>
 					{{ else }}
 					<font size="3">You haven't joined a clan yet, or you aren't the owner of your current one.</font>
 				{{ end }}
