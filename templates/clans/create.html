@@ -14,7 +14,7 @@
 		<div class="ui segment">
 			{{ .T "You're already in a Clan." }}
 		</div>
-	{{ else if has .Context.User.Privileges 4 }}
+	{{ else }}
 		<div class="tiny container">
 			<div class="ui raised segments">
 				<div class="ui segment">
@@ -42,10 +42,6 @@
 					<button tabindex="5" class="ui primary button" type="submit" form="register-form">{{ .T "Submit" }}</button>
 				</div>
 			</div>
-		</div>
-	{{ else }}
-		<div class="ui error message">
-			{{ .T "Clan creation is limited to <a href='/donate'>Akatsuki Supporters</a>." | html }}
 		</div>
 	{{ end }}
 </div>
