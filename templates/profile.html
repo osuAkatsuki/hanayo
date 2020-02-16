@@ -124,8 +124,10 @@
 							</div>
 							{{ end }}
 						{{ else if $supporter }}
+						{{ if .username_aka }}
 							<div class="supporter">
 								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
+								{{ end }}
 							</div>
 						{{ else }}
 							<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
@@ -274,8 +276,8 @@
 											{{ with .country_leaderboard_rank }}
 												<tr>
 													<td><b>{{ $global.T "Country rank" }} &nbsp;
-														<a href="/leaderboard?mode={{ $k }}&country={{ $user.country }}">
-															</a>{{ country $user.country false }}
+														<a href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}">
+															{{ country $user.country false }}
 														</a>
 													</b></td>
 													<td class="right aligned">#{{ . }}</td>

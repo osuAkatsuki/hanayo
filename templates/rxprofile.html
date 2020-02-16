@@ -276,8 +276,8 @@
 											{{ with .country_leaderboard_rank }}
 												<tr>
 													<td><b>{{ $global.T "Country rank" }} &nbsp;
-														<a href="/leaderboard?mode={{ $k }}&country={{ $user.country }}">
-															</a>{{ country $user.country false }}
+														<a href="/leaderboard?mode={{ $k }}&rx=1&country={{ $user.country }}">
+															{{ country $user.country false }}
 														</a>
 													</b></td>
 													<td class="right aligned">#{{ . }}</td>
