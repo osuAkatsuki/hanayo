@@ -39,6 +39,41 @@ $(document).ready(function() {
 		});
 });
 
+function loadMostPlayedBeatmaps(mode) {
+	var mostPlayedTable = $("#scores-zone div[data-mode=" + mode + "] table[data-type='most-played']");
+	currentPage[mode].mostPlayed++
+	api('users/most_played', {id: userID, mode: mode, p: currentPage[mode].mostPlayed, l: 5}, function (resp) {
+		if (resp.beatmaps === null) {
+			return;
+		}
+		resp.beatmaps.forEach(function(el, idx) {
+			mostPlayedTable.children('tbody').append(
+				$("<tr />").append(
+					$("<td />").append(
+						$("<h4 class='ui image header' />").append(
+							$("<img src='https://assets.ppy.sh/beatmaps/" + el.beatmap.beatmapset_id + "/covers/list.jpg' class='ui mini rounded image'>"),
+							$("<div class='content' />").append(
+								$("<a href='/b/" + el.beatmap.beatmap_id + "' />").append(
+									$('<b />').text(el.beatmap.song_name),
+									// $('<i />').text(' by OwO')
+								)
+							)
+						)
+					),
+					$("<td class='right aligned' />").append(
+						$('<i class="play circle icon" />'),
+						$('<b />').text(el.playcount)
+					)
+				)
+			)
+		})
+		if (resp.beatmaps.length === 5) {
+			var el = mostPlayedTable.find('.load-more')
+			$(el).removeClass('disabled')
+		}
+	})
+}
+
 function initialiseAchievements() {
 	api('users/achievements' + (currentUserID == userID ? '?all' : ''),
 		{id: userID}, function (resp) {
@@ -64,7 +99,7 @@ function initialiseAchievements() {
 				shown++;
 				$ach.append(
 					$("<div class='ui two wide column'>").append(
-						$("<img src='https://s.ripple.moe/images/medals-" +
+						$("<img src='https://s.akatsuki.pw/images/medals-" +
 							"client/" + ach.icon + ".png' alt='" + ach.name +
 							"' class='" +
 							(!ach.achieved ? "locked-achievement" : "achievement") +
@@ -181,18 +216,44 @@ function initialiseScores(el, mode) {
 	var best = defaultScoreTable.clone(true).addClass("orange");
 	//var first = defaultScoreTable.clone(true).addClass("blue");
 	var recent = defaultScoreTable.clone(true).addClass("blue");
+	var mostPlayedBeatmapsTable = $("<table class='ui table F-table yellow' data-mode='" + mode + "' />")
+			.append(
+					$("<thead />").append(
+							$("<tr />").append(
+									$("<th>"+ T("Beatmap") + "</th>"),
+									$("<th class='right aligned'>"+ T("Plays") + "</th>")
+							)
+					)
+			)
+			.append(
+					$('<tbody id="most-played" />')
+			)
+			.append(
+					$("<tfoot />").append(
+							$("<tr />").append(
+									$("<th colspan=2 />").append(
+											$("<div class='ui right floated pagination menu' />").append(
+													$("<a class='load-more disabled item'>" + T("Load more") + "</a>").click(loadMoreMostPlayed)
+											)
+									)
+							)
+					)
+			)
 	best.attr("data-type", "best");
 	//first.attr("data-type", "first");
 	recent.attr("data-type", "recent");
+	mostPlayedBeatmapsTable.attr("data-type", "most-played");
 	recent.addClass("no bottom margin");
 	el.append($("<div class='ui segments no bottom margin' />").append(
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Best scores") + "</h2>", best),
 		//$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + "</h2>", first),
+	                $("<div id='profile' class='ui segment' />").append("<h2 class='ui header'>" + T("Most played beatmaps") + "</h2>", mostPlayedBeatmapsTable),
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Recent scores") + "</h2>", recent)
 	));
 	loadScoresPage("best", mode);
 	//loadScoresPage("first", mode);
 	loadScoresPage("recent", mode);
+	loadMostPlayedBeatmaps(mode);
 };
 function loadMoreClick() {
 	var t = $(this);
@@ -203,12 +264,20 @@ function loadMoreClick() {
 	var mode = t.parents("div[data-mode]").data("mode");
 	loadScoresPage(type, mode);
 }
+function loadMoreMostPlayed() {
+	var t = $(this);
+	if (t.hasClass("disabled"))
+		return;
+	t.addClass("disabled");
+	var mode = t.parents("div[data-mode]").data("mode");
+	loadMostPlayedBeatmaps(mode);
+}
 // currentPage for each mode
 var currentPage = {
-	0: {best: 0, recent: 0/*, first: 0*/},
-	1: {best: 0, recent: 0/*, first: 0*/},
-	2: {best: 0, recent: 0/*, first: 0*/},
-	3: {best: 0, recent: 0/*, first: 0*/}
+	0: {best: 0/*, first: 0*/, recent: 0, mostPlayed: 0},
+	1: {best: 0/*, first: 0*/, recent: 0, mostPlayed: 0},
+	2: {best: 0/*, first: 0*/, recent: 0, mostPlayed: 0},
+	3: {best: 0/*, first: 0*/, recent: 0, mostPlayed: 0}
 };
 var scoreStore = {};
 function loadScoresPage(type, mode) {
@@ -219,10 +288,11 @@ function loadScoresPage(type, mode) {
 		type: type,
 		mode: mode,
 	});
+	var limit = type === 'best' ? 10 : 5;
 	api("users/scores/" + type, {
 		mode: mode,
 		p: page,
-		l: 10,
+		l: limit,
 		rx: 0,
 		id: userID,
 	}, function(r) {
@@ -232,14 +302,13 @@ function loadScoresPage(type, mode) {
 		}
 		r.scores.forEach(function(v, idx){
 			scoreStore[v.id] = v;
-			if (v.completed != 0) {
 				var scoreRank = getRank(mode, v.mods, v.accuracy, v.count_300, v.count_100, v.count_50, v.count_miss);
-			} else {
-        		var scoreRank = 'F';
-			}
-			table.append($("<tr class='new score-row' data-scoreid='" + v.id + "' />").append(
+			var rowColor = '';
+			if (type === 'recent')
+				rowColor = v.completed === 3 ? '' : v.completed < 2 ? 'error' : '';
+			table.append($("<tr class='new score-row " + rowColor + "' data-scoreid='" + v.id + "' />").append(
 				$(
-					"<td><img src='/static/ranking-icons/" + scoreRank + ".png' class='score rank' alt='" + scoreRank + "'> " +
+					"<td>" + (v.completed < 2 ? '' : "<img src='/static/ranking-icons/" + scoreRank + ".png' class='score rank' alt='" + scoreRank + "'> ") +
 					escapeHTML(v.beatmap.song_name) + " <b>" + getScoreMods(v.mods) + "</b> <i>(" + v.accuracy.toFixed(2) + "%)</i><br />" +
 					"<div class='subtitle'><time class='new timeago' datetime='" + v.time + "'>" + v.time + "</time></div></td>"
 				),
@@ -252,7 +321,7 @@ function loadScoresPage(type, mode) {
 			e.stopPropagation();
 		}).removeClass("new");
 		var enable = true;
-		if (r.scores.length != 10)
+		if (r.scores.length !== limit)
 			enable = false;
 		disableLoadMoreButton(type, mode, enable);
 	});
@@ -263,7 +332,7 @@ function downloadStar(id) {
 function weightedPP(type, page, idx, pp) {
 	if (type != "best" || pp == 0)
 		return "";
-	var perc = Math.pow(0.95, ((page - 1) * 10) + idx);
+	var perc = Math.pow(0.95, ((page - 1) * 20) + idx);
 	var wpp = pp * perc;
 	return "<i title='Weighted PP, " + Math.round(perc*100) + "%'>(" + wpp.toFixed(2) + "pp)</i>";
 }
@@ -287,10 +356,12 @@ function viewScoreInfo() {
 		"Max combo":	addCommas(s.max_combo) + "/" + addCommas(s.beatmap.max_combo)
 							+ (s.full_combo ? " " + T("(full combo)") : ""),
 		"Difficulty":	T("{{ stars }} star", {
-							stars: s.beatmap.difficulty2[modesShort[s.play_mode]],
-							count: Math.round(s.beatmap.difficulty2[modesShort[s.play_mode]]),
+						stars: s.beatmap.difficulty2[modesShort[s.play_mode]],
+						count: Math.round(s.beatmap.difficulty2[modesShort[s.play_mode]]),
 	 }),
 		"Mods":			getScoreMods(s.mods, true),
+		"Passed":		T(s.completed >= 2 ? "Yes" : "No"),
+		"Personal high score": 	T(s.completed === 3 ? "Yes" : "No")
 	};
 
 	// hits data
