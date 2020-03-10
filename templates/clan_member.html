@@ -11,12 +11,14 @@ NoCompile=true
 				<div class="content">
 					<a class="header" href="/u/{{ .id }}">{{ if .country }}{{ country .country false }}{{ end }}{{ .username }}</a>
 				</div>
-				<div class="extra content">
-					<div title="Registered">
-						<i class="sign in icon"></i>
-						{{ time .registered_on }}
+				{{ if .registered_on }}
+					<div class="extra content">
+						<div title="Registered">
+							<i class="sign in icon"></i>
+							{{ time .registered_on }}
+						</div>
 					</div>
-				</div>
+				{{ end }}
 			</div>
 		</div>
 	{{ end }}
