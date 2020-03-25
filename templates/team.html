@@ -39,13 +39,20 @@ KyutGrill=team2.jpg
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 53) }}
 		</div>
-		<!--div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Akatsuki People" }}</h1>
+		<div class="ui center aligned segment">
+			<h1 class="ui heading">{{ .T "Akatsuki Scorewatch" }}</h1>
 			<p>
 				{{ .T "These members help manage Akatsuki's YouTube channel; uploading plays, and keep it running nice and smooth." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 76) }}
-		</div-->
+			{{ template "userGroup" (.Get "badges/members?id=%d" 86) }}
+		</div>
+		<div class="ui center aligned segment">
+			<h1 class="ui heading">{{ .T "Twitter Managers" }}</h1>
+			<p>
+				{{ .T "These members manage Akatsuki's Twitter account; posting service status, answers questions and keep it active." }}
+			</p>
+			{{ template "userGroup" (.Get "badges/members?id=%d" 87) }}
+		</div>
 	</div>
 	<div class="ui segments">
 		<div class="ui center aligned segment">
