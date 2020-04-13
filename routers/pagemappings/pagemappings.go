@@ -35,7 +35,7 @@ var pageMappings = map[int]interface{}{
 	20: "/", // Beta keys
 	21: "/about",
 	22: "/",          // reports
-	23: "/doc/rules", // rules
+	23: "/terms", // rules
 	24: "/",          // my report
 	25: "/",          // report
 	26: "/friends",
