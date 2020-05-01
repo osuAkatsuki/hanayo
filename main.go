@@ -21,6 +21,7 @@ import (
 	"github.com/thehowl/qsql"
 	"gopkg.in/mailgun/mailgun-go.v1"
 	"gopkg.in/redis.v5"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"zxq.co/ripple/hanayo/modules/btcaddress"
 	"zxq.co/ripple/hanayo/modules/btcconversions"
 	"zxq.co/ripple/hanayo/routers/oauth"
@@ -50,7 +51,9 @@ var (
 
 		MainRippleFolder string `description:"Folder where all the non-go projects are contained, such as old-frontend, lets, ci-system. Used for changelog."`
 		AvatarsFolder    string `description:"location folder of avatars, used for placing the avatars from the avatar change page."`
-
+		EnableS3	bool `description:"Whether to use S3 for Avatars"`
+		S3Bucket	string
+		
 		CookieSecret string
 
 		RedisMaxConnections int
@@ -89,6 +92,7 @@ var (
 	qb        *qsql.DB
 	mg        mailgun.Mailgun
 	rd        *redis.Client
+	sess      *session.Session
 )
 
 // Services etc
@@ -143,6 +147,10 @@ func main() {
 		panic(err)
 	}
 
+	if config.EnableS3 {
+		sess = session.Must(session.NewSession())
+	}
+	
 	// initialise mailgun
 	mg = mailgun.NewMailgun(
 		config.MailgunDomain,
