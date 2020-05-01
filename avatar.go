@@ -7,6 +7,7 @@ import (
 	_ "image/jpeg"
 	"image/png"
 	"os"
+	"bytes"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nfnt/resize"
