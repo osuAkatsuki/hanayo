@@ -148,7 +148,9 @@ func main() {
 	}
 
 	if config.EnableS3 {
-		sess = session.Must(session.NewSession())
+		sess = session.Must(session.NewSessionWithOptions(session.Options{
+			SharedConfigState: session.SharedConfigEnable,
+		}))
 	}
 	
 	// initialise mailgun
