@@ -55,7 +55,7 @@ func avatarSubmit(c *gin.Context) {
 			Body:   buf,
 		}
 		uploader := s3manager.NewUploader(sess)
-		result, err := uploader.Upload(upParams)
+		_, err = uploader.Upload(upParams)
 		if err != nil {
 			m = errorMessage{T(c, "We were not able to save your avatar.")}
 			c.Error(err)
