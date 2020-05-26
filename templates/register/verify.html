@@ -1,27 +1,27 @@
 {{ define "tpl" }}
 <div class="ui container">
-	<!-->div class="ui segment">
+	<div class="ui segment">
 		{{ .T "Your account has been created, however it still <b>needs to be verified!</b> Please log in into <b><u>osu! (the game)</u></b> using your account. <b>There is <u>no email confirmation</u> at the moment. All you need to do is connect to Akatsuki from the osu! client!</b> If you're having trouble, <a href='/doc/1'>follow this guide</a>." | html }}
-	</div-->
+	</div>
 	<!-->div class="ui centered error message">
 		{{ .T "<b class='big text'>Do not let anyone except yourself log into your Akatsuki account!</b><br> Join our <a href='%s'>Discord server</a> and move to the #help channel instead (after following the steps on this page) so that we can help you out if you have trouble connecting." (config "DiscordServer") | html }}
 	</div-->
 	<div class="ui segment">
 		<h1 class="ui heading">{{ .T "<a href='/doc/connection_guide' target='_blank'>The Guide</a>. TL;DR version below." | html }}</h1>
 		<ol class="ui list">
-			<li><a href="/static/switcher.exe"><b>{{ .T "Download the server switcher" }}</b></a></li>
-			<li>{{ .T "Extract it, disable your antivirus, execute <i>switcher.exe</i> <b>as administrator</b>." | html }}</li>
-			<li>{{ .T "Click on <b>On/Off</b>, then <b>Install certificate</b>." | html }}</li>
-			<li>{{ .T "Make sure the switcher says \"You are playing on <b>Akatsuki</b>.\"" | html }}</li>
+			<li><a href="/static/switcher.zip"><b>{{ .T "Download the server switcher" }}</b></a></li>
+			<li>{{ .T "Extract it, move all files into a folder, and execute <i>switcher.exe</i> <b>as administrator</b>." | html }}</li>
+			<li>{{ .T "Click on <b>Switch to Akatsuki</b>. This should prompt you to install our HTTPs certificate, then switch you to our server." | html }}</li>
+			<li>{{ .T "Make sure the switcher says \"You are connected to <b>Akatsuki</b>.\"" | html }}</li>
 			<li>{{ .T "If it says something about read-only mode, you most likely have an antivirus program of some sort blocking access for us to write to <code>C:\\Windows\\System32\\Drivers\\etc</code>." | html }}</li>
 		</ol>
 		<p>
-			{{ .T "If you're still having trouble, then again, join our <a href='%s'>Discord server</a> and move to the #help channel. Please provide as much information as you can in your message." (config "DiscordServer") | html }}
+			{{ .T "If you're still having trouble, then again, join our <a href='/discord'>Discord server</a> and move to the #help channel. Please provide as much information as you can in your message." | html }}
 		</p>
 	</div>
-	<!-->div class="ui center aligned segment">
+	<div class="ui center aligned segment">
 		<h1 class="ui heading">{{ .T "Waiting for verification" }}</h1>
 		<i class="circle notched huge loading icon"></i>
-	</div-->
+	</div>
 </div>
 {{ end }}
