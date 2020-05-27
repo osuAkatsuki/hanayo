@@ -45,7 +45,7 @@
 
 					{{ if $ccEnabled }}
 						{{ if $isClan }} {{/* Checks to see if the user is in a clan.  */}}
-						{{ navbarItem .Path (.T "<p title='You are already in a Clan.' style='color: #C0C0C0;'>Create</p>") "" | html }}
+						{{ navbarItem .Path (.T "<p title='You are already in a clan.' style='color: #C0C0C0;'>Create</p>") "" | html }}
 						{{ else }}
 						{{ navbarItem .Path (.T "Create") "/clans/create" }}
 						{{ end }}
@@ -54,7 +54,7 @@
 					{{ if $clanLeader }} {{/* Checks to see if the user owns a clan.  */}}
 					{{ navbarItem .Path (.T "Clan Settings") "/settings/clansettings" }}
 					{{ else }}
-					{{ navbarItem .Path (.T "<p title='You are not an Owner of a Clan.'  style='color: #C0C0C0;'>Clan Settings</p>") ""  | html }}
+					{{ navbarItem .Path (.T "<p title='You are not a clan leader.'  style='color: #C0C0C0;'>Clan Settings</p>") ""  | html }}
 					{{ end }}
 				</div>
 			</div>

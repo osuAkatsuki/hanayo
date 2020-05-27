@@ -4,12 +4,12 @@ import (
 	"strings"
 
 	"zxq.co/ripple/rippleapi/common"
-	"zxq.co/ripple/semantic-icons-ugc"
 )
 
 type donorInfoResponse struct {
 	common.ResponseBase
 	HasDonor   bool                 `json:"has_donor"`
+	HasPremium bool                 `json:"has_premium"`
 	Expiration common.UnixTimestamp `json:"expiration"`
 }
 
@@ -24,6 +24,7 @@ func UsersSelfDonorInfoGET(md common.MethodData) common.CodeMessager {
 		return Err500
 	}
 	r.HasDonor = common.UserPrivileges(privileges)&common.UserPrivilegeDonor > 0
+	r.HasPremium = common.UserPrivileges(privileges)&common.UserPrivilegePremium > 0
 	r.Code = 200
 	return r
 }

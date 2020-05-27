@@ -10,6 +10,18 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.min.css" rel="stylesheet" type="text/css">
 <div class="ui container">
 	{{ $ief := ieForm .Gin }}
+	{{ with .Get "users/self/donor_info" }}
+		{{ if .has_premium }}
+			<div class="ui segment">
+				<h1 class="ui center aligned header no bottom margin" style="margin: 0 auto; display: table;">
+					<i class="red heart icon" style="font-size: 90%;"></i> <div class="content">{{ $.T "You are a premium member!" }}</div>
+				</h1>
+				<div class="ui centered subtitle" style="font-size:1.2rem;">
+					{{ $.T "Your Premium expires <b>%s</b>. No need to feel guilty for not having donated!" (time .expiration) | html }} &lt;3
+				</div>
+			</div>
+		{{ end }}
+	{{ end }}
 		<div class="ui segment">
 			<h1 class="ui center aligned header">
 				{{ $.T "So, what makes it so <i>Premium</i>?" | html }}
@@ -27,8 +39,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 						{{ $.T "To kick it off, you get a <b>rainbow username</b> on the website to show everyone you're a really cool dude who has gone above and beyond in helping us pay the server bills." | html }}
 					</div>
 					<div class="eight wide column">
-						<h3 class="ui header">{{ $.T "Gif/Video Backgrounds" }}</h3>
-						{{ $.T "You'll be able to take a step up from regular supporters, and <b>set your custom background to an Animated version</b>." | html }}
+						<h3 class="ui header">{{ $.T "Animated profile background" }}</h3>
+						{{ $.T "Take a step up from regular supporters, and <b>set your custom background to an Animated version</b>." | html }}
 					</div>
 				</div>
 				<div class="row">
@@ -40,23 +52,23 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 						<h3 class="ui header">{{ $.T "Premium badge" }}</h3>
 						{{ $.T "Just like Supporter, you will get a <b>premium badge</b> on your profile, to show everyone you've decided to support us!" | html }}
 					</div>
-					<div class="four wide column">
-						<h3 class="ui header">{{ $.T "#admin access in-game" }}</h3>
-						{{ $.T "Now you'll be able to keep up with all the latest drama, restrictions, reports, and all! This way you can <b>keep updated with the server's management and development</b>." | html }}
+					<div class="four wide column"> <!-- TODO: better feature -->
+						<h3 class="ui header">{{ $.T "In-game #premium channel" }}</h3>
+						{{ $.T "Premium members have a <b>dedicated in-game channel of their own!</b> This also comes along with the #supporter channel." | html }}
 					</div>
 					<div class="four wide column">
 						<h3 class="ui header">{{ $.T "Many other features.." }}</h3>
-						{{ $.T "Premium actually comes with far too many small features to fit on this page.. so why not make it interesting to leave them for you to find? Have fun and enjoy the Premium life!" }}
+						{{ $.T "As Akatsuki development continues, <b>many small quality-of-life improvements are added for premium members</b> - for example, the !q, and !overwrite commands." | html }}
 					</div>
 				</div>
 			</div>
 			{{ if $global.User.ID }}
 				<h4 class="ui horizontal divider header">
-					{{ $.T "Premium members have many, hidden, smaller features aswell. And of course, all regular supporter perks are included in Premium as well!" }}
+					{{ $.T "And of course, all regular supporter perks are included in premium as well! Live the premium life!" }}
 				</h4>
-				<p>
-					{{ $.T "You may donate through <b>PayPal</b> (or credit/debit card linked to PayPal). Use the slider below to choose the amount of months you'd like to have the premium benefits, and the cost will be instantly calculated. The more months you purchase, the bigger the discount will be." | html }}
-				</p>
+				<center>
+					<p>{{ $.T "You may donate through <b>PayPal</b> (or credit/debit card linked to PayPal). Use the slider below to choose the amount of months you'd like, and the cost will be instantly calculated. The discount will increase exponentially as the months increase." | html }}</p>
+				</center>
 				<div id="months-slider" style="margin: 0 auto; max-width: 500px"></div>
 				<br>
 				<div id="cost" class="centered"><b>{{ $.T "Loading..." }}</b></div>
@@ -86,7 +98,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 								<button type="submit" class="ui blue button">{{ $.T "Submit" }}</button>
 							</div>
 							{{ $ief }}
-							<input type="hidden" name="business" value="cmyuisuki@gmail.com">
+							<input type="hidden" name="business" value="cmyuiosu@gmail.com">
 							<input type="hidden" name="cmd" value="_xclick">
 							<input type="hidden" name="lc" value="GB">
 							<input type="hidden" name="no_note" value="0">
@@ -100,9 +112,9 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
 				</h4>
 				<p>
 				<center>
-				{{ $.T "<b>You'll have to wait until we verify and process your payment. It can take up to <b>12 hours</b> (although it is usually quite a bit faster than this). If 12 hours have passed and you still haven't received your supporter tag, contact <b>cmyui#0425</b> in our <a href='https://discord.gg/5cBtMPW'>Discord server</a> or send an email to <b>cmyuiosu@gmail.com</b>" | html }}
-				<br><br>
-				{{ $.T "Disclaimer: Donations are <b>non-refundable</b>, and do not exempt users from the Akatsuki rules. You will still be treated equally to regular users, but maybe with a bit more love <3." | html}}
+					{{ $.T "<b>Donations are not currently automatic - you'll have to wait until we verify and process your payment (it <i>can</i> take up to <b>12 hours</b>, although it is usually quite a bit faster). If 12 hours have passed and you still haven't received your supporter tag, contact <b>cmyui#0425</b> in our <a href='/discord'>Discord server</a> or send an email to <b>cmyuiosu@gmail.com</b>" | html }}
+					<br><br>
+					{{ $.T "Disclaimer: Donations are <b>non-refundable</b>, and do not exempt users from Akatsuki's rules - you will still be treated equally to regular users (with an extra bedtime kiss)." | html}}
 				</center>
 			</p>
 			{{ else }}

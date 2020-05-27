@@ -55,7 +55,7 @@
 				<noscript>Research has proven this website works 10000% better if you have JavaScript enabled.</noscript>
 				{{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
 					<div class="ui warning message">
-						{{ $.T "Your account is currently in restricted mode. You will not be able to perform certain actions, and your profile can only be seen by you and by Akatsuki's staff. If you believe this was a mistake, or have waited more than 2 months since your latest offense, you may appeal using <a href='https://goo.gl/forms/qDBIMgcvpFLWCNwf2'>this form</a>." | html }}
+						{{ $.T "Your account is currently in restricted mode, and will not be able to perform certain actions. Your profile has been hidden from normal users. If you believe this was a mistake (or have waited more than 2 months since your latest offense), you may appeal using <a href='https://goo.gl/forms/qDBIMgcvpFLWCNwf2'>this form</a>." | html }}
 					</div>
 				{{ end }}
 				{{ if .Messages }}
@@ -79,7 +79,7 @@
 				{{ end }}
 				{{ with $settings.website_maintenance.Int }}
 					<div class="ui warning message">
-						{{ $.T "The Akatsuki website is currently in maintenance mode. Only certain users are allowed to access the full website." }}
+						{{ $.T "The Akatsuki website is currently in maintenance mode, and access has been limited for normal users." }}
 					</div>
 				{{ end }}
 				</div>

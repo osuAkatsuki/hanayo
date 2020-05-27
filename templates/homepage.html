@@ -16,11 +16,11 @@
 
     {{/* Twitter/Facebook Integration */}}
     <meta property="og:image" content="/static/logos/logo.png"/>
-    <meta property="og:url" content="http://akatsuki.pw/"/>
+    <meta property="og:url" content="https://akatsuki.pw/"/>
     <meta property="og:site_name" content="Akatsuki"/>
     <meta property="og:description" content="Akatsuki is an osu! private server featuring both relax and vanilla osu!, integrated into a single server; Each style with it's own individual PP system, and much more. Join today!"/>
     <meta name="twitter:image" content="/static/logos/logo.png" />
-    <meta name="twitter:url" content="http://akatsuki.pw/" />
+    <meta name="twitter:url" content="https://akatsuki.pw/" />
     <meta name="twitter:card" content="" />
 </head>
 
@@ -49,7 +49,7 @@
                             </span>
                             <br>
                             <span class="text-sm">
-                                <b>Welcome {{ if not .Context.User.ID }}{{ else }}back {{ end }}to osu!Akatsuki.</b> We are an osu! private server featuring both relax and vanilla osu!, integrated into a single server; Each style with it's own individual PP system, PP & score sorted leaderboards, fully-functioning multiplayer, spectator mode, and a massive dedicated community between both our osu! and <a href="https://discord.gg/5cBtMPW">discord</a> servers.
+                                <b>Welcome {{ if not .Context.User.ID }}{{ else }}back {{ end }}to osu!Akatsuki.</b> We are an osu! private server featuring both relax and vanilla osu!, integrated into a single server, each with it's own individual PP system, PP & score sorted leaderboards, fully-functioning multiplayer, spectator mode, and a massive dedicated community between both our osu! and <a href="/discord">Discord</a> servers.
                             </span>
                             <div class="buttons">
                                 <a href="{{ if not .Context.User.ID }}/register{{ else }}/u/{{ .Context.User.ID }}{{ end }}" class="home-btn btn-key">{{ if not .Context.User.ID }} register here {{else}} view profile {{ end }} </a>
@@ -120,7 +120,7 @@
                         <i class="thumbs up outline icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                       <p class="status-head">2097pp</p> <!-- Hardcoded due to very expensive query-->
+                       <p class="status-head">2100pp</p> <!-- Hardcoded due to very expensive query-->
                        <p class="status-footer">Top score (Relax)</p>
                        <p class="status-head" style="font-size: 12px!important;">Played by <a href="/rx/u/7340">J U S T</a></p>
                     </div>
@@ -134,7 +134,7 @@
                         <i class="thumbs up icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ $d := (qb "SELECT ROUND(scores.pp) AS pp, users.username, scores.userid FROM scores LEFT JOIN beatmaps ON beatmaps.beatmap_md5 = scores.beatmap_md5 LEFT JOIN users ON users.id = scores.userid WHERE users.privileges & 1 AND scores.pp > 0 AND scores.pp < 1200 AND scores.completed = 3 AND scores.play_mode = 0 AND beatmaps.ranked = 2 ORDER BY scores.pp DESC LIMIT 1") }}
+                        {{ $d := (qb "SELECT ROUND(scores.pp) AS pp, users.username, scores.userid FROM scores LEFT JOIN beatmaps ON beatmaps.beatmap_md5 = scores.beatmap_md5 LEFT JOIN users ON users.id = scores.userid WHERE users.privileges & 1 AND scores.pp < 1000 AND scores.completed = 3 AND scores.play_mode = 0 AND beatmaps.ranked = 2 ORDER BY scores.pp DESC LIMIT 1") }}
                        <p class="status-head">{{ $d.pp }}pp</p>
                        <p class="status-footer">Top score (Vanilla)</p>
                        <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $d.userid }}">{{ $d.username }}</a></p>
