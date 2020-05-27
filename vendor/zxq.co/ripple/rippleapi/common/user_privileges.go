@@ -27,6 +27,7 @@ const (
 	UserPrivilegePendingVerification
 	UserPrivilegeTournamentStaff
 	AdminPrivilegeCaker
+	UserPrivilegePremium
 )
 
 // UserPrivileges represents a bitwise enum of the privileges of an user.
@@ -55,6 +56,8 @@ var userPrivilegeString = [...]string{
 	"AdminKickUsers",
 	"UserPendingVerification",
 	"UserTournamentStaff",
+	"AdminCaker",
+	"UserPremium",
 }
 
 func (p UserPrivileges) String() string {
