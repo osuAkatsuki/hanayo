@@ -116,6 +116,7 @@ type userSettingsResponse struct {
 	ID       int    `json:"id"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
+	Flags    uint   `json:"flags"`
 	userSettingsData
 }
 
@@ -130,7 +131,7 @@ SELECT
 	u.email, s.username_aka, s.favourite_mode,
 	s.show_custom_badge, s.custom_badge_icon,
 	s.custom_badge_name, s.can_custom_badge,
-	s.play_style
+	s.play_style, u.flags
 FROM users u
 LEFT JOIN users_stats s ON u.id = s.id
 WHERE u.id = ?`, md.ID()).Scan(
@@ -138,7 +139,7 @@ WHERE u.id = ?`, md.ID()).Scan(
 		&r.Email, &r.UsernameAKA, &r.FavouriteMode,
 		&r.CustomBadge.Show, &r.CustomBadge.Icon,
 		&r.CustomBadge.Name, &ccb,
-		&r.PlayStyle,
+		&r.PlayStyle, &r.Flags,
 	)
 	if err != nil {
 		md.Err(err)

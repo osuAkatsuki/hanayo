@@ -200,14 +200,15 @@ func verify2fa(c *gin.Context) {
 func loginUser(c *gin.Context, i int) {
 	var d struct {
 		Country string
+		Flags   uint
 	}
-	err := db.Get(&d, "SELECT users_stats.country FROM users_stats "+
+	err := db.Get(&d, "SELECT users_stats.country, users.flags FROM users_stats "+
 		"LEFT JOIN users ON users.id = users_stats.id WHERE users_stats.id = ?", i)
 	if err != nil {
 		c.Error(err)
 	}
 
-	afterLogin(c, i, d.Country)
+	afterLogin(c, i, d.Country, d.Flags)
 
 	addMessage(c, successMessage{T(c, "You've been successfully logged in.")})
 
