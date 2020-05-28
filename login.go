@@ -43,19 +43,18 @@ func loginSubmit(c *gin.Context) {
 		Country         string
 		pRaw            int64
 		Privileges      common.UserPrivileges
-		Flags           uint
 	}
 	err := db.QueryRow(`
-	SELECT 
+	SELECT
 		u.id, u.password_md5,
 		u.username, u.password_version,
-		s.country, u.privileges, u.flags
+		s.country, u.privileges
 	FROM users u
 	LEFT JOIN users_stats s ON s.id = u.id
 	WHERE u.`+param+` = ? LIMIT 1`, strings.TrimSpace(u)).Scan(
 		&data.ID, &data.Password,
 		&data.Username, &data.PasswordVersion,
-		&data.Country, &data.pRaw, &data.Flags,
+		&data.Country, &data.pRaw,
 	)
 	data.Privileges = common.UserPrivileges(data.pRaw)
 
@@ -119,7 +118,7 @@ func loginSubmit(c *gin.Context) {
 
 	tfaEnabled := is2faEnabled(data.ID)
 	if tfaEnabled == 0 {
-		afterLogin(c, data.ID, data.Country, data.Flags)
+		afterLogin(c, data.ID, data.Country)
 	} else {
 		sess.Set("2fa_must_validate", true)
 	}
@@ -143,7 +142,7 @@ func loginSubmit(c *gin.Context) {
 	return
 }
 
-func afterLogin(c *gin.Context, id int, country string, flags uint) {
+func afterLogin(c *gin.Context, id int, country string) {
 	s, err := generateToken(id, c)
 	if err != nil {
 		resp500(c)
