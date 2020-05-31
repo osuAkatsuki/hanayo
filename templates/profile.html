@@ -35,11 +35,11 @@
 				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
 			{{ end }}
 
-			{{ $dev       := has .privileges 15728639 }}
-			{{ $admin     := has .privileges 11522559 }}
-			{{ $cm        := has .privileges 790907 }}
-			{{ $bn        := has .privileges 267 }}
-			{{ $premium   := has .privileges 8388615 }}
+			{{ $dev := has .privileges 15728639 }}
+			{{ $admin := has .privileges 11522559 }}
+			{{ $mod := has .privileges 790907 }}
+			{{ $bn := has .privileges 267 }}
+			{{ $premium := has .privileges 8388615 }}
 			{{ $supporter := has .privileges 4 }}
 
 			{{ if hasAdmin $global.Context.User.Privileges }}
@@ -103,7 +103,7 @@
 								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
 							</div>
 							{{ end }}
-						{{ else if $cm }}
+						{{ else if $mod }}
 							{{ if .username_aka }}
 							<div class="mod">
 								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
@@ -188,7 +188,11 @@
 				<div class="ui three column divided stackable grid">
 					<div class="row">
 						<div class="column">
-							{{ if $dev }}
+							{{ if .id eq 1001 }}
+								{{ $global.T "<b>%s</b> " .username | html }}
+								is the <i class="teal code small icon"></i><b>Head Developer</b>
+								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
+							{{ else if $dev }}
 								{{ $global.T "<b>%s</b> " .username | html }}
 								 is a <i class="blue code small icon"></i><b>Developer</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
@@ -196,9 +200,9 @@
 								{{ $global.T "<b>%s</b> " .username | html }}
 								 is an <i class="blue lightning small icon"></i><b>Administrator</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
-							{{ else if $cm }}
+							{{ else if $mod }}
 								{{ $global.T "<b>%s</b> " .username | html }}
-								 is a <i class="red star small icon"></i><b>Community Manager</b>
+								 is a <i class="red star small icon"></i><b>Moderator</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
 							{{ else if $bn }}
 								{{ $global.T "<b>%s</b> " .username | html }}
@@ -318,7 +322,8 @@
 											<tr>
 												<td><b>{{ $global.T "Total hits" }}</b></td>
 												<td class="right aligned">{{ humanize .total_hits }}</td>
-											</tr>									<tr>
+											</tr>
+											<tr>
 												<td><b>{{ $global.T "Accuracy" }}</b></td>
 												<td class="right aligned">{{ printf "%.2f" .accuracy }}%</td>
 											</tr>

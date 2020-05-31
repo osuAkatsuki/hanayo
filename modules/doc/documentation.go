@@ -96,8 +96,8 @@ func GetFile(slug, language string) File {
 }
 
 var (
-	ipMain        = "163.172.71.251"
-	ipMirror      = "51.15.222.176"
+	ipMain        = "144.217.254.156"
+	ipMirror      = "144.217.254.156"
 	ipLastUpdated = time.Date(2018, 5, 13, 11, 45, 0, 0, time.UTC)
 	ipRegex       = regexp.MustCompile(`^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$`)
 )
@@ -108,7 +108,7 @@ func updateIPs() {
 	}
 	ipLastUpdated = time.Now()
 
-	resp, err := http.Get("https://ip.ripple.moe")
+	resp, err := http.Get("https://akatsuki.pw/static/current.json")
 	if err != nil {
 		fmt.Println("error updating IPs", err)
 		return
