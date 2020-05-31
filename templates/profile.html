@@ -188,7 +188,7 @@
 				<div class="ui three column divided stackable grid">
 					<div class="row">
 						<div class="column">
-							{{ if .id eq 1001 }}
+							{{ if $user.id eq 1001 }}
 								{{ $global.T "<b>%s</b> " .username | html }}
 								is the <i class="teal code small icon"></i><b>Head Developer</b>
 								{{ $global.T " from <b>%s</b>." (country .country true) | html }}
