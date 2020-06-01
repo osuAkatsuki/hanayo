@@ -3,10 +3,14 @@
 	{{ if .UserID }}
 		{{ $gqm := atoi (.Gin.Query "mode") }}
 		{{ $global := . }}
+		{{ $grx := atoi (.Gin.Query "rx") }}
 		{{ with (.Get "users/full?id=%d" .UserID) }}
 			{{ $favouritemode := _or $gqm .favourite_mode }}
+			{{ $preferRelax := _or $grx 0 }}
+			{{ $data := . }}
 			<script>
 				window.favouriteMode = {{ $favouritemode }};
+				window.preferRelax = {{ $preferRelax }};
 				window.userID = {{ .id }};
 			</script>
 
@@ -175,8 +179,8 @@
 			</div>
 			{{ $user := . }}
 			<div class="ui two item bottom attached menu" id="rx-menu">
-					<a class="0 item" data-rx="0" href="/u/{{ $user.id }}">Vanilla</a>
-					<a class="1 item" data-rx="1" href="/rx/u/{{ $user.id }}">Relax</a>
+					<a class="0 item{{ if eq (int $preferRelax) 0 }} active{{ end }}" data-rx="0" href="/u/{{ $user.id }}?rx=0">Vanilla</a>
+					<a class="1 item" data-rx="1" href="/u/{{ $user.id }}?rx=1">Relax</a>
 			</div>
 
 			<div class="ui four item bottom attached menu" id="mode-menu">
@@ -263,8 +267,10 @@
 					</div>
 
 						<div class="column">
-							{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
-								<div data-mode="{{ $k }}" {{ if ne $k (int $favouritemode) }} hidden{{ end }}>
+						{{ range _range 2 }}
+							{{ $rx := . }}
+							{{ range $k, $v := (slice $data.std $data.taiko $data.ctb $data.mania) }}
+								<div data-rx="{{ $rx }}" data-mode="{{ $k }}" {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }} hidden{{ end }}>
 									<table class="ui very basic two column compact table nopad">
 										<tbody>
 											{{ with .global_leaderboard_rank }}
@@ -337,15 +343,19 @@
 									</div>
 								</div>
 							{{ end }}
+						{{ end }}
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div id="scores-zone">
-				{{ range _range 4 }}
-					<div data-mode="{{ . }}" {{ if ne . (int $favouritemode) }} hidden{{ end }} data-loaded="0">
-					</div>
+				{{ range _range 2 }}
+					{{ $rx := . }}
+					{{ range _range 4 }}
+						<div data-mode="{{ . }}" {{ if or (ne $rx (int $preferRelax)) (ne . (int $favouritemode)) }} hidden{{ end }} data-loaded="0" data-rx="{{ $rx }}">
+						</div>
+					{{ end }}
 				{{ end }}
 			</div>
 

@@ -6,26 +6,54 @@ $(document).ready(function() {
 	if (newPathName.split("/")[2] != userID) {
 		newPathName = "/u/" + userID;
 	}
-	// if there's no mode parameter in the querystring, add it
-	if (wl.search.indexOf("mode=") === -1)
-		window.history.replaceState('', document.title, newPathName + "?mode=" + favouriteMode + wl.hash);
+	
+	let newSearch = wl.search;
+
+	if (wl.search.indexOf("mode=") === -1) {
+		newSearch = "?mode=" + favouriteMode;
+	}
+		
+	if (wl.search.indexOf("rx=") === -1)
+		newSearch += "&rx=" + preferRelax;
+		
+	if (wl.search != newSearch)
+		window.history.replaceState('', document.title, newPathName + newSearch + wl.hash);
 	else if (wl.pathname != newPathName)
 		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
+
 	setDefaultScoreTable();
+	
+	$("#rx-menu>.item").click(function(e) {
+		e.preventDefault();
+		if ($(this).hasClass("active"))
+			return;
+		
+		preferRelax = $(this).data("rx");
+		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
+		$("[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]:not(.item)").removeAttr("hidden");
+		$("#rx-menu>.active.item").removeClass("active");
+		var needsLoad = $("#scores-zone>[data-mode=" + favouriteMode + "][data-loaded=0][data-rx=" + preferRelax + "]");
+		if (needsLoad.length > 0)
+			initialiseScores(needsLoad, favouriteMode);
+		$(this).addClass("active");
+		window.history.replaceState('', document.title, `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`)
+	});
+	
 	// when an item in the mode menu is clicked, it means we should change the mode.
 	$("#mode-menu>.item").click(function(e) {
 		e.preventDefault();
 		if ($(this).hasClass("active"))
 			return;
 		var m = $(this).data("mode");
+		favouriteMode = m;
 		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
-		$("[data-mode=" + m + "]:not(.item)").removeAttr("hidden");
+		$("[data-mode=" + m + "][data-rx=" + preferRelax + "]:not(.item)").removeAttr("hidden");
 		$("#mode-menu>.active.item").removeClass("active");
-		var needsLoad = $("#scores-zone>[data-mode=" + m + "][data-loaded=0]");
+		var needsLoad = $("#scores-zone>[data-mode=" + m + "][data-loaded=0][data-rx=" + preferRelax + "]");
 		if (needsLoad.length > 0)
 			initialiseScores(needsLoad, m);
 		$(this).addClass("active");
-		window.history.replaceState('', document.title, wl.pathname + "?mode=" + m + wl.hash);
+		window.history.replaceState('', document.title, `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`);
 	});
 	initialiseAchievements();
 	initialiseFriends();
@@ -223,7 +251,7 @@ function loadScoresPage(type, mode) {
 		mode: mode,
 		p: page,
 		l: 10,
-		rx: 0,
+		rx: preferRelax,
 		id: userID,
 	}, function(r) {
 		if (r.scores == null) {
