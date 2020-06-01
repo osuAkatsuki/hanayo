@@ -454,41 +454,6 @@ a.camouflaged:hover {
 	margin: 0 auto;
 }
 
-.supporter {
-	color: #ffdf2e; /*ingame "Supporter" colour*/
-	text-shadow: -2px -2px 0px #0033CC;
-}
-
-.premium {
-	-webkit-animation: rainbow 3s infinite;
-	-ms-animation: rainbow 3s infinite;
-	animation: rainbow 3s infinite;
-	text-shadow: -2px -2px 0px #0033cc;
-}
-
-.mod {
-	color: orangered; /*ingame "BAT" colour*/
-	text-shadow: -2px -2px 0px #0033CC;
-}
-
-.admin {
-	/*
-	color: #b7e8ff; ingame "Friend" colour
-	text-shadow: -2px -2px 0px #0033CC;
-	*/
-	color: #a333c8;
-	text-shadow: -2px -2px 0px #6435c9;
-}
-
-.dev {
-	/*
-	color: #a6d0ff; ingame "Peppy" colour
-	text-shadow: -2px -2px 0px #0033cc;
-	*/
-	color: #00ffc4;
-	text-shadow: -2px -2px 0px #006cc7;
-}
-
 /* Premium stuff */
 /* Chrome, Safari, Opera */
 @-webkit-keyframes rainbow
@@ -536,6 +501,33 @@ a.camouflaged:hover {
 	80%{color: deeppink;}
 	90%{color: dodgerblue;}
 	100%{color: orange;}
+}
+
+.supporter {
+	color: #2ad1e0;
+	text-shadow: -2px -2px 0px #000000;
+}
+
+.premium {
+	-webkit-animation: rainbow 3s infinite;
+	-ms-animation: rainbow 3s infinite;
+	animation: rainbow 3s infinite;
+	text-shadow: -2px -2px 0px #000000;
+}
+
+.mod {
+	color: #ee834f;
+	text-shadow: -2px -2px 0px #000000;
+}
+
+.admin {
+	color: #ee4f4f;
+	text-shadow: -2px -2px 0px #000000;
+}
+
+.dev {
+	color: #2cb4da;
+	text-shadow: 2px 2px 0px #444444;
 }
 
 /* column in a grid which is both vertically and horizontally centered */
