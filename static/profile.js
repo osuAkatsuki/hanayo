@@ -240,7 +240,7 @@ var currentPage = {
 };
 var scoreStore = {};
 function loadScoresPage(type, mode) {
-	var table = $("#scores-zone div[data-mode=" + mode + "] table[data-type=" + type + "] tbody");
+	var table = $("#scores-zone div[data-mode=" + mode + "] div[data-rx=" + preferRelax + "] table[data-type=" + type + "] tbody");
 	var page = ++currentPage[mode][type];
 	console.log("loadScoresPage with", {
 		page: page,
@@ -296,7 +296,7 @@ function weightedPP(type, page, idx, pp) {
 	return "<i title='Weighted PP, " + Math.round(perc*100) + "%'>(" + wpp.toFixed(2) + "pp)</i>";
 }
 function disableLoadMoreButton(type, mode, enable) {
-	var button = $("#scores-zone div[data-mode=" + mode + "] table[data-type=" + type + "] .load-more-button");
+	var button = $("#scores-zone div[data-mode=" + mode + "] div[data-rx=" + preferRelax + "] table[data-type=" + type + "] .load-more-button");
 	if (enable) button.removeClass("disabled");
 	else button.addClass("disabled");
 }
