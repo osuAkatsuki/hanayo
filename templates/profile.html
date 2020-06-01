@@ -180,7 +180,7 @@
 			{{ $user := . }}
 			<div class="ui two item bottom attached menu" id="rx-menu">
 					<a class="0 item{{ if eq (int $preferRelax) 0 }} active{{ end }}" data-rx="0" href="/u/{{ $user.id }}?rx=0">Vanilla</a>
-					<a class="1 item" data-rx="1" href="/u/{{ $user.id }}?rx=1">Relax</a>
+					<a class="1 item{{ if eq (int $preferRelax) 1 }} active{{ end }}" data-rx="1" href="/u/{{ $user.id }}?rx=1">Relax</a>
 			</div>
 
 			<div class="ui four item bottom attached menu" id="mode-menu">
