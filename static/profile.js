@@ -33,7 +33,6 @@ $(document).ready(function() {
 		$("[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]:not(.item)").removeAttr("hidden");
 		$("#rx-menu>.active.item").removeClass("active");
 		var needsLoad = $("#scores-zone>[data-mode=" + favouriteMode + "][data-loaded=0][data-rx=" + preferRelax + "]");
-		console.log("#scores-zone>[data-mode=" + favouriteMode + "][data-loaded=0][data-rx=" + preferRelax + "]");
 		if (needsLoad.length > 0)
 			initialiseScores(needsLoad, favouriteMode);
 		$(this).addClass("active");
