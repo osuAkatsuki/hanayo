@@ -238,14 +238,26 @@ var currentPage = {
 	2: {best: 0, recent: 0/*, first: 0*/},
 	3: {best: 0, recent: 0/*, first: 0*/}
 };
+
+var rPage = {
+	0: {best: 0, recent: 0/*, first: 0*/},
+	1: {best: 0, recent: 0/*, first: 0*/},
+	2: {best: 0, recent: 0/*, first: 0*/},
+	3: {best: 0, recent: 0/*, first: 0*/}
+};
+
 var scoreStore = {};
 function loadScoresPage(type, mode) {
-	var table = $("#scores-zone div[data-mode=" + mode + "] div[data-rx=" + preferRelax + "] table[data-type=" + type + "] tbody");
-	var page = ++currentPage[mode][type];
+	var table = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] table[data-type=" + type + "] tbody");
+	
+	var page;
+	if (preferRelax) page = ++rPage[mode][type];
+	else page = ++currentPage[mode][type];
 	console.log("loadScoresPage with", {
 		page: page,
 		type: type,
 		mode: mode,
+		rx: preferRelax,
 	});
 	api("users/scores/" + type, {
 		mode: mode,
@@ -296,7 +308,7 @@ function weightedPP(type, page, idx, pp) {
 	return "<i title='Weighted PP, " + Math.round(perc*100) + "%'>(" + wpp.toFixed(2) + "pp)</i>";
 }
 function disableLoadMoreButton(type, mode, enable) {
-	var button = $("#scores-zone div[data-mode=" + mode + "] div[data-rx=" + preferRelax + "] table[data-type=" + type + "] .load-more-button");
+	var button = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] table[data-type=" + type + "] .load-more-button");
 	if (enable) button.removeClass("disabled");
 	else button.addClass("disabled");
 }
