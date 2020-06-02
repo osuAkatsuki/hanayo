@@ -6,31 +6,59 @@ $(document).ready(function() {
 	if (newPathName.split("/")[2] != userID) {
 		newPathName = "/u/" + userID;
 	}
-	// if there's no mode parameter in the querystring, add it
-	if (wl.search.indexOf("mode=") === -1)
-		window.history.replaceState('', document.title, newPathName + "?mode=" + favouriteMode + wl.hash);
+	
+	let newSearch = wl.search;
+
+	if (wl.search.indexOf("mode=") === -1) {
+		newSearch = "?mode=" + favouriteMode;
+	}
+		
+	if (wl.search.indexOf("rx=") === -1)
+		newSearch += "&rx=" + preferRelax;
+		
+	if (wl.search != newSearch)
+		window.history.replaceState('', document.title, newPathName + newSearch + wl.hash);
 	else if (wl.pathname != newPathName)
 		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
+
 	setDefaultScoreTable();
+	
+	$("#rx-menu>.item").click(function(e) {
+		e.preventDefault();
+		if ($(this).hasClass("active"))
+			return;
+		
+		preferRelax = $(this).data("rx");
+		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
+		$("[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]:not(.item)").removeAttr("hidden");
+		$("#rx-menu>.active.item").removeClass("active");
+		var needsLoad = $("#scores-zone>[data-mode=" + favouriteMode + "][data-loaded=0][data-rx=" + preferRelax + "]");
+		if (needsLoad.length > 0)
+			initialiseScores(needsLoad, favouriteMode);
+		$(this).addClass("active");
+		window.history.replaceState('', document.title, `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`)
+	});
+	
 	// when an item in the mode menu is clicked, it means we should change the mode.
 	$("#mode-menu>.item").click(function(e) {
 		e.preventDefault();
 		if ($(this).hasClass("active"))
 			return;
 		var m = $(this).data("mode");
+		favouriteMode = m;
 		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
-		$("[data-mode=" + m + "]:not(.item)").removeAttr("hidden");
+		$("[data-mode=" + m + "][data-rx=" + preferRelax + "]:not(.item)").removeAttr("hidden");
 		$("#mode-menu>.active.item").removeClass("active");
-		var needsLoad = $("#scores-zone>[data-mode=" + m + "][data-loaded=0]");
+		var needsLoad = $("#scores-zone>[data-mode=" + m + "][data-loaded=0][data-rx=" + preferRelax + "]");
 		if (needsLoad.length > 0)
 			initialiseScores(needsLoad, m);
 		$(this).addClass("active");
-		window.history.replaceState('', document.title, wl.pathname + "?mode=" + m + wl.hash);
+		window.history.replaceState('', document.title, `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`);
 	});
 	initialiseAchievements();
 	initialiseFriends();
 	// load scores page for the current favourite mode
-	var i = function(){initialiseScores($("#scores-zone>div[data-mode=" + favouriteMode + "]"), favouriteMode)};
+	var i = function(){initialiseScores($("#scores-zone>div[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]"), favouriteMode)};
 	if (i18nLoaded)
 		i();
 	else
@@ -210,20 +238,32 @@ var currentPage = {
 	2: {best: 0, recent: 0/*, first: 0*/},
 	3: {best: 0, recent: 0/*, first: 0*/}
 };
+
+var rPage = {
+	0: {best: 0, recent: 0/*, first: 0*/},
+	1: {best: 0, recent: 0/*, first: 0*/},
+	2: {best: 0, recent: 0/*, first: 0*/},
+	3: {best: 0, recent: 0/*, first: 0*/}
+};
+
 var scoreStore = {};
 function loadScoresPage(type, mode) {
-	var table = $("#scores-zone div[data-mode=" + mode + "] table[data-type=" + type + "] tbody");
-	var page = ++currentPage[mode][type];
+	var table = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] table[data-type=" + type + "] tbody");
+	
+	var page;
+	if (preferRelax) page = ++rPage[mode][type];
+	else page = ++currentPage[mode][type];
 	console.log("loadScoresPage with", {
 		page: page,
 		type: type,
 		mode: mode,
+		rx: preferRelax,
 	});
 	api("users/scores/" + type, {
 		mode: mode,
 		p: page,
 		l: 10,
-		rx: 0,
+		rx: preferRelax,
 		id: userID,
 	}, function(r) {
 		if (r.scores == null) {
@@ -268,7 +308,7 @@ function weightedPP(type, page, idx, pp) {
 	return "<i title='Weighted PP, " + Math.round(perc*100) + "%'>(" + wpp.toFixed(2) + "pp)</i>";
 }
 function disableLoadMoreButton(type, mode, enable) {
-	var button = $("#scores-zone div[data-mode=" + mode + "] table[data-type=" + type + "] .load-more-button");
+	var button = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] table[data-type=" + type + "] .load-more-button");
 	if (enable) button.removeClass("disabled");
 	else button.addClass("disabled");
 }
