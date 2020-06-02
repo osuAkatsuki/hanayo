@@ -65,7 +65,7 @@ func passwordReset(c *gin.Context) {
 	}
 
 	content := T(c,
-		"Hey %s! Someone, which we really hope was you, requested a password reset for your account. In case it was you, please <a href='%s'>click here</a> to reset your password on Akatsuki. Otherwise, silently ignore this email.",
+		"Hey <b>%s</b>!<br><br>Someone (<i>which we really hope was you</i>), requested a password reset for your account.<br>In case it was you, please <a href='%s'>click here</a> to reset your password on Akatsuki. Otherwise, silently ignore this email.",
 		username,
 		config.BaseURL+"/pwreset/continue?k="+key,
 	)
@@ -160,7 +160,7 @@ func passwordResetContinueSubmit(c *gin.Context) {
 		return
 	}
 
-	addMessage(c, successMessage{T(c, "All right, we have changed your password and you should now be able to login! Have fun!")})
+	addMessage(c, successMessage{T(c, "Alright, we've changed your password, you should be able to login! Have fun!")})
 	getSession(c).Save()
 	c.Redirect(302, "/login")
 }
