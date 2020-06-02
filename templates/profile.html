@@ -148,7 +148,7 @@
 				</div>
 				<div class="magic table floating right">
 					<div class="table element">
-						{{ range $rx, $_ := slice .stats }}
+						{{ range $rx, $_ := .stats }}
 							{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
 								<h1 data-rx="{{ $rx }}" data-mode="{{ $k }}"{{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }} hidden{{ end }}>{{ with and $v $v.global_leaderboard_rank }}#{{ . }}{{ else }}{{ $global.T "Unknown" }}{{ end }}</h1>
 							{{ end }}
