@@ -7,7 +7,6 @@
 		{{ with (.Get "users/full?id=%d" .UserID) }}
 			{{ $favouritemode := _or $gqm .favourite_mode }}
 			{{ $preferRelax := _or $grx 0 }}
-			{{ $data := . }}
 			<script>
 				window.favouriteMode = {{ $favouritemode }};
 				window.preferRelax = {{ $preferRelax }};
