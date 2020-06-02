@@ -65,7 +65,7 @@ func passwordReset(c *gin.Context) {
 	}
 
 	content := T(c,
-		"Hey <b>%s</b>!<br><br>Someone (<i>which we really hope was you</i>), requested a password reset for your account.<br>In case it was you, please <a href='%s'>click here</a> to reset your password on Akatsuki. Otherwise, silently ignore this email.",
+		"Hey <b>%s</b>!<br/><br/>Someone (<i>which we really hope was you</i>), requested a password reset for your account. In case it was you, please <a href='%s'>click here</a> to reset your password on Akatsuki.<br/>Otherwise, silently ignore this email.",
 		username,
 		config.BaseURL+"/pwreset/continue?k="+key,
 	)
