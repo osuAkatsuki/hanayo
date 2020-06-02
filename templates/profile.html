@@ -267,9 +267,8 @@
 					</div>
 
 						<div class="column">
-						{{ range _range 2 }}
-							{{ $rx := . }}
-							{{ range $k, $v := (slice $data.std $data.taiko $data.ctb $data.mania) }}
+						{{ range $rx, $_ := slice .stats }}
+							{{ range $k, $v := (slice .std .taiko .ctb $data.mania) }}
 								<div data-rx="{{ $rx }}" data-mode="{{ $k }}" {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }} hidden{{ end }}>
 									<table class="ui very basic two column compact table nopad">
 										<tbody>
