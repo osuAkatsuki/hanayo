@@ -642,7 +642,7 @@ function api(endpoint, data, success, failure, post) {
   }
 
   var errorMessage =
-      "An error occurred while contacting the Akatsuki API. Please report this to a Akatsuki developer.";
+      "An error occurred while contacting the Akatsuki API. Please report this to an Akatsuki developer.";
 
   $.ajax({
     method : (post ? "POST" : "GET"),
@@ -680,6 +680,7 @@ var modes = {
   2 : "osu!catch",
   3 : "osu!mania",
 };
+
 var modesShort = {
   0 : "std",
   1 : "taiko",
@@ -695,6 +696,7 @@ var entityMap = {
   "'" : '&#39;',
   "/" : '&#x2F;',
 };
+
 function escapeHTML(str) {
   return String(str).replace(/[&<>"'\/]/g,
     function(s) { return entityMap[s]; });
@@ -715,6 +717,7 @@ function setupSimplepag(callback) {
     callback();
   });
 }
+
 function disableSimplepagButtons(right) {
   var el = $(".simplepag");
 
@@ -795,7 +798,8 @@ var modsString = [
 	"K0",
 	"K1",
 	"K3",
-	"K2",
+  "K2",
+  "V2",
 ];
 
 // time format (seconds -> hh:mm:ss notation)
