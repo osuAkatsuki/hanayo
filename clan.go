@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -123,15 +122,9 @@ func clanInvite(c *gin.Context) {
 	c.Redirect(302, "/c/"+s)
 }
 
-func resolveInvite(c string) int {
-	var clanid int
-	//row := db.QueryRow("SELECT clan FROM clans_invites WHERE invite = ?", c)
+func resolveInvite(c string) (id int, err error) {
 	row := db.QueryRow("SELECT id FROM clans where invite = ?", c)
-	err := row.Scan(&clanid)
+	err = row.Scan(&id)
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(clanid)
-	return clanid
+	return
 }

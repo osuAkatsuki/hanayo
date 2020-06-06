@@ -58,25 +58,9 @@ $(document).ready(function() {
 	$("#join-btn>.item").click(function(e) {
 		e.preventDefault();
 		if (!currentUserID) return;
-		var thiss = $(this);
-		api("clans/join", { id: clanID }, function(t) {
-			if (t.code != 200) return;
-			if (t.message === "closed") {
-				showMessage("error", "Clan is closed/invite only.");
-				setTimeout(() => window.location.reload(), 2200)
-				return;
-			}
-			thiss.text("Leave");
-			thiss.attr("id", "leave-btn");
-			thiss.css("background-color", "rgba(255,0,0,.3)");
-			thiss.unbind();
-			showMessage("success", "Successfully joined " + t.clan.name);
-			modesSet = new Array(7).fill(false);
-			api("users", { id: currentUserID }, function(r) {
-				document.getElementById("members").innerHTML += `<div class="column"> <div class="ui left aligned fluid card"> <div class="image"> <img src="${hanayoConf.avatars}/${r.id}" alt="Avatar"> </div> <div class="content"> <a class="header" href="/u/"><i class="${r.country.toLowerCase()} flag"></i>${r.username}</a> </div> </div> </div>`
-			});
-			setMode(favouriteMode, rx != 0);
-		}, !0)
+		
+		var btn = $(this);
+		joinClan({ id: cId }, btn);
 	});
 	
 	$("#leave-btn>.item").click(function(e) {
@@ -93,6 +77,27 @@ $(document).ready(function() {
 		}, !0);
 	});
 });
+
+function joinClan(obj, btn) {
+	api("clans/join", obj, function(t) {
+		if (t.code != 200) return;
+		if (t.message === "closed") { // This is retarded (it doesnt even callback when code isnt 200 (dont blame me))
+			showMessage("error", "Clan is closed/invite only.");
+			setTimeout(() => window.location.reload(), 2200)
+			return;
+		}
+		btn.text("Leave");
+		btn.attr("id", "leave-btn");
+		btn.css("background-color", "rgba(255,0,0,.3)");
+		btn.unbind();
+		showMessage("success", "Successfully joined " + t.clan.name);
+		modesSet = new Array(7).fill(false);
+		api("users", { id: "self" }, function(r) {
+			document.getElementById("members").innerHTML += `<div class="column"> <div class="ui left aligned fluid card"> <div class="image"> <img src="${hanayoConf.avatars}/${r.id}" alt="Avatar"> </div> <div class="content"> <a class="header" href="/u/"><i class="${r.country.toLowerCase()} flag"></i>${r.username}</a> </div> </div> </div>`
+		});
+		setMode(favouriteMode, rx != 0);
+	}, !0)
+}
 
 function setMode(mode, rx) {
 	var mIndex = rx ? mode + 4 : mode;
@@ -114,4 +119,25 @@ function setMode(mode, rx) {
 
 function tableRow(title, data) {
 	return `<tr><td><b>${title}</b></td> <td class="right aligned">${data}</td></tr>`;
+}
+
+function joinClanInvite(inv) {
+	api("clans/join", { invite: inv }, function(t) {
+		if (t.code != 200) return;
+		if (t.message === "closed") { // This is retarded (it doesnt even callback when code isnt 200 (dont blame me))
+			showMessage("error", "Clan is closed.");
+			setTimeout(() => window.location.reload(), 2200);
+			return;
+		}
+		btn.text("Leave");
+		btn.attr("id", "leave-btn");
+		btn.css("background-color", "rgba(255,0,0,.3)");
+		btn.unbind();
+		showMessage("success", "Successfully joined " + t.clan.name);
+		modesSet = new Array(7).fill(false);
+		api("users", { id: "self" }, function(r) {
+			document.getElementById("members").innerHTML += `<div class="column"> <div class="ui left aligned fluid card"> <div class="image"> <img src="${hanayoConf.avatars}/${r.id}" alt="Avatar"> </div> <div class="content"> <a class="header" href="/u/"><i class="${r.country.toLowerCase()} flag"></i>${r.username}</a> </div> </div> </div>`
+		});
+		setMode(favouriteMode, rx != 0);
+		}, !0)
 }

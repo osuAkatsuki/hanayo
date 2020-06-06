@@ -84,18 +84,26 @@ Include=clan_member.html
 									{{ end }}
 								<!-- No Clan (join) -->
 								{{ else }}
-									{{ $open := qb "SELECT status FROM clans WHERE id = ?" $.ClanID }}
-									{{ if $open }}
-										{{ if eq $open.status.Int 0 }}
-											<div class="ui one item menu"><a class="item" style="background-color:rgba(255,0,64,.3)">Closed.</a></div>
-										{{ else if eq $open.status.Int 1 }}
-											<div class="ui one item menu" id="join-btn"><a class="item" style="background-color:rgba(0,255,128,.3)">Join</a></div>
-										{{ else if eq $open.status.Int 2 }}
-											<div class="ui one item menu"><a class="item" style="background-color:rgba(255,64,64,.3)">Ask for Invite</a></div>
-										{{ end }}
-									{{ else }}
-										<div class="ui one item menu"><a class="item" style="background-color:rgba(64,64,64,1)">! Unknown Status</a></div>
-									{{ end  }}
+									{{ if eq .status 0 }}
+										<div class="ui one item menu"><a class="item" style="background-color:rgba(255,0,64,.3)">Closed.</a></div>
+									{{ else if eq .status 1 }}
+										<div class="ui one item menu" id="join-btn"><a class="item" style="background-color:rgba(0,255,128,.3)">Join</a></div>
+									{{ else if eq .status 2 }}
+										<div class="ui one item menu" id="inv-btn"><a class="item" style="background-color:rgba(255,64,64,.3)">Ask for Invite</a></div>
+										<script>
+											$("#inv-btn>.item").click(function(e) {
+												e.preventDefault();
+												if (!currentUserID) return;
+												
+												var inv = prompt("Enter the Clan's Invite");
+												
+												if (inv == null || inv == "") return;
+												
+												var btn = $(this);
+												joinClan({invite: inv}, btn);
+											});
+										</script>
+									{{ end }}
 								{{ end }}
 							{{ else }}
 								<div class="ui one item menu"><a class="item" href="/login" style="background-color:rgba(0,128,255,.3)">Please login to join a clan</a></div>
