@@ -316,8 +316,6 @@ func generateEngine() *gin.Engine {
 	r.POST("/settings/username", changeName)
 	r.GET("/settings/discord/finish", discordFinish)
 	r.POST("/settings/profbackground/:type", profBackground)
-    r.GET("/clans/invite/:inv", clanInvite)
-	r.GET("/invite/:inv", clanInvite)
 	r.POST("/dev/tokens/create", createAPIToken)
 	r.POST("/dev/tokens/delete", deleteAPIToken)
 	r.POST("/dev/tokens/edit", editAPIToken)
