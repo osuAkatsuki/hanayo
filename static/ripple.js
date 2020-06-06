@@ -798,8 +798,8 @@ var modsString = [
 	"K0",
 	"K1",
 	"K3",
-  "K2",
-  "V2",
+	"K2",
+	"V2",
 ];
 
 // time format (seconds -> hh:mm:ss notation)
