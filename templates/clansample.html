@@ -84,11 +84,11 @@ Include=clan_member.html
 									{{ end }}
 								<!-- No Clan (join) -->
 								{{ else }}
-									{{ if eq .status 0 }}
+									{{ if eq .status 0.0 }}
 										<div class="ui one item menu"><a class="item" style="background-color:rgba(255,0,64,.3)">Closed.</a></div>
-									{{ else if eq .status 1 }}
+									{{ else if eq .status 1.0 }}
 										<div class="ui one item menu" id="join-btn"><a class="item" style="background-color:rgba(0,255,128,.3)">Join</a></div>
-									{{ else if eq .status 2 }}
+									{{ else if eq .status 2.0 }}
 										<div class="ui one item menu" id="inv-btn"><a class="item" style="background-color:rgba(255,64,64,.3)">Ask for Invite</a></div>
 										<script>
 											$("#inv-btn>.item").click(function(e) {
