@@ -58,7 +58,7 @@ Include=menu.html
 					<font size="6">Members: {{ $members.c }}</font>
 					<br>
 					{{ $ := . }}
-					{{ range (.Get "clans/members?id=%d" $d.int.Int).clan.members }}
+					{{ range (.Get "clans/members?id=%d" $d.id.Int).clan.members }}
 						{{ if ne (int .id) (int $.Context.User.ID) }}
 							<form id="kick-form" class="ui form">
 								<div class="column">
