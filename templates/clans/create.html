@@ -1,7 +1,7 @@
 {{ define "tpl" }}
 <div class="ui container">
 	{{ $regEnabled := qb "SELECT value_int FROM system_settings WHERE name = 'ccreation_enabled'" }}
-	{{ $isClan := qb "SELECT id FROM users WHERE id = ? AND clan <> 0" .Context.User.ID }}
+	{{ $isClan := qb "SELECT id FROM users WHERE id = ? AND clan_id <> 0" .Context.User.ID }}
 	{{ if not .Context.User.ID }}
 		<div class="ui segment">
 			{{ .T "You need to login!" }}
