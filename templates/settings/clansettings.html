@@ -9,16 +9,15 @@ Include=menu.html
 		{{ template "settingsSidebar" . }}
 		<div class="twelve wide column">
 			<div class="ui segment">
-				{{ $d := or (qb "SELECT id FROM clans WHERE owner = ? LIMIT 1;" .Context.User.ID).id.Int 0 }}
+				{{ $d := (qb "SELECT * FROM clans WHERE owner = ? LIMIT 1;" .Context.User.ID) }}
 				{{ if $d }}
 					<font size="6">Clan Settings</font>
 					<br><br>
 					<div class="ui center aligned segment">
-						{{ $c := qb "SELECT * FROM clans WHERE id = ?" $d }}
-						{{ $tag := or $c.tag.String "" }}
-						{{ $desc := or $c.description.String "" }}
-						{{ $icon := or $c.icon.String "" }}
-						{{ $bg := or $c.background.String "" }}
+						{{ $tag := or $d.tag.String "" }}
+						{{ $desc := or $d.description.String "" }}
+						{{ $icon := or $d.icon.String "" }}
+						{{ $bg := or $d.background.String "" }}
 						<form id="register-form" class="ui form">
 							<div class="field">
 								<label class="left aligned">Clantag (2 to 6 characters)</label>
@@ -46,8 +45,8 @@ Include=menu.html
 					<br><font size="6">Invite</font>
 					<br><br>
 					<center><div class="ui one item menu">
-					{{ $inv := qb "SELECT invite FROM clans WHERE id = ?" $d }}
-					<input id="invin" class="item" type="text" value="https://akatsuki.pw/invite/{{ $inv.invite }}" style="background-color:rgba(0,0,0,.6)" disabled></input>
+					{{ $inv := or $d.invite.String "No Invite" }}
+					<input id="invin" class="item" type="text" value="{{ $inv }}" style="background-color:rgba(0,0,0,.6)" disabled></input>
 					</div>
 						<button id="ginvite" class="ui right green button">
 							{{ .T "Generate a new invite!" }}
@@ -55,11 +54,11 @@ Include=menu.html
 					<br>
 					<br>
 					<br>
-					{{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $d) }}
+					{{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $d.id.Int) }}
 					<font size="6">Members: {{ $members.c }}</font>
 					<br>
 					{{ $ := . }}
-					{{ range (.Get "clans/members?id=%d" $d).clan.members }}
+					{{ range (.Get "clans/members?id=%d" $d.id.Int).clan.members }}
 						{{ if ne (int .id) (int $.Context.User.ID) }}
 							<form id="kick-form" class="ui form">
 								<div class="column">
@@ -80,7 +79,7 @@ Include=menu.html
 							}, !0)
 						});
 					</script>
-					{{ else }}
+				{{ else }}
 					<font size="3">You haven't joined a clan yet, or you aren't the owner of your current one.</font>
 				{{ end }}
 			</div>

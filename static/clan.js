@@ -60,7 +60,7 @@ $(document).ready(function() {
 		if (!currentUserID) return;
 		
 		var btn = $(this);
-		joinClan({ id: cId }, btn);
+		joinClan({ id: clanID }, btn);
 	});
 	
 	$("#leave-btn>.item").click(function(e) {

@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"zxq.co/x/rs"
 )
 
 func ccreate(c *gin.Context) {
@@ -54,10 +55,16 @@ func ccreateSubmit(c *gin.Context) {
 	}
 
 	// The actual registration.
+	
+	invite := rs.String(8)
+	
+	for db.QueryRow("SELECT 1 FROM clans WHERE invite = ?", invite).Scan(new(int)) != sql.ErrNoRows {
+		invite = rs.String(8)
+	}
 
-	res, err := db.Exec(`INSERT INTO clans(name, description, icon, tag, owner)
-							  VALUES (?, ?, ?, ?, ?);`,
-		username, c.PostForm("password"), c.PostForm("email"), tag, getContext(c).User.ID)
+	res, err := db.Exec(`INSERT INTO clans(name, description, icon, tag, owner, invite)
+							  VALUES (?, ?, ?, ?, ?, ?);`,
+		username, c.PostForm("password"), c.PostForm("email"), tag, getContext(c).User.ID, invite)
 	if err != nil {
 		ccreateResp(c, errorMessage{T(c, "Whoops, an error slipped in. Clan might have been created, though. I don't know.")})
 		fmt.Println(err)
@@ -65,10 +72,6 @@ func ccreateSubmit(c *gin.Context) {
 	}
 	lid, _ := res.LastInsertId()
 
-	// db.Exec("INSERT INTO `user_clans`(user, clan, perms) VALUES (?, ?, 8);", getContext(c).User.ID, lid)
-	/*usq := " SET clan = ? WHERE id = ?"
-	db.Exec("UPDATE users_stats"+usq, lid, getContext(c).User.ID)
-	db.Exec("UPDATE rx_stats"+usq, lid, getContext(c).User.ID)*/
 	db.Exec("UPDATE users SET clan_id = ?, clan_privileges = 8 WHERE id = ?", lid, getContext(c).User.ID)
 
 	addMessage(c, successMessage{T(c, "Clan created.")})
@@ -80,7 +83,6 @@ func ccreateResp(c *gin.Context, messages ...message) {
 	resp(c, 200, "clans/create.html", &baseTemplateData{
 		TitleBar:  "Create Clan",
 		KyutGrill: "register.jpg",
-		Scripts:   []string{"https://www.google.com/recaptcha/api.js"},
 		Messages:  messages,
 		FormData:  normaliseURLValues(c.Request.PostForm),
 	})
@@ -90,17 +92,6 @@ func ccreationEnabled() bool {
 	var enabled bool
 	db.QueryRow("SELECT value_int FROM system_settings WHERE name = 'ccreation_enabled'").Scan(&enabled)
 	return enabled
-}
-
-// Check User In Query Is Same As User In Y Cookie
-
-func ccin(s string, ss []string) bool {
-	for _, x := range ss {
-		if x == s {
-			return true
-		}
-	}
-	return false
 }
 
 var cnameRegex = regexp.MustCompile(`^[A-Za-z0-9 '_\[\]-]{2,15}$`)
