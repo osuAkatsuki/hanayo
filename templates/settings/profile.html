@@ -39,7 +39,7 @@ MinPrivileges=2
 					{{ if has .Context.User.Privileges 4 }}
 						<h3 class="ui header">{{ .T "Custom badge" }}</h3>
 						<div class="ui warning message">
-							{{ .T "<b>Do not use offensive badges and do not pretend to be someone else with your badge.</b> If you abuse the badges system, you'll be silenced and you won't be able to edit your custom badge anymore." | html}}
+							{{ .T "<b>Do not use offensive badges and do not pretend to be someone else with your badge.</b> If you abuse the badges system, you'll be silenced and you won't be able to edit your custom badge anymore." | html }}
 						</div>
 						<div class="ui toggle checkbox">
 							<input type="checkbox" name="custom_badge.show" {{ if $d.custom_badge.show }}checked{{ end }}>

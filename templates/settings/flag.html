@@ -14,7 +14,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
 			<div class="ui center aligned segment">
 				<font size=6 style="margin-left:-80%;">Username</font><br><br>
 				{{ $u := qb "SELECT username FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
-			{{ $n := or $u.username.String "" }}
+				{{ $n := or $u.username.String "" }}
 				<form id="username-form" class="ui form" method="post" action="/settings/username">
 						<div class="field">
 						<label>{{ .T "Username (2 to 15 characters, alphanumeric, spaces, <code>_[]-</code>)" | html }}</label>
@@ -27,21 +27,21 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
 				</div>
 				<font size=6 style="margin-left:-88%;">Flag</font>
 				<br><br>
-				
+
 				{{ $global := . }}
 					{{ $d := qb "SELECT country FROM users_stats WHERE id = ? LIMIT 1" .Context.User.ID }}
 					{{ $type  := or $d.country.String "" }}
 				<form id="register-form" class="ui form" method="post" action="/settings/flag">
-					
+
 						<select class="ui dropdown" name="country">
 							{{ range (.Get "countries").countries }}
 								<option name="flag" value="{{ .code }}"><a>{{ $global.T "<b>%s</b>" (country .code true) | html }}</a></option>
 							{{ end }}
 						</select>
-						
+
 						{{ ieForm .Gin }}
 					</form>
-				
+
 				<div class="ui right aligned segment">
 					<button tabindex="4" class="ui primary button" type="submit" form="register-form">{{ .T "Save" }}</button>
 				</div>
