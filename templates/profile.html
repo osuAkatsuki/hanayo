@@ -86,55 +86,27 @@
 					<div class="table element">
 						<h1 class="ui header">
 						{{ $user := . }}
-						
+
 						{{ if $dev }}
-							{{ if .username_aka }}
-							<div class="dev">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
-							</div>
-							{{ else }}
-							<div class="dev">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
-							</div>
-							{{ end }}
+                        	<div class="dev">
 						{{ else if $admin }}
-							{{ if .username_aka }}
-							<div class="admin">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
-							</div>
-							{{ else }}
-							<div class="admin">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
-							</div>
-							{{ end }}
+                        	<div class="admin">
 						{{ else if $mod }}
-							{{ if .username_aka }}
-							<div class="mod">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
-							</div>
-							{{ else }}
-							<div class="mod">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
-							</div>
-							{{ end }}
+                        	<div class="mod">
 						{{ else if $premium }}
-							{{ if .username_aka }}
 							<div class="premium">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username_aka }}
-							</div>
-							{{ else }}
-							<div class="premium">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
-							</div>
-							{{ end }}
 						{{ else if $supporter }}
-						{{ if .username_aka }}
 							<div class="supporter">
-								<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
-								{{ end }}
+						{{ end }}
+
+						<td class="right aligned">
+							<a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a>
+						</td>
+						{{ if and (or $dev $admin $mod $premium $supporter) .username_aka }}
+							{{ .username_aka }}
 							</div>
 						{{ else }}
-							<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a></td>{{ .username }}
+						 	{{ .username }}
 						{{ end }}
 						</h1>
 

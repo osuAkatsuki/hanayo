@@ -422,11 +422,11 @@ var funcMap = template.FuncMap{
 	},
 	// calculateDonorPrice calculates the price of x donor months in euros.
 	"calculateDonorPrice": func(a float64) string {
-		return fmt.Sprintf("%.2f", math.Pow(a*30*0.2, 0.72))//20 2nd arg for 66%
+		return fmt.Sprintf("%.2f", math.Pow(a*30*0.2, 0.72)) //20 2nd arg for 66%
 	},
 	// calculatePremiumPrice calculates the price of x premium months in euros.
 	"calculatePremiumPrice": func(a float64) string {
-		return fmt.Sprintf("%.2f", math.Pow(a*68*0.15, 0.93))//44 2nd arg for 66%
+		return fmt.Sprintf("%.2f", math.Pow(a*68*0.15, 0.93)) //44 2nd arg for 66%
 	},
 	// is2faEnabled checks 2fa is enabled for an user
 	"is2faEnabled": is2faEnabled,
