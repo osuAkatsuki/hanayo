@@ -42,7 +42,7 @@ func userProfile(c *gin.Context) {
 			c.Error(err)
 		}
 	}
-	
+
 	data := new(profileData)
 	data.UserID = userID
 
