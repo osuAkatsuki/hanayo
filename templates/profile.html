@@ -136,7 +136,7 @@
 									<i class="edit icon"></i>
 								</a>
 							{{ end }}
-							{{ if hasAdmin $global.Context.User.Privileges }}
+							{{ if $admin }}
 								<a href="http://old.akatsuki.pw/index.php?p=103&id={{ $global.UserID }}"
 									target="_blank" title="Quick edit user" class="ui circular mini red icon button">
 									<i class="folder open outline icon"></i>
