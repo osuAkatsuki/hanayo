@@ -91,11 +91,6 @@ function joinClan(obj, btn) {
 			return;
 		}
 		
-		if (t.message === "closed") { // This is retarded (it doesnt even callback when code isnt 200 (dont blame me))
-			showMessage("error", "Clan is closed/invite only.");
-			setTimeout(() => window.location.reload(), 2200)
-			return;
-		}
 		btn.text("Leave");
 		btn.attr("id", "leave-btn");
 		btn.css("background-color", "rgba(255,0,0,.3)");
