@@ -651,12 +651,7 @@ function api(endpoint, data, success, failure, post) {
     data : (post ? JSON.stringify(data) : data),
     contentType : (post ? "application/json; charset=utf-8" : ""),
     success : function(data) {
-      if (data.code != 200) {
-        if ((data.code >= 400 && data.code < 500) &&
-            typeof failure == "function") {
-          failure(data);
-          return;
-        }
+      if (data.code >= 500) {
         console.warn(data);
         showMessage("error", errorMessage);
       }

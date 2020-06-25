@@ -80,7 +80,17 @@ $(document).ready(function() {
 
 function joinClan(obj, btn) {
 	api("clans/join", obj, function(t) {
-		if (t.code != 200) return;
+		if (t.code == 403) {
+			showMessage("error", "You are not authorized to do this.");
+			return;
+		} else if (t.code == 400) {
+			showMessage("error", "Invalid Invite Format.");
+			return;
+		} else if (t.code == 404) {
+			showMessage("error", "Invite was not found.");
+			return;
+		}
+		
 		if (t.message === "closed") { // This is retarded (it doesnt even callback when code isnt 200 (dont blame me))
 			showMessage("error", "Clan is closed/invite only.");
 			setTimeout(() => window.location.reload(), 2200)
