@@ -233,17 +233,17 @@ function loadMoreClick() {
 }
 // currentPage for each mode
 var currentPage = {
-	0: {best: 0, recent: 0}, first: 0},
-	1: {best: 0, recent: 0}, first: 0},
-	2: {best: 0, recent: 0}, first: 0},
-	3: {best: 0, recent: 0}, first: 0}
+	0: {best: 0, recent: 0, first: 0},
+	1: {best: 0, recent: 0, first: 0},
+	2: {best: 0, recent: 0, first: 0},
+	3: {best: 0, recent: 0, first: 0}
 };
 
 var rPage = {
-	0: {best: 0, recent: 0}, first: 0},
-	1: {best: 0, recent: 0}, first: 0},
-	2: {best: 0, recent: 0}, first: 0},
-	3: {best: 0, recent: 0}, first: 0}
+	0: {best: 0, recent: 0, first: 0},
+	1: {best: 0, recent: 0, first: 0},
+	2: {best: 0, recent: 0, first: 0},
+	3: {best: 0, recent: 0, first: 0}
 };
 
 var scoreStore = {};
