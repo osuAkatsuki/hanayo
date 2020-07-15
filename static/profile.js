@@ -6,28 +6,28 @@ $(document).ready(function() {
 	if (newPathName.split("/")[2] != userID) {
 		newPathName = "/u/" + userID;
 	}
-	
+
 	let newSearch = wl.search;
 
 	if (wl.search.indexOf("mode=") === -1) {
 		newSearch = "?mode=" + favouriteMode;
 	}
-		
+
 	if (wl.search.indexOf("rx=") === -1)
 		newSearch += "&rx=" + preferRelax;
-		
+
 	if (wl.search != newSearch)
 		window.history.replaceState('', document.title, newPathName + newSearch + wl.hash);
 	else if (wl.pathname != newPathName)
 		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
 
 	setDefaultScoreTable();
-	
+
 	$("#rx-menu>.item").click(function(e) {
 		e.preventDefault();
 		if ($(this).hasClass("active"))
 			return;
-		
+
 		preferRelax = $(this).data("rx");
 		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]:not(.item)").removeAttr("hidden");
@@ -38,7 +38,7 @@ $(document).ready(function() {
 		$(this).addClass("active");
 		window.history.replaceState('', document.title, `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`)
 	});
-	
+
 	// when an item in the mode menu is clicked, it means we should change the mode.
 	$("#mode-menu>.item").click(function(e) {
 		e.preventDefault();
@@ -207,19 +207,19 @@ i18next.on('loaded', function(loaded) {
 function initialiseScores(el, mode) {
 	el.attr("data-loaded", "1");
 	var best = defaultScoreTable.clone(true).addClass("orange");
-	//var first = defaultScoreTable.clone(true).addClass("blue");
+	var first = defaultScoreTable.clone(true).addClass("blue");
 	var recent = defaultScoreTable.clone(true).addClass("blue");
 	best.attr("data-type", "best");
-	//first.attr("data-type", "first");
+	first.attr("data-type", "first");
 	recent.attr("data-type", "recent");
 	recent.addClass("no bottom margin");
 	el.append($("<div class='ui segments no bottom margin' />").append(
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Best scores") + "</h2>", best),
-		//$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + "</h2>", first),
+		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + "</h2>", first),
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Recent scores") + "</h2>", recent)
 	));
 	loadScoresPage("best", mode);
-	//loadScoresPage("first", mode);
+	loadScoresPage("first", mode);
 	loadScoresPage("recent", mode);
 };
 function loadMoreClick() {
@@ -233,23 +233,23 @@ function loadMoreClick() {
 }
 // currentPage for each mode
 var currentPage = {
-	0: {best: 0, recent: 0/*, first: 0*/},
-	1: {best: 0, recent: 0/*, first: 0*/},
-	2: {best: 0, recent: 0/*, first: 0*/},
-	3: {best: 0, recent: 0/*, first: 0*/}
+	0: {best: 0, recent: 0, first: 0},
+	1: {best: 0, recent: 0, first: 0},
+	2: {best: 0, recent: 0, first: 0},
+	3: {best: 0, recent: 0, first: 0}
 };
 
 var rPage = {
-	0: {best: 0, recent: 0/*, first: 0*/},
-	1: {best: 0, recent: 0/*, first: 0*/},
-	2: {best: 0, recent: 0/*, first: 0*/},
-	3: {best: 0, recent: 0/*, first: 0*/}
+	0: {best: 0, recent: 0, first: 0},
+	1: {best: 0, recent: 0, first: 0},
+	2: {best: 0, recent: 0, first: 0},
+	3: {best: 0, recent: 0, first: 0}
 };
 
 var scoreStore = {};
 function loadScoresPage(type, mode) {
 	var table = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] table[data-type=" + type + "] tbody");
-	
+
 	var page;
 	if (preferRelax) page = ++rPage[mode][type];
 	else page = ++currentPage[mode][type];
