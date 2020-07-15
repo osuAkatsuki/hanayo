@@ -337,5 +337,5 @@ var forbiddenUsernames = []string{
 	"notititititi", "mysliderbreak", "qsc20010", "curry3521", "s1ck", "itswinter", "remillia", "astar", "aika", "ruri", "cpugeek", "andros",
 	"xeltol", "merami", "mrekk", "whitecat", "micca", "alumetri", "fgsky", "badeu", "asecretbox", "a_blue", "lifeline", "dereban", "vamhi",
 	"azr8", "azerite", "ralidea", "bartek22830", "morgn", "maxim bogdan", "gasha", "chocomint", "srchispa", "vinno", "mcy4", "arcin", "gayzmcgee",
-	"filsdelama", "paraqeet", "danyl"
+	"filsdelama", "paraqeet", "danyl",
 }
