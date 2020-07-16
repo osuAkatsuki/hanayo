@@ -12,7 +12,7 @@ import (
 
 var l net.Listener
 
-func startuato(engine *gin.Engine) {
+func startuato(engine *gin.Engine) bool {
 	var err error
 
 	// Listen on a TCP or a UNIX domain socket (TCP here).
@@ -23,7 +23,9 @@ func startuato(engine *gin.Engine) {
 	}
 	if err != nil {
 		log.Fatalln(err)
+		return false
 	}
 
 	http.Serve(l, engine)
+	return true
 }

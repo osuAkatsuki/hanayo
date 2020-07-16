@@ -44,6 +44,74 @@ var singlePageSnippets = {
       });
   },
 
+  "/clans" : function() {
+     function e() {
+    var e = window.location;
+    window.history.replaceState("", document.title, e.pathname + "?mode=" + favouriteMode + "&p=" + page + "&rx=" + !!rx + "&sort=" + sort + e.hash);
+	
+	if (sort == "1s") {
+		api("clans/stats/first", {
+			m: favouriteMode,
+			p: page,
+			l: 50,
+			rx: rx
+		}, function(e) {
+			var n = $(".ui.table tbody");
+			n.find("tr").remove(), null == e.clans && (disableSimplepagButtons(!0), e.clans = []);
+			var i = 0;
+			e.clans.forEach(function(e) {
+				n.append($("<tr />").append($("<td />").text("#" + (50 * (page - 1) + ++i)), $("<td />").html("<a href='/c/" + e.id + '?mode=' + favouriteMode + (0 === rx ? '' : '&rx=1') + "' title='View clan'>" + escapeHTML(e.name) + "</a>"), $("<td />").html(addCommas(e.count))))
+			})
+			disableSimplepagButtons(e.clans.length < 50)
+		})
+		return;
+	}
+	
+	api("clans/stats/all", {
+        m: favouriteMode,
+        p: page,
+        l: 50,
+        rx: rx
+    }, function(e) {
+        var n = $(".ui.table tbody");
+        n.find("tr").remove(), null == e.clans && (disableSimplepagButtons(!0), e.clans = []);
+        var i = 0;
+        e.clans.forEach(function(e) {
+            n.append($("<tr />").append($("<td />").text("#" + (50 * (page - 1) + ++i)), $("<td />").html("<a href='/c/" + e.id + '?mode=' + favouriteMode + (0 === rx ? '' : '&rx=1') + "' title='View clan'>" + escapeHTML(e.name) + "</a>"), $("<td />").html(t(e.chosen_mode.ranked_score, e.chosen_mode.pp)), $("<td />").text(e.chosen_mode.accuracy.toFixed(2) + "%"), $("<td />").html(addCommas(e.chosen_mode.playcount))))
+        })
+		disableSimplepagButtons(e.clans.length < 50)
+    })
+}
+
+function t(e, t) {
+    return 0 === t ? "<b>" + addCommas(e) + "</b>" : "<b>" + addCommas(t) + "pp</b> (" + addCommas(e) + ")"
+}
+
+page = 0 === page ? 1 : page;
+
+$("#rx-menu ." + (1 === rx ? 1 : 0) + ".item").addClass("active");
+e();
+setupSimplepag(e);
+$("#mode-menu .item").click(function(t) {
+    t.preventDefault();
+	$("#mode-menu .active.item").removeClass("active");
+	$(this).addClass("active");
+	favouriteMode = $(this).data("mode");
+	page = 1;
+	e();
+})
+
+$("#rx-menu .item").click(function(t) {
+    t.preventDefault();
+	$("#rx-menu .active.item").removeClass("active");
+	$(this).addClass("active");
+	rx = $(this).data("rx");
+	page = 1;
+	e();
+})
+
+  }
+
   "/leaderboard" : function() {
     page = page === 0 ? 1 : page;
 

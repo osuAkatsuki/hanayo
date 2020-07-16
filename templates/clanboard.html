@@ -7,11 +7,18 @@ KyutGrill=team2.jpg
 <div class="ui container">
 	{{ $favModeRaw := .Get "users/self/favourite_mode" }}
 	{{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
+	{{ $sort := or (.Gin.Query "sort") "1s" }}
 	<script>
 		var favouriteMode = {{ $favMode }};
 		var rx = {{ or (.Gin.Query "rx") 0 }};
 		var page = {{ .Gin.Query "p" | atoint | atLeastOne }};
+		var sort = {{ $sort }}
 	</script>
+	<div class="ui two item menu" id="sort-menu">
+		<a class="0 item" data-sort="1s" href="/clans?sort=1s">#1s Rankings</a>
+		<a class="1 item" data-sort="pp" href="/clans?sort=pp">Performance Rankings</a>
+	</div>
+	
 	<div class="ui two item menu" id="rx-menu">
 			<a class="0 item" data-rx="0" href="/clans?rx=0">Regular</a>
 			<a class="1 item" data-rx="1" href="/clans?rx=1">Relax</a>
@@ -24,19 +31,31 @@ KyutGrill=team2.jpg
 	</div>
 	<table class="ui fixed table">
 		<thead>
-			{{ template "simplepag" 5 }}
+			{{ if eq $sort "1s" }}
+				{{ template "simplepag" 3 }}
+			{{ else }}
+				{{ template "simplepag" 5 }}
+			{{ end }}
 			<tr>
 				<th class="two wide"> {{ .T "Rank" }} </th>
 				<th class="four wide">{{ .T "Clan" }} </th>
-				<th class="four wide"> Performance (Score) </th>
-				<th class="three wide">{{ .T "Accuracy" }} </th>
-				<th class="three wide">{{ .T "Playcount" }} </th>
+				{{ if eq $sort "1s" }}
+					<th class="two wide">{{ .T "#1 Count" }} </th>
+				{{ else }}
+					<th class="four wide"> Performance (Score) </th>
+					<th class="three wide">{{ .T "Accuracy" }} </th>
+					<th class="three wide">{{ .T "Playcount" }} </th>
+				{{ end }}
 			</tr>
 		</thead>
 		<tbody>
 		</tbody>
 		<tfoot>
-			{{ template "simplepag" 5 }}
+			{{ if eq $sort "1s" }}
+				{{ template "simplepag" 3 }}
+			{{ else }}
+				{{ template "simplepag" 5 }}
+			{{ end }}
 		</tfoot>
 	</table>
 </div>
