@@ -21,15 +21,15 @@ Include=menu.html
 						<form id="register-form" class="ui form">
 							<div class="field">
 								<label class="left aligned">Clantag (2 to 6 characters)</label>
-								<input tabindex="1" type="text" name="tag" placeholder="{{ $tag }}">
+								<input tabindex="1" type="text" name="tag" value="{{ $tag }}">
 							</div>
 							<div class="field">
 								<label class="left aligned">Description (optional)</label>
-								<input tabindex="2" type="text" name="desc" placeholder="{{ $desc }}">
+								<input tabindex="2" type="text" name="desc" placeholder="Description" value="{{ $desc }}">
 							</div>
 							<div class="field">
 								<label class="left aligned">{{ "Icon [URL] (optional)" }}</label>
-								<input tabindex="3" type="url" name="icon" placeholder="{{ if $icon }}{{ $icon }}{{ else }}Icon{{ end }}">
+								<input tabindex="3" type="url" name="icon" {{ if $icon }}value="{{ $icon }}"{{ else }}placeholder="Icon"{{ end }}>
 							</div>
 							{{ if has .Context.User.Privileges 8388612 }}
 								<div class="field">
