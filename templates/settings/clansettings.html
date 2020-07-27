@@ -29,7 +29,7 @@ Include=menu.html
 							</div>
 							<div class="field">
 								<label class="left aligned">{{ "Icon [URL] (optional)" }}</label>
-								<input tabindex="3" type="url" name="icon" {{ if $icon }}value="{{ $icon }}"{{ else }}placeholder="Icon"{{ end }}>
+								<input tabindex="3" type="url" name="icon" placeholder="Icon" value="{{ $icon }}">
 							</div>
 							{{ if has .Context.User.Privileges 8388612 }}
 								<div class="field">
