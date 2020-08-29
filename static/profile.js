@@ -271,7 +271,7 @@ function loadScoresPage(type, mode) {
 			return;
 		}
 		
-		if (type === 'first' && r.total != undefined)
+		if (type === 'first')
 			document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
 
 		r.scores.forEach(function(v, idx){
