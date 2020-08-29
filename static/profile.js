@@ -272,7 +272,7 @@ function loadScoresPage(type, mode) {
 		}
 		
 		if (type === 'first' && r.total != undefined)
-			document.getElementById('1stotal').innerHTML = r.total + '( in total)';
+			document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
 
 		r.scores.forEach(function(v, idx){
 			scoreStore[v.id] = v;
