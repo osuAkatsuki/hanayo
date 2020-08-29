@@ -266,14 +266,14 @@ function loadScoresPage(type, mode) {
 		rx: preferRelax,
 		id: userID,
 	}, function(r) {
+		if (type === 'first')
+			document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
+		
 		if (r.scores == null) {
 			disableLoadMoreButton(type, mode);
 			return;
 		}
 		
-		if (type === 'first')
-			document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
-
 		r.scores.forEach(function(v, idx){
 			scoreStore[v.id] = v;
 			if (v.completed != 0) {
