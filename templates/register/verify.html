@@ -9,14 +9,12 @@
 	<div class="ui segment">
 		<h1 class="ui heading">{{ .T "<a href='/doc/connection_guide' target='_blank'>The Guide</a>. TL;DR version below." | html }}</h1>
 		<ol class="ui list">
-			<li><a href="/static/switcher.zip"><b>{{ .T "Download the server switcher" }}</b></a></li>
-			<li>{{ .T "Extract it, move all files into a folder, and execute <i>switcher.zip</i> <b>as administrator</b>." | html }}</li>
-			<li>{{ .T "Click on <b>Switch to Akatsuki</b>. This should prompt you to install our HTTPs certificate, then switch you to our server." | html }}</li>
-			<li>{{ .T "Make sure the switcher says \"You are connected to <b>Akatsuki</b>.\"" | html }}</li>
-			<li>{{ .T "If it says something about read-only mode, you most likely have an antivirus program of some sort blocking access for us to write to <code>C:\\Windows\\System32\\Drivers\\etc</code>." | html }}</li>
+			<li><a href="/static/switcher.exe"><b>{{ .T "Download the server switcher" }}</b></a></li>
+			<li>{{ .T "Switching between osu! and Akatsuki can be done by simply opening the switcher, and clicking the current status." | html }}</li>
+			<li>{{ .T "Make sure the switcher says \"<b>Currently: Akatsuki</b>.\" before starting osu!" | html }}</li>
 		</ol>
 		<p>
-			{{ .T "If you're still having trouble, then again, join our <a href='/discord'>Discord server</a> and move to the #help channel. Please provide as much information as you can in your message." | html }}
+			{{ .T "If you have any problems with the switcher, join our <a href='/discord'>Discord server</a> and move to the #help channel. Please provide as much information as you can in your message." | html }}
 		</p>
 	</div>
 	<div class="ui center aligned segment">
