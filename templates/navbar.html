@@ -34,9 +34,9 @@
 					{{ navbarItem .Path (.T "YouTube Channel") "https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" }}
 				</div>
 			</div>
-			{{/* if .Context.User.Username}}
+			{{ if .Context.User.Username}}
 				{{ navbarItem .Path (.T "Beatmaps") "/beatmaps" }}
-			{{ end */}}
+			{{ end }}
 
 			<div class="ui dropdown item">
 				<span>{{ .T "Clans" }}</span>
@@ -44,24 +44,28 @@
 					{{ navbarItem .Path (.T "Leaderboard") "/clans?mode=0" }}
 
 					{{ if $ccEnabled }}
-						{{ if $isClan }} {{/* Checks to see if the user is in a clan.  */}}
-						{{ navbarItem .Path (.T "<p title='You are already in a clan.' style='color: #C0C0C0;'>Create</p>") "" | html }}
+						{{ if $isClan }}
+							{{/* Checks to see if the user is in a clan.  */}}
+							{{ navbarItem .Path (.T "<p title='You are already in a clan.' style='color: #C0C0C0;'>Create</p>") "" | html }}
 						{{ else }}
-						{{ navbarItem .Path (.T "Create") "/clans/create" }}
+							{{ navbarItem .Path (.T "Create") "/clans/create" }}
 						{{ end }}
 					{{ end }}
 
-					{{ if $clanLeader }} {{/* Checks to see if the user owns a clan.  */}}
-					{{ navbarItem .Path (.T "Clan Settings") "/settings/clansettings" }}
+					{{ if $clanLeader }}
+						{{/* Checks to see if the user owns a clan.  */}}
+						{{ navbarItem .Path (.T "Clan Settings") "/settings/clansettings" }}
 					{{ else }}
-					{{ navbarItem .Path (.T "<p title='You are not a clan leader.'  style='color: #C0C0C0;'>Clan Settings</p>") ""  | html }}
+						{{ navbarItem .Path (.T "<p title='You are not a clan leader.'  style='color: #C0C0C0;'>Clan Settings</p>") ""  | html }}
 					{{ end }}
 				</div>
 			</div>
 
 			{{ navbarItem .Path (.T "Discord") "/discord" }}
-			{{ navbarItem .Path (.T "Server Switcher" | printf "<i class=\"green cloud download icon\"></i>%s") "/static/switcher.exe" }}
-			{{ if $isAdmin }}{{ navbarItem .Path (.T "Admin Panel" | printf "<b>%s</b>") "https://old.akatsuki.pw/index.php?p=100" }}{{ end }}
+			{{ navbarItem .Path (.T "Switcher" | printf "<i class=\"green cloud download icon\"></i>%s") "/static/switcher.exe" }}
+			{{ if $isAdmin }}
+				{{ navbarItem .Path (.T "Admin Panel" | printf "<b>%s</b>") "https://old.akatsuki.pw/index.php?p=100" }}
+			{{ end }}
 		{{ end }}
 		<div class="firetrucking-right-menu">
 			{{ navbarItem .Path (printf "<span data-tooltip=\"Support us! (♥ω♥ ) ~♪\" data-position=\"bottom right\"><i class=\"red heart icon\"></i></span>") "/donate" }}
