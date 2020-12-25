@@ -48,7 +48,7 @@ var singlePageSnippets = {
      function e() {
     var e = window.location;
     window.history.replaceState("", document.title, e.pathname + "?mode=" + favouriteMode + "&p=" + page + "&rx=" + !!rx + "&sort=" + sort + e.hash);
-	
+
 	if (sort == "1s") {
 		api("clans/stats/first", {
 			m: favouriteMode,
@@ -66,7 +66,7 @@ var singlePageSnippets = {
 		})
 		return;
 	}
-	
+
 	api("clans/stats/all", {
         m: favouriteMode,
         p: page,
@@ -422,7 +422,7 @@ $("#rx-menu .item").click(function(t) {
       rates = data;
       us.on('update', function() {
         var months = us.get();
-        var priceEUR = Math.pow(months * 30 * 0.2, 0.70);// 2nd arg: 20 for 66%
+        var priceEUR = Math.pow(months * 20 * 0.2, 0.70);// 2nd arg: 20 for 66%
         var priceBTC = priceEUR / rates.EUR;
         var priceUSD = priceBTC * rates.USD;
         $("#cost")
@@ -465,7 +465,7 @@ $("#rx-menu .item").click(function(t) {
       rates = data;
       us.on('update', function() {
         var months = us.get();
-        var priceEUR = Math.pow(months * 68 * 0.15, 0.93);// 2nd arg: 44 for 66%
+        var priceEUR = Math.pow(months * 44 * 0.15, 0.93);// 2nd arg: 44 for 66%
         var priceBTC = priceEUR / rates.EUR;
         var priceUSD = priceBTC * rates.USD;
         $("#cost")
