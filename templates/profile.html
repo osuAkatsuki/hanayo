@@ -15,28 +15,19 @@
 
 			<head>
 				{{/* Meta tags */}}
-				<meta charset="utf-8">
-				<meta http-equiv="X-UA-Compatible" content="IE=edge">
-				<meta name="viewport" content="width=device-width, initial-scale=1">
-				<meta name="description" content="{{ .username }} is an Akatsuki player from {{ country .country true }}." />
-				<meta name="keywords" content="" />
-				<meta name="author" content="" />
+				<meta property="og:title" content="{{ .username }}'s profile | osu!Akatsuki"/>
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://akatsuki.pw/u/{{ $global.UserID }}?mode=0&rx=1"/>
+				<meta property="og:image" content="https://a.akatsuki.pw/{{ $global.UserID }}"/>
+				<meta property="og:description" content="{{ .username }} is a player from {{ country .country true }}."/>
+				<meta name="theme-color" content="#AC88D8">
 
-				{{/* Twitter/Facebook Integration */}}
-				<meta property="og:title" content="{{ .username }}"/>
-				<meta property="og:image" content="http://a.akatsuki.pw/{{ $global.UserID }}"/>
-				<meta property="og:url" content="http://akatsuki.pw/u/{{ $global.UserID }}"/>
-				<meta property="og:site_name" content="Akatsuki"/>
-				<meta property="og:description" content="{{ .username }} is an Akatsuki player from {{ country .country true }}."/>
-				<meta name="twitter:title" content="{{ .username }}" />
-				<meta name="twitter:image" content="http://a.akatsuki.pw/{{ $global.UserID }}" />
-				<meta name="twitter:url" content="http://akatsuki.pw/u/{{ $global.UserID }}" />
+				{{/* Twitter-specific stuff */}}
+				<meta name="twitter:title" content="{{ .username }}'s profile | osu!Akatsuki" />
+				<meta name="twitter:image" content="https://a.akatsuki.pw/{{ $global.UserID }}?mode=0&rx=1" />
+				<meta name="twitter:url" content="https://akatsuki.pw/u/{{ $global.UserID }}" />
 				<meta name="twitter:card" content="" />
 			</head>
-
-			{{ if after .silence_info.end }}
-				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
-			{{ end }}
 
 			{{ $dev := has .privileges 4194304 }} {{/* AdminCaker */}}
 			{{ $admin := has .privileges 16 }} {{/* AdminManageUsers */}}
@@ -44,6 +35,10 @@
 			{{ $bn := has .privileges 256 }} {{/* AdminManageBeatmaps */}}
 			{{ $premium := has .privileges 8388608 }} {{/* UserPremium */}}
 			{{ $supporter := has .privileges 4 }} {{/* UserDonor */}}
+
+			{{ if after .silence_info.end }}
+				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
+			{{ end }}
 
 			{{ if hasAdmin $global.Context.User.Privileges }}
 				{{ $restr := not (has .privileges 1) }}

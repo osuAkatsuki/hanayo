@@ -7,20 +7,17 @@
 
 <head>
     {{/* Meta tags */}}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Akatsuki is an osu! private server featuring both relax and vanilla osu!, integrated into a single server; Each style with it's own individual PP system, and much more. Join today!" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
-
-    {{/* Twitter/Facebook Integration */}}
+    <meta property="og:title" content="home | osu!Akatsuki" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://akatsuki.pw"/>
     <meta property="og:image" content="/static/logos/logo.png"/>
-    <meta property="og:url" content="https://akatsuki.pw/"/>
     <meta property="og:site_name" content="Akatsuki"/>
-    <meta property="og:description" content="Akatsuki is an osu! private server featuring both relax and vanilla osu!, integrated into a single server; Each style with it's own individual PP system, and much more. Join today!"/>
+    <meta property="og:description" content="Akatsuki is an osu! private server mainly based around the relax mod - featuring score submission, leaderboards & rankings, custom pp, and much more for both relax and vanilla osu!"/>
+
+    {{/* Twitter-specific stuff */}}
+    <meta name="twitter:title" content="home | osu!Akatsuki" />
     <meta name="twitter:image" content="/static/logos/logo.png" />
-    <meta name="twitter:url" content="https://akatsuki.pw/" />
+    <meta name="twitter:url" content="https://akatsuki.pw" />
     <meta name="twitter:card" content="" />
 </head>
 
@@ -49,7 +46,7 @@
                             </span>
                             <br>
                             <span class="text-sm">
-                                <b>Welcome {{ if not .Context.User.ID }}{{ else }}back {{ end }}to osu!Akatsuki.</b> We are an osu! private server featuring both relax and vanilla osu!, integrated into a single server, each with it's own individual PP system, PP & score sorted leaderboards, fully-functioning multiplayer, spectator mode, and a massive dedicated community between both our osu! and <a href="/discord">Discord</a> servers.
+                                <b>Welcome {{ if not .Context.User.ID }}{{ else }}back {{ end }}to osu!Akatsuki.</b> We are an osu! private server mainly based around the relax mod - featuring score submission, leaderboards & rankings, custom pp, and much more for both relax and vanilla osu! We have a massive dedicated community between both our osu! and <a href="/discord">Discord</a> servers.
                             </span>
                             <div class="buttons">
                                 <a href="{{ if not .Context.User.ID }}/register{{ else }}/u/{{ .Context.User.ID }}{{ end }}" class="home-btn btn-key">{{ if not .Context.User.ID }} register here {{else}} view profile {{ end }} </a>

@@ -215,7 +215,7 @@ function initialiseScores(el, mode) {
 	recent.addClass("no bottom margin");
 	el.append($("<div class='ui segments no bottom margin' />").append(
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Best scores") + "</h2>", best),
-		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + "</h2>", first),
+		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + ' <span id="1stotal" style="font-size: medium;">(.. in total)</span></h2>', first),
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Recent scores") + "</h2>", recent)
 	));
 	loadScoresPage("best", mode);
@@ -266,10 +266,14 @@ function loadScoresPage(type, mode) {
 		rx: preferRelax,
 		id: userID,
 	}, function(r) {
+		if (type === 'first')
+			document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
+		
 		if (r.scores == null) {
 			disableLoadMoreButton(type, mode);
 			return;
 		}
+		
 		r.scores.forEach(function(v, idx){
 			scoreStore[v.id] = v;
 			if (v.completed != 0) {
