@@ -160,23 +160,25 @@
 				<div class="ui three column divided stackable grid">
 					<div class="row">
 						<div class="column">
-							{{ $global.T "<b>%s</b> is a " .username | html }}
-							{{ if eq $user.id 1001.0 }}
-								<i class="teal code small icon"></i><b>Head Developer</b>
+							{{ $global.T "<b>%s</b> is " .username | html }}
+							{{ if eq $user.id 1000.0 }}
+								an <i class="blue rebel small icon"></i><b>Owner</b>
+							{{ else if eq $user.id 1001.0 }}
+								a <i class="teal code small icon"></i><b>Head Developer</b>
 							{{ else if $dev }}
-								<i class="blue code small icon"></i><b>Developer</b>
+								a <i class="blue code small icon"></i><b>Developer</b>
 							{{ else if $admin }}
-								<i class="blue lightning small icon"></i><b>Administrator</b>
+								an <i class="blue lightning small icon"></i><b>Administrator</b>
 							{{ else if $mod }}
-								<i class="red star small icon"></i><b>Moderator</b>
+								a <i class="red star small icon"></i><b>Moderator</b>
 							{{ else if $bn }}
-								<i class="orange universal access small icon"></i><b>Nominator</b>
+								a <i class="orange universal access small icon"></i><b>Nominator</b>
 							{{ else if $premium }}
-								<i class="yellow credit card small icon"></i><b>Premium member</b>
+								a <i class="yellow credit card small icon"></i><b>Premium member</b>
 							{{ else if $supporter }}
-								<i class="pink heart small icon"></i><b>Supporter</b>
+								a <i class="pink heart small icon"></i><b>Supporter</b>
 							{{ else }}
-								member
+								a member
 							{{ end }}
 
 							{{ $global.T " from <b>%s</b>." (country .country true) | html }}
