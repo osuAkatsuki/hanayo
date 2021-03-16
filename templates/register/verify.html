@@ -2,8 +2,11 @@
 <div class="ui container">
 	<div class="ui segment">
 		<h1 class="ui heading">{{ .T "Connecting to Akatsuki's servers" | html }}</h1>
+		<h3 class="ui heading">
+			{{ .T "To switch to akatsuki, you must run your osu with the -devserver command line argument." }}<br>
+		    {{ .T "The simplest way to do this is probably with a shortcut:" }}
+		</h3>
 		<ol class="ui list">
-			<li>{{ .T "To switch to akatsuki, you must run your osu with the -devserver command line argument." }}</li>
 			<li><a href="/static/images/conn_1.png">{{ .T "Create a shortcut of osu!.exe." }}</a></li>
 			<li><a href="/static/images/conn_2.png">{{ .T "Edit the shortcut's properties." }}</a></li>
 			<li><a href="/static/images/conn_3.png">{{ .T "Add ` -devserver akatsuki.pw` to the Target path (the space matters)." }}</a></li>
