@@ -1,25 +1,17 @@
 {{ define "tpl" }}
 <div class="ui container">
 	<div class="ui segment">
-		{{ .T "Your account has been created, however it still <b>needs to be verified!</b> Please log in into <b><u>osu! (the game)</u></b> using your account. <b>There is <u>no email confirmation</u> at the moment. All you need to do is connect to Akatsuki from the osu! client!</b> If you're having trouble, <a href='/doc/1'>follow this guide</a>." | html }}
-	</div>
-	<!-->div class="ui centered error message">
-		{{ .T "<b class='big text'>Do not let anyone except yourself log into your Akatsuki account!</b><br> Join our <a href='%s'>Discord server</a> and move to the #help channel instead (after following the steps on this page) so that we can help you out if you have trouble connecting." (config "DiscordServer") | html }}
-	</div-->
-	<div class="ui segment">
-		<h1 class="ui heading">{{ .T "<a href='/doc/connection_guide' target='_blank'>The Guide</a>. TL;DR version below." | html }}</h1>
+		<h1 class="ui heading">{{ .T "Connecting to Akatsuki's servers" | html }}</h1>
 		<ol class="ui list">
-			<li><a href="/static/switcher.exe"><b>{{ .T "Download the server switcher" }}</b></a></li>
-			<li>{{ .T "Switching between osu! and Akatsuki can be done by simply opening the switcher, and clicking the current status." | html }}</li>
-			<li>{{ .T "Make sure the switcher says \"<b>Currently: Akatsuki</b>.\" before starting osu!" | html }}</li>
+			<li>{{ .T "To switch to akatsuki, you must run your osu with the -devserver command line argument." }}</li>
+			<li><a href="/static/images/conn_1.png">{{ .T "Create a shortcut of osu!.exe." }}</a></li>
+			<li><a href="/static/images/conn_2.png">{{ .T "Edit the shortcut's properties." }}</a></li>
+			<li><a href="/static/images/conn_3.png">{{ .T "Add ` -devserver akatsuki.pw` to the Target path (the space matters)." }}</a></li>
+			<li>{{ .T "Run the new shortcut to launch Akatsuki - no need to use anything like a switcher, and you can rename it whatever you'd like." }}</li>
 		</ol>
 		<p>
-			{{ .T "If you have any problems with the switcher, join our <a href='/discord'>Discord server</a> and move to the #help channel. Please provide as much information as you can in your message." | html }}
+			{{ .T "If you have any problems connecting, feel free to join our <a href='/discord'>Discord server</a> and move to the #help channel.<br>Please provide as much information as you can in your message!" | html }}
 		</p>
-	</div>
-	<div class="ui center aligned segment">
-		<h1 class="ui heading">{{ .T "Waiting for verification" }}</h1>
-		<i class="circle notched huge loading icon"></i>
 	</div>
 </div>
 {{ end }}
