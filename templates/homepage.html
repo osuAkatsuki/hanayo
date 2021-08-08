@@ -31,7 +31,7 @@
                         <div class="quaver"></div>
                         <div class="content">
                             <div class="status">
-                                {{ range $key, $value := (qb "SELECT COUNT(*) FROM users WHERE privileges & 1") }}
+                                {{ range $key, $value := (qb "SELECT COUNT(*) FROM users") }}
                                 <span>
                                     <span style="color: #2094ca;" class="counter-text"> {{ $value }} </span> total users
                                 </span>
