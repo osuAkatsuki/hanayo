@@ -10,9 +10,9 @@ type homepageData struct {
 
 func homepagePage(c *gin.Context) {
 
-data := new(homepageData)
+	data := new(homepageData)
 
-defer resp(c, 200, "homepage.html", data)
+	defer resp(c, 200, "homepage.html", data)
 
-data.DisableHH = true
+	data.DisableHH = true
 }

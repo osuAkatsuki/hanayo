@@ -268,12 +268,12 @@ function loadScoresPage(type, mode) {
 	}, function(r) {
 		if (type === 'first')
 			document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
-		
+
 		if (r.scores == null) {
 			disableLoadMoreButton(type, mode);
 			return;
 		}
-		
+
 		r.scores.forEach(function(v, idx){
 			scoreStore[v.id] = v;
 			if (v.completed != 0) {
@@ -302,17 +302,17 @@ function loadScoresPage(type, mode) {
 	});
 }
 function downloadStar(id) {
-	return "<a href='/web/replays/" + id + "' class='new downloadstar'><i class='star icon'></i>" + T("Download") + "</a>";
+	return `<a href='/web/replays/${id}' class='new downloadstar'><i class='star icon'></i>${T("Download")}</a>`;
 }
 function weightedPP(type, page, idx, pp) {
 	if (type != "best" || pp == 0)
 		return "";
 	var perc = Math.pow(0.95, ((page - 1) * 10) + idx);
 	var wpp = pp * perc;
-	return "<i title='Weighted PP, " + Math.round(perc*100) + "%'>(" + wpp.toFixed(2) + "pp)</i>";
+	return `<i title='Weighted PP, ${Math.round(perc * 100)}%'>(${wpp.toFixed(2)}pp)</i>`;
 }
 function disableLoadMoreButton(type, mode, enable) {
-	var button = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] table[data-type=" + type + "] .load-more-button");
+	var button = $(`#scores-zone div[data-mode=${mode}][data-rx=${preferRelax}] table[data-type=${type}] .load-more-button`);
 	if (enable) button.removeClass("disabled");
 	else button.addClass("disabled");
 }
@@ -326,7 +326,7 @@ function viewScoreInfo() {
 	var data = {
 		"Points":		addCommas(s.score),
 		"PP":			addCommas(s.pp),
-		"Beatmap":		"<a href='/b/" + s.beatmap.beatmap_id + "'>" + escapeHTML(s.beatmap.song_name) + "</a>",
+		"Beatmap":		`<a href='/b/${s.beatmap.beatmap_id}'>${escapeHTML(s.beatmap.song_name)}</a>`,
 		"Accuracy":		s.accuracy + "%",
 		"Max combo":	addCommas(s.max_combo) + "/" + addCommas(s.beatmap.max_combo)
 							+ (s.full_combo ? " " + T("(full combo)") : ""),
@@ -361,8 +361,8 @@ function viewScoreInfo() {
 	$.each(data, function(key, value) {
 		els.push(
 			$("<tr />").append(
-				$("<td>" + T(key) + "</td>"),
-				$("<td>" + value + "</td>")
+				$(`<td>${T(key)}</td>`),
+				$(`<td>${value}</td>`)
 			)
 		);
 	});
@@ -479,12 +479,12 @@ function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
 
 function ppOrScore(pp, score) {
 	if (pp != 0)
-		return addCommas(pp.toFixed(2)) + "pp";
+		return `${addCommas(pp.toFixed(2))}pp`;
 	return addCommas(score);
 }
 
 function beatmapLink(type, id) {
 	if (type == "s")
-		return "<a href='/s/" + id + "'>" + id + '</a>';
-	return "<a href='/b/" + id + "'>" + id + '</a>';
+		return `<a href='/s/${id}'>${id}</a>`;
+	return `<a href='/b/${id}'>${id}</a>`;
 }
