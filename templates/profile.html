@@ -8,23 +8,21 @@
 {{ $preferRelax := _or $grx 0 }}
 
 <head>
-	{{/* Meta tags */}}
 	{{ $user := . }}
-	<meta property="og:title" content="{{ .username }}'s profile" />
-	<meta content="osu!Akatsuki" property="og:site_name">
+	
+	{{/* Meta tags */}}
+	<meta property="og:title" content="{{ .username }}'s profile | osu!Akatsuki"/>
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://akatsuki.pw/u/{{ $global.UserID }}?mode=0&rx=1" />
-	<meta property="og:image" content="https://akatest.space/papi/get_user_profile/{{ $global.UserID }}" />
-	<meta property="og:image:width" content="1200">
-	<meta property="og:image:height" content="600">
-	<meta property="og:description" content="{{ .username }} is a player from {{ country .country true }} with uhhhhh idk what should i add to description and cmyui is sus yay AMONG US AISDHOIWAOD" />
+	<meta property="og:url" content="https://akatsuki.pw/u/{{ $global.UserID }}?mode=0&rx=1"/>
+	<meta property="og:image" content="https://a.akatsuki.pw/{{ $global.UserID }}"/>
+	<meta property="og:description" content="{{ .username }} is a player from {{ country .country true }}."/>
 	<meta name="theme-color" content="#AC88D8">
 
 	{{/* Twitter-specific stuff */}}
 	<meta name="twitter:title" content="{{ .username }}'s profile | osu!Akatsuki" />
-	<meta name="twitter:image" content="https://akatest.space/papi/get_user_profile/{{ $global.UserID }}" />
+	<meta name="twitter:image" content="https://a.akatsuki.pw/{{ $global.UserID }}?mode=0&rx=1" />
 	<meta name="twitter:url" content="https://akatsuki.pw/u/{{ $global.UserID }}" />
-	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:card" content="" />
 </head>
 
 <script>
