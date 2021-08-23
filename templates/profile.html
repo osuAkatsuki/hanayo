@@ -9,7 +9,7 @@
 
 <head>
 	{{ $user := . }}
-	
+
 	{{/* Meta tags */}}
 	<meta property="og:title" content="{{ .username }}'s profile | osu!Akatsuki"/>
 	<meta property="og:type" content="website" />
@@ -88,7 +88,9 @@
 									</div>
 									{{ end }}
 									{{ with .custom_badge }}
-									<a data-tooltip="{{ .name }}"><i class="{{ faIcon .icon }} small icon m-less"></i></a>
+									<div class="badge">
+										<a data-tooltip="{{ .name }}"><i class="{{ faIcon .icon }} small icon m-less"></i></a>
+									</div>
 									{{ end }}
 								{{ end }}
 						</div>
