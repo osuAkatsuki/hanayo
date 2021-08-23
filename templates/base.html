@@ -67,8 +67,7 @@
 			
 			{{ if not .DisableHH }}
 				<div class="huge heading {{ if .HeadingOnRight }}right{{ end }} dropped"
-					style="background:linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%) ), url(
-						{{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ or .KyutGrill "default.jpg" }}{{ end }})">
+					style="background: linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%) ), url({{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ or .KyutGrill "default.jpg" }}{{ end }});background-size: cover">
 					<div class="ui container">
 						<h1>{{ if .HeadingTitle }}{{ .T .HeadingTitle | html }}{{ else }}{{ .T .TitleBar }}{{ end }}</h1>
 					</div>
