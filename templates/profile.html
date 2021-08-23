@@ -1,345 +1,282 @@
 {{ define "tpl" }}
-<div class="ui container">
-	{{ if .UserID }}
-		{{ $gqm := atoi (.Gin.Query "mode") }}
-		{{ $global := . }}
-		{{ $grx := atoi (.Gin.Query "rx") }}
-		{{ with (.Get "users/full?id=%d" .UserID) }}
-			{{ $favouritemode := _or $gqm .favourite_mode }}
-			{{ $preferRelax := _or $grx 0 }}
-			<script>
-				window.favouriteMode = {{ $favouritemode }};
-				window.preferRelax = {{ $preferRelax }};
-				window.userID = {{ .id }};
-			</script>
+{{ if .UserID }}
+{{ $gqm := atoi (.Gin.Query "mode") }}
+{{ $global := . }}
+{{ $grx := atoi (.Gin.Query "rx") }}
+{{ with (.Get "users/full?id=%d" .UserID) }}
+{{ $favouritemode := _or $gqm .favourite_mode }}
+{{ $preferRelax := _or $grx 0 }}
 
-			<head>
-				{{/* Meta tags */}}
-				<meta property="og:title" content="{{ .username }}'s profile | osu!Akatsuki"/>
-				<meta property="og:type" content="website" />
-				<meta property="og:url" content="https://akatsuki.pw/u/{{ $global.UserID }}?mode=0&rx=1"/>
-				<meta property="og:image" content="https://a.akatsuki.pw/{{ $global.UserID }}"/>
-				<meta property="og:description" content="{{ .username }} is a player from {{ country .country true }}."/>
-				<meta name="theme-color" content="#AC88D8">
+<head>
+	{{/* Meta tags */}}
+	{{ $user := . }}
+	<meta property="og:title" content="{{ .username }}'s profile" />
+	<meta content="osu!Akatsuki" property="og:site_name">
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://akatsuki.pw/u/{{ $global.UserID }}?mode=0&rx=1" />
+	<meta property="og:image" content="https://akatest.space/papi/get_user_profile/{{ $global.UserID }}" />
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="600">
+	<meta property="og:description" content="{{ .username }} is a player from {{ country .country true }} with uhhhhh idk what should i add to description and cmyui is sus yay AMONG US AISDHOIWAOD" />
+	<meta name="theme-color" content="#AC88D8">
 
-				{{/* Twitter-specific stuff */}}
-				<meta name="twitter:title" content="{{ .username }}'s profile | osu!Akatsuki" />
-				<meta name="twitter:image" content="https://a.akatsuki.pw/{{ $global.UserID }}?mode=0&rx=1" />
-				<meta name="twitter:url" content="https://akatsuki.pw/u/{{ $global.UserID }}" />
-				<meta name="twitter:card" content="" />
-			</head>
+	{{/* Twitter-specific stuff */}}
+	<meta name="twitter:title" content="{{ .username }}'s profile | osu!Akatsuki" />
+	<meta name="twitter:image" content="https://akatest.space/papi/get_user_profile/{{ $global.UserID }}" />
+	<meta name="twitter:url" content="https://akatsuki.pw/u/{{ $global.UserID }}" />
+	<meta name="twitter:card" content="summary_large_image">
+</head>
 
-			{{ $dev := has .privileges 4194304 }} {{/* AdminCaker */}}
-			{{ $admin := has .privileges 16 }} {{/* AdminManageUsers */}}
-			{{ $mod := has .privileges 262144 }} {{/* AdminChatMod */}}
-			{{ $bn := has .privileges 256 }} {{/* AdminManageBeatmaps */}}
-			{{ $premium := has .privileges 8388608 }} {{/* UserPremium */}}
-			{{ $supporter := has .privileges 4 }} {{/* UserDonor */}}
+<script>
+	window.favouriteMode = {{ $favouritemode }};
+	window.preferRelax = {{ $preferRelax }};
+	window.userID = {{ .id }};
+</script>
 
-			{{ if after .silence_info.end }}
-				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
-			{{ end }}
+<link rel="stylesheet" href="/static/css/pages/profile.css">
 
-			{{ if hasAdmin $global.Context.User.Privileges }}
-				{{ $restr := not (has .privileges 1) }}
-				{{ $disab := not (has .privileges 2) }}
-				{{ $pend  := has .privileges 1048576 }}
+<div class="profile heading" style="background:linear-gradient( rgb(0 0 0 / 50%), rgb(0 0 0 / 50%) ), url(https://i.pinimg.com/originals/b8/2f/28/b82f28a7e9c8fcb3868d3d94652c107c.gif) no-repeat top/110%">
+	<div class="ui container user-profile">
+		{{ $user := . }}
 
-				{{ if and $disab $restr }}
-					{{ if $pend }}
-						<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "pending verification" | html }}.</div>
-					{{ else }}
-						<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "banned" | html }}.</div>
-					{{ end }}
-				{{ else if $restr }}
-					<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "restricted" | html }}.</div>
-				{{ else if $disab }}
-					<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "locked" | html }}.</div>
-				{{ end }}
-			{{ end }}
-			{{ with $global.Get "users/userpage?id=%.0f" .id }}
-				{{ if .userpage }}
-					{{ with parseUserpage .userpage }}
-						<div class="ui raised segment twemoji" id="userpage-content">
-							{{ . }}
-						</div>
-					{{ end }}
-				{{ end}}
-			{{ end }}
-
-			<div class="ui top attached segment overflow auto">
-				<div class="magic table">
-					<div class="table element">
-						{{ if eq $global.UserID $global.Context.User.ID }}
-							<a href="/settings/avatar">
-						{{ end }}
-								<img src="{{ config "AvatarURL" }}/{{ .id }}" alt="avatar" class="user avatar">
-						{{ if eq $global.UserID $global.Context.User.ID }}
-							</a>
-						{{ end }}
+		{{ $dev := has .privileges 4194304 }} {{/* AdminCaker */}}
+		{{ $admin := has .privileges 16 }} {{/* AdminManageUsers */}}
+		{{ $mod := has .privileges 262144 }} {{/* AdminChatMod */}}
+		{{ $bn := has .privileges 256 }} {{/* AdminManageBeatmaps */}}
+		{{ $premium := has .privileges 8388608 }} {{/* UserPremium */}}
+		{{ $supporter := has .privileges 4 }} {{/* UserDonor */}}
+		<div class="ui grid">
+			<div class="ten wide column" id="user-info">
+				<div class="flex">
+					<div class="fcolumn">
+						<img src="https://a.akatsuki.pw/{{ .id }}" alt="avatar" class="user avatar">
 					</div>
-					<div class="table element">
-						<h1 class="ui header">
-						{{ $user := . }}
-
-						{{ if $dev }}
-                        	<div class="dev">
-						{{ else if $admin }}
-                        	<div class="admin">
-						{{ else if $mod }}
-                        	<div class="mod">
-						{{ else if $premium }}
-							<div class="premium">
-						{{ else if $supporter }}
-							<div class="supporter">
-						{{ end }}
-
-						<td class="right aligned">
-							<a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a>
-						</td>
-						{{ if and (or $dev $admin $mod $premium $supporter) .username_aka }}
-							{{ .username_aka }}
-							</div>
-						{{ else }}
-						 	{{ .username }}
-						{{ end }}
-						</h1>
-
-						{{ with bget "isOnline?id=%.0f" .id }}
-							<div class="subtitle">
-								<i class="{{ if .result }}green{{ else }}red{{ end }} circle icon"></i>
-								{{ if .result }}{{ $global.T "Online" }}{{ else }}{{ $global.T "Offline" }}{{ end }}
-							</div>
-						{{ end }}
-					</div>
-				</div>
-				<div class="magic table floating right">
-					<div class="table element">
-						{{ range $rx, $_ := .stats }}
-							{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
-								<h1 data-rx="{{ $rx }}" data-mode="{{ $k }}"{{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }} hidden{{ end }}>{{ with and $v $v.global_leaderboard_rank }}#{{ . }}{{ else }}{{ $global.T "Unknown" }}{{ end }}</h1>
-							{{ end }}
-						{{ end }}
-						<div id="profile-actions">
-							{{ if and (ne $global.Context.User.ID $global.UserID) (ne $global.Context.User.ID 0) }}
-								<button class="ui circular mini icon loading button" id="add-friend-button">
-									<i class="horizontal ellipsis icon"></i>
-								</button>
-							{{ end }}
-							{{ if eq $global.Context.User.ID $global.UserID }}
-								<a href="/settings" class="ui circular mini teal icon button">
-									<i class="edit icon"></i>
-								</a>
-							{{ end }}
-							{{ if has $global.Context.User.Privileges 16 }} {{/* AdminManageUsers */}}
-								<a href="http://old.akatsuki.pw/index.php?p=103&id={{ $global.UserID }}"
-									target="_blank" title="Quick edit user" class="ui circular mini red icon button">
-									<i class="folder open outline icon"></i>
-								</a>
-								<a href="http://old.akatsuki.pw/index.php?p=104&id={{ $global.UserID }}"
-									target="_blank" title="Quick edit username" class="ui circular mini red icon button">
-										<i class="address book outline icon"></i>
-								</a>
-							{{ end }}
-						</div>
-					</div>
-				</div>
-			</div>
-			{{ $user := . }}
-			<div class="ui two item bottom attached menu" id="rx-menu">
-					<a class="0 item{{ if eq (int $preferRelax) 0 }} active{{ end }}" data-rx="0" href="/u/{{ $user.id }}?rx=0">Vanilla</a>
-					<a class="1 item{{ if eq (int $preferRelax) 1 }} active{{ end }}" data-rx="1" href="/u/{{ $user.id }}?rx=1">Relax</a>
-			</div>
-
-			<div class="ui four item bottom attached menu" id="mode-menu">
-				{{ range $k, $v := modes }}
-					<a class="{{ favMode $favouritemode $k }}item" data-mode="{{ $k }}" href="/u/{{ $user.id }}?mode={{ $k }}">{{ $v }}</a>
-				{{ end }}
-			</div>
-			<div class="ui segment">
-				<div class="ui three column divided stackable grid">
-					<div class="row">
-						<div class="column">
-							{{ $global.T "<b>%s</b> is " .username | html }}
-							{{ if eq $user.id 1000.0 }}
-								an <i class="blue rebel small icon"></i><b>Owner</b>
-							{{ else if eq $user.id 1001.0 }}
-								a <i class="teal code small icon"></i><b>Head Developer</b>
-							{{ else if $dev }}
-								a <i class="blue code small icon"></i><b>Developer</b>
-							{{ else if $admin }}
-								an <i class="blue lightning small icon"></i><b>Administrator</b>
-							{{ else if $mod }}
-								a <i class="red star small icon"></i><b>Moderator</b>
-							{{ else if $bn }}
-								a <i class="orange universal access small icon"></i><b>Nominator</b>
-							{{ else if $premium }}
-								a <i class="yellow credit card small icon"></i><b>Premium member</b>
-							{{ else if $supporter }}
-								a <i class="pink heart small icon"></i><b>Supporter</b>
-							{{ else }}
-								a member
-							{{ end }}
-
-							{{ $global.T " from <b>%s</b>." (country .country true) | html }}
-							<br>{{ $global.T "They registered %s." (time $user.registered_on) | html }}
-							<br>{{ $global.T "Last seen: %s." (time $user.latest_activity) | html }}
-							<br>{{ with playstyle .play_style $global }}{{ $global.T "They play with %s." . }}{{ end }}
-							<br>
-							<br>
-							<div class="column">
-								<table class="ui very basic two column compact table nopad">
-									<tbody>
-										<tr>
-											<div class="ui grid">
-												{{ range .tbadges }}
-												<br><br><br>
-												<div class="three wide">
-													<img src="{{.icon }}" title="{{.name }}"></img>
-													<br>
-												</div>
-												{{ end }}
-											</div>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
-					<div class="column">
-						{{ if and (not .badges) (not .custom_badge) }}
-							{{ $global.T "This user hasn't got any badges!" }}
-						{{ else }}
-							<div class="ui grid">
-
-								{{ range .badges }}
-									<div class="eight wide centered column">
-										<i class="circular {{ faIcon .icon }} big icon"></i><br>
-										<b>{{ .name }}</b>
-
-									</div>
-								{{ end }}
-								{{ with .custom_badge }}
-									<div class="eight wide centered column">
-										<i class="circular {{ faIcon .icon }} big icon"></i><br>
-										<b><i>{{ .name }}</i></b>
-									</div>
+					<div class="fcolumn">
+						<div class="top-side">
+							<div class="username"><h1>{{ .username }}</h1>
+								{{ if $dev }}
+								<div class="dev">DEV</div>
+							    {{ else if $admin }}
+							    <div class="admin">ADMIN</div>
+								{{ else if $mod }}
+								<div class="mod">MOD</div>
+								{{ else if $premium }}
+								<div class="premium"><i class="heart small icon"></i></div>
+								{{ else if $supporter }}
+								<div class="supporter"><i class="heart small icon"></i></div>
 								{{ end }}
 							</div>
-						{{ end }}
-					</div>
-
-						<div class="column">
-						{{ range $rx, $_ := .stats }}
-							{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
-								<div data-rx="{{ $rx }}" data-mode="{{ $k }}" {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }} hidden{{ end }}>
-									<table class="ui very basic two column compact table nopad">
-										<tbody>
-											{{ with .global_leaderboard_rank }}
-												<tr>
-													<td><b>{{ $global.T "Global rank" }}</b></td>
-													<td class="right aligned">#{{ . }}</td>
-												</tr>
-											{{ end }}
-											{{ with .country_leaderboard_rank }}
-												<tr>
-													<td><b>{{ $global.T "Country rank" }} &nbsp;
-														<a href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}">
-															{{ country $user.country false }}
-														</a>
-													</b></td>
-													<td class="right aligned">#{{ . }}</td>
-												</tr>
-											{{ end }}
-											<tr>
-												<td><b>{{ $global.T "Clan" }}</b></td>
-												<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode={{ $k }}">{{ $user.clan.name }}</a></td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "PP" }}</b></td>
-												<td class="right aligned">{{ humanize .pp }}</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Ranked score" }}</b></td>
-												<td class="right aligned">{{ humanize .ranked_score }}</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Total score" }}</b></td>
-												<td class="right aligned">{{ humanize .total_score }}</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Playcount" }}</b></td>
-												<td class="right aligned">{{ humanize .playcount }}</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Playtime" }}</b></td>
-												<td class="right aligned">{{ playtimeConv .playtime }}</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Total Playtime" }}</b></td>
-												<td class="right aligned">{{ playtimeConv .total_playtime }}</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Replays watched" }}</b></td>
-												<td class="right aligned">{{ humanize .replays_watched }}</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Total hits" }}</b></td>
-												<td class="right aligned">{{ humanize .total_hits }}</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Accuracy" }}</b></td>
-												<td class="right aligned">{{ printf "%.2f" .accuracy }}%</td>
-											</tr>
-											<tr>
-												<td><b>{{ $global.T "Followers" }}</b></td>
-												<td class="right aligned">{{ humanize $user.followers }}</td>
-											</tr>
-										</tbody>
-									</table>
-									<div class="ui blue progress little margin top" data-percent="{{ levelPercent .level }}">
-										<div class="bar">
-											<div class="progress">{{ levelPercent .level }}%</div>
-										</div>
-										<div class="label">{{ $global.T "Level %s" (level .level) }}</div>
-									</div>
+							<div class="flex country-status">
+								<div class="tcolumn flex2">
+									<img src="/static/images/flags/{{ .country }}.png" class="pflag"> {{ countryReadable .country }}
 								</div>
-							{{ end }}
-						{{ end }}
+								<div class="tcolumn">
+									{{ with bget "isOnline?id=%.0f" .id }}
+            						<div class="subtitle">
+            						    <i class="{{ if .result }}green{{ else }}red{{ end }} circle icon"></i>
+            						    {{ if .result }}{{ $global.T "Online" }}{{ else }}{{ $global.T "Offline" }}{{ end }}
+            						</div>
+            						{{ end }}
+								</div>
+							</div>
+						</div>
+						<div class="center-side">
+							{{ if and (not .badges) (not .custom_badge) }}
+								{{ $global.T "This user hasn't got any badges!" }}
+								{{ else }}
+									{{ range .badges }}
+									<div class="badge">
+										<a data-tooltip="{{ .name }}"><i class="{{ faIcon .icon }} small icon m-less"></i></a>
+									</div>
+									{{ end }}
+									{{ with .custom_badge }}
+									<a data-tooltip="{{ .name }}"><i class="{{ faIcon .icon }} small icon m-less"></i></a>
+									{{ end }}
+								{{ end }}
+						</div>
+						<div class="bottom-side">
+							Player Since: <b>{{ $global.T "%s" (time $user.registered_on) | html }}</b>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="six wide column" id="user-rank"></div>
+		</div>
+	</div>
+</div>
+
+<div class="ui segment bar margin">
+	<div class="ui container">
+		<div class="bar-selection">
+			<div class="select-left" id="mode-menu">
+				{{ range $k, $v := modes }}
+				<a class="simple-banner-swtich {{ favMode $favouritemode $k }}" data-mode="{{ $k }}" href="/u/{{ $user.id }}?mode={{ $k }}">{{ $v }}</a>
+				{{ end }}
+			</div> 
+			<div class="select-right" id="rx-menu">
+				<a class="0 simple-banner-swtich{{ if eq (int $preferRelax) 0 }} active{{ end }}" data-rx="0"
+					href="/u/{{ $user.id }}?rx=0">Vanilla</a>
+				<a class="1 simple-banner-swtich{{ if eq (int $preferRelax) 1 }} active{{ end }}" data-rx="1"
+					href="/u/{{ $user.id }}?rx=1">Relax</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="ui container">
+	{{ if after .silence_info.end }}
+	<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
+	{{ end }}
+
+	{{ if hasAdmin $global.Context.User.Privileges }}
+	{{ $restr := not (has .privileges 1) }}
+	{{ $disab := not (has .privileges 2) }}
+	{{ $pend := has .privileges 1048576 }}
+
+	{{ if and $disab $restr }}
+	{{ if $pend }}
+	<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "pending verification" | html }}.</div>
+	{{ else }}
+	<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "banned" | html }}.</div>
+	{{ end }}
+	{{ else if $restr }}
+	<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "restricted" | html }}.</div>
+	{{ else if $disab }}
+	<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "locked" | html }}.</div>
+	{{ end }}
+	{{ end }}
+
+	<div class="ui stackable column grid">
+		<div class="vark-info-grid wide column">
+			<div class="ui segment">
+				<div class="column">
+					{{ range $rx, $_ := .stats }}
+					{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
+					<div data-rx="{{ $rx }}" data-mode="{{ $k }}" {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }} hidden{{ end }}>
+						<table class="ui very basic two column compact table nopad">
+							<tbody>
+								{{ with .global_leaderboard_rank }}
+								<tr>
+									<td><b>{{ $global.T "Global rank" }}</b></td>
+									<td class="right aligned">#{{ . }}</td>
+								</tr>
+								{{ end }}
+								{{ with .country_leaderboard_rank }}
+								<tr>
+									<td><b>{{ $global.T "Country rank" }} &nbsp;
+											<a href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}">
+												{{ country $user.country false }}
+											</a>
+										</b></td>
+									<td class="right aligned">#{{ . }}</td>
+								</tr>
+								{{ end }}
+								<tr>
+									<td><b>{{ $global.T "Clan" }}</b></td>
+									<td class="right aligned"><a href="/c/{{ $user.clan.id }}?mode={{ $k }}">{{ $user.clan.name }}</a></td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "PP" }}</b></td>
+									<td class="right aligned">{{ humanize .pp }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Ranked score" }}</b></td>
+									<td class="right aligned">{{ humanize .ranked_score }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Total score" }}</b></td>
+									<td class="right aligned">{{ humanize .total_score }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Playcount" }}</b></td>
+									<td class="right aligned">{{ humanize .playcount }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Playtime" }}</b></td>
+									<td class="right aligned">{{ playtimeConv .playtime }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Total Playtime" }}</b></td>
+									<td class="right aligned">{{ playtimeConv .total_playtime }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Replays watched" }}</b></td>
+									<td class="right aligned">{{ humanize .replays_watched }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Total hits" }}</b></td>
+									<td class="right aligned">{{ humanize .total_hits }}</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Accuracy" }}</b></td>
+									<td class="right aligned">{{ printf "%.2f" .accuracy }}%</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Followers" }}</b></td>
+									<td class="right aligned">{{ humanize $user.followers }}</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="ui blue progress little margin top" data-percent="{{ levelPercent .level }}">
+							<div class="bar">
+								<div class="progress">{{ levelPercent .level }}%</div>
+							</div>
+							<div class="label">{{ $global.T "Level %s" (level .level) }}</div>
+						</div>
+					</div>
+					{{ end }}
+					{{ end }}
+				</div>
+			</div>
+		</div>
+		<div class="vark-list-grid wide column load-data" id="user-scores">
+			{{ with $global.Get "users/userpage?id=%.0f" .id }}
+			{{ if .userpage }}
+			{{ with parseUserpage .userpage }}
+			<div class="ui raised segment twemoji" id="userpage-content">
+			    {{ . }}
+			</div>
+			{{ end }}
+			{{ end }}
+			{{ end }}
 
 			<div id="scores-zone">
 				{{ range _range 2 }}
-					{{ $rx := . }}
-					{{ range _range 4 }}
-						<div data-mode="{{ . }}" {{ if or (ne $rx (int $preferRelax)) (ne . (int $favouritemode)) }} hidden{{ end }} data-loaded="0" data-rx="{{ $rx }}">
-						</div>
-					{{ end }}
+				{{ $rx := . }}
+				{{ range _range 4 }}
+				<div data-mode="{{ . }}" {{ if or (ne $rx (int $preferRelax)) (ne . (int $favouritemode)) }} hidden{{ end }}
+					data-loaded="0" data-rx="{{ $rx }}">
+				</div>
+				{{ end }}
 				{{ end }}
 			</div>
-
-			<div class="ui segment">
-				<h2 class="ui header">Achievements</h2>
-				<div id="achievements" class="ui grid">
+		
+			<div class="ui segment sui">
+				<div class="header-top">
+					<h2 class="ui header">Achievements</h2>
+				</div>
+				<div id="achievements" class="ui grid achivement-data">
 				</div>
 				<div class="right aligned">
-					<button class="ui disabled button" id="load-more-achievements">
-						{{ $global.T "Load more" }}
-					</button>
+					<div class="extra-block">
+						<a class="show-button" id="load-more-achievements">{{ $global.T "Load more" }}</a>
+					</div>
 				</div>
 			</div>
+		
+		</div>
+	</div>
 
-			<div class="ui modal">
-				<i class="close icon"></i>
-				<div class="content">
-					<table class="ui definition table" id="score-data-table">
-					</table>
-				</div>
-			</div>
-		{{ end }}
+	<div class="ui modal">
+		<i class="close icon"></i>
+		<div class="content">
+			<table class="ui definition table" id="score-data-table">
+			</table>
+		</div>
+	</div>
+
+	{{ end }}
 	{{ end }}
 </div>
 {{ end }}

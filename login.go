@@ -46,7 +46,7 @@ func loginSubmit(c *gin.Context) {
 		Flags           uint
 	}
 	err := db.QueryRow(`
-	SELECT
+	SELECT 
 		u.id, u.password_md5,
 		u.username, u.password_version,
 		s.country, u.privileges, u.flags

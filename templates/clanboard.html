@@ -4,47 +4,57 @@ TitleBar=Clans
 KyutGrill=team2.jpg
 */}}
 {{ define "tpl" }}
-<div class="ui container">
+<div class="ui container akat-box">
+	<link rel="stylesheet" href="/static/css/pages/clanboard.css">
+
 	{{ $favModeRaw := .Get "users/self/favourite_mode" }}
 	{{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
 	{{ $sort := or (.Gin.Query "sort") "1s" }}
+
 	<script>
-		var favouriteMode = {{ $favMode }};
-		var rx = {{ or (.Gin.Query "rx") 0 }};
-		var page = {{ .Gin.Query "p" | atoint | atLeastOne }};
-		var sort = {{ $sort }}
+		var favouriteMode = "{{ $favMode }}";
+		var rx = '{{ or (.Gin.Query "rx") 0 }}';
+		var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
+		var sort = "{{ $sort }}"
 	</script>
+
+	<div class="ui grid stackable">
+		<div class="eleven wide column">
+			<div class="ui four item menu" id="mode-menu">
+				{{ range $k, $v := modes }}
+				<a class="{{ favMode $favMode $k }}item" data-mode="{{ $k }}" href="/clans?mode={{ $k }}">{{ $v }}</a>
+				{{ end }}
+			</div>
+		</div>
+		<div class="five wide column">
+			<div class="ui two item menu" id="rx-menu">
+				<a class="0 item" data-rx="0" href="/clans?rx=0">Regular</a>
+				<a class="1 item" data-rx="1" href="/clans?rx=1">Relax</a>
+			</div>
+		</div>
+	</div>
+
 	<div class="ui two item menu" id="sort-menu">
 		<a class="0 item" data-sort="1s" href="/clans?sort=1s">#1 Rankings</a>
 		<a class="1 item" data-sort="pp" href="/clans?sort=pp">Performance Rankings</a>
 	</div>
-	
-	<div class="ui two item menu" id="rx-menu">
-			<a class="0 item" data-rx="0" href="/clans?rx=0">Regular</a>
-			<a class="1 item" data-rx="1" href="/clans?rx=1">Relax</a>
-	</div>
 
-	<div class="ui four item menu" id="mode-menu">
-		{{ range $k, $v := modes }}
-			<a class="{{ favMode $favMode $k }}item" data-mode="{{ $k }}" href="/clans?mode={{ $k }}">{{ $v }}</a>
-		{{ end }}
-	</div>
-	<table class="ui fixed table">
+	<table class="ui table clan-table">
 		<thead>
 			{{ if eq $sort "1s" }}
-				{{ template "simplepag" 3 }}
+			{{ template "simplepag" 3 }}
 			{{ else }}
-				{{ template "simplepag" 5 }}
+			{{ template "simplepag" 5 }}
 			{{ end }}
 			<tr>
-				<th class="two wide"> {{ .T "Rank" }} </th>
-				<th class="four wide">{{ .T "Clan" }} </th>
+				<th class="one wide l-head"></th>
+				<th class="eleven wide l-head"></th>
 				{{ if eq $sort "1s" }}
-					<th class="two wide">{{ .T "#1 Count" }} </th>
+				<th class="two wide l-head center aligned">{{ .T "#1 Count" }} </th>
 				{{ else }}
-					<th class="four wide"> Performance (Score) </th>
-					<th class="three wide">{{ .T "Accuracy" }} </th>
-					<th class="three wide">{{ .T "Playcount" }} </th>
+				<th class="four wide l-head center aligned"> Performance (Score) </th>
+				<th class="three wide l-head center aligned">{{ .T "Accuracy" }} </th>
+				<th class="three wide l-head right aligned">{{ .T "Playcount" }} </th>
 				{{ end }}
 			</tr>
 		</thead>
@@ -52,9 +62,9 @@ KyutGrill=team2.jpg
 		</tbody>
 		<tfoot>
 			{{ if eq $sort "1s" }}
-				{{ template "simplepag" 3 }}
+			{{ template "simplepag" 3 }}
 			{{ else }}
-				{{ template "simplepag" 5 }}
+			{{ template "simplepag" 5 }}
 			{{ end }}
 		</tfoot>
 	</table>

@@ -46,7 +46,7 @@
 							<div class="ui vertical buttons">
 								<a href="osu://dl/{{ .Beatmapset.ID }}" class="ui pink labeled icon button"><i class="download icon"></i>{{ $.T "osu!direct" }}</a>
 								<a href="http://akatsuki.pw/d/{{ .Beatmapset.ID }}" class="ui green labeled icon button"><i class="download icon"></i>{{ $.T "download" }}</a>
-								<a href="https://chimu.moe/d/{{ .Beatmapset.ID }}" class="ui red labeled icon button"><i class="download icon"></i>{{ $.T "Bloodcat" }}</a>
+								<a href="https://bloodcat.com/osu/?q={{ .Beatmapset.ID }}&c=s&s=&m=&g=&l=" class="ui red labeled icon button"><i class="download icon"></i>{{ $.T "Bloodcat" }}</a>
 								{{ if .Beatmapset.HasVideo }}
 									<a href="http://akatsuki.pw/d/{{ .Beatmapset.ID }}?novideo" class="ui gray labeled icon button"><i class="download icon"></i>{{ $.T "download (no video)" }}</a>
 								{{ end }}

@@ -10,48 +10,29 @@
 
 		<title>{{ if .TitleBar }}{{ .T .TitleBar }} - {{ end }}Akatsuki</title>
 
-		<link rel="stylesheet" type="text/css" href="/static/{{ if $ds }}dark/{{ end }}semantic.min.css?{{ unixNano }}">
-		<link rel="stylesheet" type="text/css" href="/static/ripple.css?{{ unixNano }}">
-		<link rel="stylesheet" type="text/css" href="/static/snow/snow.css?{{ unixNano }}">
-		<link rel="stylesheet" type="text/css" href="/static/css/beatmaps.dfc480ea.chunk.css" rel="stylesheet">
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
+		<link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css?{{ unixNano }}">
+		<link rel="stylesheet" type="text/css" href="/static/css/akatsuki.css?{{ unixNano }}">
+
+		<script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
+		
+		<style>
+			body{
+				--base: 213;
+			}
+		</style>
 	</head>
-	<body {{ if $ds }} class="ds"{{ end }}>
-		{{/*
-			If we're asked to disable the hugeheading, but a KyutGrill is set, it will become the background of the page.
-			This is mainly used in user profiles, allowing users to set their profile background.
-			If we're asked to disable the hugeheading, and a KyutGrill is not set, navbar has the `dropped` class.
-		*/}}
-		<div class="ui full height main wrapper"
+	<body>
+		<div class="ui full height main wrapper" id="app"
 			{{ if and .DisableHH .KyutGrill }}
 				style="background-image: url('{{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ .KyutGrill }}{{ end }}');"
 			{{ else if .SolidColour }}
 				style="background-color: {{ .SolidColour }}"
 			{{ end }}>
 			{{ template "navbar" . }}
-			{{ if not .DisableHH }}
-				<div class="huge heading {{ if .HeadingOnRight }}right{{ end }} dropped"
-					style="background-image: url('{{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ or .KyutGrill "default.jpg" }}{{ end }}');">
-					<div id="snow-container">
-						<div>
-							<div class="snow large"></div>
-							<div class="snow large delayed"></div>
 
-							<div class="snow medium"></div>
-							<div class="snow medium delayed"></div>
-
-							<div class="snow small"></div>
-							<div class="snow small delayed"></div>
-						</div>
-					</div>
-					<div class="ui container">
-						<h1>{{ if .HeadingTitle }}{{ .T .HeadingTitle | html }}{{ else }}{{ .T .TitleBar }}{{ end }}</h1>
-					</div>
-				</div>
-			{{ end }}
-
-			<div class="h-container">
-				<div class="ui margined container" id="messages-container">
+			<div id="messages-container">
 				<noscript>Research has proven this website works 10000% better if you have JavaScript enabled.</noscript>
 				{{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
 					<div class="ui warning message">
@@ -83,97 +64,54 @@
 					</div>
 				{{ end }}
 				</div>
+			
+			{{ if not .DisableHH }}
+				<div class="huge heading {{ if .HeadingOnRight }}right{{ end }} dropped"
+					style="background:linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%) ), url(
+						{{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ or .KyutGrill "default.jpg" }}{{ end }})">
+					<div class="ui container">
+						<h1>{{ if .HeadingTitle }}{{ .T .HeadingTitle | html }}{{ else }}{{ .T .TitleBar }}{{ end }}</h1>
+					</div>
+				</div>
+			{{ end }}
+
+			<div class="h-container">
 				{{ template "tpl" . }}
 			</div>
 
 		</div>
-			<div class="footer-bg">
-				<div class="ui container">
-					<div class="ui internally celled grid">
-						<div class="row">
-							<div class="three wide column">
-								<div class="footer-info-block">
-									<a class="footer-title">Help</a>
-									<ul style="list-style-type: none; padding: 0; margin: 0;">
-										<li>
-											<a href="/doc/rules">Rules</a>
-										</li>
-										<li>
-											<a href="/static/switcher.exe">Switcher</a>
-										</li>
-										<li>
-											<a href="/doc/connection_guide">Connection Guide</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="three wide column">
-								<div class="footer-info-block">
-									<a class="footer-title">Socials</a>
-									<ul style="list-style-type: none; padding: 0; margin: 0;">
-										<li>
-											<a href="/discord" target="_blank">Discord</a>
-										</li>
-										<li>
-											<a href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" target="_blank">YouTube</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="three wide column">
-								<div class="footer-info-block">
-									<a class="footer-title">About Us</a>
-									<ul style="list-style-type: none; padding: 0; margin: 0;">
-										<li>
-											<a href="/team">Team</a>
-										</li>
-										<li>
-											<a href="https://github.com/osuAkatsuki" target="_blank">GitHub</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="three wide column" style="padding-top: 3em;">
-								<div class="dropup dropup-language dropup-block">
-									{{ $lang := .Context.Language }}
-									<div class="language">
-									{{ with $lang }}
-										{{ $info := languageInformationByNameShort . }}
-										{{ $info.Name }}
-										<img src="/static/images/flags/{{ $info.CountryShort }}.png" class="dropup-flags">
-									{{ else }}
-										English
-										<img src="http://akatsuki.pw/static/images/flags/us.png" class="dropup-flags">
-									{{ end }}
-									</div>
-									<div class="dropup-content">
-										{{ range languageInformation }}
-											<li class="language-select {{ if eq .NameShort $lang }}selected{{ end }}" data-lang="{{ .NameShort }}">
-												{{ .Name }}
-												<img src="/static/images/flags/{{ .CountryShort }}.png" class="dropup-flags">
-											</li>
-										{{ end }}
-									</div>
-								</div>
-							</div>
-							<div class="one wide column" style="box-shadow: 0 0 0 0;"></div>
-							<div class="footer-logo">
-								<span>osu!Akatsuki</span>
-								<br><br>
-								<a class="subtitle"> osu! private server</a>
-							</div>
-						</div>
+		<center class="footer">
+			<div class="ui container center">
+			{{ .T "&copy; %d osu!Akatsuki, using Hanayo %s." (curryear) (version) | html }}
+				<a href="/team" title="{{ .T "Who is working on this thing?" }}"><i class="users icon"></i>{{ .T "Team" }}</a>
+				<a href="https://github.com/osuakatsuki" title="{{ .T "Git"}}{{/*'"*/}}"><i class="git square icon"></i></a>
+				<div class="ui scrolling dropdown" style="margin-left: 5px;" id="language-selector">
+				{{ $lang := .Context.Language }}
+				{{ with $lang }}
+				{{ $info := languageInformationByNameShort . }}
+					<div class="text"><i class="{{ $info.CountryShort }} flag"></i>{{ $info.Name }}</div>
+				{{ else }}
+					<div class="default text">{{ .T "Language" }}</div>
+				{{ end }}
+					<i class="dropdown icon"></i>
+					<div class="menu">
+					{{ range languageInformation }}
+						<div class="{{ if eq .NameShort $lang }}selected {{ end }}item" data-lang="{{ .NameShort }}"><i
+								class="{{ .CountryShort }} flag"></i>{{ .Name }}</div>
+					{{ end }}
 					</div>
 				</div>
 			</div>
+		</center>
+		
 		<script>
 			var hanayoConf = {
-				avatars:   {{ .Conf.AvatarURL }},
-				banchoAPI: {{ .Conf.BanchoAPI }},
-				baseAPI:   {{ .Conf.BaseAPIPublic }},
-				cheesegullAPI: {{ .Conf.CheesegullAPI }},
+				avatars:   '{{ .Conf.AvatarURL }}',
+				banchoAPI: '{{ .Conf.BanchoAPI }}',
+				baseAPI:   '{{ .Conf.BaseAPIPublic }}',
+				cheesegullAPI: '{{ .Conf.CheesegullAPI }}',
 			};
-			var currentUserID = {{ .Context.User.ID }};
+			var currentUserID = '{{ .Context.User.ID }}';
 		</script>
 		<script>
 			$(".language-select").on('click', function(event){
@@ -184,9 +122,9 @@
 				window.location.reload()
 			});
 		</script>
-		{{/* If we got some more scripts to print, print'em */}}
-		<script src="//twemoji.maxcdn.com/2/twemoji.min.js?2.2"></script>
-		<script src="/static/dist.min.js?{{ unixNano }}"></script>
+
+		<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+		<script src="/static/js/dist.min.js?{{ unixNano }}"></script>
 		{{ if .Scripts }}
 			{{ range .Scripts }}
 				<script src="{{ . }}?{{ unixNano }}"></script>

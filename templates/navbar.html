@@ -5,18 +5,12 @@
 {{ $ccEnabled := qb "SELECT 1 FROM system_settings WHERE name = 'ccreation_enabled' AND value_int = 1 LIMIT 1" }}
 {{ $isClan := qb "SELECT 1 FROM users WHERE id = ? AND clan_id <> 0" .Context.User.ID }}
 {{ $clanLeader := qb "SELECT 1 FROM clans WHERE owner = ? LIMIT 1" .Context.User.ID }}
-<div class="ui secondary fixed-height stackable white background main menu no margin bottom{{ if .DisableHH }} dropped{{ end }}" id="navbar">
+<div class="ui secondary fixed-height white background main menu no margin bottom{{ if .DisableHH }} dropped{{ end }}" id="navbar">
 	<div class="ui container">
 		<div class="item">
-			<b><a href="/" title="{{ .T "Home page" }}"><img class="ripple logo" src="/static/logos/text-white.png" alt="Ripple"></a></b>
+			<a class="navbar-icon" href="/" title="{{ .T "Home page" }}"><span class="osu-title">osu!</span><b>Akatsuki</b></a>
 		</div>
 		{{ if $isRAP }}
-			{{/*
-			Note:
-				Admin Panel navbar will be completely different from standard navbar,
-				meaning it will have the buttons and all the stuff that are in
-				the current Admin Panel's sidebar.
-			*/}}
 		{{ else }}
 			<div class="ui dropdown item">
 				<span>{{ .T "Leaderboard" }}</span>
@@ -35,9 +29,6 @@
 					{{ navbarItem .Path (.T "YouTube Channel") "https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" }}
 				</div>
 			</div>
-			{{ if .Context.User.Username}}
-				{{ navbarItem .Path (.T "Beatmaps") "/beatmaps" }}
-			{{ end }}
 
 			{{ navbarItem .Path (.T "Discord") "/discord" }}
 			{{ if $isAdmin }}
@@ -45,7 +36,8 @@
 			{{ end }}
 		{{ end }}
 		<div class="firetrucking-right-menu">
-			{{ navbarItem .Path (printf "<span data-tooltip=\"Support us! (♥ω♥ ) ~♪\" data-position=\"bottom right\"><i class=\"red heart icon\"></i></span>") "/donate" }}
+			{{ navbarItem .Path (printf "<span data-tooltip=\"Support us! (♥ω♥ ) ~♪\" data-position=\"bottom right\"><i class=\"red heart icon m-less\"></i></span>") "/donate" }}
+			
 			<div class="item">
 				<div class="ui search" id="user-search">
 					<div class="ui icon input">
@@ -54,6 +46,7 @@
 					</div>
 				</div>
 			</div>
+
 			{{ if .Context.User.Username }}
 				<div class="ui dropdown item">
 					<img class="ui avatar image" src="{{ config "AvatarURL" }}/{{ .Context.User.ID }}">
@@ -68,6 +61,83 @@
 			{{ else }}
 				{{ navbarItem .Path (.T "Log in") "/login" }}
 				{{ navbarItem .Path (.T "Register") "/register" }}
+			{{ end }}
+
+			<a class="item mobile" onclick="toggleNavbar()">
+				<button class="ui icon button">
+					<i class="list icon"></i>
+				  </button>
+			</a>
+		</div>
+	</div>
+	<div class="mobile-header">
+		{{ if .Context.User.Username }}
+			<div class="head">
+				<a href="/u/{{ .Context.User.ID }}" class="user">
+					<img class="avatar" src="{{ config "AvatarURL" }}/{{ .Context.User.ID }}">
+					<div class="username">
+						{{ .Context.User.Username }}
+					</div>
+				</a>
+			</div>
+		{{ else }}
+			<div class="head">
+				<a href="#" class="user">
+					<img class="avatar" src="https://a.akatsuki.pw/999">
+					<div class="username">
+						Guest
+					</div>
+				</a>
+				<div class="user-control">
+					<a class="single" href="/login">
+						<span class="header-block--title">Login</span>
+					</a> 
+					<a class="single" href="/register">
+						<span class="header-block--title">Register</span>
+					</a> 
+				</div>
+			</div>
+		{{ end }}
+		<div class="mcontent">
+			{{ if .Context.User.Username }}
+			<a class="single" href="/friends">
+				<span class="header-block--title">Friends</span>
+			</a> 
+			<a class="single" href="/settings">
+				<span class="header-block--title">Settings</span>
+			</a> 
+			<a class="single" href="/leaderboard">
+				<span class="header-block--title">Leaderboard</span>
+			</a> 
+			<div class="single">
+				<span class="header-block--title">Infomation</span>
+				<div class="m-menu">
+					<a class="single" href="/doc">Documentation</a>
+					<a class="single" href="/doc/tos">Rules</a>
+					<a class="single" href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">Youtube</a>
+				</div>
+			</div>
+			<a class="single" href="/discord">
+				<span class="header-block--title">Discord</span>
+			</a> 
+			<a class="single" href='/logout?k={{ .Session.Get "logout" }}'>
+				<span class="header-block--title">Logout</span>
+			</a> 
+			{{ else }}
+			<a class="single" href="/leaderboard">
+				<span class="header-block--title">Leaderboard</span>
+			</a> 
+			<div class="single">
+				<span class="header-block--title">Infomation</span>
+				<div class="m-menu">
+					<a class="single" href="/doc">Documentation</a>
+					<a class="single" href="/doc/tos">Rules</a>
+					<a class="single" href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">Youtube</a>
+				</div>
+			</div>
+			<a class="single" href="/discord">
+				<span class="header-block--title">Discord</span>
+			</a> 
 			{{ end }}
 		</div>
 	</div>

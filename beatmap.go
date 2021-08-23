@@ -64,7 +64,7 @@ func beatmapInfo(c *gin.Context) {
 	}
 
 	data.TitleBar = T(c, "%s - %s", data.Beatmapset.Artist, data.Beatmapset.Title)
-	data.Scripts = append(data.Scripts, "/static/tablesort.js", "/static/beatmap.js")
+	data.Scripts = append(data.Scripts, "/static/js/pages/tablesort.js", "/static/js/pages/beatmap.js")
 }
 
 func getBeatmapData(b string) (beatmap models.Beatmap, err error) {

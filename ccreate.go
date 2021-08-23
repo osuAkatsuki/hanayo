@@ -55,9 +55,9 @@ func ccreateSubmit(c *gin.Context) {
 	}
 
 	// The actual registration.
-
+	
 	invite := rs.String(8)
-
+	
 	for db.QueryRow("SELECT 1 FROM clans WHERE invite = ?", invite).Scan(new(int)) != sql.ErrNoRows {
 		invite = rs.String(8)
 	}
