@@ -1,0 +1,3 @@
+[submodule "website-docs"]
+	path = website-docs
+	url = https://github.com/osuripple/website-docs.git
