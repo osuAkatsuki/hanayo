@@ -2,7 +2,7 @@
 <div class="ui container">
 	{{ if .Session.Get "2fa_must_validate" }}
 		{{ $e := is2faEnabled .Context.User.ID }}
-		<div >
+		<div>
 			<div class="ui raised segments">
 				<div class="ui segment">
 					{{ .T "Hey, %s." .Context.User.Username }}
