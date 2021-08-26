@@ -1018,3 +1018,28 @@ li.language-select:hover:before, li.language-select.selected:before {
     display: none;
   }
 }
+
+.badge-image {
+  border-radius: 4px;
+}
+
+.tournament-badge {
+  transition: 0.1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tournament-badge:hover {
+  transform: scale(1.05);
+}
+
+.tournament-badges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 7px;
+  grid-row-gap: 7px;
+  margin-bottom: 8px;
+}
+

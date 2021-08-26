@@ -22029,7 +22029,6 @@ a.ui.nag {
   height: 0.71428571em;
   background: #222;
   z-index: 2;
-  box-shadow: 1px 1px 0 0 #202020;
   opacity: 0;
   -webkit-transform: rotate(45deg) scale(0) !important;
   transform: rotate(45deg) scale(0) !important;
@@ -22046,10 +22045,9 @@ a.ui.nag {
   text-align: left;
   white-space: nowrap;
   font-size: 1rem;
-  border: 1px solid #3a3a39;
   line-height: 1.4285em;
   max-width: none;
-  background: #222;
+  background: #131212;
   padding: 0.833em 1em;
   font-weight: 400;
   font-style: normal;
@@ -22072,7 +22070,6 @@ a.ui.nag {
 [data-tooltip]:hover:before {
   -webkit-transform: rotate(45deg) scale(1) !important;
   transform: rotate(45deg) scale(1) !important;
-  opacity: 1;
 }
 
 [data-tooltip]:after, [data-tooltip][data-position="top center"]:after, [data-tooltip][data-position="bottom center"]:after {

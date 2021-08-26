@@ -83,13 +83,13 @@
 								{{ $global.T "This user hasn't got any badges!" }}
 								{{ else }}
 									{{ range .badges }}
-									<div class="badge">
-										<a data-tooltip="{{ .name }}"><i class="{{ faIcon .icon }} small icon m-less"></i></a>
+									<div class="badge" data-tooltip="{{ .name }}">
+										<a><i class="{{ faIcon .icon }} small icon m-less"></i></a>
 									</div>
 									{{ end }}
 									{{ with .custom_badge }}
-									<div class="badge">
-										<a data-tooltip="{{ .name }}"><i class="{{ faIcon .icon }} small icon m-less"></i></a>
+									<div class="badge" data-tooltip="{{ .name }}">
+										<a><i class="{{ faIcon .icon }} small icon m-less"></i></a>
 									</div>
 									{{ end }}
 								{{ end }}
@@ -151,6 +151,15 @@
 		<div class="vark-info-grid wide column">
 			<div class="ui segment">
 				<div class="column">
+					<div class="tournament-badges">
+						{{ range .tbadges }}
+						<div class="tournament-badge" data-tooltip="{{.name }}">
+							<img class="badge-image" src="{{.icon }}" title="{{.name }}"></img>
+							<br>
+						</div>
+						{{ end }}
+					</div>
+
 					{{ range $rx, $_ := .stats }}
 					{{ range $k, $v := (slice .std .taiko .ctb .mania) }}
 					<div data-rx="{{ $rx }}" data-mode="{{ $k }}" {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }} hidden{{ end }}>
