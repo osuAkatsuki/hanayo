@@ -247,7 +247,7 @@ a.inherit:hover {
 }
 
 .main.wrapper {
-  min-height: calc(88vh - -45px);
+  min-height: calc(88vh - -65px);
 }
 
 .footer {

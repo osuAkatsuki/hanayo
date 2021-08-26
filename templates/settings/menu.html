@@ -25,7 +25,6 @@ NoCompile=true
 			{{ navbarItem .Path (.T "<p title='Only the leader of the clan can access the settings page.' style='color:#C0C0C0;'>Clan Settings</p>") ""  | html }}
 		{{ end }}
 
-		{{/* Stuff for donators */}}
 		{{ if has .Context.User.Privileges 4 }}
 			{{ navbarItem .Path (.T "Edit username & country") "/settings/flag" }}
 			{{ navbarItem .Path (.T "Edit profile background") "/settings/profbackground" }}
