@@ -55,7 +55,7 @@
 				<noscript>Research has proven this website works 10000% better if you have JavaScript enabled.</noscript>
 				{{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
 					<div class="ui warning message">
-						{{ $.T "Your account is currently in restricted mode, and will not be able to perform certain actions. Your profile has been hidden from normal users. If you believe this was a mistake (or have waited more than 2 months since your latest offense), you may appeal using <a href='https://goo.gl/forms/qDBIMgcvpFLWCNwf2'>this form</a>." | html }}
+						{{ $.T "Your account is currently in restricted mode, and will not be able to perform certain actions. Your profile has been hidden from normal users. If you believe this was a mistake (or have waited more than 2 months since your latest offense), you may appeal by contacting an Admin or higher in <a href='/discord'>our Discord</a>." | html }}
 					</div>
 				{{ end }}
 				{{ if .Messages }}
