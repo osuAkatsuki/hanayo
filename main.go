@@ -121,7 +121,7 @@ func main() {
 		&config.AvatarURL:        "https://a.akatsuki.pw",
 		&config.BaseURL:          "https://akatsuki.pw",
 		&config.BanchoAPI:        "https://c.akatsuki.pw",
-		&config.CheesegullAPI:    "https://pisstau.be/api",
+		&config.CheesegullAPI:    "https://api.chimu.moe/cheesegull",
 		&config.API:              "https://localhost:40001/api/v1/",
 		&config.APISecret:        "Potato",
 		&config.IP_API:           "https://ip.zxq.co",
