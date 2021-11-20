@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/fatih/structs"
 	"github.com/getsentry/raven-go"
 	"github.com/gin-gonic/contrib/sessions"
@@ -21,14 +22,13 @@ import (
 	"github.com/thehowl/qsql"
 	"gopkg.in/mailgun/mailgun-go.v1"
 	"gopkg.in/redis.v5"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"zxq.co/ripple/hanayo/modules/btcaddress"
 	"zxq.co/ripple/hanayo/modules/btcconversions"
 	"zxq.co/ripple/hanayo/routers/oauth"
 	"zxq.co/ripple/hanayo/routers/pagemappings"
 	"zxq.co/ripple/hanayo/services"
 	"zxq.co/ripple/hanayo/services/cieca"
-	"zxq.co/ripple/schiavolib"
+	schiavo "zxq.co/ripple/schiavolib"
 	"zxq.co/x/rs"
 )
 
@@ -53,7 +53,7 @@ var (
 		AvatarsFolder    string `description:"location folder of avatars, used for placing the avatars from the avatar change page."`
 		EnableS3	bool `description:"Whether to use S3 for Avatars"`
 		S3Bucket	string
-		
+
 		CookieSecret string
 
 		RedisMaxConnections int
@@ -152,7 +152,7 @@ func main() {
 			SharedConfigState: session.SharedConfigEnable,
 		}))
 	}
-	
+
 	// initialise mailgun
 	mg = mailgun.NewMailgun(
 		config.MailgunDomain,
