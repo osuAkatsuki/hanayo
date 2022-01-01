@@ -7,29 +7,24 @@ MinPrivileges=2
 */}}
 {{ define "tpl" }}
 {{ $ := . }}
-{{ $can_userpage := qb "SELECT 1 FROM users WHERE id = ? AND userpage_allowed LIMIT 1" .Context.User.ID }}
 <div class="ui container">
 	<div class="ui stackable grid">
 		{{ template "settingsSidebar" . }}
 		<div class="twelve wide column">
 			<div class="ui segment">
-				{{ if $can_userpage }}
-					{{ $f := ieForm .Gin }}
-					{{ with .Get "users/userpage?id=%d" .Context.User.ID }}
-						<form class="ui form" method="post">
-							<textarea tabindex="1" class="monospace" name="data">{{ .userpage }}</textarea>
-							<p><a href="https://docs.ripple.moe/docs/misc/hanayo_bbcode" target="_blank">{{ $.T "BBCode syntax reference" }}</a></p>
-							<div class="ui divider"></div>
-							<div class="ui segment twemoji" id="userpage-content">{{ parseUserpage .userpage | html }}</div>
-							<div class="ui divider"></div>
-							<div style="text-align: right">
-								<button type="submit" class="ui blue button">{{ $.T "Save" }}</button>
-							</div>
-							{{ $f }}
-						</form>
-					{{ end }}
-				{{ else }}
-					{{ .T "Your userpage privileges have been revoked by an Administrator." }}
+				{{ $f := ieForm .Gin }}
+				{{ with .Get "users/userpage?id=%d" .Context.User.ID }}
+					<form class="ui form" method="post">
+						<textarea tabindex="1" class="monospace" name="data">{{ .userpage }}</textarea>
+						<p><a href="https://docs.ripple.moe/docs/misc/hanayo_bbcode" target="_blank">{{ $.T "BBCode syntax reference" }}</a></p>
+						<div class="ui divider"></div>
+						<div class="ui segment twemoji" id="userpage-content">{{ parseUserpage .userpage | html }}</div>
+						<div class="ui divider"></div>
+						<div style="text-align: right">
+							<button type="submit" class="ui blue button">{{ $.T "Save" }}</button>
+						</div>
+						{{ $f }}
+					</form>
 				{{ end }}
 			</div>
 		</div>

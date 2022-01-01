@@ -8,8 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"net/url"
-
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"zxq.co/ripple/rippleapi/common"
@@ -27,7 +25,7 @@ func loginSubmit(c *gin.Context) {
 		return
 	}
 
-	param := "username_safe"
+	param := "safe_name"
 	u := c.PostForm("username")
 	if strings.Contains(u, "@") {
 		param = "email"
@@ -39,42 +37,31 @@ func loginSubmit(c *gin.Context) {
 		ID              int
 		Username        string
 		Password        string
-		PasswordVersion int
 		Country         string
 		pRaw            int64
-		Privileges      common.UserPrivileges
-		Flags           uint
+		Privileges      Privileges
 	}
 	err := db.QueryRow(`
 	SELECT 
-		u.id, u.password_md5,
-		u.username, u.password_version,
-		s.country, u.privileges, u.flags
+		u.id, u.pw_bcrypt, u.name,
+		u.country, u.priv
 	FROM users u
-	LEFT JOIN users_stats s ON s.id = u.id
 	WHERE u.`+param+` = ? LIMIT 1`, strings.TrimSpace(u)).Scan(
-		&data.ID, &data.Password,
-		&data.Username, &data.PasswordVersion,
-		&data.Country, &data.pRaw, &data.Flags,
+		&data.ID, &data.Password, &data.Username,
+		&data.Country, &data.pRaw,
 	)
-	data.Privileges = common.UserPrivileges(data.pRaw)
+	data.Privileges = Privileges(data.pRaw)
 
 	switch {
 	case err == sql.ErrNoRows:
-		if param == "username_safe" {
-			param = "username"
+		if param == "safe_name" {
+			param = "name"
 		}
 		simpleReply(c, errorMessage{T(c, "No user with such %s!", param)})
 		return
 	case err != nil:
 		c.Error(err)
 		resp500(c)
-		return
-	}
-
-	if data.PasswordVersion == 1 {
-		addMessage(c, warningMessage{T(c, "Your password is sooooooo old, that we don't even know how to deal with it anymore. Could you please change it?")})
-		c.Redirect(302, "/pwreset")
 		return
 	}
 
@@ -90,7 +77,7 @@ func loginSubmit(c *gin.Context) {
 	if i, err := bcrypt.Cost([]byte(data.Password)); err == nil && i < bcrypt.DefaultCost {
 		pass, err := bcrypt.GenerateFromPassword([]byte(cmd5(c.PostForm("password"))), bcrypt.DefaultCost)
 		if err == nil {
-			if _, err := db.Exec("UPDATE users SET password_md5 = ? WHERE id = ?", string(pass), data.ID); err == nil {
+			if _, err := db.Exec("UPDATE users SET pw_bcrypt = ? WHERE id = ?", string(pass), data.ID); err == nil {
 				data.Password = string(pass)
 			}
 		}
@@ -98,7 +85,7 @@ func loginSubmit(c *gin.Context) {
 
 	sess := getSession(c)
 
-	if data.Privileges&common.UserPrivilegePendingVerification > 0 {
+	if data.Privileges & VERIFIED == 0 {
 		setYCookie(data.ID, c)
 		addMessage(c, warningMessage{T(c, "You will need to verify your account first.")})
 		sess.Save()
@@ -106,7 +93,7 @@ func loginSubmit(c *gin.Context) {
 		return
 	}
 
-	if data.Privileges&common.UserPrivilegeNormal == 0 {
+	if data.Privileges & NORMAL == 0 {
 		simpleReply(c, errorMessage{T(c, "You are not allowed to login. This means your account is either banned or locked.")})
 		return
 	}
@@ -117,33 +104,23 @@ func loginSubmit(c *gin.Context) {
 	sess.Set("pw", cmd5(data.Password))
 	sess.Set("logout", rs.String(15))
 
-	tfaEnabled := is2faEnabled(data.ID)
-	if tfaEnabled == 0 {
-		afterLogin(c, data.ID, data.Country, data.Flags)
-	} else {
-		sess.Set("2fa_must_validate", true)
-	}
+	afterLogin(c, data.ID, data.Country)
 
 	redir := c.PostForm("redir")
 	if len(redir) > 0 && redir[0] != '/' {
 		redir = ""
 	}
 
-	if tfaEnabled > 0 {
-		sess.Save()
-		c.Redirect(302, "/2fa_gateway?redir="+url.QueryEscape(redir))
-	} else {
-		addMessage(c, successMessage{T(c, "Hey %s! You are now logged in.", template.HTMLEscapeString(data.Username))})
-		sess.Save()
-		if redir == "" {
-			redir = "/"
-		}
-		c.Redirect(302, redir)
+	addMessage(c, successMessage{T(c, "Hey %s! You are now logged in.", template.HTMLEscapeString(data.Username))})
+	sess.Save()
+	if redir == "" {
+		redir = "/"
 	}
+	c.Redirect(302, redir)
 	return
 }
 
-func afterLogin(c *gin.Context, id int, country string, flags uint) {
+func afterLogin(c *gin.Context, id int, country string) {
 	s, err := generateToken(id, c)
 	if err != nil {
 		resp500(c)

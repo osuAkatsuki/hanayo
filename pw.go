@@ -18,7 +18,7 @@ func passwordReset(c *gin.Context) {
 		return
 	}
 
-	field := "username"
+	field := "name"
 	if strings.Contains(c.PostForm("username"), "@") {
 		field = "email"
 	}
@@ -30,7 +30,7 @@ func passwordReset(c *gin.Context) {
 		privileges uint64
 	)
 
-	err := db.QueryRow("SELECT id, username, email, privileges FROM users WHERE "+field+" = ?",
+	err := db.QueryRow("SELECT id, name, email, priv FROM users WHERE "+field+" = ?",
 		c.PostForm("username")).
 		Scan(&id, &username, &email, &privileges)
 
@@ -46,8 +46,7 @@ func passwordReset(c *gin.Context) {
 		return
 	}
 
-	if common.UserPrivileges(privileges)&
-		(common.UserPrivilegeNormal|common.UserPrivilegePendingVerification) == 0 {
+	if Privileges(privileges) & NORMAL == 0 {
 		simpleReply(c, errorMessage{T(c, "You look pretty banned/locked here.")})
 		return
 	}
@@ -145,7 +144,7 @@ func passwordResetContinueSubmit(c *gin.Context) {
 		return
 	}
 
-	_, err = db.Exec("UPDATE users SET password_md5 = ?, salt = '', password_version = '2' WHERE username = ?",
+	_, err = db.Exec("UPDATE users SET pw_bcrypt = ? WHERE name = ?",
 		pass, username)
 	if err != nil {
 		c.Error(err)
@@ -213,7 +212,7 @@ func changePasswordSubmit(c *gin.Context) {
 	}
 
 	var password string
-	db.Get(&password, "SELECT password_md5 FROM users WHERE id = ? LIMIT 1", ctx.User.ID)
+	db.Get(&password, "SELECT pw_bcrypt FROM users WHERE id = ? LIMIT 1", ctx.User.ID)
 
 	if err := bcrypt.CompareHashAndPassword(
 		[]byte(password),
@@ -232,7 +231,7 @@ func changePasswordSubmit(c *gin.Context) {
 		}
 		pw, err := generatePassword(c.PostForm("newpassword"))
 		if err == nil {
-			uq.Add("password_md5", pw)
+			uq.Add("pw_bcrypt", pw)
 		}
 		sess := getSession(c)
 		sess.Set("pw", cmd5(pw))
@@ -242,8 +241,6 @@ func changePasswordSubmit(c *gin.Context) {
 	if err != nil {
 		c.Error(err)
 	}
-
-	db.Exec("UPDATE users SET flags = flags & ~3 WHERE id = ? LIMIT 1", ctx.User.ID)
 
 	messages = append(messages, successMessage{T(c, "Your settings have been saved.")})
 }

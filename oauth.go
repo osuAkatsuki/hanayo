@@ -20,7 +20,7 @@ func (o oauthRequestHandler) CheckLoggedInOrRedirect(c *gin.Context) bool {
 
 func (o oauthRequestHandler) DisplayAuthorizePage(client oauth.Client, c *gin.Context) {
 	var creatorName string
-	db.Get(&creatorName, "SELECT username FROM users WHERE id = ? LIMIT 1", client.CreatorID)
+	db.Get(&creatorName, "SELECT name FROM users WHERE id = ? LIMIT 1", client.CreatorID)
 
 	c.Header("X-Frame-Options", "deny")
 

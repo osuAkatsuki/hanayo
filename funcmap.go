@@ -26,7 +26,6 @@ import (
 	"zxq.co/ripple/hanayo/modules/doc"
 	fasuimappings "zxq.co/ripple/hanayo/modules/fa-semantic-mappings"
 	"zxq.co/ripple/playstyle"
-	"zxq.co/ripple/rippleapi/common"
 )
 
 // funcMap contains useful functions for the various templates.
@@ -55,8 +54,9 @@ var funcMap = template.FuncMap{
 	},
 	// hasAdmin returns, based on the user's privileges, whether they should be
 	// able to see the RAP button (aka AdminPrivilegeAccessRAP).
-	"hasAdmin": func(privs common.UserPrivileges) bool {
-		return privs&common.AdminPrivilegeAccessRAP > 0
+	// in gulag's case, accessing panel should be moderator+
+	"hasAdmin": func(privs Privileges) bool {
+		return privs & MODERATOR > 0
 	},
 	// isRAP returns whether the current page is in RAP.
 	"isRAP": func(p string) bool {
@@ -206,7 +206,7 @@ var funcMap = template.FuncMap{
 	"has": func(priv1 interface{}, priv2 float64) bool {
 		var p1 uint64
 		switch priv1 := priv1.(type) {
-		case common.UserPrivileges:
+		case Privileges:
 			p1 = uint64(priv1)
 		case float64:
 			p1 = uint64(priv1)
@@ -428,10 +428,6 @@ var funcMap = template.FuncMap{
 	"calculatePremiumPrice": func(a float64) string {
 		return fmt.Sprintf("%.2f", math.Pow(a*68*0.15, 0.93)) //44 2nd arg for 66%
 	},
-	// is2faEnabled checks 2fa is enabled for an user
-	"is2faEnabled": is2faEnabled,
-	// get2faConfirmationToken retrieves the current confirmation token for a certain user.
-	"get2faConfirmationToken": get2faConfirmationToken,
 	// csrfGenerate creates a csrf token input
 	"csrfGenerate": func(u int) template.HTML {
 		return template.HTML(`<input type="hidden" name="csrf" value="` + mustCSRFGenerate(u) + `">`)
@@ -440,12 +436,11 @@ var funcMap = template.FuncMap{
 	"csrfURL": func(u int) template.URL {
 		return template.URL("csrf=" + mustCSRFGenerate(u))
 	},
-	// systemSetting retrieves some information from the table system_settings
-	"systemSettings": systemSettings,
 	// authCodeURL gets the auth code for discord
 	"authCodeURL": func(u int) string {
 		return getDiscord().AuthCodeURL(mustCSRFGenerate(u))
 	},
+	"systemSettings": systemSettings,
 	// perc returns a percentage
 	"perc": func(i, total float64) string {
 		return fmt.Sprintf("%.0f", i/total*100)
@@ -467,15 +462,6 @@ var funcMap = template.FuncMap{
 	// version gets what's the current Hanayo version.
 	"version": func() string {
 		return version
-	},
-	"generateKey": generateKey,
-	// getKeys gets the recovery 2fa keys for an user
-	"getKeys": func(id int) []string {
-		var keyRaw string
-		db.Get(&keyRaw, "SELECT recovery FROM 2fa_totp WHERE userid = ?", id)
-		s := make([]string, 0, 8)
-		json.Unmarshal([]byte(keyRaw), &s)
-		return s
 	},
 	// rediget retrieves a value from redis.
 	"rediget": func(k string) string {
@@ -511,9 +497,30 @@ var funcMap = template.FuncMap{
 		return doc.GetFile(slug, language)
 	},
 	"privilegesToString": func(privs float64) string {
-		return common.Privileges(privs).String()
+		return Privileges(privs).String()
 	},
 	"htmlescaper": template.HTMLEscaper,
+}
+
+type systemSetting struct {
+	Name   string
+	Int    int
+	String string
+}
+
+func systemSettings(names ...string) map[string]systemSetting {
+	var settingsRaw []systemSetting
+	q, p, _ := sqlx.In("SELECT name, value_int as `int`, value_string as `string` FROM system_settings WHERE name IN (?)", names)
+	err := db.Select(&settingsRaw, q, p...)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	settings := make(map[string]systemSetting, len(names))
+	for _, s := range settingsRaw {
+		settings[s.Name] = s
+	}
+	return settings
 }
 
 var localeLanguages = []string{"de", "pl", "it", "es", "ru", "fr", "nl", "ro", "fi", "sv", "vi", "ko"}
@@ -567,27 +574,6 @@ func isIE(s string) bool {
 		}
 	}
 	return false
-}
-
-type systemSetting struct {
-	Name   string
-	Int    int
-	String string
-}
-
-func systemSettings(names ...string) map[string]systemSetting {
-	var settingsRaw []systemSetting
-	q, p, _ := sqlx.In("SELECT name, value_int as `int`, value_string as `string` FROM system_settings WHERE name IN (?)", names)
-	err := db.Select(&settingsRaw, q, p...)
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
-	settings := make(map[string]systemSetting, len(names))
-	for _, s := range settingsRaw {
-		settings[s.Name] = s
-	}
-	return settings
 }
 
 func getDiscord() *oauth2.Config {

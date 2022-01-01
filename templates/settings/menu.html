@@ -3,16 +3,11 @@ NoCompile=true
 */}}
 {{ define "settingsSidebar" }}
 {{ $d := or (qb "SELECT 1 FROM users WHERE clan_id = ? AND clan_privileges = 8" .Context.User.ID).clan_id.Int -1 }}
-{{ $can_userpage := qb "SELECT 1 FROM users WHERE id = ? AND userpage_allowed LIMIT 1" .Context.User.ID }}
 <div class="four wide column">
 	<div class="ui fluid vertical menu">
 		{{ navbarItem .Path (.T "Profile") "/settings" }}
 
-		{{ if $can_userpage }} {{/* Admins can disallow users from editing their userpage */}}
-			{{ navbarItem .Path (.T "Userpage") "/settings/userpage" }}
-		{{ else }}
-			{{ navbarItem .Path (.T "<p title='Your userpage privileges have been revoked by an Administrator.' style='color:#C0C0C0;'>Userpage</p>") "" | html }}
-		{{ end }}
+		{{ navbarItem .Path (.T "Userpage") "/settings/userpage" }}
 
 		{{ navbarItem .Path (.T "Avatar") "/settings/avatar" }}
 		{{ navbarItem .Path (.T "Password") "/settings/password" }}

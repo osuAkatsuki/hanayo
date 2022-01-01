@@ -16,7 +16,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"zxq.co/ripple/hanayo/modules/bbcode"
 	tp "zxq.co/ripple/hanayo/modules/top-passwords"
-	"zxq.co/ripple/rippleapi/common"
 )
 
 //go:generate go run scripts/generate_mappings.go -g
@@ -95,7 +94,7 @@ func discordFinish(c *gin.Context) {
 		return
 	}
 
-	if ctx.User.Privileges&common.UserPrivilegeDonor == 0 {
+	if ctx.User.Privileges & DONATOR == 0 {
 		addMessage(c, errorMessage{T(c, "You're not a donor!")})
 		return
 	}

@@ -15,8 +15,7 @@ func changeFlag(c *gin.Context) {
 	}
 
 	if c.PostForm("country") != "" {
-		db.Exec("UPDATE users_stats SET country = ? WHERE id = ?", c.PostForm("country"), getContext(c).User.ID)
-		db.Exec("UPDATE rx_stats SET country = ? WHERE id = ?", c.PostForm("country"), getContext(c).User.ID)
+		db.Exec("UPDATE users SET country = ? WHERE id = ?", c.PostForm("country"), getContext(c).User.ID)
 		addMessage(c, successMessage{T(c, "Flag changed")})
 		getSession(c).Save()
 		c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))
@@ -36,7 +35,7 @@ func changeName(c *gin.Context) {
 	if c.PostForm("name") != "" {
 		username := strings.TrimSpace(c.PostForm("name"))
 		// check if username already taken
-		if db.QueryRow("SELECT 1 FROM users WHERE username_safe = ?", safeUsername(username)).
+		if db.QueryRow("SELECT 1 FROM users WHERE safe_name = ?", safeUsername(username)).
 		Scan(new(int)) != sql.ErrNoRows {
 			addMessage(c, errorMessage{T(c, "Username taken.")})
 			getSession(c).Save()
@@ -61,9 +60,7 @@ func changeName(c *gin.Context) {
 		}
 
 		// update username
-		db.Exec("UPDATE users_stats SET username = ? WHERE id = ?", username, getContext(c).User.ID)
-		db.Exec("UPDATE rx_stats SET username = ? WHERE id = ?", username, getContext(c).User.ID)
-		db.Exec("UPDATE users SET username = ?, username_safe = ? WHERE id = ?", username, safeUsername(username), getContext(c).User.ID)
+		db.Exec("UPDATE users SET name = ?, safe_name = ? WHERE id = ?", username, safeUsername(username), getContext(c).User.ID)
 		addMessage(c, successMessage{T(c, "Username changed")})
 		getSession(c).Save()
 		c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))

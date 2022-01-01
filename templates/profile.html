@@ -37,12 +37,12 @@
 	<div class="ui container user-profile">
 		{{ $user := . }}
 
-		{{ $dev := has .privileges 4194304 }} {{/* AdminCaker */}}
-		{{ $admin := has .privileges 16 }} {{/* AdminManageUsers */}}
-		{{ $mod := has .privileges 262144 }} {{/* AdminChatMod */}}
-		{{ $bn := has .privileges 256 }} {{/* AdminManageBeatmaps */}}
-		{{ $premium := has .privileges 8388608 }} {{/* UserPremium */}}
-		{{ $supporter := has .privileges 4 }} {{/* UserDonor */}}
+		{{ $dev := has .privileges 16384 }}
+		{{ $admin := has .privileges 8192 }}
+		{{ $mod := has .privileges 4096 }}
+		{{ $bn := has .privileges 2048 }}
+		{{ $premium := has .privileges 32 }}
+		{{ $supporter := has .privileges 16 }}
 		<div class="ui grid">
 			<div class="ten wide column" id="user-info">
 				<div class="flex">
@@ -118,6 +118,8 @@
 					href="/u/{{ $user.id }}?rx=0">Vanilla</a>
 				<a class="1 simple-banner-swtich{{ if eq (int $preferRelax) 1 }} active{{ end }}" data-rx="1"
 					href="/u/{{ $user.id }}?rx=1">Relax</a>
+				<a class="2 simple-banner-swtich{{ if eq (int $preferRelax) 2 }} active{{ end }}" data-rx="2"
+					href="/u/{{ $user.id }}?rx=2">Autopilot</a>
 			</div>
 		</div>
 	</div>
@@ -131,19 +133,12 @@
 
 	{{ if hasAdmin $global.Context.User.Privileges }}
 	{{ $restr := not (has .privileges 1) }}
-	{{ $disab := not (has .privileges 2) }}
-	{{ $pend := has .privileges 1048576 }}
+	{{ $pend := not (has .privileges 2) }}
 
-	{{ if and $disab $restr }}
 	{{ if $pend }}
 	<div class="ui warning centered message">{{ $global.T "User is <b>%s</b>" "pending verification" | html }}.</div>
-	{{ else }}
-	<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "banned" | html }}.</div>
-	{{ end }}
 	{{ else if $restr }}
 	<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "restricted" | html }}.</div>
-	{{ else if $disab }}
-	<div class="ui error centered message">{{ $global.T "User is <b>%s</b>" "locked" | html }}.</div>
 	{{ end }}
 	{{ end }}
 

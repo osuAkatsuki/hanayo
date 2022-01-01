@@ -12,7 +12,7 @@
     <meta property="og:url" content="https://akatsuki.pw"/>
     <meta property="og:image" content="/static/logos/logo.png"/>
     <meta property="og:site_name" content="Akatsuki"/>
-    <meta property="og:description" content="Akatsuki is an osu! private server mainly based around the relax mod - featuring score submission, leaderboards & rankings, custom pp, and much more for both relax and vanilla osu!"/>
+    <meta property="og:description" content="Akatsuki is an osu! private server mainly based around the relax mod - featuring score submission, leaderboards & rankings, custom pp, and much more for relax, autopilot and vanilla osu!"/>
 
     {{/* Twitter-specific stuff */}}
     <meta name="twitter:title" content="home | osu!Akatsuki" />
@@ -31,7 +31,7 @@
             osu!<b>Akatsuki</b>
           </div>
           <div class="tagline">
-            <b>Welcome to osu!Akatsuki.</b> We are an osu! private server mainly based around the relax mod - featuring score submission, leaderboards &amp; rankings, custom pp, and much more for both relax and vanilla osu! We have a massive dedicated community between both our osu! and <a href="/discord">Discord</a> servers.
+            <b>Welcome to osu!Akatsuki.</b> We are an osu! private server mainly based around the relax mod - featuring score submission, leaderboards &amp; rankings, custom pp, and much more for relax, autopilot and vanilla osu!. We have a massive dedicated community between both our osu! and <a href="/discord">Discord</a> servers.
           </div>
         </h1>
         <div class="buttons">
@@ -50,7 +50,6 @@
         {{ . | html }}
     </div>
     {{ end }}
-
     <br>
 
     {{/* Global Statistics */}}
@@ -62,23 +61,34 @@
                         <i class="angle right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
+                        <p class="status-head">{{ .T "%s" (rediget "gulag:submitted_scores_relax") | html }}</p>
                         <p class="status-footer">Total scores (Relax)</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="six wide column less-pad">
+        <div class="five wide column less-pad">
             <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="user plus icon status-icon"></i>
+                        <i class="angle right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ range $key, $value := (qb "SELECT username FROM users WHERE privileges & 1 ORDER BY id DESC LIMIT 1") }}
-                        <p class="status-head">{{ $value }}</p>
-                        {{ end }}
-                    <p class="status-footer">Latest player</p>
+                        <p class="status-head">{{ .T "%s" (rediget "gulag:submitted_scores") | html }}</p>
+                        <p class="status-footer">Total scores (Vanilla)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="five wide column less-pad">
+            <div class="ui segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="angle right icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        <p class="status-head">{{ .T "%s" (rediget "gulag:submitted_scores_autopilot") | html }}</p>
+                        <p class="status-footer">Total scores (Autopilot)</p>
                     </div>
                 </div>
             </div>
@@ -90,38 +100,40 @@
                         <i class="angle double right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
-                        <p class="status-footer">Total scores (Vanilla)</p>
+                        {{ $d := (qb "SELECT ROUND(scores_rx.pp) AS pp, users.name, scores_rx.userid FROM scores_rx LEFT JOIN maps ON scores_rx.map_md5 = maps.md5 LEFT JOIN users ON users.id = scores_rx.userid WHERE users.priv & 1 AND scores_rx.status = 2 AND scores_rx.mode = 0 AND maps.status = 2 ORDER BY scores_rx.pp DESC LIMIT 1") }}
+                        <p class="status-head">{{ $d.pp }}pp</p>
+                        <p class="status-footer">Top score (Relax)</p>
+                        <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $d.userid }}?rx=1">{{ $d.name }}</a></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="eight wide column less-pad">
+        <div class="five wide column less-pad">
             <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="thumbs up outline icon status-icon"></i>
+                        <i class="angle double right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ $d := (qb "SELECT ROUND(scores_relax.pp) AS pp, users.username, scores_relax.userid FROM scores_relax LEFT JOIN beatmaps USING(beatmap_md5) LEFT JOIN users ON users.id = scores_relax.userid WHERE users.privileges & 1 AND users.whitelist & 2 AND scores_relax.completed = 3 AND scores_relax.play_mode = 0 AND beatmaps.ranked = 2 ORDER BY scores_relax.pp DESC LIMIT 1") }}
-                       <p class="status-head">{{ $d.pp }}pp</p>
-                       <p class="status-footer">Top score (Relax)</p>
-                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $d.userid }}?rx=1">{{ $d.username }}</a></p>
+                        {{ $d := (qb "SELECT ROUND(scores_vn.pp) AS pp, users.name, scores_vn.userid FROM scores_vn LEFT JOIN maps ON scores_vn.map_md5 = maps.md5 LEFT JOIN users ON users.id = scores_vn.userid WHERE users.priv & 1 AND scores_vn.status = 2 AND scores_vn.mode = 0 AND maps.status = 2 ORDER BY scores_vn.pp DESC LIMIT 1") }}
+                        <p class="status-head">{{ $d.pp }}pp</p>
+                        <p class="status-footer">Top score (Vanilla)</p>
+                        <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $d.userid }}?rx=1">{{ $d.name }}</a></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="eight wide column less-pad">
+        <div class="five wide column less-pad">
             <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="thumbs up icon status-icon"></i>
+                        <i class="angle double right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ $d := (qb "SELECT ROUND(scores.pp) AS pp, users.username, scores.userid FROM scores LEFT JOIN beatmaps USING(beatmap_md5) LEFT JOIN users ON users.id = scores.userid WHERE users.privileges & 1 AND users.whitelist & 1 AND scores.completed = 3 AND scores.play_mode = 0 AND beatmaps.ranked = 2 ORDER BY scores.pp DESC LIMIT 1") }}
-                       <p class="status-head">{{ $d.pp }}pp</p>
-                       <p class="status-footer">Top score (Vanilla)</p>
-                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $d.userid }}">{{ $d.username }}</a></p>
+                        {{ $d := (qb "SELECT ROUND(scores_ap.pp) AS pp, users.name, scores_ap.userid FROM scores_ap LEFT JOIN maps ON scores_ap.map_md5 = maps.md5 LEFT JOIN users ON users.id = scores_ap.userid WHERE users.priv & 1 AND scores_ap.status = 2 AND scores_ap.mode = 0 AND maps.status = 2 ORDER BY scores_ap.pp DESC LIMIT 1") }}
+                        <p class="status-head">{{ $d.pp }}pp</p>
+                        <p class="status-footer">Top score (Autopilot)</p>
+                        <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $d.userid }}?rx=1">{{ $d.name }}</a></p>
                     </div>
                 </div>
             </div>

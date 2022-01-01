@@ -7,7 +7,6 @@ import (
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"zxq.co/ripple/rippleapi/common"
 	"zxq.co/x/rs"
 )
 
@@ -25,15 +24,15 @@ func sessionInitializer() func(c *gin.Context) {
 				pRaw     int64
 				password string
 			)
-			err := db.QueryRow("SELECT username, privileges, flags, password_md5 FROM users WHERE id = ?", userid).
-				Scan(&ctx.User.Username, &pRaw, &ctx.User.Flags, &password)
+			err := db.QueryRow("SELECT name, priv, pw_bcrypt FROM users WHERE id = ?", userid).
+				Scan(&ctx.User.Username, &pRaw, &password)
 			if err != nil {
 				c.Error(err)
 			}
 			if sess.Get("logout") == nil {
 				sess.Set("logout", rs.String(15))
 			}
-			ctx.User.Privileges = common.UserPrivileges(pRaw)
+			ctx.User.Privileges = Privileges(pRaw)
 			db.Exec("UPDATE users SET latest_activity = ? WHERE id = ?", time.Now().Unix(), userid)
 			if s, ok := sess.Get("pw").(string); !ok || cmd5(password) != s {
 				ctx = context{}
@@ -64,7 +63,7 @@ func sessionInitializer() func(c *gin.Context) {
 		}
 
 		var addBannedMessage bool
-		if ctx.User.ID != 0 && (ctx.User.Privileges&common.UserPrivilegeNormal == 0) {
+		if ctx.User.ID != 0 && (ctx.User.Privileges & NORMAL == 0) {
 			ctx = context{}
 			sess.Clear()
 			addBannedMessage = true

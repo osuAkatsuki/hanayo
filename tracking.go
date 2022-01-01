@@ -59,6 +59,6 @@ func setCountry(c *gin.Context, user int) error {
 	if country == "" || len(country) != 2 {
 		return nil
 	}
-	db.Exec("UPDATE users_stats SET country = ? WHERE id = ?", country, user)
+	db.Exec("UPDATE users SET country = ? WHERE id = ?", country, user)
 	return nil
 }

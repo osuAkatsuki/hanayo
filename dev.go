@@ -40,7 +40,7 @@ func createAPIToken(c *gin.Context) {
 		return
 	}
 
-	privileges := common.Privileges(common.Int(c.PostForm("privileges"))).CanOnly(ctx.User.Privileges)
+	privileges := Privileges(common.Int(c.PostForm("privileges")))
 	description := c.PostForm("description")
 
 	var (
@@ -117,7 +117,7 @@ func editAPIToken(c *gin.Context) {
 		return
 	}
 
-	privileges := common.Privileges(common.Int(c.PostForm("privileges"))).CanOnly(ctx.User.Privileges)
+	privileges := Privileges(common.Int(c.PostForm("privileges")))
 	description := c.PostForm("description")
 
 	_, err := db.Exec("UPDATE tokens SET privileges = ?, description = ? WHERE user = ? AND id = ? AND private = 0",

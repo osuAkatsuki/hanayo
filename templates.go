@@ -275,8 +275,8 @@ func (t templateConfig) inc(prefix string) []string {
 	return a
 }
 
-func (t templateConfig) mp() common.UserPrivileges {
-	return common.UserPrivileges(t.MinPrivileges)
+func (t templateConfig) mp() Privileges {
+	return Privileges(t.MinPrivileges)
 }
 
 func (t templateConfig) additionalJS() []string {

@@ -2,8 +2,8 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"net/url"
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -11,7 +11,6 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	"zxq.co/ripple/rippleapi/common"
 	"zxq.co/ripple/schiavolib"
 )
 
@@ -20,6 +19,7 @@ func register(c *gin.Context) {
 		resp403(c)
 		return
 	}
+
 	if c.Query("stopsign") != "1" {
 		u, _ := tryBotnets(c)
 		if u != "" {
@@ -29,17 +29,13 @@ func register(c *gin.Context) {
 			return
 		}
 	}
+
 	registerResp(c)
 }
 
 func registerSubmit(c *gin.Context) {
 	if getContext(c).User.ID != 0 {
 		resp403(c)
-		return
-	}
-	// check registrations are enabled
-	if !registrationsEnabled() {
-		registerResp(c, errorMessage{T(c, "Sorry, it's not possible to register at the moment. Please try again later.")})
 		return
 	}
 
@@ -64,16 +60,6 @@ func registerSubmit(c *gin.Context) {
 		registerResp(c, errorMessage{T(c, "You're not allowed to register with that username.")})
 		return
 	}
-	// check if key is required for login and if passed
-	if keyRequired() && c.PostForm("key") == "" {
-		registerResp(c, errorMessage{T(c, "Please pass a valid key.")})
-		return
-	}
-	// check if given key is valid
-	if !checkKey(c.PostForm("key")) && keyRequired() {
-		registerResp(c, errorMessage{T(c, "Please pass a valid key.")})
-		return
-	}
 
 	// check email is valid
 	if !govalidator.IsEmail(c.PostForm("email")) {
@@ -94,7 +80,7 @@ func registerSubmit(c *gin.Context) {
 	}
 
 	// check whether username already exists
-	if db.QueryRow("SELECT 1 FROM users WHERE username_safe = ?", safeUsername(username)).
+	if db.QueryRow("SELECT 1 FROM users WHERE safe_name = ?", safeUsername(username)).
 		Scan(new(int)) != sql.ErrNoRows {
 		registerResp(c, errorMessage{T(c, "An user with that username already exists!")})
 		return
@@ -135,17 +121,18 @@ func registerSubmit(c *gin.Context) {
 		return
 	}
 
-	res, err := db.Exec(`INSERT INTO users(username, username_safe, password_md5, salt, email, register_datetime, privileges, password_version, latest_activity) VALUES (?, ?, ?, '', ?, ?, ?, 2, ?);`,
-		username, safeUsername(username), pass, c.PostForm("email"), time.Now().Unix(), common.UserPrivilegePendingVerification, time.Now().Unix())
+	res, err := db.Exec(`INSERT INTO users(name, safe_name, pw_bcrypt, email, creation_time, priv, latest_activity) VALUES (?, ?, ?, ?, ?, ?, ?);`,
+		username, safeUsername(username), pass, c.PostForm("email"), time.Now().Unix(), NORMAL, time.Now().Unix())
 	if err != nil {
 		registerResp(c, errorMessage{T(c, "Whoops, an error slipped in. You might have been registered, though. I don't know.")})
 		return
 	}
 	lid, _ := res.LastInsertId()
 
-	db.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	for i := range []int{0,1,2,3,4,5,6,7} {
+		db.Exec("INSERT INTO `stats` (id, mode) VALUES (?, ?)", lid, i)
+	}
 
-	db.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
 	/* Beta Keys
 	db.Exec("UPDATE `beta_keys` set used = 1 where key = ?", key)
 
@@ -156,7 +143,6 @@ func registerSubmit(c *gin.Context) {
 	//db.Exec("DELETE FROM beta_keys WHERE beta_key = ?", c.PostForm("key"))
 
 	setYCookie(int(lid), c)
-	logIP(c, int(lid))
 
 	rd.Incr("ripple:registered_users")
 
@@ -175,24 +161,34 @@ func registerResp(c *gin.Context, messages ...message) {
 	})
 }
 
-func registrationsEnabled() bool {
-	var enabled bool
-	db.QueryRow("SELECT value_int FROM system_settings WHERE name = 'registrations_enabled'").Scan(&enabled)
-	return enabled
-}
+func tryBotnets(c *gin.Context) (string, string) {
+	var username string
 
-func keyRequired() bool {
-	var enabled bool
-	db.QueryRow("SELECT value_int FROM system_settings WHERE name = 'regkey_required'").Scan(&enabled)
-	return enabled
-}
-
-func checkKey(passed string) bool {
-	if db.QueryRow("SELECT beta_key FROM beta_keys WHERE beta_key = ?", passed).Scan(new(int)) != sql.ErrNoRows {
-			return true
-		} else {
-			return false
+	err := db.QueryRow("SELECT u.username FROM ip_user i INNER JOIN users u ON u.id = i.userid WHERE i.ip = ?", clientIP(c)).Scan(&username)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			c.Error(err)
 		}
+		return "", ""
+	}
+	if username != "" {
+		return username, "IP"
+	}
+
+	cook, _ := c.Cookie("y")
+	err = db.QueryRow("SELECT u.username FROM identity_tokens i INNER JOIN users u ON u.id = i.userid WHERE i.token = ?",
+		cook).Scan(&username)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			c.Error(err)
+		}
+		return "", ""
+	}
+	if username != "" {
+		return username, "username"
+	}
+
+	return "", ""
 }
 
 func verifyAccount(c *gin.Context) {
@@ -238,14 +234,14 @@ func welcome(c *gin.Context) {
 	}
 
 	var rPrivileges uint64
-	db.Get(&rPrivileges, "SELECT privileges FROM users WHERE id = ?", i)
-	if common.UserPrivileges(rPrivileges)&common.UserPrivilegePendingVerification > 0 {
+	db.Get(&rPrivileges, "SELECT priv FROM users WHERE id = ?", i)
+	if Privileges(rPrivileges) & VERIFIED == 0 {
 		c.Redirect(302, "/register/verify?u="+c.Query("u"))
 		return
 	}
 
 	t := T(c, "Welcome!")
-	if common.UserPrivileges(rPrivileges)&common.UserPrivilegeNormal == 0 {
+	if Privileges(rPrivileges) & NORMAL == 0 {
 		// if the user has no UserNormal, it means they're banned = they multiaccounted
 		t = T(c, "Welcome back!")
 	}
@@ -271,36 +267,6 @@ func checkUInQS(c *gin.Context) (int, bool) {
 		return 0, true
 	}
 	return i, false
-}
-
-func tryBotnets(c *gin.Context) (string, string) {
-	var username string
-
-	err := db.QueryRow("SELECT u.username FROM ip_user i INNER JOIN users u ON u.id = i.userid WHERE i.ip = ?", clientIP(c)).Scan(&username)
-	if err != nil {
-		if err != sql.ErrNoRows {
-			c.Error(err)
-		}
-		return "", ""
-	}
-	if username != "" {
-		return username, "IP"
-	}
-
-	cook, _ := c.Cookie("y")
-	err = db.QueryRow("SELECT u.username FROM identity_tokens i INNER JOIN users u ON u.id = i.userid WHERE i.token = ?",
-		cook).Scan(&username)
-	if err != nil {
-		if err != sql.ErrNoRows {
-			c.Error(err)
-		}
-		return "", ""
-	}
-	if username != "" {
-		return username, "username"
-	}
-
-	return "", ""
 }
 
 func in(s string, ss []string) bool {

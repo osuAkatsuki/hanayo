@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"zxq.co/ripple/rippleapi/common"
 )
 
 // TODO: replace with simple ResponseInfo containing userid
@@ -25,16 +24,16 @@ func userProfile(c *gin.Context) {
 
 	u := c.Param("user")
 	if _, err := strconv.Atoi(u); err != nil {
-		err := db.QueryRow("SELECT id, username, privileges FROM users WHERE username = ? AND "+ctx.OnlyUserPublic()+" LIMIT 1", u).Scan(&userID, &username, &privileges)
+		err := db.QueryRow("SELECT id, name, priv FROM users WHERE name = ? AND "+ctx.OnlyUserPublic()+" LIMIT 1", u).Scan(&userID, &username, &privileges)
 		if err != nil && err != sql.ErrNoRows {
 			c.Error(err)
 		}
 	} else {
-		err := db.QueryRow(`SELECT id, username, privileges FROM users WHERE id = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
+		err := db.QueryRow(`SELECT id, name, priv FROM users WHERE id = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
 		switch {
 		case err == nil:
 		case err == sql.ErrNoRows:
-			err := db.QueryRow(`SELECT id, username, privileges FROM users WHERE username = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
+			err := db.QueryRow(`SELECT id, name, priv FROM users WHERE name = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
 			if err != nil && err != sql.ErrNoRows {
 				c.Error(err)
 			}
@@ -54,7 +53,7 @@ func userProfile(c *gin.Context) {
 		return
 	}
 
-	if common.UserPrivileges(privileges)&common.UserPrivilegeDonor > 0 {
+	if Privileges(privileges) & DONATOR > 0 {
 		var profileBackground struct {
 			Type  int
 			Value string
@@ -85,16 +84,16 @@ func relaxProfile(c *gin.Context) {
 
 	u := c.Param("user")
 	if _, err := strconv.Atoi(u); err != nil {
-		err := db.QueryRow("SELECT id, username, privileges FROM users WHERE username = ? AND "+ctx.OnlyUserPublic()+" LIMIT 1", u).Scan(&userID, &username, &privileges)
+		err := db.QueryRow("SELECT id, name, priv FROM users WHERE name = ? AND "+ctx.OnlyUserPublic()+" LIMIT 1", u).Scan(&userID, &username, &privileges)
 		if err != nil && err != sql.ErrNoRows {
 			c.Error(err)
 		}
 	} else {
-		err := db.QueryRow(`SELECT id, username, privileges FROM users WHERE id = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
+		err := db.QueryRow(`SELECT id, name, priv FROM users WHERE id = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
 		switch {
 		case err == nil:
 		case err == sql.ErrNoRows:
-			err := db.QueryRow(`SELECT id, username, privileges FROM users WHERE username = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
+			err := db.QueryRow(`SELECT id, name, priv FROM users WHERE name = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
 			if err != nil && err != sql.ErrNoRows {
 				c.Error(err)
 			}
@@ -114,7 +113,7 @@ func relaxProfile(c *gin.Context) {
 		return
 	}
 
-	if common.UserPrivileges(privileges)&common.UserPrivilegeDonor > 0 {
+	if Privileges(privileges) & DONATOR > 0 {
 		var profileBackground struct {
 			Type  int
 			Value string

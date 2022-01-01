@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"zxq.co/x/rs"
 )
 
 func ccreate(c *gin.Context) {
@@ -18,11 +17,6 @@ func ccreate(c *gin.Context) {
 func ccreateSubmit(c *gin.Context) {
 	if getContext(c).User.ID == 0 {
 		resp403(c)
-		return
-	}
-	// check registrations are enabled
-	if !ccreationEnabled() {
-		ccreateResp(c, errorMessage{T(c, "Sorry, it's not possible to create a clan at the moment. Please try again later.")})
 		return
 	}
 
@@ -55,16 +49,10 @@ func ccreateSubmit(c *gin.Context) {
 	}
 
 	// The actual registration.
-	
-	invite := rs.String(8)
-	
-	for db.QueryRow("SELECT 1 FROM clans WHERE invite = ?", invite).Scan(new(int)) != sql.ErrNoRows {
-		invite = rs.String(8)
-	}
 
-	res, err := db.Exec(`INSERT INTO clans(name, description, icon, tag, owner, invite)
-							  VALUES (?, ?, ?, ?, ?, ?);`,
-		username, c.PostForm("password"), c.PostForm("email"), tag, getContext(c).User.ID, invite)
+	res, err := db.Exec(`INSERT INTO clans(name, description, icon, tag, owner, created_at)
+							  VALUES (?, ?, ?, ?, ?, UNIX_TIMESTAMP());`,
+		username, c.PostForm("password"), c.PostForm("email"), tag, getContext(c).User.ID)
 	if err != nil {
 		ccreateResp(c, errorMessage{T(c, "Whoops, an error slipped in. Clan might have been created, though. I don't know.")})
 		fmt.Println(err)
@@ -72,7 +60,7 @@ func ccreateSubmit(c *gin.Context) {
 	}
 	lid, _ := res.LastInsertId()
 
-	db.Exec("UPDATE users SET clan_id = ?, clan_privileges = 8 WHERE id = ?", lid, getContext(c).User.ID)
+	db.Exec("UPDATE users SET clan_id = ?, clan_priv = 3 WHERE id = ?", lid, getContext(c).User.ID)
 
 	addMessage(c, successMessage{T(c, "Clan created.")})
 	getSession(c).Save()
@@ -86,12 +74,6 @@ func ccreateResp(c *gin.Context, messages ...message) {
 		Messages:  messages,
 		FormData:  normaliseURLValues(c.Request.PostForm),
 	})
-}
-
-func ccreationEnabled() bool {
-	var enabled bool
-	db.QueryRow("SELECT value_int FROM system_settings WHERE name = 'ccreation_enabled'").Scan(&enabled)
-	return enabled
 }
 
 var cnameRegex = regexp.MustCompile(`^[A-Za-z0-9 '_\[\]-]{2,15}$`)
