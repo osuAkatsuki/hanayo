@@ -10,6 +10,8 @@ const (
 	VERIFIED // has logged in
 
 	WHITELISTED // can bypass some anticheat measures
+	
+	_
 
 	SUPPORTER // has supporter
 	PREMIUM // has premium
