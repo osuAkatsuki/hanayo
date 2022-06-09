@@ -62,8 +62,8 @@ func ccreateSubmit(c *gin.Context) {
 		invite = rs.String(8)
 	}
 
-	res, err := db.Exec(`INSERT INTO clans(name, description, icon, tag, owner, invite)
-							  VALUES (?, ?, ?, ?, ?, ?);`,
+	res, err := db.Exec(`INSERT INTO clans(name, description, icon, tag, owner, invite, status)
+							  VALUES (?, ?, ?, ?, ?, ?, 2);`,
 		username, c.PostForm("password"), c.PostForm("email"), tag, getContext(c).User.ID, invite)
 	if err != nil {
 		ccreateResp(c, errorMessage{T(c, "Whoops, an error slipped in. Clan might have been created, though. I don't know.")})

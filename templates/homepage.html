@@ -26,7 +26,7 @@
         <div id="home">
             <link onload="onLoad()" rel="stylesheet" href="/static/css/home.css">
             <div class="container">
-                <div class="col-lg-12">
+                <div class="col-lg-35">
                     <div class="main-block">
                         <div class="quaver"></div>
                         <div class="content">
@@ -40,7 +40,7 @@
                                     <span class="counter-text"> {{ rediget "ripple:online_users" }} </span> online users
                                 </span>
                             </div>
-                            <br>
+                            <br><br>
                             <span class="text-lg" style="padding-bottom: 15px;">
                                 osu!Akatsuki
                             </span>
@@ -110,6 +110,7 @@
                 </div>
             </div>
         </div>
+        <!-- TODO: improve server performance to fix this mess? :) -->
         <div class="eight wide column">
             <div class="ui red segment">
                 <div class="ui grid">
@@ -117,10 +118,9 @@
                         <i class="thumbs up outline icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ $d := (qb "SELECT ROUND(scores_relax.pp) AS pp, users.username, scores_relax.userid FROM scores_relax LEFT JOIN beatmaps USING(beatmap_md5) LEFT JOIN users ON users.id = scores_relax.userid WHERE users.privileges & 1 AND users.whitelist & 2 AND scores_relax.completed = 3 AND scores_relax.play_mode = 0 ORDER BY scores_relax.pp DESC LIMIT 1") }}
-                       <p class="status-head">{{ $d.pp }}pp</p>
+                       <p class="status-head">2559pp</p> <!-- $d.pp -->
                        <p class="status-footer">Top score (Relax)</p>
-                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $d.userid }}?rx=1">{{ $d.username }}</a></p>
+                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/1714?rx=1">corn</a></p>
                     </div>
                 </div>
             </div>
@@ -132,10 +132,9 @@
                         <i class="thumbs up icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ $d := (qb "SELECT ROUND(scores.pp) AS pp, users.username, scores.userid FROM scores LEFT JOIN beatmaps USING(beatmap_md5) LEFT JOIN users ON users.id = scores.userid WHERE users.privileges & 1 AND users.whitelist & 1 AND scores.completed = 3 AND scores.play_mode = 0 ORDER BY scores.pp DESC LIMIT 1") }}
-                       <p class="status-head">{{ $d.pp }}pp</p>
+                       <p class="status-head">1007pp</p> <!-- $d.pp-->
                        <p class="status-footer">Top score (Vanilla)</p>
-                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $d.userid }}">{{ $d.username }}</a></p>
+                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/1176">RyuK</a></p>
                     </div>
                 </div>
             </div>

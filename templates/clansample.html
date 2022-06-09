@@ -31,9 +31,10 @@ Include=clan_member.html
 					</div>
 				</div>
 			</div>
-			<div class="ui two item bottom attached menu" id="rx-menu">
+			<div class="ui three item bottom attached menu" id="rx-menu">
 				<a class="0 item{{ if (not $rx) }} active{{ end }}" data-rx="0" href="/c/{{ .id }}?rx=0">Vanilla</a>
 				<a class="1 item{{ if $rx }} active{{ end }}" data-rx="1" href="/c/{{ .id }}?rx=1">Relax</a>
+				<a class="2 item{{ if $rx }} active{{ end }}" data-rx="2" href="/c/{{ .id }}?rx=2">Autopilot</a>
 			</div>
 			{{ $clan := . }}
 			<div class="ui four item bottom attached menu" id="mode-menu">

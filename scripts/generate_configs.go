@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 package main
@@ -19,7 +20,26 @@ type noTemplate struct {
 	MinPrivileges                uint64
 }
 
-var simplePages = [...]simplePage{{"/", "homepage.html", "Home Page", "homepage2.jpg", 0}, {"/login", "login.html", "Log in", "login2.jpg", 0}, {"/settings/avatar", "settings/avatar.html", "Change avatar", "settings2.jpg", 2}, {"/dev/tokens", "dev/tokens.html", "Your API tokens", "dev.jpg", 2}, {"/beatmaps/rank_request", "beatmaps/rank_request.html", "Request beatmap ranking", "request_beatmap_ranking.jpg", 2}, {"/donate", "support.html", "Support Ripple", "donate2.png", 0}, {"/doc", "doc.html", "Documentation", "documentation.jpg", 0}, {"/doc/:id", "doc_content.html", "View document", "documentation.jpg", 0}, {"/help", "help.html", "Contact support", "help.jpg", 0}, {"/leaderboard", "leaderboard.html", "Leaderboard", "leaderboard2.jpg", 0}, {"/friends", "friends.html", "Friends", "", 2}, {"/changelog", "changelog.html", "Changelog", "changelog.jpg", 0}, {"/team", "team.html", "Team", "", 0}, {"/pwreset", "pwreset.html", "Reset password", "", 0}, {"/about", "about.html", "About", "", 0}}
+var simplePages = [...]simplePage{
+	{"/", "homepage.html", "Home Page", "homepage2.jpg", 0},
+	{"/login", "login.html", "Log in", "login2.jpg", 0},
+	{"/settings/avatar", "settings/avatar.html", "Change avatar", "settings2.jpg", 2},
+	{"/dev/tokens", "dev/tokens.html", "Your API tokens", "dev.jpg", 2},
+	{"/beatmaps/rank_request", "beatmaps/rank_request.html", "Request beatmap ranking", "request_beatmap_ranking.jpg", 2},
+	{"/donate", "support.html", "Support Ripple", "donate2.png", 0},
+	{"/doc", "doc.html", "Documentation", "documentation.jpg", 0},
+	{"/doc/:id", "doc_content.html", "View document", "documentation.jpg", 0},
+	{"/help", "help.html", "Contact support", "help.jpg", 0},
+	{"/leaderboard", "leaderboard.html", "Leaderboard", "leaderboard2.jpg", 0},
+	{"/friends", "friends.html", "Friends", "", 2},
+	{"/changelog", "changelog.html", "Changelog", "changelog.jpg", 0},
+	{"/team", "team.html", "Team", "", 0},
+	{"/pwreset", "pwreset.html", "Reset password", "", 0},
+	{"/about", "about.html", "About", "", 0},
+	{"/patcher", "patcherdl.html", "Akatsuki Patcher", "documentation.jpg", 0},
+	// TODO: should merge.html be here?
+}
+
 
 func main() {
 	for _, p := range simplePages {
