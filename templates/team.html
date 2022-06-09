@@ -11,14 +11,6 @@ KyutGrill=team2.jpg
 			<h3>{{ .T "A list of wonderful people who keep Akatsuki running smoothly, and take pride in its community." }}</h3>
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "" }}</h1>
-			<p>
-				{{ .T "They manage the overall team and structure of Akatsuki, while also contributing to development of the server." }}<br>
-				{{ .T "They have a darker blue name in the in-game chat." | html }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 35) }}
-		</div>
-		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Community Management Team" }}</h1>
 			<p>
 				{{ .T "Community managers manage not only the community, but also the management team itself." }}<br>
@@ -27,17 +19,9 @@ KyutGrill=team2.jpg
 			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Management Committee" }}</h1>
+			<h1 class="ui heading">{{ .T "Development Team" }}</h1>
 			<p>
-				{{ .T "The Management Committee deals with restrictions, reports, moderation and pretty much everything to do with community management." }}<br>
-				{{ .T "They have a red name in the in-game chat." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Developers" }}</h1>
-			<p>
-				{{ .T "Developers add new features to the server, squash bugs, keep the server running, and take care of its maintenance." }}<br>
+				{{ .T "Developers implement, and maintain the server's infrastructure - they keep the server running, and take care of it's maintenance." }}<br>
 				{{ .T "They have a darker blue name in the in-game chat." }}
 
 			</p>
