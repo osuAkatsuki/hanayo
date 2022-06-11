@@ -323,7 +323,7 @@ function loadMostPlayedBeatmaps(type, mode) {
 		var enable = true;
 		if (resp.most_played_beatmaps.length != 5)
 			enable = false;
-		
+
 		disableLoadMoreButton(type, mode, enable);
 	})
 }
@@ -372,9 +372,9 @@ function loadScoresPage(type, mode) {
 					$(
 						"<td><img src='/static/ranking-icons/" + scoreRank + ".png' class='score rank' alt='" + scoreRank + "'> " +
 						escapeHTML(v.beatmap.song_name) + " <b>" + getScoreMods(v.mods) + "</b> <i>(" + v.accuracy.toFixed(2) + "%)</i><br />" +
-						"<div class='subtitle'><time class='new timeago' datetime='" + v.time + "'>" + v.time + "</time></div>" + (v.completed == 3 ? downloadStar(v.id) : "") + (v.completed == 3 && userID == window.actualID ? pinButton(v.id, preferRelax) : "") + "</td>"
+						"<div class='subtitle'><time class='new timeago' datetime='" + v.time + "'>" + v.time + "</time></div></td>"
 					),
-					$("<td><b>" + ppOrScore(v.pp, v.score) + "</b> " + weightedPP(type, page, idx, v.pp) + "</td>")
+					$("<td><b>" + ppOrScore(v.pp, v.score) + "</b> " + weightedPP(type, page, idx, v.pp) + (v.completed == 3 ? "<br>" + downloadStar(v.id) : "") + (v.completed == 3 && userID == window.actualID ? pinButton(v.id, preferRelax) : "") + "</td>")
 				));
 			});
 			$(".new.timeago").timeago().removeClass("new");
@@ -441,9 +441,9 @@ function do_pin(table, score, mode) {
 		$(
 			"<td><img src='/static/ranking-icons/" + scoreRank + ".png' class='score rank' alt='" + scoreRank + "'> " +
 			escapeHTML(score.beatmap.song_name) + " <b>" + getScoreMods(score.mods) + "</b> <i>(" + score.accuracy.toFixed(2) + "%)</i><br />" +
-			"<div class='subtitle'><time class='new timeago' datetime='" + score.time + "'>" + score.time + "</time></div>" + (score.completed == 3 ? downloadStar(score.id) : "") + (userID == window.actualID ? unpinButton(score.id, preferRelax) : "") + "</td>"
+			"<div class='subtitle'><time class='new timeago' datetime='" + score.time + "'>" + score.time + "</time></div></td>"
 		),
-		$("<td><b>" + ppOrScore(score.pp, score.score) + "</b></td>")
+		$("<td><b>" + ppOrScore(score.pp, score.score) + "</b>" + (score.completed == 3 ? "<br>" + downloadStar(score.id) : "") + (userID == window.actualID ? unpinButton(score.id, preferRelax) : "") + "</td>")
 	));
 }
 
