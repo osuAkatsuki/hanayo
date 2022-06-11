@@ -394,7 +394,7 @@ function loadScoresPage(type, mode) {
 			disableLoadMoreButton(type, mode, enable);
 		});
 	} else {
-		pin_api("pinned/", {
+		pin_api("pinned", {
 			mode: mode,
 			p: page,
 			l: 10,
