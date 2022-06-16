@@ -118,9 +118,12 @@
                         <i class="thumbs up outline icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                       <p class="status-head">2559pp</p> <!-- $d.pp -->
+                        {{ $relax_pp := (rediget "akatsuki:top:scores_relax:pp") }}
+                        {{ $relax_id := (rediget "akatsuki:top:scores_relax:id") }}
+                        {{ $relax_name := (rediget "akatsuki:top:scores_relax:name") }}
+                       <p class="status-head">{{ $relax_pp }}pp</p>
                        <p class="status-footer">Top score (Relax)</p>
-                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/1714?rx=1">corn</a></p>
+                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $relax_id }}?rx=1">{{ .T "%s" $relax_name | html }}</a></p>
                     </div>
                 </div>
             </div>
@@ -132,9 +135,12 @@
                         <i class="thumbs up icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                       <p class="status-head">1007pp</p> <!-- $d.pp-->
+                        {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
+                        {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
+                        {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
+                       <p class="status-head">{{ $vanilla_pp }}pp</p>
                        <p class="status-footer">Top score (Vanilla)</p>
-                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/1176">RyuK</a></p>
+                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $vanilla_id }}?rx=1">{{ $vanilla_name }}</a></p>
                     </div>
                 </div>
             </div>
