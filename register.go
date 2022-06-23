@@ -146,6 +146,7 @@ func registerSubmit(c *gin.Context) {
 	db.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
 
 	db.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	db.Exec("INSERT INTO `ap_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, country) VALUES (?, ?, 'black', '', 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
 	/* Beta Keys
 	db.Exec("UPDATE `beta_keys` set used = 1 where key = ?", key)
 

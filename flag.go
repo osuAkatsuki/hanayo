@@ -17,6 +17,7 @@ func changeFlag(c *gin.Context) {
 	if c.PostForm("country") != "" {
 		db.Exec("UPDATE users_stats SET country = ? WHERE id = ?", c.PostForm("country"), getContext(c).User.ID)
 		db.Exec("UPDATE rx_stats SET country = ? WHERE id = ?", c.PostForm("country"), getContext(c).User.ID)
+		rd.Publish("api:change_country", strconv.Itoa(int(getContext(c).User.ID)))
 		addMessage(c, successMessage{T(c, "Flag changed")})
 		getSession(c).Save()
 		c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))
@@ -64,6 +65,7 @@ func changeName(c *gin.Context) {
 		db.Exec("UPDATE users_stats SET username = ? WHERE id = ?", username, getContext(c).User.ID)
 		db.Exec("UPDATE rx_stats SET username = ? WHERE id = ?", username, getContext(c).User.ID)
 		db.Exec("UPDATE users SET username = ?, username_safe = ? WHERE id = ?", username, safeUsername(username), getContext(c).User.ID)
+		rd.Publish("api:change_username", strconv.Itoa(int(getContext(c).User.ID)))
 		addMessage(c, successMessage{T(c, "Username changed")})
 		getSession(c).Save()
 		c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))

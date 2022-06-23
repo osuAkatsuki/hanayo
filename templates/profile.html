@@ -2,6 +2,7 @@
 {{ if .UserID }}
 {{ $gqm := atoi (.Gin.Query "mode") }}
 {{ $global := . }}
+{{ $realid := $global.Context.User.ID }}
 {{ $grx := atoi (.Gin.Query "rx") }}
 {{ with (.Get "users/full?id=%d" .UserID) }}
 {{ $favouritemode := _or $gqm .favourite_mode }}
@@ -29,6 +30,7 @@
 	window.favouriteMode = {{ $favouritemode }};
 	window.preferRelax = {{ $preferRelax }};
 	window.userID = {{ .id }};
+	window.actualID = {{ $realid }};
 </script>
 
 <link rel="stylesheet" href="/static/css/pages/profile.css">
@@ -118,6 +120,8 @@
 					href="/u/{{ $user.id }}?rx=0">Vanilla</a>
 				<a class="1 simple-banner-swtich{{ if eq (int $preferRelax) 1 }} active{{ end }}" data-rx="1"
 					href="/u/{{ $user.id }}?rx=1">Relax</a>
+				<a class="2 simple-banner-swtich{{ if eq (int $preferRelax) 2 }} active{{ end }}" data-rx="2"
+					href="/u/{{ $user.id }}?rx=2">Autopilot</a>
 			</div>
 		</div>
 	</div>
@@ -206,10 +210,6 @@
 									<td class="right aligned">{{ playtimeConv .playtime }}</td>
 								</tr>
 								<tr>
-									<td><b>{{ $global.T "Total Playtime" }}</b></td>
-									<td class="right aligned">{{ playtimeConv .total_playtime }}</td>
-								</tr>
-								<tr>
 									<td><b>{{ $global.T "Replays watched" }}</b></td>
 									<td class="right aligned">{{ humanize .replays_watched }}</td>
 								</tr>
@@ -220,6 +220,10 @@
 								<tr>
 									<td><b>{{ $global.T "Accuracy" }}</b></td>
 									<td class="right aligned">{{ printf "%.2f" .accuracy }}%</td>
+								</tr>
+								<tr>
+									<td><b>{{ $global.T "Max combo" }}</b></td>
+									<td class="right aligned">{{ humanize .max_combo }}</td>
 								</tr>
 								<tr>
 									<td><b>{{ $global.T "Followers" }}</b></td>
@@ -251,9 +255,9 @@
 			{{ end }}
 
 			<div id="scores-zone">
-				{{ range _range 2 }}
-				{{ $rx := . }}
 				{{ range _range 4 }}
+				{{ $rx := . }}
+				{{ range _range 6 }}
 				<div data-mode="{{ . }}" {{ if or (ne $rx (int $preferRelax)) (ne . (int $favouritemode)) }} hidden{{ end }}
 					data-loaded="0" data-rx="{{ $rx }}">
 				</div>

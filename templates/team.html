@@ -11,56 +11,47 @@ KyutGrill=team2.jpg
 			<h3>{{ .T "A list of wonderful people who keep Akatsuki running smoothly, and take pride in its community." }}</h3>
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Founder & Head Developer" }}</h1>
+			<h1 class="ui heading">{{ .T "Community Management Team" }}</h1>
 			<p>
-				{{ .T "cmyui manages the overall team and structure of Akatsuki, while also contributing to development of the server." }}<br>
-				{{ .T "They have a darker blue name in the in-game chat." | html }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 35) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Administrators" }}</h1>
-			<p>
-				{{ .T "Administrators deal with bans, silences, name changes and pretty much everything that has to do with community management." }}<br>
+				{{ .T "Community managers manage not only the community, but also the management team itself." }}<br>
 				{{ .T "They have a light blue colour in the in-game chat." }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Developers" }}</h1>
+			<h1 class="ui heading">{{ .T "Development Team" }}</h1>
 			<p>
-				{{ .T "Developers add new features to the server, squash bugs, keep the server running, and take care of its maintenance." }}<br>
+				{{ .T "Developers implement, and maintain the server's infrastructure - they keep the server running, and take care of it's maintenance." }}<br>
 				{{ .T "They have a darker blue name in the in-game chat." }}
 
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 2) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Moderators" }}</h1>
-			<p>
-				{{ .T "Moderators deal with basic restrictions, player reports, moderate the chat channels, and make sure the rules are respected." }}<br>
-				{{ .T "They have a red name in the in-game chat." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Event Managers" }}</h1>
+			<h1 class="ui heading">{{ .T "Event Management Team" }}</h1>
 			<p>
 				{{ .T "Event Managers host events such as competitions and tournaments, keeping the community thriving." }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 78) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Beatmap Nominators" }}</h1>
+			<h1 class="ui heading">{{ .T "Beatmap Quality Assurance Team" }}</h1>
+			<p>
+				{{ .T "Beatmap QA members manage the nomination team while also contributing to nomination." }}
+			</p>
+			{{ template "userGroup" (.Get "badges/members?id=%d" 89) }}
+		</div>
+		<div class="ui center aligned segment">
+			<h1 class="ui heading">{{ .T "Beatmap Nomination Team" }}</h1>
 			<p>
 				{{ .T "Beatmap Nominators handle all beatmap related inquiries; such as ranked requests." }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 53) }}
 		</div>
 		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Akatsuki Scorewatch" }}</h1>
+			<h1 class="ui heading">{{ .T "Akatsuki Scorewatch Team" }}</h1>
 			<p>
-				{{ .T "These members help manage Akatsuki's <a href='https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ'>YouTube channel</a>." | html }}
+				{{ .T "These members help select scores for <a href='https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ'>AKatsuki's YouTube channel</a>." | html }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 86) }}
 		</div>
