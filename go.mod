@@ -1,10 +1,11 @@
-module github.com/osuakatsuki/hanayo
+module zxq.co/ripple/hanayo
 
 go 1.17
 
 require (
 	github.com/RangelReale/osin v1.0.1
 	github.com/asaskevich/govalidator v0.0.0-20171111151018-521b25f4b05f
+	github.com/aws/aws-sdk-go v1.40.49
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/structs v1.1.0
 	github.com/felipeweb/osin-mysql v0.0.0-20170620113854-269603eb06cf
@@ -32,7 +33,6 @@ require (
 	gopkg.in/redis.v5 v5.2.9
 	gopkg.in/yaml.v2 v2.4.0
 	zxq.co/ripple/go-discord-oauth v0.0.0-20161117211055-348e08feccb5
-	zxq.co/ripple/hanayo v1.9.0
 	zxq.co/ripple/playstyle v0.0.0-20161106144235-198984a13cb6
 	zxq.co/ripple/rippleapi v0.0.0-20180719135835-50ffa4e066dd
 	zxq.co/ripple/schiavolib v0.0.0-20161109210250-9cdc674dad07
@@ -42,7 +42,6 @@ require (
 require (
 	github.com/DataDog/datadog-go v0.0.0-20180330214955-e67964b4021a // indirect
 	github.com/ansel1/merry v1.3.1 // indirect
-	github.com/aws/aws-sdk-go v1.40.49 // indirect
 	github.com/boj/redistore v0.0.0-20160128113310-fc113767cd6b // indirect
 	github.com/boombuler/barcode v1.0.0 // indirect
 	github.com/certifi/gocertifi v0.0.0-20180118203423-deb3ae2ef261 // indirect

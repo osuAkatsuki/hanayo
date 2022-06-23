@@ -12,6 +12,46 @@ github.com/ansel1/merry
 github.com/asaskevich/govalidator
 # github.com/aws/aws-sdk-go v1.40.49
 ## explicit; go 1.11
+github.com/aws/aws-sdk-go/aws
+github.com/aws/aws-sdk-go/aws/awserr
+github.com/aws/aws-sdk-go/aws/awsutil
+github.com/aws/aws-sdk-go/aws/client
+github.com/aws/aws-sdk-go/aws/client/metadata
+github.com/aws/aws-sdk-go/aws/corehandlers
+github.com/aws/aws-sdk-go/aws/credentials
+github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds
+github.com/aws/aws-sdk-go/aws/credentials/endpointcreds
+github.com/aws/aws-sdk-go/aws/credentials/processcreds
+github.com/aws/aws-sdk-go/aws/credentials/ssocreds
+github.com/aws/aws-sdk-go/aws/credentials/stscreds
+github.com/aws/aws-sdk-go/aws/csm
+github.com/aws/aws-sdk-go/aws/defaults
+github.com/aws/aws-sdk-go/aws/ec2metadata
+github.com/aws/aws-sdk-go/aws/endpoints
+github.com/aws/aws-sdk-go/aws/request
+github.com/aws/aws-sdk-go/aws/session
+github.com/aws/aws-sdk-go/aws/signer/v4
+github.com/aws/aws-sdk-go/internal/context
+github.com/aws/aws-sdk-go/internal/ini
+github.com/aws/aws-sdk-go/internal/sdkio
+github.com/aws/aws-sdk-go/internal/sdkmath
+github.com/aws/aws-sdk-go/internal/sdkrand
+github.com/aws/aws-sdk-go/internal/sdkuri
+github.com/aws/aws-sdk-go/internal/shareddefaults
+github.com/aws/aws-sdk-go/internal/strings
+github.com/aws/aws-sdk-go/internal/sync/singleflight
+github.com/aws/aws-sdk-go/private/protocol
+github.com/aws/aws-sdk-go/private/protocol/json/jsonutil
+github.com/aws/aws-sdk-go/private/protocol/jsonrpc
+github.com/aws/aws-sdk-go/private/protocol/query
+github.com/aws/aws-sdk-go/private/protocol/query/queryutil
+github.com/aws/aws-sdk-go/private/protocol/rest
+github.com/aws/aws-sdk-go/private/protocol/restjson
+github.com/aws/aws-sdk-go/private/protocol/xml/xmlutil
+github.com/aws/aws-sdk-go/service/sso
+github.com/aws/aws-sdk-go/service/sso/ssoiface
+github.com/aws/aws-sdk-go/service/sts
+github.com/aws/aws-sdk-go/service/sts/stsiface
 # github.com/boj/redistore v0.0.0-20160128113310-fc113767cd6b
 ## explicit
 github.com/boj/redistore
@@ -83,6 +123,7 @@ github.com/gorilla/securecookie
 github.com/gorilla/sessions
 # github.com/jmespath/go-jmespath v0.4.0
 ## explicit; go 1.14
+github.com/jmespath/go-jmespath
 # github.com/jmoiron/sqlx v1.2.1-0.20181024163419-82935fac6c1a
 ## explicit
 github.com/jmoiron/sqlx
@@ -249,19 +290,6 @@ gopkg.in/yaml.v2
 # zxq.co/ripple/go-discord-oauth v0.0.0-20161117211055-348e08feccb5
 ## explicit
 zxq.co/ripple/go-discord-oauth
-# zxq.co/ripple/hanayo v1.9.0
-## explicit
-zxq.co/ripple/hanayo/modules/bbcode
-zxq.co/ripple/hanayo/modules/btcaddress
-zxq.co/ripple/hanayo/modules/btcconversions
-zxq.co/ripple/hanayo/modules/doc
-zxq.co/ripple/hanayo/modules/fa-semantic-mappings
-zxq.co/ripple/hanayo/modules/locale
-zxq.co/ripple/hanayo/modules/top-passwords
-zxq.co/ripple/hanayo/routers/oauth
-zxq.co/ripple/hanayo/routers/pagemappings
-zxq.co/ripple/hanayo/services
-zxq.co/ripple/hanayo/services/cieca
 # zxq.co/ripple/playstyle v0.0.0-20161106144235-198984a13cb6
 ## explicit
 zxq.co/ripple/playstyle

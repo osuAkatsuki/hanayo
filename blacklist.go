@@ -15,4 +15,4 @@ func checkBlacklisted(c *gin.Context) {
 	}
 
 	c.Next()
-} 
+}

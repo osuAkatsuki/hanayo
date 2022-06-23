@@ -38,7 +38,7 @@ func changeName(c *gin.Context) {
 		username := strings.TrimSpace(c.PostForm("name"))
 		// check if username already taken
 		if db.QueryRow("SELECT 1 FROM users WHERE username_safe = ?", safeUsername(username)).
-		Scan(new(int)) != sql.ErrNoRows {
+			Scan(new(int)) != sql.ErrNoRows {
 			addMessage(c, errorMessage{T(c, "Username taken.")})
 			getSession(c).Save()
 			c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))

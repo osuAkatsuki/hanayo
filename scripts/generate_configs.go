@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 package main
@@ -36,7 +37,9 @@ var simplePages = [...]simplePage{
 	{"/pwreset", "pwreset.html", "Reset password", "", 0},
 	{"/about", "about.html", "About", "", 0},
 	{"/patcher", "patcherdl.html", "Akatsuki Patcher", "documentation.jpg", 0},
+	// TODO: should merge.html be here?
 }
+
 
 func main() {
 	for _, p := range simplePages {

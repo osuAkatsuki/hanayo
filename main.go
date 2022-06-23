@@ -27,7 +27,7 @@ import (
 	"zxq.co/ripple/hanayo/routers/pagemappings"
 	"zxq.co/ripple/hanayo/services"
 	"zxq.co/ripple/hanayo/services/cieca"
-	"zxq.co/ripple/schiavolib"
+	schiavo "zxq.co/ripple/schiavolib"
 	"zxq.co/x/rs"
 )
 
@@ -120,7 +120,7 @@ func main() {
 		&config.AvatarURL:        "https://a.akatsuki.pw",
 		&config.BaseURL:          "https://akatsuki.pw",
 		&config.BanchoAPI:        "https://c.akatsuki.pw",
-		&config.CheesegullAPI:    "https://pisstau.be/api",
+		&config.CheesegullAPI:    "https://api.chimu.moe/cheesegull",
 		&config.API:              "https://localhost:40001/api/v1/",
 		&config.APISecret:        "Potato",
 		&config.IP_API:           "https://ip.zxq.co",
@@ -146,11 +146,11 @@ func main() {
 		panic(err)
 	}
 
-	//if config.EnableS3 {
-	//	sess = session.Must(session.NewSessionWithOptions(session.Options{
-	//		SharedConfigState: session.SharedConfigEnable,
-	//	}))
-	//}
+	// if config.EnableS3 {
+	// 	sess = session.Must(session.NewSessionWithOptions(session.Options{
+	// 		SharedConfigState: session.SharedConfigEnable,
+	// 	}))
+	// }
 
 	// initialise mailgun
 	mg = mailgun.NewMailgun(
@@ -282,6 +282,9 @@ func generateEngine() *gin.Engine {
 	r.POST("/register", registerSubmit)
 	r.GET("/register/verify", verifyAccount)
 	r.GET("/register/welcome", welcome)
+
+	r.GET("/merge", mergeGET)
+	r.POST("/merge", mergePOST)
 
 	r.GET("/clans/create", ccreate)
 	r.POST("/clans/create", ccreateSubmit)
