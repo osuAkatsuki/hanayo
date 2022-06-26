@@ -315,7 +315,6 @@ func generateEngine() *gin.Engine {
 	r.POST("/settings/avatar", avatarSubmit)
 	r.POST("/settings/2fa/disable", disable2fa)
 	r.POST("/settings/2fa/totp", totpSetup)
-	r.POST("/settings/flag", changeFlag)
 	r.POST("/settings/username", changeName)
 	r.GET("/settings/discord/finish", discordFinish)
 	r.POST("/settings/profbackground/:type", profBackground)
