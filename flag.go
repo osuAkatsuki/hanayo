@@ -8,6 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func addToUserNotes(message string, user int) {
+    message = "\n[" + time.Now().Format("2006-01-02") + "] " + message
+
+    db.Exec("SELECT 
+    db.Exec("UPDATE users SET notes = CONCAT(COALESCE(notes, ''), ?) WHERE id = ?",
+        message, user)
+}
+
 func changeFlag(c *gin.Context) {
 	if getContext(c).User.ID == 0 {
 		resp403(c)
@@ -19,7 +27,7 @@ func changeFlag(c *gin.Context) {
 		db.Exec("UPDATE rx_stats SET country = ? WHERE id = ?", c.PostForm("country"), getContext(c).User.ID)
 		rd.Publish("api:change_country", strconv.Itoa(int(getContext(c).User.ID)))
 
-		addMessage(c, successMessage{T(c, "Flag changed")})
+		addMessage(c, successMessage{T(c, "Flag changed.")})
 		getSession(c).Save()
 		c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))
 	} else {
@@ -47,7 +55,7 @@ func changeName(c *gin.Context) {
 		}
 		// check if violates regex
 		if !usernameRegex.MatchString(username) {
-			addMessage(c, errorMessage{T(c, "Please choose a Username that matches our criteria.")})
+			addMessage(c, errorMessage{T(c, "Please choose a username that matches our criteria.")})
 			getSession(c).Save()
 			c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))
 
@@ -55,7 +63,7 @@ func changeName(c *gin.Context) {
 		}
 		// check if username in banned names list c
 		if in(strings.ToLower(username), forbiddenUsernames) {
-			addMessage(c, errorMessage{T(c, "You are not allowed to pick that Username.")})
+			addMessage(c, errorMessage{T(c, "You are not allowed to pick that username.")})
 			getSession(c).Save()
 			c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))
 
@@ -66,9 +74,10 @@ func changeName(c *gin.Context) {
 		db.Exec("UPDATE users_stats SET username = ? WHERE id = ?", username, getContext(c).User.ID)
 		db.Exec("UPDATE rx_stats SET username = ? WHERE id = ?", username, getContext(c).User.ID)
 		db.Exec("UPDATE users SET username = ?, username_safe = ? WHERE id = ?", username, safeUsername(username), getContext(c).User.ID)
+		addToUserNotes(fmt.Sprintf("Username change: %s -> %s", getContext(c).User.Username, username), getContext(c).User.ID)
 		rd.Publish("api:change_username", strconv.Itoa(int(getContext(c).User.ID)))
 
-		addMessage(c, successMessage{T(c, "Username changed")})
+		addMessage(c, successMessage{T(c, "Username changed.")})
 		getSession(c).Save()
 		c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))
 	} else {
