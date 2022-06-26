@@ -8,28 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func changeFlag(c *gin.Context) {
-	if getContext(c).User.ID == 0 {
-		resp403(c)
-		return
-	}
-
-	if c.PostForm("country") != "" {
-		db.Exec("UPDATE users_stats SET country = ? WHERE id = ?", c.PostForm("country"), getContext(c).User.ID)
-		db.Exec("UPDATE rx_stats SET country = ? WHERE id = ?", c.PostForm("country"), getContext(c).User.ID)
-		rd.Publish("api:change_country", strconv.Itoa(int(getContext(c).User.ID)))
-
-		addMessage(c, successMessage{T(c, "Flag changed")})
-		getSession(c).Save()
-		c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))
-	} else {
-		addMessage(c, errorMessage{T(c, "Something went wrong.")})
-		getSession(c).Save()
-		c.Redirect(302, "/u/"+strconv.Itoa(int(getContext(c).User.ID)))
-	}
-
-}
-
 func changeName(c *gin.Context) {
 	if getContext(c).User.ID == 0 {
 		resp403(c)
