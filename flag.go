@@ -10,8 +10,7 @@ import (
 
 func addToUserNotes(message string, user int) {
     message = "\n[" + time.Now().Format("2006-01-02") + "] " + message
-
-    db.Exec("SELECT 
+	
     db.Exec("UPDATE users SET notes = CONCAT(COALESCE(notes, ''), ?) WHERE id = ?",
         message, user)
 }
