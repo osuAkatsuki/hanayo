@@ -1,6 +1,6 @@
 {{/*###
-Handler=/settings/flag
-TitleBar=Change Flag
+Handler=/settings/username
+TitleBar=Change Username
 KyutGrill=settings2.jpg
 Include=menu.html
 MinPrivileges=4
@@ -24,26 +24,6 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
 					</form>
 				<div class="ui right aligned segment">
 					<button tabindex="2" class="ui primary button" type="submit" form="username-form">{{ .T "Save" }}</button>
-				</div>
-				<font size=6 style="margin-left:-88%;">Flag</font>
-				<br><br>
-
-				{{ $global := . }}
-					{{ $d := qb "SELECT country FROM users_stats WHERE id = ? LIMIT 1" .Context.User.ID }}
-					{{ $type  := or $d.country.String "" }}
-				<form id="register-form" class="ui form" method="post" action="/settings/flag">
-
-						<select class="ui dropdown" name="country">
-							{{ range (.Get "countries").countries }}
-								<option name="flag" value="{{ .code }}"><a>{{ $global.T "<b>%s</b>" (country .code true) | html }}</a></option>
-							{{ end }}
-						</select>
-
-						{{ ieForm .Gin }}
-					</form>
-
-				<div class="ui right aligned segment">
-					<button tabindex="4" class="ui primary button" type="submit" form="register-form">{{ .T "Save" }}</button>
 				</div>
 			</div>
 			</div>
