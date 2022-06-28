@@ -11,19 +11,37 @@ KyutGrill=team2.jpg
 			<h3>{{ .T "A list of wonderful people who keep Akatsuki running smoothly, and take pride in its community." }}</h3>
 		</div>
 		<div class="ui center aligned segment">
+			<h1 class="ui heading">{{ .T "Project Management Team" }}</h1>
+			<p>
+				{{ .T "Project managers are responsible for overlooking Akatsuki itself, overlooking the rest of the team." }}<br>
+			</p>
+			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
+		</div>
+		<div class="ui center aligned segment">
+			<h1 class="ui heading">{{ .T "Product Management Team" }}</h1>
+			<p>
+				{{ .T "Product managers are responsible for envisionining Akatsuki's future, and create ideas in order to shape the server." }}<br>
+			</p>
+			{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
+		</div>
+		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Community Management Team" }}</h1>
 			<p>
 				{{ .T "Community managers manage not only the community, but also the management team itself." }}<br>
-				{{ .T "They have a light blue colour in the in-game chat." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
+			{{ template "userGroup" (.Get "badges/members?id=%d" 97) }}
+		</div>
+		<div class="ui center aligned segment">
+			<h1 class="ui heading">{{ .T "Support Team" }}</h1>
+			<p>
+				{{ .T "The support team handle appeals and any general support queries players may have." }}<br>
+			</p>
+			{{ template "userGroup" (.Get "badges/members?id=%d" 32) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Development Team" }}</h1>
 			<p>
 				{{ .T "Developers implement, and maintain the server's infrastructure - they keep the server running, and take care of it's maintenance." }}<br>
-				{{ .T "They have a darker blue name in the in-game chat." }}
-
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 2) }}
 		</div>
@@ -33,13 +51,6 @@ KyutGrill=team2.jpg
 				{{ .T "Event Managers host events such as competitions and tournaments, keeping the community thriving." }}
 			</p>
 			{{ template "userGroup" (.Get "badges/members?id=%d" 78) }}
-		</div>
-		<div class="ui center aligned segment">
-			<h1 class="ui heading">{{ .T "Beatmap Quality Assurance Team" }}</h1>
-			<p>
-				{{ .T "Beatmap QA members manage the nomination team while also contributing to nomination." }}
-			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 89) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Beatmap Nomination Team" }}</h1>

@@ -31,12 +31,14 @@
 				<meta name="twitter:card" content="" />
 			</head>
 
-			{{ $dev := has .privileges 4194304 }} {{/* AdminCaker */}}
-			{{ $admin := has .privileges 16 }} {{/* AdminManageUsers */}}
-			{{ $mod := has .privileges 262144 }} {{/* AdminChatMod */}}
-			{{ $bn := has .privileges 256 }} {{/* AdminManageBeatmaps */}}
-			{{ $premium := has .privileges 8388608 }} {{/* UserPremium */}}
-			{{ $supporter := has .privileges 4 }} {{/* UserDonor */}}
+			{{ $dev := has .privileges 165387 }}
+			{{ $cm := has .privileges 1036539 }}
+			{{ $product := has .privileges 1046779 }}
+			{{ $project := has .privileges 7340027 }}
+			{{ $support := has .privileges 4283 }}
+			{{ $bn := has .privileges 267 }}
+			{{ $premium := has .privileges 8388608 }}
+			{{ $supporter := has .privileges 4 }}
 
 			{{ if after .silence_info.end }}
 				<div class="ui error centered message">{{ $global.T "User is <b>silenced</b> for %s, expires %s." (.silence_info.reason | htmlescaper) (time .silence_info.end) | html }}</div>
@@ -84,12 +86,12 @@
 						<h1 class="ui header">
 						{{ $user := . }}
 
-						{{ if $dev }}
-                        	<div class="dev">
-						{{ else if $admin }}
+						{{ if (or $cm $project $product) }}
                         	<div class="admin">
-						{{ else if $mod }}
-                        	<div class="mod">
+						{{ else if $support }}
+							<div class="mod">
+						{{ else if $dev }}
+                        	<div class="dev">
 						{{ else if $premium }}
 							<div class="premium">
 						{{ else if $supporter }}
@@ -99,7 +101,7 @@
 						<td class="right aligned">
 							<a href="/c/{{ $user.clan.id }}?mode=0">{{ $user.clan.tag }} </a>
 						</td>
-						{{ if and (or $dev $admin $mod $premium $supporter) .username_aka }}
+						{{ if and (or $dev $cm $project $product $premium $supporter) .username_aka }}
 							{{ .username_aka }}
 							</div>
 						{{ else }}
@@ -164,20 +166,18 @@
 					<div class="row">
 						<div class="column">
 							{{ $global.T "<b>%s</b> is " .username | html }}
-							{{ if eq $user.id 1000.0 }}
-								an <i class="blue rebel small icon"></i><b>Owner</b>
-							{{ else if eq $user.id 1001.0 }}
-								a <i class="orange universal access small icon"></i><b>Nominator</b>
-							{{ else if eq $user.id 1935.0 }}
-								a <i class="teal code small icon"></i><b>Head Developer</b>
+							{{ if $project }}
+								a <i class="blue star small icon"></i><b>Project Manager</b>
+							{{ else if $product }}
+								a <i class="red gift small icon"></i><b>Product Manager</b>
+							{{ else if $cm }}
+								an <i class="blue lightning small icon"></i><b>Community Manager</b>
+							{{ else if $support }}
+								a <i class="green question small icon"></i><b>Support Team member</b>
 							{{ else if $dev }}
 								a <i class="blue code small icon"></i><b>Developer</b>
-							{{ else if $admin }}
-								an <i class="blue lightning small icon"></i><b>Administrator</b>
-							{{ else if $mod }}
-								a <i class="red star small icon"></i><b>Moderator</b>
 							{{ else if $bn }}
-								a <i class="orange universal access small icon"></i><b>Nominator</b>
+								a <i class="orange universal access small icon"></i><b>Beatmap Nominator</b>
 							{{ else if $premium }}
 								a <i class="yellow credit card small icon"></i><b>Premium member</b>
 							{{ else if $supporter }}

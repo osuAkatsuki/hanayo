@@ -9,3 +9,4 @@ semantic/gulpfile.tmp.*.js
 /_
 static/oauth-apps/*
 !static/oauth-apps/.keep
+static/akatsukiPatcher.exe
