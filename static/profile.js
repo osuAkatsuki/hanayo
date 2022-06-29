@@ -252,7 +252,7 @@ function initialiseScores(el, mode) {
 	el.append($("<div class='ui segments no bottom margin' />").append(
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Pinned scores") + "</h2>", pinned),
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Best scores") + "</h2>", best),
-		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Most played beatmaps") + ' <span id="mapstotal" style="font-size: medium;"></span></h2>', most_played),
+		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Most played beatmaps") + "</h2>", most_played),
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("First Place Ranks") + ' <span id="1stotal" style="font-size: medium;"></span></h2>', first),
 		$("<div class='ui segment' />").append("<h2 class='ui header'>" + T("Recent scores (24h)") + "</h2>", recent)
 	));
@@ -307,8 +307,6 @@ function loadMostPlayedBeatmaps(type, mode) {
 			disableLoadMoreButton(type, mode);
 			return;
 		}
-
-		document.getElementById('mapstotal').innerHTML = '(' + resp.most_played_beatmaps.length + ' in total)';
 
 		resp.most_played_beatmaps.forEach(function (el, idx) {
 			mostPlayedTable.append($("<tr class='new map-row'/>").append(
