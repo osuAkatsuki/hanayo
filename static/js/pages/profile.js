@@ -241,7 +241,7 @@ function initialiseScores(el, mode) {
 	el.append($("<div class='ui segments' />").append(
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Pinned scores")}</h2></div>`, pinned),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Best scores")}</h2></div>`, best),
-		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Most played beatmaps")} <span id='1stotal' style='font-size: medium;'></span></h2></div>`, first),
+		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Most played beatmaps")}</h2></div>`, first),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("First Place Ranks")} <span id='1stotal' style='font-size: medium;'>(.. in total)</span></h2></div>`, first),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Recent scores (24h)")}</h2></div>`, recent),
 	));
@@ -298,8 +298,6 @@ function loadMostPlayedBeatmaps(type, mode) {
 			return;
 		}
 
-		document.getElementById('mapstotal').innerHTML = '(' + resp.most_played_beatmaps.length + ' in total)';
-
 		resp.most_played_beatmaps.forEach(function (el, idx) {
 			mostPlayedTable.append($("<tr class='new map-row'/>").append(
 				$(
@@ -350,10 +348,10 @@ function loadScoresPage(type, mode) {
 								</div>
 								<div class="map-title-block">
 									<div class="map-title">
-										<h4>No score avalible</h4>
+										<h4>No score available</h4>
 									</div>
 									<div class="play-stats">
-										maybe you should play something?
+										Maybe you should play something?
 									</div>
 								</div>
 							</div>
@@ -375,8 +373,8 @@ function loadScoresPage(type, mode) {
 				<div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
 					<div class="map-content1">
 						<div class="map-data">
-							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id}/covers/card.jpg)">
-								<div class="map-grade rank-${scoreRank}">${scoreRank}</div>
+							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id}/covers/list.jpg)">
+								<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "+")}</div>
 							</div>
 							<div class="map-title-block">
 								<div class="map-title"><a class="beatmap-link">
@@ -406,6 +404,8 @@ function loadScoresPage(type, mode) {
 										</b>
 									</div>
 								</div>
+								${downloadStar(v.id)}
+								${userID == window.actualID ? pinButton(v.id, preferRelax) : ""}
 								<div class="score-details_icon-block">
 									<i class="angle right icon"></i>
 								</div>
@@ -418,6 +418,12 @@ function loadScoresPage(type, mode) {
 			$(".new.timeago").timeago().removeClass("new");
 			$(".new.map-single").click(viewScoreInfo).removeClass("new");
 			$(".new.downloadstar").click(function (e) {
+				e.stopPropagation();
+			}).removeClass("new");
+			$(".new.pinbutton").click(function (e) {
+				e.stopPropagation();
+			}).removeClass("new");
+			$(".new.unpinbutton").click(function (e) {
 				e.stopPropagation();
 			}).removeClass("new");
 			var enable = true;
@@ -452,7 +458,7 @@ function loadScoresPage(type, mode) {
 			}).removeClass("new");
 			var enable = true;
 			if (r.scores.length != 10)
-				enable = false;o
+				enable = false;
 			disableLoadMoreButton(type, mode, enable);
 		});
 	}
@@ -468,23 +474,60 @@ function do_pin(table, score, mode) {
 	} else {
 		var scoreRank = 'F';
 	}
-	table.append($("<tr class='new score-row' data-scoreid='" + score.id + "' />").append(
-		$(
-			"<td><img src='/static/ranking-icons/" + scoreRank + ".png' class='score rank' alt='" + scoreRank + "'> " +
-			escapeHTML(score.beatmap.song_name) + " <b>" + getScoreMods(score.mods) + "</b> <i>(" + score.accuracy.toFixed(2) + "%)</i><br />" +
-			"<div class='subtitle'><time class='new timeago' datetime='" + score.time + "'>" + score.time + "</time></div>" + (score.completed == 3 ? downloadStar(score.id) : "") + (userID == window.actualID ? unpinButton(score.id, preferRelax) : "") + "</td>"
-		),
-		$("<td><b>" + ppOrScore(score.pp, score.score) + "</b></td>")
-	));
+	table.append(`
+	<div class="new map-single complete-${score.completed}" data-pinnedscoreid="${score.id}">
+		<div class="map-content1">
+			<div class="map-data">
+				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${score.beatmap.beatmapset_id}/covers/card.jpg)">
+					<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "+")}</div>
+				</div>
+				<div class="map-title-block">
+					<div class="map-title"><a class="beatmap-link">
+						${escapeHTML(score.beatmap.song_name)}
+						</a>
+					</div>
+					<div class="play-stats">
+						${score.score} / ${score.max_combo}x
+					</div>
+					<div class="map-date">
+						<time class="new timeago" datetime="${score.time}">
+							${score.time}
+						</time>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="map-content2">
+			<div class="score-details d-flex">
+				<div class="score-details_right-block">
+					<div class="score-details_pp-block">
+						<div class="map-pp">
+							${ppOrScore(score.pp, score.score)}
+						</div>
+						<div class="map-acc">accuracy:&nbsp;<b>
+							${score.accuracy.toFixed(2)}%
+							</b>
+						</div>
+					</div>
+					${downloadStar(score.id)}
+					${userID == window.actualID ? unpinButton(score.id, preferRelax) : ""}
+					<div class="score-details_icon-block">
+						<i class="angle right icon"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	`);
 }
 
 function pinSuccess(data)
 {
 	score = scoreStore[data['score_id']]
-	//refreshTable("pinned");
-	//location.reload();
-	var table = $(`#scores-zone div[data-mode=${favouriteMode}][data-rx=${preferRelax}] table[data-type=pinned] tbody`);
+
+	var table = $("#scores-zone div[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "] div[data-type=pinned] .scores");
 	if (!table) return showMessage("error", "Tell Flame to fix this");
+
 	do_pin(table, score, favouriteMode);
 	$(".new.timeago").timeago().removeClass("new");
 
@@ -492,8 +535,9 @@ function pinSuccess(data)
 }
 
 function unpinSuccess(data) {
-	//refreshTable("pinned");
-	location.reload();
+	var row = $(`div[data-pinnedscoreid=${data['score_id']}]`)
+	row.remove()
+
 	showMessage("success", "Score unpinned.");
 }
 
@@ -545,11 +589,11 @@ function unpinScore(id, rx) {
 }
 
 function pinButton(id, rx) {
-	return `<a href='#' class='new pinbutton' onclick='pinScore(${id}, ${rx})'><i class='pin icon'></i>Pin</a>`
+	return `<a href='#' class='new pinbutton' onclick='pinScore("${id}", ${rx})'><i class='pin icon'></i></a>`
 }
 
 function unpinButton(id, rx) {
-	return `<a href='#' class='new unpinbutton' onclick='unpinScore(${id}, ${rx})'><i class='pin icon'></i>Unpin</a>`
+	return `<a href='#' class='new unpinbutton' onclick='unpinScore("${id}", ${rx})'><i class='pin icon'></i></a>`
 }
 
 function downloadStar(id) {
