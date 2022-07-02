@@ -5,6 +5,7 @@ Include=user_group.html
 KyutGrill=team2.jpg
 */}}
 {{ define "tpl" }}
+<link rel="stylesheet" href="/static/css/pages/clanpage.css">
 <div class="ui container">
 	<div class="ui segments">
 		<div class="ui center aligned segment">
@@ -16,7 +17,7 @@ KyutGrill=team2.jpg
 				{{ .T "Community managers manage not only the community, but also the management team itself." }}<br>
 				{{ .T "They have a light blue colour in the in-game chat." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
+			{{ template "users" (.Get "badges/members?id=%d" 4) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Development Team" }}</h1>
@@ -25,42 +26,42 @@ KyutGrill=team2.jpg
 				{{ .T "They have a darker blue name in the in-game chat." }}
 
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 2) }}
+			{{ template "users" (.Get "badges/members?id=%d" 2) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Event Management Team" }}</h1>
 			<p>
 				{{ .T "Event Managers host events such as competitions and tournaments, keeping the community thriving." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 78) }}
+			{{ template "users" (.Get "badges/members?id=%d" 78) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Beatmap Quality Assurance Team" }}</h1>
 			<p>
 				{{ .T "Beatmap QA members manage the nomination team while also contributing to nomination." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 89) }}
+			{{ template "users" (.Get "badges/members?id=%d" 89) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Beatmap Nomination Team" }}</h1>
 			<p>
 				{{ .T "Beatmap Nominators handle all beatmap related inquiries; such as ranked requests." }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 53) }}
+			{{ template "users" (.Get "badges/members?id=%d" 53) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Akatsuki Scorewatch Team" }}</h1>
 			<p>
 				{{ .T "These members help select scores for <a href='https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ'>AKatsuki's YouTube channel</a>." | html }}
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 86) }}
+			{{ template "users" (.Get "badges/members?id=%d" 86) }}
 		</div>
 	</div>
 	<div class="ui segments">
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Special thanks" }}</h1>
 			<p>{{ .T "Here's an additional list of some people who helped us out along the way." }}</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 42) }}
+			{{ template "users" (.Get "badges/members?id=%d" 42) }}
 		</div>
 		<div class="ui segment">
 			<ul class="ui list">
@@ -86,7 +87,7 @@ KyutGrill=team2.jpg
 	<div class="ui modal">
 		<div class="header"><h2 class="ui header">{{ .T "They told me these are very cool people." }}</h2></div>
 			<div class="content">
-				{{ template "userGroup" (.Get "badges/members?id=%d" 59) }}
+				{{ template "users" (.Get "badges/members?id=%d" 59) }}
 				<!-- Probably most shit coded part of Hanayo -->
 				<br>
 				<div class="centered">
