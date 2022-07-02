@@ -1,4 +1,3 @@
-var modesSet = new Array(7).fill(false);
 $(document).ready(function() {
 	var wl = window.location;
 	var newPathName = wl.pathname + wl.search;
@@ -27,7 +26,7 @@ $(document).ready(function() {
 		
 	}*/
 	checkRelaxMania(favouriteMode, rx);
-	setMode(favouriteMode, rx != 0);
+	setMode(favouriteMode, rx);
 
 	$("#rx-menu>.item").click(function(e) {
 		e.preventDefault();
@@ -38,8 +37,8 @@ $(document).ready(function() {
 		window.rx = nrx;
 		checkRelaxMania(favouriteMode, rx);
 		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
-		$("[data-mode=" + favouriteMode + (rx != 0 ? 'r' : '') + "]:not(.item)").removeAttr("hidden");
-		setMode(favouriteMode, rx != 0);
+		$("[data-mode=" + favouriteMode + (rx != 0 ? (rx != 2 ? 'r' : 'a') : '') + "]:not(.item)").removeAttr("hidden");
+		setMode(favouriteMode, rx);
 		$(this).addClass("active");
 		window.history.replaceState('', document.title, wl.pathname + "?mode=" + favouriteMode + "&rx=" + nrx + wl.hash);
 	});
@@ -54,8 +53,8 @@ $(document).ready(function() {
 		checkRelaxMania(m, rx);
 		window.favouriteMode = m;
 		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
-		$("[data-mode=" + m + (rx != 0 ? 'r' : '') + "]:not(.item)").removeAttr("hidden");
-		setMode(m, rx != 0);
+		$("[data-mode=" + m + (rx != 0 ? (rx != 2 ? 'r' : 'a') : '') + "]:not(.item)").removeAttr("hidden");
+		setMode(m, rx);
 		$(this).addClass("active");
 		window.history.replaceState('', document.title, wl.pathname + "?mode=" + m + "&rx=" + rx + wl.hash);
 	});
@@ -101,21 +100,16 @@ function joinClan(obj, btn) {
 		btn.css("background-color", "rgba(255,0,0,.3)");
 		btn.unbind();
 		showMessage("success", "Successfully joined " + t.clan.name);
-		modesSet = new Array(7).fill(false);
 		api("users", { id: "self" }, function(r) {
 			document.getElementById("members").innerHTML += `<div class="column"> <div class="ui left aligned fluid card"> <div class="image"> <img src="${hanayoConf.avatars}/${r.id}" alt="Avatar"> </div> <div class="content"> <a class="header" href="/u/"><i class="${r.country.toLowerCase()} flag"></i>${r.username}</a> </div> </div> </div>`
 		});
-		setMode(favouriteMode, rx != 0);
+		setMode(favouriteMode, rx);
 	}, !0)
 }
 
 function setMode(mode, rx) {
-	var mIndex = rx ? mode + 4 : mode;
-	if (mIndex > 6 || mIndex < 0) return;
-	if (modesSet[mIndex]) return;
-	modesSet[mIndex] = true;
-	let eldx = document.getElementById(mode + (rx ? 'r' : ''));	
-	api("clans/stats", { id: clanID, m: mode, rx: (rx ? 1 : 0) }, function (e) {
+	let eldx = document.getElementById(mode + (rx != 0 ? (rx != 2 ? 'r' : 'a') : ''));
+	api("clans/stats", { id: clanID, m: mode, rx: rx }, function (e) {
 		var data = e.clan.chosen_mode;
 		eldx.innerHTML = `` + tableRow("Global Rank", addCommas(data.global_leaderboard_rank)) 
 		+ tableRow("Performance", addCommas(data.pp)+"pp") 
@@ -132,9 +126,28 @@ function tableRow(title, data) {
 }
 
 function checkRelaxMania(mode, rx) {
-	if (rx) $("a.item[data-mode='3']").addClass('disabled')
-	else $("a.item[data-mode='3']").removeClass('disabled')
+	if (rx == 1) {
+		for (i = 0; i <= 3; i++) {
+			$(`a.item[data-mode='${i}']`).removeClass('disabled')
+		}
+		$("a.item[data-mode='3']").addClass('disabled')
+	} else if (rx == 2) {
+		for (i = 1; i <= 3; i++) {
+			$(`a.item[data-mode='${i}']`).addClass('disabled')
+		}
+	} else {
+		for (i = 0; i <= 3; i++) {
+			$(`a.item[data-mode='${i}']`).removeClass('disabled')
+		}
+	}
 
-	if (mode === 3) $("a.item[data-rx='1']").addClass('disabled')
-	else $("a.item[data-rx='1']").removeClass('disabled')
+	if (mode === 3) {
+		$("a.item[data-rx='1']").addClass('disabled')
+		$("a.item[data-rx='2']").addClass('disabled')
+	} else if (mode === 1 || mode == 2) {
+		$("a.item[data-rx='2']").addClass('disabled')
+	} else {
+		$("a.item[data-rx='1']").removeClass('disabled')
+		$("a.item[data-rx='2']").removeClass('disabled')
+	}
 }

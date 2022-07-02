@@ -7,13 +7,18 @@ NoCompile=true
 	<a class="player" href="/u/{{ .id }}">
 		<div class="front">
 			<img class="user-avatar" src="{{ config "AvatarURL" }}/{{ .id }}" alt="Avatar">
-			<h1 class="header">{{ if .country }}{{ country .country false }}{{ end }}{{ .username }}</h1>
+			<h1 class="header">
+				{{ if .country }}
+					<img class="new-flag fixed--flag--cards" src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints .country }}.svg"></img>
+				{{ end }}
+				{{ .username }}
+			</h1>
 		</div>
 		{{ if .registered_on }}
-		<div class="sub-header" title="Registered">
-			<i class="sign in icon notlock-icon"></i>
-			{{ time .registered_on }}
-		</div>
+			<div class="sub-header" title="Registered">
+				<i class="sign in icon notlock-icon"></i>
+				{{ time .registered_on }}
+			</div>
 		{{ end }}
 	</a>
 </div>

@@ -8,7 +8,7 @@ Include=clan_member.html
 {{ $global := . }}
 {{ $favModeRaw := .Get "users/self/favourite_mode" }}
 {{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
-{{ $rx := _or (atoi (.Gin.Query "rx")) (has .ClientFlags 2) }}
+{{ $rx := _or (atoi (.Gin.Query "rx")) (float 0) }}
 <!-- idk (it works) -->
 {{ with (.Get "clans?id=%d" .ClanID).clan }}
 <script>
@@ -59,9 +59,9 @@ Include=clan_member.html
 		</div>
 		<div class="five wide column">
 			<div class="ui three item bottom attached menu no-border" id="rx-menu">
-				<a class="0 item{{ if (not $rx) }} active{{ end }}" data-rx="0" href="/c/{{ .id }}?rx=0">Vanilla</a>
-				<a class="1 item{{ if $rx }} active{{ end }}" data-rx="1" href="/c/{{ .id }}?rx=1">Relax</a>
-				<a class="3 item{{ if $rx }} active{{ end }}" data-rx="2" href="/c/{{ .id }}?rx=2">Autopilot</a>
+				<a class="{{ favMode $rx 0 }}item" data-rx="0" href="/c/{{ .id }}?rx=0">Vanilla</a>
+				<a class="{{ favMode $rx 1 }}item" data-rx="1" href="/c/{{ .id }}?rx=1">Relax</a>
+				<a class="{{ favMode $rx 2 }}item" data-rx="2" href="/c/{{ .id }}?rx=2">Autopilot</a>
 			</div>
 		</div>
 	</div>
@@ -73,20 +73,28 @@ Include=clan_member.html
 					<h1 class="ui heading">{{ $.T "Clan Statistics" }}</h1>
 					<p>{{ $.T "The statistics of the clan." }}</p>
 					{{ range $k, $v := modes }}
-					<div data-mode="{{ $k }}" {{ if or (ne $k (int $favMode)) ($rx) }}hidden{{ end }}>
-						<table class="ui very basic two column compact table nopad">
-							<tbody id="{{ $k }}">
-							</tbody>
-						</table>
-					</div>
+						<div data-mode="{{ $k }}" {{ if or (ne $k (int $favMode)) ($rx) }}hidden{{ end }}>
+							<table class="ui very basic two column compact table nopad">
+								<tbody id="{{ $k }}">
+								</tbody>
+							</table>
+						</div>
 					{{ end }}
 					{{ range $k, $v := modes }}
-					<div data-mode="{{ $k }}r" {{ if or (ne $k (int $favMode)) (not $rx) }}hidden{{ end }}>
-						<table class="ui very basic two column compact table nopad">
-							<tbody id="{{ $k }}r">
-							</tbody>
-						</table>
-					</div>
+						<div data-mode="{{ $k }}r" {{ if or (ne $k (int $favMode)) (not $rx) }}hidden{{ end }}>
+							<table class="ui very basic two column compact table nopad">
+								<tbody id="{{ $k }}r">
+								</tbody>
+							</table>
+						</div>
+					{{ end }}
+					{{ range $k, $v := modes }}
+						<div data-mode="{{ $k }}a" {{ if or (ne $k (int $favMode)) (not $rx) }}hidden{{ end }}>
+							<table class="ui very basic two column compact table nopad">
+								<tbody id="{{ $k }}a">
+								</tbody>
+							</table>
+						</div>
 					{{ end }}
 				</div>
 				<div class="column">
