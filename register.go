@@ -81,6 +81,11 @@ func registerSubmit(c *gin.Context) {
 		return
 	}
 
+	if c.PostForm("password") != c.PostForm("password2") {
+		registerResp(c, errorMessage{T(c, "The passwords doesn't match!")})
+		return
+	}
+
 	// passwords check (too short/too common)
 	if x := validatePassword(c.PostForm("password")); x != "" {
 		registerResp(c, errorMessage{T(c, x)})
