@@ -48,7 +48,7 @@
 		<div class="ui grid">
 			<div class="ten wide column" id="user-info">
 				<div class="flex">
-					<div class="fcolumn">
+					<div class="fcolumn" style="margin-bottom: 1.5em;">
 						<img src="https://a.akatsuki.pw/{{ .id }}" alt="avatar" class="user avatar">
 					</div>
 					<div class="fcolumn">
@@ -70,7 +70,7 @@
 								<div class="tcolumn flex2">
 									<img src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints .country }}.svg" class="pflag"> {{ countryReadable .country }}
 								</div>
-								<div class="tcolumn">
+								<div class="tcolumn online-status">
 									{{ with bget "isOnline?id=%.0f" .id }}
             						<div class="subtitle">
             						    <i class="{{ if .result }}green{{ else }}red{{ end }} circle icon"></i>
@@ -98,6 +98,26 @@
 						</div>
 						<div class="bottom-side">
 							Player Since: <b>{{ $global.T "%s" (time $user.registered_on) | html }}</b>
+						</div>
+						<div class="bottom-side">
+							{{ if and (ne $global.Context.User.ID $global.UserID) (ne $global.Context.User.ID 0) }}
+								<a class="ui button loading" id="add-friend-button"></a>
+							{{ end }}
+							{{ if eq $global.Context.User.ID $global.UserID }}
+								<a href="/settings" class="ui teal button" title="Go to settings">
+									<i class="fa-solid fa-pen-to-square"></i>
+								</a>
+							{{ end }}
+							{{ if has $global.Context.User.Privileges 16 }} {{/* AdminManageUsers */}}
+								<a href="http://old.akatsuki.pw/index.php?p=103&id={{ $global.UserID }}"
+									target="_blank" title="Edit user" class="ui purple button">
+									<i class="fa-solid fa-folder-open"></i>
+								</a>
+								<a href="http://old.akatsuki.pw/index.php?p=104&id={{ $global.UserID }}"
+									target="_blank" title="Edit username" class="ui red button">
+									<i class="fa-solid fa-book"></i>
+								</a>
+							{{ end }}
 						</div>
 					</div>
 				</div>

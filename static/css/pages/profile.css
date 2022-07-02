@@ -145,7 +145,6 @@
 }
 
 .map-single {
-    height: 72px;
     min-width: 0;
     display: flex;
     flex-direction: row;
@@ -160,13 +159,11 @@
 }
 
 .map-data {
-    height: 72px;
     min-width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-right: 0;
-    margin: 8px 0;
     justify-content: space-between;
     overflow: hidden;
     transition: 0.2s ease;
@@ -300,6 +297,7 @@
 
 .score-data {
     padding: 8px 12px;
+    background: #222121;
 }
 
 .achivement-data {
@@ -392,4 +390,48 @@
         justify-content: center;
         margin-top: 18px;
     }
+}
+
+.new-flag-margin {
+    margin-bottom: -0.3em !important;
+}
+
+.modified-menu {
+    left: 1 !important;  /* Just so we can disable it */
+    right: 0 !important;
+}
+
+@media only screen and (max-width: 700px) {
+  .map-single {
+      display: block;
+  }
+
+  .map-data {
+    display: block;
+  }
+
+  .map-image {
+    width: 100%;
+    background-size: cover;
+  }
+
+  .map-title-block {
+    padding: 1.2rem 0px 0px 0px
+  }
+
+  .map-content2 {
+    padding: 0px 0px 1.2rem 0px;
+  }
+
+  .map-grade {
+    font-size: 3rem
+  }
+}
+
+.online-status {
+    margin-bottom: 0.25em;
+}
+
+.bottom-side > .ui.button {
+    font-size: 0.55em !important;
 }

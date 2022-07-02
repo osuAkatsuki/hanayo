@@ -13,7 +13,7 @@ $(document).ready(function () {
 		newSearch = "?mode=" + favouriteMode;
 	}
 
-	if (wl.search.indexOf("rx=") === -1)
+	if (wl.search.indexOf("rx=") === -1 || wl.search.indexOf("?rx=") != -1) 
 		newSearch += "&rx=" + preferRelax;
 
 	if (wl.search != newSearch)
@@ -22,7 +22,7 @@ $(document).ready(function () {
 		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
 
 	setDefaultScoreTable();
-	checkRelaxMania(favouriteMode, $(this).data("rx"));
+	checkRelaxMania(favouriteMode, preferRelax);
 
 	$("#rx-menu>.simple-banner-swtich").click(function (e) {
 		e.preventDefault();
@@ -153,21 +153,21 @@ function setFriend(i) {
 	switch (i) {
 		case 0:
 			b
-				.addClass("blue")
-				.attr("title", T("Add friend"))
-				.html("<i class='plus icon'></i>");
+			.addClass("blue")
+			.attr("title", T("Add friend"))
+			.html(`<i class="fas fa-user-plus"></i>`);
 			break;
 		case 1:
 			b
-				.addClass("green")
-				.attr("title", T("Remove friend"))
-				.html("<i class='minus icon'></i>");
+			.addClass("green")
+			.attr("title", T("Remove friend"))
+			.html(`<i class="fas fa-user-times"></i>`);
 			break;
 		case 2:
 			b
-				.addClass("red")
-				.attr("title", T("Unmutual friend"))
-				.html("<i class='heart icon'></i>");
+			.addClass("red")
+			.attr("title", T("Unmutual friend"))
+			.html(`<i class="fas fa-user-friends"></i>`);
 			break;
 	}
 	b.attr("data-friends", i > 0 ? 1 : 0)
@@ -343,7 +343,7 @@ function loadScoresPage(type, mode) {
 					`<div class="map-single">
 						<div class="map-content1">
 							<div class="map-data">
-								<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) )">
+								<div class="map-image" style="background:linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)); background-size: cover;">
 									<div class="map-grade rank-SHD">: (</div>
 								</div>
 								<div class="map-title-block">
@@ -373,7 +373,7 @@ function loadScoresPage(type, mode) {
 				<div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
 					<div class="map-content1">
 						<div class="map-data">
-							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id}/covers/list.jpg)">
+							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id}/covers/list.jpg); background-size: cover;">
 								<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "+")}</div>
 							</div>
 							<div class="map-title-block">
@@ -404,8 +404,10 @@ function loadScoresPage(type, mode) {
 										</b>
 									</div>
 								</div>
-								${downloadStar(v.id)}
-								${userID == window.actualID ? pinButton(v.id, preferRelax) : ""}
+								<div data-btns-score-id='${v.id}'>
+									${downloadStar(v.id)}
+									${userID == window.actualID && !document.querySelector(`[data-pinnedscoreid='${v.id}']`) ? pinButton(v.id, preferRelax) : ""}
+								</div>
 								<div class="score-details_icon-block">
 									<i class="angle right icon"></i>
 								</div>
@@ -478,7 +480,7 @@ function do_pin(table, score, mode) {
 	<div class="new map-single complete-${score.completed}" data-pinnedscoreid="${score.id}">
 		<div class="map-content1">
 			<div class="map-data">
-				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${score.beatmap.beatmapset_id}/covers/card.jpg)">
+				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${score.beatmap.beatmapset_id}/covers/list.jpg); background-size: cover;">
 					<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "+")}</div>
 				</div>
 				<div class="map-title-block">
@@ -531,12 +533,18 @@ function pinSuccess(data)
 	do_pin(table, score, favouriteMode);
 	$(".new.timeago").timeago().removeClass("new");
 
+	var otherScores = $(`[data-btns-score-id="${data['score_id']}"]`)
+	otherScores.find('.pinbutton').remove();
+
 	showMessage("success", "Score pinned.");
 }
 
 function unpinSuccess(data) {
 	var row = $(`div[data-pinnedscoreid=${data['score_id']}]`)
 	row.remove()
+
+	var otherScores = $(`[data-btns-score-id="${data['score_id']}"]`)
+	otherScores.append(pinButton(data['score_id'], preferRelax))
 
 	showMessage("success", "Score unpinned.");
 }
@@ -565,6 +573,7 @@ function pin_api(endpoint, data, success, failure, post) {
 				console.warn(data);
 				showMessage("error", errorMessage);
 			}
+			console.log(data)
 			success(data);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -786,9 +795,28 @@ function beatmapLink(type, id) {
 }
 
 function checkRelaxMania(mode, rx) {
-	if (rx === 1) $(".simple-banner-swtich[data-mode='3']").addClass('disabled')
-	else $(".simple-banner-swtich[data-mode='3']").removeClass('disabled')
+	if (rx == 1) {
+		for (i = 0; i <= 3; i++) {
+			$(`.simple-banner-swtich[data-mode='${i}']`).removeClass('disabled')
+		}
+		$(".simple-banner-swtich[data-mode='3']").addClass('disabled')
+	} else if (rx == 2) {
+		for (i = 1; i <= 3; i++) {
+			$(`.simple-banner-swtich[data-mode='${i}']`).addClass('disabled')
+		}
+	} else {
+		for (i = 0; i <= 3; i++) {
+			$(`.simple-banner-swtich[data-mode='${i}']`).removeClass('disabled')
+		}
+	}
 
-	if (mode === 3) $(".simple-banner-swtich[data-rx='1']").addClass('disabled')
-	else $(".simple-banner-swtich[data-rx='1']").removeClass('disabled')
+	if (mode === 3) {
+		$(".simple-banner-swtich[data-rx='1']").addClass('disabled')
+		$(".simple-banner-swtich[data-rx='2']").addClass('disabled')
+	} else if (mode === 1 || mode === 2) {
+		$(".simple-banner-swtich[data-rx='2']").addClass('disabled')
+	} else {
+		$(".simple-banner-swtich[data-rx='1']").removeClass('disabled')
+		$(".simple-banner-swtich[data-rx='2']").removeClass('disabled')
+	}
 }
