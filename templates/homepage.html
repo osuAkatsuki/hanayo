@@ -35,8 +35,8 @@
           </div>
         </h1>
         <div class="buttons">
-            <a class="ui small pink button">Register</a>
-            <a class="ui small blue button">Login</a>
+            <a class="ui small pink button" href="/register">Register</a>
+            <a class="ui small blue button" href="/login">Login</a>
           </div>
         </div>
     </div>
@@ -59,11 +59,11 @@
             <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="angle right icon status-icon"></i>
+                        <i class="angle double right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
-                        <p class="status-footer">Total scores (Relax)</p>
+                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
+                        <p class="status-footer">Total scores (Vanilla)</p>
                     </div>
                 </div>
             </div>
@@ -72,13 +72,11 @@
             <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="user plus icon status-icon"></i>
+                        <i class="angle right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ range $key, $value := (qb "SELECT username FROM users WHERE privileges & 1 ORDER BY id DESC LIMIT 1") }}
-                        <p class="status-head">{{ $value }}</p>
-                        {{ end }}
-                    <p class="status-footer">Latest player</p>
+                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
+                        <p class="status-footer">Total scores (Relax)</p>
                     </div>
                 </div>
             </div>
@@ -90,13 +88,30 @@
                         <i class="angle double right icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
-                        <p class="status-footer">Total scores (Vanilla)</p>
+                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_ap") | html }}</p>
+                        <p class="status-footer">Total scores (Autopilot)</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="eight wide column less-pad">
+        <div class="five wide column less-pad">
+            <div class="ui segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="thumbs up icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
+                        {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
+                        {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
+                       <p class="status-head">{{ $vanilla_pp }}pp</p>
+                       <p class="status-footer">Top score (Vanilla)</p>
+                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="six wide column less-pad">
             <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
@@ -113,19 +128,19 @@
                 </div>
             </div>
         </div>
-        <div class="eight wide column less-pad">
+        <div class="five wide column less-pad">
             <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="thumbs up icon status-icon"></i>
+                        <i class="thumbs up outline icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
-                        {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
-                        {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
-                       <p class="status-head">{{ $vanilla_pp }}pp</p>
-                       <p class="status-footer">Top score (Vanilla)</p>
-                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a></p>
+                        {{ $ap_pp := (rediget "akatsuki:top:scores_ap:pp") }}
+                        {{ $ap_id := (rediget "akatsuki:top:scores_ap:id") }}
+                        {{ $ap_name := (rediget "akatsuki:top:scores_ap:name") }}
+                       <p class="status-head">{{ $ap_pp }}pp</p>
+                       <p class="status-footer">Top score (Autopilot)</p>
+                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $ap_id }}?rx=1">{{ .T "%s" $ap_name | html }}</a></p>
                     </div>
                 </div>
             </div>
