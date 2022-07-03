@@ -82,6 +82,16 @@ func parseBBCode(c *gin.Context) {
 	c.String(200, d)
 }
 
+func countryToCodepoints(isoCode string) string {
+    var charList []string
+    isoCode = strings.ToUpper(isoCode)
+
+    for _, char := range isoCode {
+        charList = append(charList, fmt.Sprintf("%x", int(char)+127397))
+    }
+    return strings.Join(charList, "-")
+}
+
 func discordFinish(c *gin.Context) {
 	sess := getSession(c)
 	defer func() {
