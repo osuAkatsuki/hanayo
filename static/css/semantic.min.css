@@ -317,7 +317,7 @@ input::selection, textarea::selection {
 }
 
 .ui.button:hover {
-  background-color: #cacbcd;
+  background: hsl(var(--base), 0%, 30%);
   background-image: none;
   box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, 0.15) inset;
   color: #fff;
@@ -328,7 +328,7 @@ input::selection, textarea::selection {
 }
 
 .ui.button:focus {
-  background-color: #cacbcd;
+  background-color: hsl(var(--base), 0%, 30%);
   color: #fff;
   background-image: "" !important;
   box-shadow: "" !important;
@@ -339,27 +339,27 @@ input::selection, textarea::selection {
 }
 
 .ui.active.button:active, .ui.button:active {
-  background-color: #babbbc;
+  background-color: hsl(var(--base), 0%, 30%);
   background-image: "";
   color: #fff;
   box-shadow: 0 0 0 1px transparent inset, none;
 }
 
 .ui.active.button {
-  background-color: #c0c1c2;
+  background-color: hsl(var(--base), 0%, 30%);
   background-image: none;
   box-shadow: 0 0 0 1px transparent inset;
   color: #fff;
 }
 
 .ui.active.button:hover {
-  background-color: #c0c1c2;
+  background-color: hsl(var(--base), 0%, 30%);
   background-image: none;
   color: #fff;
 }
 
 .ui.active.button:active {
-  background-color: #c0c1c2;
+  background-color: hsl(var(--base), 0%, 30%);
   background-image: none;
 }
 
@@ -10825,7 +10825,7 @@ a.ui.basic.label:hover {
   left: auto;
   font-weight: 400;
   margin-left: -1.25rem;
-  content: "â€¢";
+  content: "•";
   opacity: 1;
   color: inherit;
   vertical-align: top;
@@ -11774,7 +11774,7 @@ ol.ui.list li[value]:before {
 
 .ui.segment {
   position: relative;
-  background: hsl(var(--base), 0%, 10%) !important;
+  background: #222121;
   margin: 1rem 0;
   padding: 1em;
   border-radius: 0.28571429rem;
@@ -16166,7 +16166,7 @@ ol.ui.list li[value]:before {
 
 .ui.message .list:not(.ui) li:before {
   position: absolute;
-  content: "â€¢";
+  content: "•";
   left: -1em;
   height: 100%;
   vertical-align: baseline;
