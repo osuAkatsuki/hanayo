@@ -827,7 +827,7 @@ function getScoreMods(m, noplus) {
       r.push(v);
   });
 	if (r.length > 0) {
-		return (noplus ? "" : "+ ") + r.join(", ");
+		return (noplus ? "" : "+") + r.join("");
 	} else {
 		return (noplus ? T('None') : '');
 	}

@@ -378,11 +378,11 @@ function loadScoresPage(type, mode) {
 							</div>
 							<div class="map-title-block">
 								<div class="map-title"><a class="beatmap-link">
-									${escapeHTML(v.beatmap.song_name)}
+									${escapeHTML(v.beatmap.song_name)} ${getScoreMods(v.mods)}
 									</a>
 								</div>
 								<div class="play-stats">
-									${v.score} / ${v.max_combo}x
+									${addCommas(v.score)} / ${addCommas(v.max_combo)}x
 								</div>
 								<div class="map-date">
 									<time class="new timeago" datetime="${v.time}">
@@ -485,11 +485,11 @@ function do_pin(table, score, mode) {
 				</div>
 				<div class="map-title-block">
 					<div class="map-title"><a class="beatmap-link">
-						${escapeHTML(score.beatmap.song_name)}
+						${escapeHTML(score.beatmap.song_name)} ${getScoreMods(score.mods)}
 						</a>
 					</div>
 					<div class="play-stats">
-						${score.score} / ${score.max_combo}x
+						${addCommas(score.score)} / ${addCommas(score.max_combo)}x
 					</div>
 					<div class="map-date">
 						<time class="new timeago" datetime="${score.time}">
