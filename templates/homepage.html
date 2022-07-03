@@ -35,8 +35,8 @@
           </div>
         </h1>
         <div class="buttons">
-            <a class="ui small pink button" href="/register">Register</a>
-            <a class="ui small blue button" href="/login">Login</a>
+            <a href="{{ if not .Context.User.ID }}/register{{ else }}/u/{{ .Context.User.ID }}{{ end }}" class="ui small pink button">{{ if not .Context.User.ID }} Register {{else}} Profile {{ end }} </a>
+            <a href="{{ if not .Context.User.ID }}/doc/connection_guide{{ else }}/leaderboard{{ end }}" class="ui small blue button" style="margin-left: 6px;">{{ if not .Context.User.ID }} How to connect {{ else }} View leaderboards {{ end }}</a>
           </div>
         </div>
     </div>
