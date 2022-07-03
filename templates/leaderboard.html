@@ -30,7 +30,7 @@ KyutGrill=dev.jpg
 				<a class="{{ favMode $relax 2 }}item" data-rx="2" href="/leaderboard?rx=2">Autopilot</a>
 			</div>
 		</div>
-		<div class="ten wide column">
+		<div class="eleven wide column">
 			<div class="ui four item menu" id="mode-menu">
 				{{ range $k, $v := modes }}
 				<a class="{{ favMode $favMode $k }}item" data-mode="{{ $k }}" href="/leaderboard?mode={{ $k }}">
@@ -38,19 +38,16 @@ KyutGrill=dev.jpg
 				{{ end }}
 			</div>
 		</div>
-		<div class="one wide column">
-			<div class="ui twelve item stackable">
-				<div class="ui dropdown icon button">
-					<span class="text">{{ if .Gin.Query "country" }}<i class='{{ .Gin.Query "country" }} flag nopad'></i>{{ else }}...{{ end }}</span>
-					<div class="menu">
-						{{ range countryList 8 }}
-						<a class="item lb-country" data-country="{{ . }}"><i class="{{ . }} flag nopad"></i></a>
-						{{ end }}
-						<a class="item" id="country-chooser-modal">...</a>
-					</div>
-				</div>
-			</div>
-		</div>
+	</div>
+
+	<div class="ui twelve item stackable menu" id="country-menu">
+		{{ range countryList 11 }}
+			{{ $code := . }}
+			{{ with country . false }}
+				<a class="item lb-country" data-country="{{ $code }}">{{ . }}</a>
+			{{ end }}
+		{{ end }}
+		<a class="item" id="country-chooser-modal">...</a>
 	</div>
 
 	<table class="ui table leaderboard-table" id="main">
@@ -75,10 +72,9 @@ KyutGrill=dev.jpg
 		<div class="content">
 			<div class="ui four column grid">
 				{{ range countryList 500 }}
-				{{ $short := . }}
-				{{ with country . true }}
-				<div class="ui clickable column lb-country" data-country="{{ $short }}">{{ . }}</div>
-				{{ end }}
+					<div class="ui clickable column lb-country" data-country="{{ . }}">
+						<img src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints . }}.svg" class="new-flag fixed--flag--margin"> {{ countryReadable . }}
+					</div>
 				{{ end }}
 			</div>
 		</div>
