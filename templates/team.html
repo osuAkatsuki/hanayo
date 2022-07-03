@@ -16,14 +16,14 @@ KyutGrill=team2.jpg
 			<p>
 				{{ .T "Project managers are responsible for overlooking Akatsuki itself, overlooking the rest of the team." }}<br>
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 4) }}
+			{{ template "users" (.Get "badges/members?id=%d" 4) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Product Management Team" }}</h1>
 			<p>
 				{{ .T "Product managers are responsible for envisionining Akatsuki's future, and create ideas in order to shape the server." }}<br>
 			</p>
-			{{ template "userGroup" (.Get "badges/members?id=%d" 30) }}
+			{{ template "users" (.Get "badges/members?id=%d" 30) }}
 		</div>
 		<div class="ui center aligned segment">
 			<h1 class="ui heading">{{ .T "Community Management Team" }}</h1>
