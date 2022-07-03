@@ -197,12 +197,7 @@ var defaultMapTable;
 function setDefaultMapTable() {
 	defaultMapTable = $("<table class='ui table score-table' />")
 		.append(
-			$("<thead />").append(
-				$("<tr />").append(
-					$("<th>" + T("Beatmap") + "</th>"),
-					$("<th class='right aligned'>" + T("Playcount") + "</th>")
-				)
-			)
+			$("<div class='scores' />")
 		)
 		.append(
 			$("<tbody />")
@@ -229,7 +224,7 @@ function initialiseScores(el, mode) {
 	var best = defaultScoreTable.clone(true);
 
 	setDefaultMapTable();
-	var most_played = defaultMapTable.clone(true);
+	var most_played = defaultScoreTable.clone(true);
 
 	var first = defaultScoreTable.clone(true);
 	var recent = defaultScoreTable.clone(true);
@@ -241,7 +236,7 @@ function initialiseScores(el, mode) {
 	el.append($("<div class='ui segments' />").append(
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Pinned scores")}</h2></div>`, pinned),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Best scores")}</h2></div>`, best),
-		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Most played beatmaps")}</h2></div>`, first),
+		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Most played beatmaps")}</h2></div>`, most_played),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("First Place Ranks")} <span id='1stotal' style='font-size: medium;'>(.. in total)</span></h2></div>`, first),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Recent scores (24h)")}</h2></div>`, recent),
 	));
@@ -285,11 +280,19 @@ var rPage = {
 	3: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0}
 };
 
+var aPage = {
+	0: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
+	1: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
+	2: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
+	3: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0}
+};
+
 function loadMostPlayedBeatmaps(type, mode) {
-	var mostPlayedTable = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] table[data-type=" + type + "] tbody");
+	var mostPlayedTable = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] div[data-type=" + type + "] .scores");
 
 	var page;
-	if (preferRelax) page = ++rPage[mode][type];
+	if (preferRelax == 1) page = ++rPage[mode][type];
+	else if (preferRelax == 2) page = ++aPage[mode][type];
 	else page = ++currentPage[mode][type];
 
 	api('users/most_played', { id: userID, mode: mode, p: page, l: 5, rx: preferRelax }, function (resp) {
@@ -299,13 +302,34 @@ function loadMostPlayedBeatmaps(type, mode) {
 		}
 
 		resp.most_played_beatmaps.forEach(function (el, idx) {
-			mostPlayedTable.append($("<tr class='new map-row'/>").append(
-				$(
-					`<td> <h5 class="ui image header"> <img src="https://assets.ppy.sh/beatmaps/${el.beatmap.beatmapset_id}/covers/list.jpg" class="ui mini rounded image">` +
-					`<div class="content"><a href="/b/${el.beatmap.beatmap_id}"><b>${escapeHTML(el.beatmap.song_name)}</b></a></div></h5></td>`
-				),
-				$("<td class='right aligned'><i class='play circle icon' /><b>" + el.playcount + "</b></td>")
-			));
+			mostPlayedTable.append(`
+			<div class="new map-single" style="cursor: auto">
+				<div class="map-content1">
+					<div class="map-data">
+						<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${el.beatmap.beatmapset_id}/covers/list.jpg); background-size: cover;">
+						</div>
+						<div class="map-title-block">
+							<div class="map-title">
+								<a class="beatmap-link" href="/b/${el.beatmap.beatmap_id}">
+									${escapeHTML(el.beatmap.song_name)}
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="map-content2">
+					<div class="score-details d-flex">
+						<div class="score-details_right-block">
+							<div class="score-details_pp-block">
+								<div class="map-pp">
+									<i class="fa-solid fa-play"></i> <b>${el.playcount}</b>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>`
+			)	
 		})
 
 		var enable = true;
@@ -321,7 +345,8 @@ function loadScoresPage(type, mode) {
 	var table = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] div[data-type=" + type + "] .scores");
 
 	var page;
-	if (preferRelax) page = ++rPage[mode][type];
+	if (preferRelax == 1) page = ++rPage[mode][type];
+	else if (preferRelax == 2) page = ++aPage[mode][type];
 	else page = ++currentPage[mode][type];
 
 	if (type != "pinned") {
@@ -379,10 +404,10 @@ function loadScoresPage(type, mode) {
 							<div class="map-title-block">
 								<div class="map-title"><a class="beatmap-link">
 									${escapeHTML(v.beatmap.song_name)}
-									</a>${getScoreMods(v.mods)}
+									</a>
 								</div>
 								<div class="play-stats">
-									${addCommas(v.score)} / ${addCommas(v.max_combo)}x
+									${addCommas(v.score)} / ${addCommas(v.max_combo)}x / <b>${getScoreMods(v.mods, true)}</b>
 								</div>
 								<div class="map-date">
 									<time class="new timeago" datetime="${v.time}">
@@ -487,10 +512,9 @@ function do_pin(table, score, mode) {
 					<div class="map-title"><a class="beatmap-link">
 						${escapeHTML(score.beatmap.song_name)}
 						</a>
-						${getScoreMods(score.mods)}
 					</div>
 					<div class="play-stats">
-						${addCommas(score.score)} / ${addCommas(score.max_combo)}x
+						${addCommas(score.score)} / ${addCommas(score.max_combo)}x / <b>${getScoreMods(score.mods, true)}</b>
 					</div>
 					<div class="map-date">
 						<time class="new timeago" datetime="${score.time}">
