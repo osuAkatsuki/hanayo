@@ -111,6 +111,9 @@
 							Player Since: <b>{{ $global.T "%s" (time $user.registered_on) | html }}</b>
 						</div>
 						<div class="bottom-side">
+							Last Seen: <b>{{ $global.T "%s" (time $user.latest_activity) | html }}</b>
+						</div>
+						<div class="bottom-side">
 							{{ if and (ne $global.Context.User.ID $global.UserID) (ne $global.Context.User.ID 0) }}
 								<a class="ui button loading" id="add-friend-button"></a>
 							{{ end }}
