@@ -101,52 +101,106 @@
 		{{ end }}
 		<div class="mcontent">
 			{{ if .Context.User.Username }}
-			<a class="single" href="/friends">
-				<span class="header-block--title">Friends</span>
-			</a> 
-			<a class="single" href="/settings">
-				<span class="header-block--title">Settings</span>
-			</a> 
-			<a class="single" href="/leaderboard">
-				<span class="header-block--title">Leaderboard</span>
-			</a> 
-			<div class="single">
-				<span class="header-block--title">Infomation</span>
-				<div class="m-menu">
-					<a class="single" href="/doc">Documentation</a>
-					<a class="single" href="/doc/tos">Rules</a>
-					<a class="single" href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">Youtube</a>
+				<a class="single" href="/friends">
+					<span class="header-block--title">Friends</span>
+				</a> 
+				<a class="single" href="/settings">
+					<span class="header-block--title">Settings</span>
+				</a> 
+				<div class="single">
+					<span data-menu="lb" data-invoked="false" class="header-block--title">
+						Leaderboard
+						<i data-dropdown-icon="lb" class="fa-solid fa-caret-down"></i>
+					</span>
+					<div data-dropdown-menu="lb" class="m-menu" style="display: none;">
+						<a class="single" href="/leaderboard">Performance</a>
+						<a class="single" href="/leaderboard?sort=score">Score</a>
+						<a class="single" href="/clans?mode=0">Clans</a>
+					</div>
+				</div> 
+				<div class="single">
+					<span data-menu="info" data-invoked="false" class="header-block--title">
+						Information
+						<i data-dropdown-icon="info" class="fa-solid fa-caret-down"></i>
+					</span>
+					<div data-dropdown-menu="info" class="m-menu" style="display: none;">
+						<a class="single" href="/doc">Documentation</a>
+						<a class="single" href="/doc/tos">Rules</a>
+						<a class="single" href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">Youtube</a>
+					</div>
 				</div>
-			</div>
-			<div class="ui search" id="user-search">
-				<div class="ui icon input">
-					<input class="prompt" type="text" placeholder="{{ .T "Looking for someone?" }}" id="user-search-input">
-					<i class="blue search link icon"></i>
+				<div class="ui search" id="user-search">
+					<div class="ui icon input">
+						<input class="prompt" type="text" placeholder="{{ .T "Looking for someone?" }}" id="user-search-input">
+						<i class="blue search link icon"></i>
+					</div>
 				</div>
-			</div>
-			<a class="single" href="/discord">
-				<span class="header-block--title">Discord</span>
-			</a> 
-			<a class="single" href='/logout?k={{ .Session.Get "logout" }}'>
-				<span class="header-block--title">Logout</span>
-			</a> 
+				<a class="single" href="/discord">
+					<span class="header-block--title">Discord</span>
+				</a> 
+				<a class="single" href='/logout?k={{ .Session.Get "logout" }}'>
+					<span class="header-block--title">Logout</span>
+				</a> 
 			{{ else }}
-			<a class="single" href="/leaderboard">
-				<span class="header-block--title">Leaderboard</span>
-			</a> 
-			<div class="single">
-				<span class="header-block--title">Infomation</span>
-				<div class="m-menu">
-					<a class="single" href="/doc">Documentation</a>
-					<a class="single" href="/doc/tos">Rules</a>
-					<a class="single" href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">Youtube</a>
+				<div class="single">
+					<span data-menu="lb" data-invoked="false" class="header-block--title">
+						Leaderboard
+						<i data-dropdown-icon="lb" class="fa-solid fa-caret-down"></i>
+					</span>
+					<div data-dropdown-menu="lb" class="m-menu" style="display: none;">
+						<a class="single" href="/leaderboard">Performance</a>
+						<a class="single" href="/leaderboard?sort=score">Score</a>
+						<a class="single" href="/clans?mode=0">Clans</a>
+					</div>
+				</div>  
+				<div class="single">
+					<span data-menu="info" data-invoked="false" class="header-block--title">
+						Information
+						<i data-dropdown-icon="info" class="fa-solid fa-caret-down"></i>
+					</span>
+					<div data-dropdown-menu="info" class="m-menu" style="display: none;">
+						<a class="single" href="/doc">Documentation</a>
+						<a class="single" href="/doc/tos">Rules</a>
+						<a class="single" href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">Youtube</a>
+					</div>
 				</div>
-			</div>
-			<a class="single" href="/discord">
-				<span class="header-block--title">Discord</span>
-			</a> 
+				<div class="ui search" id="user-search">
+					<div class="ui icon input">
+						<input class="prompt" type="text" placeholder="{{ .T "Looking for someone?" }}" id="user-search-input">
+						<i class="blue search link icon"></i>
+					</div>
+				</div>
+				<a class="single" href="/discord">
+					<span class="header-block--title">Discord</span>
+				</a> 
 			{{ end }}
 		</div>
 	</div>
+	<script >
+		$(document).ready(() => {
+			// Dropdowns for mobile view.
+			$('[data-menu]').on("click", function() {
+				dropdownType = $(this).data("menu")
+				isInvoked = $(this).data("invoked") == "true"
+				console.log(dropdownType, isInvoked)
+
+				dropdown = $(`[data-dropdown-menu="${dropdownType}"]`)
+				dropdownIcon = $(`[data-dropdown-icon="${dropdownType}"]`)
+				if (!isInvoked) {
+					$(this).data("invoked", "true")
+					dropdown.slideDown(300, () => {
+						dropdown.css("display", "")
+						dropdownIcon.removeClass("fa-caret-down").addClass("fa-caret-up")
+					})
+				} else {
+					$(this).data("invoked", "false")
+					dropdown.slideUp(300, () => {
+						dropdown.css("display", "none")
+						dropdownIcon.removeClass("fa-caret-up").addClass("fa-caret-down")
+					})
+				}
+			})
+		})
+	</script>
 </div>
 {{ end }}
