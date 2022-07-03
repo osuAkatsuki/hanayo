@@ -1,6 +1,6 @@
 .user-avatar {
-    width: 6rem;
-    height: 6rem;
+    width: 5rem;
+    height: 5rem;
     border-radius: 500px;
     object-fit: cover;
 }
@@ -8,7 +8,7 @@
 .header {
     margin-top: 0.2rem;
     margin-bottom: 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .sub-header {
@@ -123,10 +123,6 @@
 @media screen and (max-width: 600px) {
     .subtitle {
         width: 200px;
-    }
-
-    .header {
-        font-size: 1.1rem;
     }
 }
 

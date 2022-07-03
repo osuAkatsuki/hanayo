@@ -432,10 +432,18 @@
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 500px) {
     .avatar-container {
         margin-bottom: -1.2em !important;
-        margin-right: 15em !important; /* TODO: this needs an fix */ 
+    }
+
+    .flex {
+        justify-content: left;
+        margin-left: 0.7em;
+    }
+
+    .flex2 {
+        margin-left: -0.5em;
     }
 }
 

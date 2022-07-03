@@ -1072,14 +1072,8 @@ li.language-select:hover:before, li.language-select.selected:before {
 }
 
 .fixed--flag--cards {
-  margin-bottom: -0.14em !important;
+  margin-bottom: -0.3em !important;
   margin-right: 0.2em !important;
-}
-
-@media screen and (max-width: 600px) {
-  .fixed--flag--cards {
-    margin-bottom: -0.3em !important;
-  }
 }
 
 .modes-icons {
@@ -1097,4 +1091,8 @@ li.language-select:hover:before, li.language-select.selected:before {
 
 .noUi-handle {
   border-radius: 0.28571429rem !important;
+}
+
+.small-text-btn {
+  font-size: 0.9rem !important;
 }
