@@ -448,7 +448,7 @@ function loadScoresPage(type, mode) {
 
 			r.scores.forEach(score => do_pin(table, score, mode));
 			$(".new.timeago").timeago().removeClass("new");
-			$(".new.score-row").click(viewScoreInfo).removeClass("new");
+			$(".new.map-single").click(viewScoreInfo).removeClass("new");
 			$(".new.downloadstar").click(function (e) {
 				e.stopPropagation();
 			}).removeClass("new");
