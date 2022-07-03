@@ -48,7 +48,7 @@
 		<div class="ui grid">
 			<div class="ten wide column" id="user-info">
 				<div class="flex">
-					<div class="fcolumn" style="margin-bottom: 1.5em;">
+					<div class="fcolumn avatar-container">
 						<img src="https://a.akatsuki.pw/{{ .id }}" alt="avatar" class="user avatar">
 					</div>
 					<div class="fcolumn">
@@ -197,7 +197,8 @@
 								{{ end }}
 								{{ with .country_leaderboard_rank }}
 								<tr>
-									<td><b>{{ $global.T "Country rank" }} &nbsp;
+									<!-- nowrap because flag in other langs sometimes go down. -->
+									<td style="white-space: nowrap !important;"><b>{{ $global.T "Country rank" }} &nbsp;
 											<a href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}">
 												<img src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints $user.country }}.svg" class="new-flag new-flag-margin">
 											</a>

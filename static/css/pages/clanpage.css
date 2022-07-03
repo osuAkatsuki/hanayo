@@ -124,6 +124,10 @@
     .subtitle {
         width: 200px;
     }
+
+    .header {
+        font-size: 1.1rem;
+    }
 }
 
 .center-side {

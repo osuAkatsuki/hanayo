@@ -1076,6 +1076,12 @@ li.language-select:hover:before, li.language-select.selected:before {
   margin-right: 0.2em !important;
 }
 
+@media screen and (max-width: 600px) {
+  .fixed--flag--cards {
+    margin-bottom: -0.3em !important;
+  }
+}
+
 .modes-icons {
   margin-top: -0.8em !important;
   font-size: 1.2em !important;
