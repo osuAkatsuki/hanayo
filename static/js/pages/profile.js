@@ -397,7 +397,7 @@ function loadScoresPage(type, mode) {
 							<div class="score-details_right-block">
 								<div class="score-details_pp-block">
 									<div class="map-pp">
-										${Math.round(ppOrScore(v.pp, v.score))}
+										${ppOrScore(v.pp, v.score)}
 									</div>
 									<div class="map-acc">accuracy:&nbsp;<b>
 										${v.accuracy.toFixed(2)}%
@@ -504,7 +504,7 @@ function do_pin(table, score, mode) {
 				<div class="score-details_right-block">
 					<div class="score-details_pp-block">
 						<div class="map-pp">
-							${Math.round(ppOrScore(score.pp, score.score))}
+							${ppOrScore(score.pp, score.score)}
 						</div>
 						<div class="map-acc">accuracy:&nbsp;<b>
 							${score.accuracy.toFixed(2)}%
@@ -784,7 +784,7 @@ function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
 
 function ppOrScore(pp, score) {
 	if (pp != 0)
-		return addCommas(pp.toFixed(2)) + "pp";
+		return addCommas(Math.round(pp)) + "pp";
 	return addCommas(score);
 }
 
