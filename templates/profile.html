@@ -69,14 +69,14 @@
 							<div class="flex country-status">
 								<div class="tcolumn flex2">
 									<img src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints .country }}.svg" class="pflag"> {{ countryReadable .country }}
-								</div>
-								<div class="tcolumn online-status">
-									{{ with bget "isOnline?id=%.0f" .id }}
-            						<div class="subtitle">
-            						    <i class="{{ if .result }}green{{ else }}red{{ end }} circle icon"></i>
-            						    {{ if .result }}{{ $global.T "Online" }}{{ else }}{{ $global.T "Offline" }}{{ end }}
-            						</div>
-            						{{ end }}
+									<div class="tcolumn">
+										{{ with bget "isOnline?id=%.0f" .id }}
+										<div class="subtitle">
+											<i class="{{ if .result }}green{{ else }}red{{ end }} circle icon"></i>
+											{{ if .result }}{{ $global.T "Online" }}{{ else }}{{ $global.T "Offline" }}{{ end }}
+										</div>
+										{{ end }}
+									</div>
 								</div>
 							</div>
 						</div>
