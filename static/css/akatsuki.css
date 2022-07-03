@@ -339,8 +339,15 @@ body.ds .white.background {
   overflow: auto;
   object-fit: cover;
   border-radius: 15px;
-  height: 112px;
-  width: 112px;
+  height: 140px;
+  width: 140px;
+}
+
+@media only screen and (max-width: 500px) {
+  .user.avatar {
+    height: 100px;
+    width: 100px;
+  }
 }
 
 .ui.attached.segment {
@@ -1095,4 +1102,15 @@ li.language-select:hover:before, li.language-select.selected:before {
 
 .small-text-btn {
   font-size: 0.9rem !important;
+}
+
+.right--margin {
+  margin-left: 6px !important;
+}
+
+@media only screen and (max-width: 500px) {
+  .right--margin {
+    margin-left: 0px !important;
+    margin-top: 10px !important;
+  }
 }

@@ -193,7 +193,7 @@
     display: flow-root;
     font-weight: 500;
     align-items: center;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .map-title-block {
