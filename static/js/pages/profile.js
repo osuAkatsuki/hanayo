@@ -622,7 +622,12 @@ function disableLoadMoreButton(type, mode, enable) {
 }
 function viewScoreInfo() {
 	var scoreid = $(this).data("scoreid");
-	if (!scoreid && scoreid !== 0) return;
+	if (!scoreid && scoreid !== 0) {
+		scoreid = $(this).data("pinnedscoreid");
+
+		if (!scoreid && scoreid !== 0) return;
+	}
+
 	var s = scoreStore[scoreid];
 	if (s === undefined) return;
 
