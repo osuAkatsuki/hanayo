@@ -397,7 +397,7 @@ function loadScoresPage(type, mode) {
 							<div class="score-details_right-block">
 								<div class="score-details_pp-block">
 									<div class="map-pp">
-										${ppOrScore(v.pp, v.score)}
+										${ppOrScore(v.pp, v.score) | 0}
 									</div>
 									<div class="map-acc">accuracy:&nbsp;<b>
 										${v.accuracy.toFixed(2)}%
@@ -504,7 +504,7 @@ function do_pin(table, score, mode) {
 				<div class="score-details_right-block">
 					<div class="score-details_pp-block">
 						<div class="map-pp">
-							${ppOrScore(score.pp, score.score)}
+							${ppOrScore(score.pp, score.score) | 0}
 						</div>
 						<div class="map-acc">accuracy:&nbsp;<b>
 							${score.accuracy.toFixed(2)}%
