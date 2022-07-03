@@ -10,8 +10,9 @@
 
 		<title>{{ if .TitleBar }}{{ .T .TitleBar }} - {{ end }}Akatsuki</title>
 
-		<link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css?{{ unixNano }}">
-		<link rel="stylesheet" type="text/css" href="/static/css/akatsuki.css?{{ unixNano }}">
+		<link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/akatsuki.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
 		<script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -42,7 +43,7 @@
 				{{ if .Messages }}
 						{{ range $i, $v := .Messages }}
 							<div class="ui {{ $v.Type }} message">
-								<i class="close icon"></i>
+								<i class="fa-solid fa-xmark"></i>
 								{{ html $v.Content }}
 							</div>
 						{{ end }}
@@ -82,21 +83,22 @@
 		<center class="footer">
 			<div class="ui container center">
 			{{ .T "&copy; %d osu!Akatsuki, using Hanayo %s." (curryear) (version) | html }}
-				<a href="/team" title="{{ .T "Who is working on this thing?" }}"><i class="users icon"></i>{{ .T "Team" }}</a>
-				<a href="https://github.com/osuakatsuki" title="{{ .T "Git"}}{{/*'"*/}}"><i class="git square icon"></i></a>
+				<a href="/team" title="{{ .T "Who is working on this thing?" }}"><i class="fa-solid fa-users"></i> {{ .T "Team" }}</a>
+				<a href="https://github.com/osuakatsuki" title="{{ .T "Git" }}"><i class="fa-brands fa-github"></i> {{ .T "Github" }}</a>
 				<div class="ui scrolling dropdown" style="margin-left: 5px;" id="language-selector">
 				{{ $lang := .Context.Language }}
 				{{ with $lang }}
 				{{ $info := languageInformationByNameShort . }}
-					<div class="text"><i class="{{ $info.CountryShort }} flag"></i>{{ $info.Name }}</div>
+					<span class="text">
+						<img class="new-flag fixed--flag--margin" style="margin-bottom: 0.2em !important" src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints $info.CountryShort }}.svg"></img>{{ countryReadable $info.CountryShort }}
+					</span>
 				{{ else }}
-					<div class="default text">{{ .T "Language" }}</div>
+					<span class="default text">{{ .T "Language" }}</span>
 				{{ end }}
-					<i class="dropdown icon"></i>
+					<i class="fa-solid fa-caret-down"></i>
 					<div class="menu">
 					{{ range languageInformation }}
-						<div class="{{ if eq .NameShort $lang }}selected {{ end }}item" data-lang="{{ .NameShort }}"><i
-								class="{{ .CountryShort }} flag"></i>{{ .Name }}</div>
+						<div class="language-select {{ if eq .NameShort $lang }}selected {{ end }}item" data-lang="{{ .NameShort }}">{{ country .CountryShort false }}{{ .Name }}</div>
 					{{ end }}
 					</div>
 				</div>
@@ -123,10 +125,10 @@
 		</script>
 
 		<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
-		<script src="/static/js/dist.min.js?{{ unixNano }}"></script>
+		<script src="/static/js/dist.min.js"></script>
 		{{ if .Scripts }}
 			{{ range .Scripts }}
-				<script src="{{ . }}?{{ unixNano }}"></script>
+				<script src="{{ . }}"></script>
 			{{ end }}
 		{{ end }}
 	</body>
