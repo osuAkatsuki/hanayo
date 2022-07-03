@@ -378,8 +378,8 @@ function loadScoresPage(type, mode) {
 							</div>
 							<div class="map-title-block">
 								<div class="map-title"><a class="beatmap-link">
-									${escapeHTML(v.beatmap.song_name)} ${getScoreMods(v.mods)}
-									</a>
+									${escapeHTML(v.beatmap.song_name)}
+									</a>${getScoreMods(v.mods)}
 								</div>
 								<div class="play-stats">
 									${addCommas(v.score)} / ${addCommas(v.max_combo)}x
@@ -485,8 +485,9 @@ function do_pin(table, score, mode) {
 				</div>
 				<div class="map-title-block">
 					<div class="map-title"><a class="beatmap-link">
-						${escapeHTML(score.beatmap.song_name)} ${getScoreMods(score.mods)}
+						${escapeHTML(score.beatmap.song_name)}
 						</a>
+						${getScoreMods(score.mods)}
 					</div>
 					<div class="play-stats">
 						${addCommas(score.score)} / ${addCommas(score.max_combo)}x
