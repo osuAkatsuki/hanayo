@@ -9,6 +9,11 @@
   display: none !important
 }
 
+i.icon {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+}
+
 @media only screen and (max-width: 767px) {
   #navbar .item {
     display: none !important
@@ -888,7 +893,7 @@ li img.dropup-flags {
 }
 
 .language-select {
-  background-color: #0c0c0c;
+  background-color: #292929;
   border-radius: 4px;
   margin-top: 6px;
   padding: 4px;
@@ -1043,3 +1048,47 @@ li.language-select:hover:before, li.language-select.selected:before {
   margin-bottom: 8px;
 }
 
+.flag-container {
+  display: inline;
+  white-space: nowrap;
+}
+
+.new-flag {
+  display: inline-block;
+  width: 20px !important;
+  line-height: 11px;
+  vertical-align: baseline;
+  margin: 0 0.5em 0 0;
+  text-decoration: inherit;
+  speak: none;
+  font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.fixed--flag--margin {
+  margin-bottom: -0.3em !important;
+  margin-right: 0.4em !important;
+}
+
+.fixed--flag--cards {
+  margin-bottom: -0.14em !important;
+  margin-right: 0.2em !important;
+}
+
+.modes-icons {
+  margin-top: -0.8em !important;
+  font-size: 1.2em !important;
+}
+
+.rank--bmap--font {
+  font-size: 1.5em;
+}
+
+.noUi-connect {
+  background: hsl(var(--base), 35%, 60%) !important
+}
+
+.noUi-handle {
+  border-radius: 0.28571429rem !important;
+}
