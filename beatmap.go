@@ -53,6 +53,15 @@ func beatmapInfo(c *gin.Context) {
 		return
 	}
 
+	for i := range data.Beatmapset.ChildrenBeatmaps {
+		err := db.QueryRow("SELECT playcount, passcount FROM beatmaps WHERE beatmap_md5 = ?", data.Beatmapset.ChildrenBeatmaps[i].FileMD5).Scan(&data.Beatmapset.ChildrenBeatmaps[i].Playcount, &data.Beatmapset.ChildrenBeatmaps[i].Passcount)
+		if err != nil {
+			fmt.Println(err)
+			data.Beatmapset.ChildrenBeatmaps[i].Playcount = 0
+			data.Beatmapset.ChildrenBeatmaps[i].Passcount = 0
+		}
+	}
+
 	data.KyutGrill = fmt.Sprintf("https://assets.ppy.sh/beatmaps/%d/covers/cover.jpg?%d", data.Beatmapset.ID, data.Beatmapset.LastUpdate.Unix())
 	data.KyutGrillAbsolute = true
 
@@ -64,7 +73,7 @@ func beatmapInfo(c *gin.Context) {
 	}
 
 	data.TitleBar = T(c, "%s - %s", data.Beatmapset.Artist, data.Beatmapset.Title)
-	data.Scripts = append(data.Scripts, "/static/tablesort.js", "/static/beatmap.js")
+	data.Scripts = append(data.Scripts, "/static/js/tablesort.js", "/static/js/pages/beatmap.js")
 }
 
 func getBeatmapData(b string) (beatmap models.Beatmap, err error) {

@@ -71,7 +71,7 @@ func userProfile(c *gin.Context) {
 
 	data.TitleBar = T(c, "%s's profile", username)
 	data.DisableHH = true
-	data.Scripts = append(data.Scripts, "/static/profile.js")
+	data.Scripts = append(data.Scripts, "/static/js/pages/profile.js")
 }
 
 func relaxProfile(c *gin.Context) {
@@ -131,5 +131,5 @@ func relaxProfile(c *gin.Context) {
 
 	data.TitleBar = T(c, "%s's profile", username)
 	data.DisableHH = true
-	data.Scripts = append(data.Scripts, "/static/rxprofile.js")
+	data.Scripts = append(data.Scripts, "/static/js/pages/rxprofile.js")
 }

@@ -8,5 +8,6 @@ static/avatars/*
 semantic/gulpfile.tmp.*.js
 /_
 static/oauth-apps/*
+static/cmyui/*
 !static/oauth-apps/.keep
 static/akatsukiPatcher.exe

@@ -4,45 +4,65 @@ TitleBar=Leaderboard
 KyutGrill=dev.jpg
 */}}
 {{ define "tpl" }}
-<div class="ui container">
+<link rel="stylesheet" href="/static/css/pages/leaderboard.css">
+
+<div class="ui container akat-box">
 	{{ $favModeRaw := .Get "users/self/favourite_mode" }}
 	{{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
+	{{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
 	{{ $sort := or (.Gin.Query "sort") "pp" }}
+
 	<script>
-		var favouriteMode = {{ $favMode }};
-		var rx = {{ or (.Gin.Query "rx") 0 }};
-		var page = {{ .Gin.Query "p" | atoint | atLeastOne }};
-		var sort = {{ $sort }}
-		var country = {{ .Gin.Query "country" }}.toLowerCase();
+		var favouriteMode = '{{ $favMode }}';
+		var rx = '{{ or (.Gin.Query "rx") 0 }}';
+		var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
+		var sort = '{{ $sort }}'
+		var country = '{{ .Gin.Query "country" }}'.toLowerCase();
 		if (country.length != 2)
 			country = "";
 	</script>
-	<div class="ui three item menu" id="rx-menu">
-			<a class="0 item" data-rx="0" href="/leaderboard?rx=0">Vanilla</a>
-			<a class="1 item" data-rx="1" href="/leaderboard?rx=1">Relax</a>
-			<a class="2 item" data-rx="2" href="/leaderboard?rx=2">Autopilot</a>
+
+	<div class="ui grid stackable">
+		<div class="five wide column">
+			<div class="ui three item menu" id="rx-menu">
+				<a class="{{ favMode $relax 0 }}item" data-rx="0" href="/leaderboard?rx=0">Vanilla</a>
+				<a class="{{ favMode $relax 1 }}item" data-rx="1" href="/leaderboard?rx=1">Relax</a>
+				<a class="{{ favMode $relax 2 }}item" data-rx="2" href="/leaderboard?rx=2">Autopilot</a>
+			</div>
+		</div>
+		<div class="ten wide column">
+			<div class="ui four item menu" id="mode-menu">
+				{{ range $k, $v := modes }}
+				<a class="{{ favMode $favMode $k }}item" data-mode="{{ $k }}" href="/leaderboard?mode={{ $k }}">
+					{{ $v }}</a>
+				{{ end }}
+			</div>
+		</div>
+		<div class="one wide column">
+			<div class="ui twelve item stackable">
+				<div class="ui dropdown icon button">
+					<span class="text">{{ if .Gin.Query "country" }}<i class='{{ .Gin.Query "country" }} flag nopad'></i>{{ else }}...{{ end }}</span>
+					<div class="menu">
+						{{ range countryList 8 }}
+						<a class="item lb-country" data-country="{{ . }}"><i class="{{ . }} flag nopad"></i></a>
+						{{ end }}
+						<a class="item" id="country-chooser-modal">...</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<div class="ui four item menu" id="mode-menu">
-		{{ range $k, $v := modes }}
-			<a class="{{ favMode $favMode $k }}item" data-mode="{{ $k }}" href="/leaderboard?mode={{ $k }}">{{ $v }}</a>
-		{{ end }}
-	</div>
-	<div class="ui twelve item stackable menu">
-		{{ range countryList 11 }}
-			<a class="item lb-country" data-country="{{ . }}"><i class="{{ . }} flag nopad"></i></a>
-		{{ end }}
-		<a class="item" id="country-chooser-modal">...</a>
-	</div>
-	<table class="ui fixed table">
+	<table class="ui table leaderboard-table" id="main">
 		<thead>
 			{{ template "simplepag" 5 }}
 			<tr>
-				<th class="two wide"> {{ .T "Rank" }} </th>
-				<th class="four wide">{{ .T "Player" }} </th>
-				<th class="four wide"> {{ if eq $sort "score" }}Score (Performance){{ else }}Performance (Score){{ end }} </th>
-				<th class="three wide">{{ .T "Accuracy" }} </th>
-				<th class="three wide">{{ .T "Playcount" }} </th>
+				<th class="t-heading"></th>
+				<th class="t-heading t-player"></th>
+				<th class="t-heading center aligned"> {{ if eq $sort "score" }}Score (Performance){{ else }}Performance (Score)
+					{{ end }} </th>
+				<th class="t-heading center aligned">{{ .T "Accuracy" }} </th>
+				<th class="t-heading center aligned">{{ .T "Playcount" }} </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -55,10 +75,10 @@ KyutGrill=dev.jpg
 		<div class="content">
 			<div class="ui four column grid">
 				{{ range countryList 500 }}
-					{{ $short := . }}
-					{{ with country . true }}
-						<div class="ui clickable column lb-country" data-country="{{ $short }}">{{ . }}</div>
-					{{ end }}
+				{{ $short := . }}
+				{{ with country . true }}
+				<div class="ui clickable column lb-country" data-country="{{ $short }}">{{ . }}</div>
+				{{ end }}
 				{{ end }}
 			</div>
 		</div>

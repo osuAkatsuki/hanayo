@@ -5,6 +5,7 @@ MinPrivileges=2
 KyutGrill=friends.jpg
 */}}
 {{ define "tpl" }}
+<link rel="stylesheet" href="/static/css/pages/clanpage.css">
 <div class="ui container">
 	<div class="ui segments">
 		<div class="ui segment">
@@ -13,31 +14,39 @@ KyutGrill=friends.jpg
 		<div class="ui segment">
 			{{ $ := . }}
 			{{ $page := or (atoint (.Gin.Query "p")) 1 }}
-			{{ $friends := .Get "friends?p=%d&l=40&sort=username,asc" $page }}
+			{{ $friends := .Get "friends?p=%d&l=18&sort=username,asc" $page }}
 			{{ with $friends }}
-				<div class="ui four column stackable grid">
+				<div class="ui three column stackable grid">
 					{{ range .friends }}
-						<div class="ui column">
-							<h4 class="ui image header">
-								<img src="{{ config "AvatarURL" }}/{{ .id }}" class="ui mini rounded image"{{ if not (has .privileges 1) }} style="opacity: 0.5"{{ end }}>
-								<div class="content">
-									<a href="/u/{{ .id }}"{{ if not (has .privileges 1) }} style="opacity: 0.5"{{ end }}>{{ .username }}</a>
-									<div class="sub header">
-										<div class="ui compact circular smalltext icon labeled {{ if .is_mutual }}red{{ else }}green{{ end }} button"
-											data-userid="{{ .id }}">
-											<i class="{{ if .is_mutual }}heart{{ else }}minus{{ end }} icon"></i>
-											<span>{{ if .is_mutual }}{{ $.T "Mutual" }}{{ else }}{{ $.T "Remove" }}{{ end }}</span>
-										</div>
+						<div class="column">
+							<div class="player">
+								<div class="front">
+									<img class="user-avatar" src="{{ config "AvatarURL" }}/{{ .id }}" alt="Avatar" {{ if not (has .privileges 1) }}style="opacity: 0.5"{{ end }}>
+									<a href="/u/{{ .id }}">
+										<h1 class="header" {{ if not (has .privileges 1) }}style="opacity: 0.5"{{ end }}>
+											{{ if .country }}
+												<img class="new-flag fixed--flag--cards" src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints .country }}.svg"></img>
+											{{ end }}
+											<span>
+												{{ .username }}
+											</span>
+										</h1>
+									</a>
+								</div>
+								<div class="sub-header" title="{{ if .is_mutual }}{{ $.T "Mutual" }}{{ else }}{{ $.T "Friend" }}{{ end }}">
+									<div class="ui compact labeled button small-text-btn" style="" data-userid="{{ .id }}">
+										<i class="{{ if .is_mutual }}red heart{{ else }}green minus{{ end }} icon"></i>
+										<span>{{ if .is_mutual }}{{ $.T "Unmutual" }}{{ else }}{{ $.T "Remove" }}{{ end }}</span>
 									</div>
 								</div>
-							</h4>
+							</div>
 						</div>
 					{{ end }}
 				</div>
 			{{ end }}
 		</div>
 		{{ $left := gt $page 1 }}
-		{{ $right := eq (len (rsin $friends.friends)) 40 }}
+		{{ $right := eq (len (rsin $friends.friends)) 18 }}
 		{{ if or $left $right }}
 			<div class="ui right aligned segment">
 				<div class="ui pagination menu">

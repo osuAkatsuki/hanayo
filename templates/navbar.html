@@ -5,18 +5,12 @@
 {{ $ccEnabled := qb "SELECT 1 FROM system_settings WHERE name = 'ccreation_enabled' AND value_int = 1 LIMIT 1" }}
 {{ $isClan := qb "SELECT 1 FROM users WHERE id = ? AND clan_id <> 0" .Context.User.ID }}
 {{ $clanLeader := qb "SELECT 1 FROM clans WHERE owner = ? LIMIT 1" .Context.User.ID }}
-<div class="ui secondary fixed-height stackable white background main menu no margin bottom{{ if .DisableHH }} dropped{{ end }}" id="navbar">
+<div class="ui secondary fixed-height white background main menu no margin bottom{{ if .DisableHH }} dropped{{ end }}" id="navbar">
 	<div class="ui container">
 		<div class="item">
-			<b><a href="/" title="{{ .T "Home page" }}"><img class="ripple logo" src="/static/logos/text-white.png" alt="Ripple"></a></b>
+			<a class="navbar-icon" href="/" title="{{ .T "Home page" }}"><span class="osu-title">osu!</span><b>Akatsuki</b></a>
 		</div>
 		{{ if $isRAP }}
-			{{/*
-			Note:
-				Admin Panel navbar will be completely different from standard navbar,
-				meaning it will have the buttons and all the stuff that are in
-				the current Admin Panel's sidebar.
-			*/}}
 		{{ else }}
 			<div class="ui dropdown item">
 				<span>{{ .T "Leaderboard" }}</span>
@@ -33,13 +27,9 @@
 					{{ navbarItem .Path (.T "Documentation") "/doc" }}
 					{{ navbarItem .Path (.T "Rules") "/doc/tos" }}
 					{{ navbarItem .Path (.T "YouTube Channel") "https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ" }}
-					{{ navbarItem .Path (.T "Iteki Merge") "/merge" }}
 					{{ navbarItem .Path (.T "Akatsuki Patcher") "/patcher" }}
 				</div>
 			</div>
-			{{ if .Context.User.Username}}
-				{{ navbarItem .Path (.T "Beatmaps") "/beatmaps" }}
-			{{ end }}
 
 			{{ navbarItem .Path (.T "Discord") "/discord" }}
 			{{ if $isAdmin }}
@@ -47,7 +37,8 @@
 			{{ end }}
 		{{ end }}
 		<div class="firetrucking-right-menu">
-			{{ navbarItem .Path (printf "<span data-tooltip=\"Support us! (♥ω♥ ) ~♪\" data-position=\"bottom right\"><i class=\"red heart icon\"></i></span>") "/donate" }}
+			{{ navbarItem .Path (printf "<span data-tooltip=\"Support us! (♥ω♥ ) ~♪\" data-position=\"bottom right\"><i class=\"red heart icon m-less\"></i></span>") "/donate" }}
+			
 			<div class="item">
 				<div class="ui search" id="user-search">
 					<div class="ui icon input">
@@ -56,6 +47,7 @@
 					</div>
 				</div>
 			</div>
+
 			{{ if .Context.User.Username }}
 				<div class="ui dropdown item">
 					<img class="ui avatar image" src="{{ config "AvatarURL" }}/{{ .Context.User.ID }}">
@@ -71,7 +63,144 @@
 				{{ navbarItem .Path (.T "Log in") "/login" }}
 				{{ navbarItem .Path (.T "Register") "/register" }}
 			{{ end }}
+
+			<a class="item mobile" onclick="toggleNavbar()">
+				<button class="ui icon button">
+					<i class="list icon"></i>
+				  </button>
+			</a>
 		</div>
 	</div>
+	<div class="mobile-header">
+		{{ if .Context.User.Username }}
+			<div class="head">
+				<a href="/u/{{ .Context.User.ID }}" class="user">
+					<img class="avatar" src="{{ config "AvatarURL" }}/{{ .Context.User.ID }}">
+					<div class="username">
+						{{ .Context.User.Username }}
+					</div>
+				</a>
+			</div>
+		{{ else }}
+			<div class="head">
+				<a href="#" class="user">
+					<img class="avatar" src="https://a.akatsuki.pw/999">
+					<div class="username">
+						Guest
+					</div>
+				</a>
+				<div class="user-control">
+					<a class="single" href="/login">
+						<span class="header-block--title">Login</span>
+					</a> 
+					<a class="single" href="/register">
+						<span class="header-block--title">Register</span>
+					</a> 
+				</div>
+			</div>
+		{{ end }}
+		<div class="mcontent">
+			{{ if .Context.User.Username }}
+				<a class="single" href="/friends">
+					<span class="header-block--title">Friends</span>
+				</a> 
+				<a class="single" href="/settings">
+					<span class="header-block--title">Settings</span>
+				</a> 
+				<div class="single">
+					<span data-menu="lb" data-invoked="false" class="header-block--title">
+						Leaderboard
+						<i data-dropdown-icon="lb" class="fa-solid fa-caret-down"></i>
+					</span>
+					<div data-dropdown-menu="lb" class="m-menu" style="display: none;">
+						<a class="single" href="/leaderboard">Performance</a>
+						<a class="single" href="/leaderboard?sort=score">Score</a>
+						<a class="single" href="/clans?mode=0">Clans</a>
+					</div>
+				</div> 
+				<div class="single">
+					<span data-menu="info" data-invoked="false" class="header-block--title">
+						Information
+						<i data-dropdown-icon="info" class="fa-solid fa-caret-down"></i>
+					</span>
+					<div data-dropdown-menu="info" class="m-menu" style="display: none;">
+						<a class="single" href="/doc">Documentation</a>
+						<a class="single" href="/doc/tos">Rules</a>
+						<a class="single" href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">Youtube</a>
+					</div>
+				</div>
+				<div class="ui search" id="user-search">
+					<div class="ui icon input">
+						<input class="prompt" type="text" placeholder="{{ .T "Looking for someone?" }}" id="user-search-input">
+						<i class="blue search link icon"></i>
+					</div>
+				</div>
+				<a class="single" href="/discord">
+					<span class="header-block--title">Discord</span>
+				</a> 
+				<a class="single" href='/logout?k={{ .Session.Get "logout" }}'>
+					<span class="header-block--title">Logout</span>
+				</a> 
+			{{ else }}
+				<div class="single">
+					<span data-menu="lb" data-invoked="false" class="header-block--title">
+						Leaderboard
+						<i data-dropdown-icon="lb" class="fa-solid fa-caret-down"></i>
+					</span>
+					<div data-dropdown-menu="lb" class="m-menu" style="display: none;">
+						<a class="single" href="/leaderboard">Performance</a>
+						<a class="single" href="/leaderboard?sort=score">Score</a>
+						<a class="single" href="/clans?mode=0">Clans</a>
+					</div>
+				</div>  
+				<div class="single">
+					<span data-menu="info" data-invoked="false" class="header-block--title">
+						Information
+						<i data-dropdown-icon="info" class="fa-solid fa-caret-down"></i>
+					</span>
+					<div data-dropdown-menu="info" class="m-menu" style="display: none;">
+						<a class="single" href="/doc">Documentation</a>
+						<a class="single" href="/doc/tos">Rules</a>
+						<a class="single" href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">Youtube</a>
+					</div>
+				</div>
+				<div class="ui search" id="user-search">
+					<div class="ui icon input">
+						<input class="prompt" type="text" placeholder="{{ .T "Looking for someone?" }}" id="user-search-input">
+						<i class="blue search link icon"></i>
+					</div>
+				</div>
+				<a class="single" href="/discord">
+					<span class="header-block--title">Discord</span>
+				</a> 
+			{{ end }}
+		</div>
+	</div>
+	<script >
+		$(document).ready(() => {
+			// Dropdowns for mobile view.
+			$('[data-menu]').on("click", function() {
+				dropdownType = $(this).data("menu")
+				isInvoked = $(this).data("invoked") == "true"
+				console.log(dropdownType, isInvoked)
+
+				dropdown = $(`[data-dropdown-menu="${dropdownType}"]`)
+				dropdownIcon = $(`[data-dropdown-icon="${dropdownType}"]`)
+				if (!isInvoked) {
+					$(this).data("invoked", "true")
+					dropdown.slideDown(300, () => {
+						dropdown.css("display", "")
+						dropdownIcon.removeClass("fa-caret-down").addClass("fa-caret-up")
+					})
+				} else {
+					$(this).data("invoked", "false")
+					dropdown.slideUp(300, () => {
+						dropdown.css("display", "none")
+						dropdownIcon.removeClass("fa-caret-up").addClass("fa-caret-down")
+					})
+				}
+			})
+		})
+	</script>
 </div>
 {{ end }}

@@ -3,14 +3,14 @@ Handler=/pwreset
 TitleBar=Reset password
 */}}
 {{ define "tpl" }}
-<div class="ui container">
+<div class="ui tiny container">
 	{{ if .Context.User.ID }}
 		<div class="ui segment">
 			{{ .T "You're already logged in!" }}
 		</div>
 	{{ else }}
 		<!-- TODO: captcha -->
-		<div class="tiny container">
+		<div>
 			<div class="ui raised segments">
 				<div class="ui segment">
 					{{ .T "Forgot your password? Worry not! Here you can reset it. Just tell us your username or email address, and we'll take care of it. You will receive an email at the email address you used to sign up on Akatsuki. To continue the password reset procedure, click the link on that email." }}
@@ -25,7 +25,7 @@ TitleBar=Reset password
 					</form>
 				</div>
 				<div class="ui right aligned segment">
-					<button tabindex="2" class="ui primary button" type="submit" form="pw-reset-form">{{ .T "Username" }}</button>
+					<button tabindex="2" class="ui primary button" type="submit" form="pw-reset-form">{{ .T "Submit" }}</button>
 				</div>
 			</div>
 		</div>

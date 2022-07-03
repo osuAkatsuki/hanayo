@@ -3,22 +3,24 @@
 	{{ $ := . }}
 	{{ if ne .Beatmapset.ID 0 }}
 		<div class="ui floating icon labeled dropdown button" id="diff-menu">
-			<i class="caret down icon"></i>
+			<i class="fa-solid fa-caret-down icon"></i>
 			<span class="text">
-				<i class="attention icon"></i>
+				<img src="/static/images/modes/{{ .Beatmap.Mode }}.png" class="modes-icons">
 				{{ .Beatmap.DiffName }}
-				(<i class="fitted star icon" style="margin-right:0"></i> {{ printf "%.2f" .Beatmap.DifficultyRating }})
+				(<i class="fa-solid fa-star" style="margin-right:0"></i> {{ printf "%.2f" .Beatmap.DifficultyRating }})
 			</span>
 			<div class="menu">
 				{{ range .Beatmapset.ChildrenBeatmaps }}
 				<a href="/b/{{ .ID }}" class="item {{ if eq .ID $.Beatmap.ID }}active{{ end }}" data-bid="{{ .ID }}">
-					<i class="attention icon"></i>
+					<img src="/static/images/modes/{{ .Mode }}.png" class="modes-icons">
 					{{ .DiffName }}
-      				(<i class="fitted star icon" style="margin-right:0"></i> {{ printf "%.2f" .DifficultyRating }})
+      				(<i class="fa-solid fa-star icon" style="margin-right:0"></i> {{ printf "%.2f" .DifficultyRating }})
 				</a>
 				{{ end }}
 			</div>
 		</div>
+
+		<audio id="beatmap-preview" src="https://catboy.best/preview/audio/{{ .Beatmap.ID }}" preload="auto"></audio>
 
 		<div class="ui segments">
 			<div class="ui segment">
@@ -44,12 +46,13 @@
 						</div>
 						<div class="full-centered column">
 							<div class="ui vertical buttons">
-								<a href="osu://dl/{{ .Beatmapset.ID }}" class="ui pink labeled icon button"><i class="download icon"></i>{{ $.T "osu!direct" }}</a>
-								<a href="http://akatsuki.pw/d/{{ .Beatmapset.ID }}" class="ui green labeled icon button"><i class="download icon"></i>{{ $.T "download" }}</a>
-								<a href="https://chimu.moe/d/{{ .Beatmapset.ID }}" class="ui red labeled icon button"><i class="download icon"></i>{{ $.T "Bloodcat" }}</a>
+								<a href="osu://dl/{{ .Beatmapset.ID }}" class="ui pink labeled icon button"><i class="fa-solid fa-download icon"></i>{{ $.T "osu!direct" }}</a>
+								<a href="http://akatsuki.pw/d/{{ .Beatmapset.ID }}" class="ui green labeled icon button"><i class="fa-solid fa-download icon"></i>{{ $.T "Download" }}</a>
+								<a href="https://kitsu.moe/d/{{ .Beatmapset.ID }}" class="ui red labeled icon button"><i class="fa-solid fa-download icon"></i>{{ $.T "Bloodcat" }}</a>
 								{{ if .Beatmapset.HasVideo }}
-									<a href="http://akatsuki.pw/d/{{ .Beatmapset.ID }}?novideo" class="ui gray labeled icon button"><i class="download icon"></i>{{ $.T "download (no video)" }}</a>
+									<a href="http://akatsuki.pw/d/{{ .Beatmapset.ID }}?novideo" class="ui gray labeled icon button"><i class="fa-solid fa-download icon"></i>{{ $.T "Download (no video)" }}</a>
 								{{ end }}
+								<a class="ui purple labeled icon button" onclick="playPreview()"><i class="fa-solid fa-play icon" id="preview-icon"></i><span id="preview-text">{{ $.T "Play" }}</span></a>
 							</div>
 						</div>
 					</div>
@@ -59,19 +62,60 @@
 
 		<script>
 			{{ $p := .Gin.Query "p" }}
+			{{ $curMode := atoi (.Gin.Query "mode") }}
+			{{ $relax := atoi (.Gin.Query "rx") }}
 			{{ $favModeRaw := .Get "users/self/favourite_mode" }}
 			var beatmapID = {{ .Beatmap.ID }};
 			var setData = JSON.parse({{ .SetJSON }});
 			var page = {{ $p | atoint | atLeastOne }};
 			// defaults to 0
-			var currentMode = {{ atoi (.Gin.Query "mode") }};
+			var currentMode = {{ $curMode }};
+			var currentCmode = parseInt({{ $relax }}) || 0;
 			var currentModeChanged = false;
+			var currentCmodeChanged = false;
 			var favMode = parseInt({{ $favModeRaw.favourite_mode }}) || 0;
+
+			var previewAudio = document.querySelector("#beatmap-preview")
+			var previewText = document.querySelector("#preview-text")
+			var previewIcon = $("#preview-icon")
+			var previewPlaying = false
+			previewAudio.volume = 0.2
+
+			previewAudio.onplaying = () => {
+				previewPlaying = true
+				previewText.innerHTML = '{{ .T "Pause" }}';
+				previewIcon.removeClass("fa-play").addClass("fa-pause");
+			}
+
+			previewAudio.onpause = () => {
+				previewPlaying = false
+				previewText.innerHTML = '{{ .T "Play" }}';
+				previewIcon.removeClass("fa-pause").addClass("fa-play");
+			}
+
+			previewAudio.onended = () => {
+				previewPlaying = false
+				previewText.innerHTML = '{{ .T "Play" }}';
+				previewIcon.removeClass("fa-pause").addClass("fa-play");
+
+			}
+
+			// Le curse.
+			const playPreview = () => {
+				previewPlaying ? previewAudio.pause() : previewAudio.play()
+			}
+
 		</script>
+
+		<div class="ui three item menu" id="cmode-menu">
+			{{ range $k, $v := cmodes }}
+				<a class="item" id="cmode-{{ $k }}" data-cmode="{{ $k }}" href="/b/{{ $.Beatmap.ID }}?mode={{ $curMode }}&rx={{ $k }}">{{ $v }}</a>
+			{{ end }}
+		</div>
 
 		<div class="ui four item menu" id="mode-menu">
 			{{ range $k, $v := modes }}
-				<a class="item" id="mode-{{ $k }}" data-mode="{{ $k }}" href="/b/{{ $.Beatmap.ID }}?mode={{ $k }}">{{ $v }}</a>
+				<a class="item" id="mode-{{ $k }}" data-mode="{{ $k }}" href="/b/{{ $.Beatmap.ID }}?mode={{ $k }}&rx={{ $relax }}">{{ $v }}</a>
 			{{ end }}
 		</div>
 
@@ -79,12 +123,14 @@
 			<thead>
 				<tr>
 					<th class="one wide">{{ .T "Rank" }} </th>
-					<th class="four wide">{{ .T "Player" }} </th>
-					<th class="three wide">{{ .T "Score" }} </th>
-					<th class="two wide">{{ .T "Mods" }} </th>
+					<th class="one wide">{{ .T "Grade" }} </th>
+					<th class="two wide">{{ .T "Score" }} </th>
 					<th class="two wide">{{ .T "Accuracy" }} </th>
-					<th class="two wide">{{ .T "Combo" }} </th>
+					<th class="three wide">{{ .T "Player" }} </th>
+					<th class="two wide">{{ .T "Combo" }}  ({{ .Beatmap.MaxCombo }})</th>
 					<th class="two wide">{{ .T "PP" }} </th>
+					<th class="two wide">{{ .T "Mods" }} </th>
+					<th class="one wide">{{ .T "Time" }} </th>
 				</tr>
 			</thead>
 			<tbody>

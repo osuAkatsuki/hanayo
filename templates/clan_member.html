@@ -2,37 +2,45 @@
 NoCompile=true
 */}}
 {{ define "clanMember" }}
-	{{ if . }}
-		<div class="column">
-			<div class="ui left aligned fluid card">
-				<div class="image">
-					<img src="{{ config "AvatarURL" }}/{{ .id }}" alt="Avatar">
-				</div>
-				<div class="content">
-					<a class="header" href="/u/{{ .id }}">{{ if .country }}{{ country .country false }}{{ end }}{{ .username }}</a>
-				</div>
-				{{ if .registered_on }}
-					<div class="extra content">
-						<div title="Registered">
-							<i class="sign in icon"></i>
-							{{ time .registered_on }}
-						</div>
-					</div>
+{{ if . }}
+<div class="column">
+	<a class="player" href="/u/{{ .id }}">
+		<div class="front">
+			<img class="user-avatar" src="{{ config "AvatarURL" }}/{{ .id }}" alt="Avatar">
+			<h1 class="header">
+				{{ if .country }}
+					<img class="new-flag fixed--flag--cards" src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints .country }}.svg"></img>
 				{{ end }}
-			</div>
+				{{ .username }}
+			</h1>
 		</div>
-	{{ end }}
+		{{ if .registered_on }}
+			<div class="sub-header" title="Registered">
+				<i class="sign in icon notlock-icon"></i>
+				{{ time .registered_on }}
+			</div>
+		{{ end }}
+	</a>
+</div>
+{{ end }}
 {{ end }}
 
 {{ define "clanMembers" }}
-	<div class="ui three column center aligned stackable grid" id="members">
-	{{ with .clan }}
-		{{ $c := . }}
-		{{ range .members }}
-			{{ if ne .id $c.owner }}
-				{{ template "clanMember" . }}
-			{{ end }}
-		{{ end }}
+{{ with .clan }}
+{{ if eq (len .members) 1 }}
+<div>
+	<p>No members in this clan. maybe invite someone?</p>
+</div>
+{{ else }}
+<div class="ui two column center aligned stackable grid" id="members">
+	{{ $c := . }}
+	{{ range .members }}
+	{{ if ne .id $c.owner }}
+	{{ template "clanMember" . }}
 	{{ end }}
-	</div>
+	{{ end }}
+</div>
+{{ end }}
+
+{{ end }}
 {{ end }}

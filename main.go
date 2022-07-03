@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/fatih/structs"
 	"github.com/getsentry/raven-go"
 	"github.com/gin-gonic/contrib/sessions"
@@ -92,7 +91,7 @@ var (
 	qb        *qsql.DB
 	mg        mailgun.Mailgun
 	rd        *redis.Client
-	sess      *session.Session
+	//sess      *session.Session
 )
 
 // Services etc
@@ -147,11 +146,11 @@ func main() {
 		panic(err)
 	}
 
-	if config.EnableS3 {
-		sess = session.Must(session.NewSessionWithOptions(session.Options{
-			SharedConfigState: session.SharedConfigEnable,
-		}))
-	}
+	// if config.EnableS3 {
+	// 	sess = session.Must(session.NewSessionWithOptions(session.Options{
+	// 		SharedConfigState: session.SharedConfigEnable,
+	// 	}))
+	// }
 
 	// initialise mailgun
 	mg = mailgun.NewMailgun(

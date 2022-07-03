@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"zxq.co/x/rs"
+	"github.com/gin-gonic/gin"
 )
 
 func setYCookie(userID int, c *gin.Context) {

@@ -1,0 +1,295 @@
+.col-lg-6, .col-lg-12 {
+    padding-right: 2px !important;
+    padding-left: 2px !important;
+}
+
+button:focus {
+    outline: none;
+}
+
+.masthead, .masthead:after {
+    -ms-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    -moz-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    -webkit-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+}
+
+.masthead {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: 0em;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0px;
+    border-bottom: none;
+    background-color: #000000;
+    background-position: 50% 50%;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.masthead.segment {
+    position: relative;
+    z-index: 3;
+    margin: 0em;
+    min-height: 240px;
+    padding: 4em 0em;
+    background: linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%)), url(https://wallpaperaccess.com/full/2621341.jpg);
+    box-shadow: none;
+}
+
+.masthead.segment .small-lineh {
+    font-size: 3em;
+    color: rgba(255, 255, 255, 1);
+    line-height: 1.2;
+    margin: 0px 0px 0px;
+    padding-bottom: 0px;
+    -moz-perspective: 500px;
+    -webkit-perspective: 500px;
+    perspective: 500px;
+    text-shadow: 0px 0px 10px rgb(0 0 0 / 20%);
+    -moz-transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.masthead.segment .small-lineh>.library {
+    display: block;
+    font-size: 48px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.masthead.segment .small-lineh .tagline {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
+}
+
+.introduction {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+@media (min-width: 767px) {
+    .introduction {
+        width: 750px;
+    }
+}
+
+.main-block {
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    background-color: hsl(var(--base), 10%, 15%) !important;
+    margin-top: 96px;
+    align-items: flex-end;
+    height: 288px;
+    padding-right: 34px;
+    box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);
+}
+
+.margined.container {
+    margin: 0;
+}
+
+.quaver {
+    background-image: url(/static/characters/quaver.png);
+    background-repeat: no-repeat;
+    height: 363px;
+    width: 1196px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    height: 100%;
+    justify-content: center;
+}
+
+.status {
+    display: flex;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.text-lg {
+    font-size: 52px;
+    font-weight: 700;
+    margin-top: 26px;
+    text-shadow: 3px 3px #000000;
+}
+
+.counter-text {
+    font-size: 16px;
+    color: #f6a;
+    font-weight: 600;
+}
+
+.text-sm {
+    font-size: 14px;
+    font-style: italic;
+    text-shadow: 2px 2px #000000;
+}
+
+.home-btn {
+    background-image: url(/static/images/icons/button.svg);
+    border: none;
+    background-size: 150%;
+    border-radius: 4px;
+    color: white;
+    text-shadow: -1px 2px 2px rgba(0, 0, 0, 0.11);
+    transition: 200ms box-shadow, 200ms background-position, 200ms margin-top, 200ms background-color;
+    cursor: pointer;
+    font-size: 16px;
+    font-style: italic;
+    padding: 12px;
+    padding-left: 22px;
+    padding-right: 22px;
+    text-align: center;
+}
+
+.btn-key {
+    background-color: #f6a;
+    box-shadow: 0 4px rgb(134, 56, 91), 0 2px 2px rgb(0, 0, 0);
+}
+
+.home-btn.btn-key:hover {
+    background-color: rgb(250, 128, 183);
+    background-position-x: -30px;
+    color: white;
+}
+
+.btn-how {
+    background-color: #2094ca;
+    box-shadow: 0 4px #2f537d, 0 2px 2px #000;
+}
+
+.home-btn.btn-how:hover {
+    background-color: #2eb1ee;
+    background-position-x: -30px;
+    color: white;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+}
+
+.home-btn:active {
+    box-shadow: none;
+    margin-top: 4px;
+}
+
+.features {
+    background-color: #222222;
+    border-radius: 4px;
+    border: none;
+    font-size: 14px;
+    background-image: url(/static/images/backgrounds/home-btn.png);
+    color: white;
+    font-style: italic;
+    font-weight: 500;
+    padding: 4px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 18px;
+    background-repeat: no-repeat;
+    background-position-x: 31%;
+    background-position-y: bottom;
+    box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.11);
+    transition: 200ms background-color;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.features .logo {
+    margin-left: 12px;
+}
+
+.features:hover {
+    color: white;
+    background-color: #1b1b1b;
+}
+
+.less-pad {
+    padding: 0.5rem !important;
+}
+
+@media (max-width: 1200px) {
+    .quaver {
+        width: 140%;
+        background-position-x: 20%;
+    }
+    .status {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 992px) {
+    .quaver {
+        height: 519px;
+        width: 675px;
+        background-position-x: -190%;
+    }
+    .status {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 768px) {
+    .quaver {
+        display: none;
+    }
+    .main-block {
+        padding: 34px;
+        margin-top: 0px;
+    }
+    .text-sm {
+        text-align: center;
+    }
+    .text-lg {
+        margin-top: 0px;
+    }
+    .content {
+        align-items: center;
+    }
+    .main-block {
+        height: 260px;
+    }
+    .buttons {
+        margin-top: 36px;
+    }
+    .status {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-block {
+        height: 360px;
+    }
+    .content {
+        justify-content: space-between;
+    }
+    .buttons {
+        flex-direction: column;
+        margin-top: 24px;
+        align-items: initial;
+        height: auto;
+    }
+    .home-btn {
+        margin-left: 0px !important;
+    }
+    .btn-key {
+        margin-bottom: 12px;
+    }
+    .status {
+        visibility: hidden;
+    }
+}

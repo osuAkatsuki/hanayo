@@ -7,11 +7,9 @@ import (
 	_ "image/jpeg"
 	"image/png"
 	"os"
-	"bytes"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nfnt/resize"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
 func avatarSubmit(c *gin.Context) {
@@ -39,8 +37,8 @@ func avatarSubmit(c *gin.Context) {
 		return
 	}
 	img = resize.Thumbnail(256, 256, img, resize.Bilinear)
-	
-	if config.EnableS3 {
+
+	/*if config.EnableS3 {
 		buf := new(bytes.Buffer)
 		err = png.Encode(buf, img)
 		if err != nil {
@@ -63,7 +61,7 @@ func avatarSubmit(c *gin.Context) {
 			return
 		}
 		
-	} else {
+	} else {*/
 		f, err := os.Create(fmt.Sprintf("%s/%d.png", config.AvatarsFolder, ctx.User.ID))
 		defer f.Close()
 		if err != nil {
@@ -71,14 +69,14 @@ func avatarSubmit(c *gin.Context) {
 			c.Error(err)
 			return
 		}
-		
+
 		err = png.Encode(f, img)
 		if err != nil {
 			m = errorMessage{T(c, "We were not able to save your avatar.")}
 			c.Error(err)
 			return
 		}
-	}
-	
+	//}
+
 	m = successMessage{T(c, "Your avatar was successfully changed. It may take some time to properly update. To force a cache refresh, you can use CTRL+F5.")}
 }

@@ -163,6 +163,7 @@ var funcMap = template.FuncMap{
 	},
 	// countryReadable converts a country's ISO name to its full name.
 	"countryReadable": countryReadable,
+	"countryCodepoints": countryToCodepoints,
 	"country": func(s string, name bool) template.HTML {
 		var c string
 		if name {
@@ -171,7 +172,8 @@ var funcMap = template.FuncMap{
 				return ""
 			}
 		}
-		return template.HTML(fmt.Sprintf(`<i class="%s flag"></i>%s`, strings.ToLower(s), c))
+		codepoints := countryToCodepoints(s)
+		return template.HTML(fmt.Sprintf(`<img src="https://twemoji.maxcdn.com/v/latest/svg/%s.svg" class="new-flag"></img>%s`, codepoints, c))
 	},
 	// humanize pretty-prints a float, e.g.
 	//     humanize(1000) == "1,000"
@@ -272,9 +274,17 @@ var funcMap = template.FuncMap{
 	"modes": func() []string {
 		return []string{
 			"osu!",
-			"osu!taiko",
-			"osu!catch",
-			"osu!mania",
+			"Taiko",
+			"Catch",
+			"Mania",
+		}
+	},
+
+	"cmodes": func() []string {
+		return []string{
+			"Vanilla",
+			"Relax",
+			"Autopilot",
 		}
 	},
 	// _or is like or, but has only false and nil as its "falsey" values

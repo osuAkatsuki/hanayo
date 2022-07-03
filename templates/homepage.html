@@ -21,43 +21,29 @@
     <meta name="twitter:card" content="" />
 </head>
 
-<div class="ui container">
-    <div id="content">
-        <div id="home">
-            <link onload="onLoad()" rel="stylesheet" href="/static/css/home.css">
-            <div class="container">
-                <div class="col-lg-35">
-                    <div class="main-block">
-                        <div class="quaver"></div>
-                        <div class="content">
-                            <div class="status">
-                                {{ range $key, $value := (qb "SELECT COUNT(*) FROM users") }}
-                                <span>
-                                    <span style="color: #2094ca;" class="counter-text"> {{ $value }} </span> total users
-                                </span>
-                                {{ end }}
-                                <span style="margin-left: 16px;">
-                                    <span class="counter-text"> {{ rediget "ripple:online_users" }} </span> online users
-                                </span>
-                            </div>
-                            <br><br>
-                            <span class="text-lg" style="padding-bottom: 15px;">
-                                osu!Akatsuki
-                            </span>
-                            <br>
-                            <span class="text-sm">
-                                <b>Welcome {{ if not .Context.User.ID }}{{ else }}back {{ end }}to osu!Akatsuki.</b> We are an osu! private server mainly based around the relax mod - featuring score submission, leaderboards & rankings, custom pp, and much more for both relax and vanilla osu! We have a massive dedicated community between both our osu! and <a href="/discord">Discord</a> servers.
-                            </span>
-                            <div class="buttons">
-                                <a href="{{ if not .Context.User.ID }}/register{{ else }}/u/{{ .Context.User.ID }}{{ end }}" class="home-btn btn-key">{{ if not .Context.User.ID }} register here {{else}} view profile {{ end }} </a>
-                                <a href="{{ if not .Context.User.ID }}/doc/connection_guide{{ else }}/leaderboard{{ end }}" class="home-btn btn-how" style="margin-left: 6px;">{{ if not .Context.User.ID }} how to connect {{ else }} view leaderboards {{ end }}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<link rel="stylesheet" href="/static/css/pages/home.css">
+
+<div class="masthead segment bg14">
+    <div class="ui container">
+      <div class="introduction">
+        <div class="ui header small-lineh">
+          <div class="library">
+            osu!<b>Akatsuki</b>
+          </div>
+          <div class="tagline">
+            <b>Welcome to osu!Akatsuki.</b> We are an osu! private server mainly based around the relax mod - featuring score submission, leaderboards &amp; rankings, custom pp, and much more for relax, autopilot and vanilla osu! We have a massive dedicated community between both our osu! and <a href="/discord">Discord</a> servers.
+          </div>
+        </h1>
+        <div class="buttons">
+            <a href="{{ if not .Context.User.ID }}/register{{ else }}/u/{{ .Context.User.ID }}{{ end }}" class="ui small pink button">{{ if not .Context.User.ID }} Register {{else}} Profile {{ end }} </a>
+            <a href="{{ if not .Context.User.ID }}/doc/connection_guide{{ else }}/leaderboard{{ end }}" class="ui small blue button" style="margin-left: 6px;">{{ if not .Context.User.ID }} How to connect {{ else }} View leaderboards {{ end }}</a>
+          </div>
         </div>
     </div>
+  </div>
+</div>
+
+<div class="ui container">
     {{ $set := systemSettings "website_home_alert" }}
     {{ with $set.website_home_alert.String }}
     <div class="ui warning message">
@@ -69,36 +55,8 @@
 
     {{/* Global Statistics */}}
     <div class="ui stackable four grid">
-        <div class="five wide column">
-            <div class="ui yellow segment">
-                <div class="ui grid">
-                    <div class="four wide column">
-                        <i class="angle right icon status-icon"></i>
-                    </div>
-                    <div class="twelve wide column">
-                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
-                        <p class="status-footer">Total scores (Relax)</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="six wide column">
-            <div class="ui orange segment">
-                <div class="ui grid">
-                    <div class="four wide column">
-                        <i class="user plus icon status-icon"></i>
-                    </div>
-                    <div class="twelve wide column">
-                        {{ range $key, $value := (qb "SELECT username FROM users WHERE privileges & 1 ORDER BY id DESC LIMIT 1") }}
-                        <p class="status-head">{{ $value }}</p>
-                        {{ end }}
-                    <p class="status-footer">Latest player</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="five wide column">
-            <div class="ui pink segment">
+        <div class="five wide column less-pad">
+            <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
                         <i class="angle double right icon status-icon"></i>
@@ -110,9 +68,51 @@
                 </div>
             </div>
         </div>
-        <!-- TODO: improve server performance to fix this mess? :) -->
-        <div class="eight wide column">
-            <div class="ui red segment">
+        <div class="six wide column less-pad">
+            <div class="ui segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="angle right icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
+                        <p class="status-footer">Total scores (Relax)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="five wide column less-pad">
+            <div class="ui segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="angle double right icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        <p class="status-head">{{ .T "%s" (rediget "ripple:submitted_scores_ap") | html }}</p>
+                        <p class="status-footer">Total scores (Autopilot)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="five wide column less-pad">
+            <div class="ui segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <i class="thumbs up icon status-icon"></i>
+                    </div>
+                    <div class="twelve wide column">
+                        {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
+                        {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
+                        {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
+                       <p class="status-head">{{ $vanilla_pp }}pp</p>
+                       <p class="status-footer">Top score (Vanilla)</p>
+                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="six wide column less-pad">
+            <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
                         <i class="thumbs up outline icon status-icon"></i>
@@ -128,19 +128,19 @@
                 </div>
             </div>
         </div>
-        <div class="eight wide column">
-            <div class="ui green segment">
+        <div class="five wide column less-pad">
+            <div class="ui segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <i class="thumbs up icon status-icon"></i>
+                        <i class="thumbs up outline icon status-icon"></i>
                     </div>
                     <div class="twelve wide column">
-                        {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
-                        {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
-                        {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
-                       <p class="status-head">{{ $vanilla_pp }}pp</p>
-                       <p class="status-footer">Top score (Vanilla)</p>
-                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a></p>
+                        {{ $ap_pp := (rediget "akatsuki:top:scores_ap:pp") }}
+                        {{ $ap_id := (rediget "akatsuki:top:scores_ap:id") }}
+                        {{ $ap_name := (rediget "akatsuki:top:scores_ap:name") }}
+                       <p class="status-head">{{ $ap_pp }}pp</p>
+                       <p class="status-footer">Top score (Autopilot)</p>
+                       <p class="status-head" style="font-size: 12px!important;">Played by <a href="/u/{{ $ap_id }}?rx=1">{{ .T "%s" $ap_name | html }}</a></p>
                     </div>
                 </div>
             </div>
