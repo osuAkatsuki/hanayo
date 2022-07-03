@@ -39,12 +39,15 @@
 	<div class="ui container user-profile">
 		{{ $user := . }}
 
-		{{ $dev := has .privileges 4194304 }} {{/* AdminCaker */}}
-		{{ $admin := has .privileges 16 }} {{/* AdminManageUsers */}}
-		{{ $mod := has .privileges 262144 }} {{/* AdminChatMod */}}
-		{{ $bn := has .privileges 256 }} {{/* AdminManageBeatmaps */}}
-		{{ $premium := has .privileges 8388608 }} {{/* UserPremium */}}
-		{{ $supporter := has .privileges 4 }} {{/* UserDonor */}}
+		{{ $dev := has .privileges 165387 }}
+		{{ $cm := has .privileges 1036539 }}
+		{{ $product := has .privileges 1046779 }}
+		{{ $project := has .privileges 7340027 }}
+		{{ $support := has .privileges 4283 }}
+		{{ $bn := has .privileges 267 }}
+		{{ $premium := has .privileges 8388608 }}
+		{{ $supporter := has .privileges 4 }}
+
 		<div class="ui grid">
 			<div class="ten wide column" id="user-info">
 				<div class="flex">
@@ -54,12 +57,19 @@
 					<div class="fcolumn">
 						<div class="top-side">
 							<div class="username"><h1>{{ .username }}</h1>
-								{{ if $dev }}
+							    {{ if (or $cm $project $product) }}
+							    <div class="admin">
+									{{ if $project }}
+									PROJECT MANAGER
+									{{ else if $product }}
+									PRODUCT MANAGER
+									{{ else if $cm }}
+									COMMUNITY MANAGER
+								</div>
+								{{ else if $support }}
+								<div class="mod">SUPPORT TEAM</div>
+								{{ else if $dev }}
 								<div class="dev">DEV</div>
-							    {{ else if $admin }}
-							    <div class="admin">ADMIN</div>
-								{{ else if $mod }}
-								<div class="mod">MOD</div>
 								{{ else if $premium }}
 								<div class="premium"><i class="heart small icon"></i></div>
 								{{ else if $supporter }}
