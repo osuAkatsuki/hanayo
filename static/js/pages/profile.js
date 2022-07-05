@@ -62,6 +62,7 @@ $(document).ready(function () {
 	});
 	initialiseAchievements();
 	initialiseFriends();
+	initialiseUserpage()
 	// load scores page for the current favourite mode
 	var i = function () { initialiseScores($("#scores-zone>div[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]"), favouriteMode) };
 	if (i18nLoaded)
@@ -71,6 +72,18 @@ $(document).ready(function () {
 			i();
 		});
 });
+
+function initialiseUserpage() {
+	api("users/userpage", { id: userID }, (resp) => {
+		var userpage = $("#userpage-content")
+
+		if (!resp.userpage_compiled) return
+
+		userpage.css("display", "")
+		userpage.html(resp.userpage_compiled)
+		userpage.removeClass("loading")
+	})
+}
 
 function initialiseAchievements() {
 	api('users/achievements' + (currentUserID == userID ? '?all' : ''),
@@ -193,28 +206,6 @@ function setDefaultScoreTable() {
 		;
 }
 
-var defaultMapTable;
-function setDefaultMapTable() {
-	defaultMapTable = $("<table class='ui table score-table' />")
-		.append(
-			$("<div class='scores' />")
-		)
-		.append(
-			$("<tbody />")
-		)
-		.append(
-			$("<tfoot />").append(
-				$("<tr />").append(
-					$("<th colspan=2 />").append(
-						$("<div class='ui right floated pagination menu' />").append(
-							$("<a class='disabled item load-more-button'>" + T("Load more") + "</a>").click(loadMoreMostPlayed)
-						)
-					)
-				)
-			)
-		)
-	;
-}
 i18next.on('loaded', function (loaded) {
 	setDefaultScoreTable();
 });
@@ -223,9 +214,10 @@ function initialiseScores(el, mode) {
 	var pinned = defaultScoreTable.clone(true);
 	var best = defaultScoreTable.clone(true);
 
-	setDefaultMapTable();
-	var most_played = defaultScoreTable.clone(true);
+	var rxAsSring = preferRelax ? preferRelax == 2 ? "a" : "r" : ""
+	var spanSuffix = `${mode}${rxAsSring}`
 
+	var most_played = defaultScoreTable.clone(true);
 	var first = defaultScoreTable.clone(true);
 	var recent = defaultScoreTable.clone(true);
 	pinned.attr("data-type", "pinned");
@@ -237,7 +229,7 @@ function initialiseScores(el, mode) {
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Pinned scores")}</h2></div>`, pinned),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Best scores")}</h2></div>`, best),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Most played beatmaps")}</h2></div>`, most_played),
-		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("First Place Ranks")} <span id='1stotal' style='font-size: medium;'>(.. in total)</span></h2></div>`, first),
+		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("First Place Ranks")} <span id="first-scores-span-${spanSuffix}" style='font-size: medium;'>(.. in total)</span></h2></div>`, first),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Recent scores (24h)")}</h2></div>`, recent),
 	));
 	loadScoresPage("pinned", mode);
@@ -255,15 +247,6 @@ function loadMoreClick() {
 	var type = t.parents("div[data-type]").data("type");
 	var mode = t.parents("div[data-mode]").data("mode");
 	loadScoresPage(type, mode);
-}
-function loadMoreMostPlayed() {
-	var t = $(this);
-	if (t.hasClass("disabled"))
-		return;
-	t.addClass("disabled");
-	var type = t.parents("table[data-type]").data("type");
-	var mode = t.parents("div[data-mode]").data("mode");
-	loadMostPlayedBeatmaps(type, mode);
 }
 // currentPage for each mode
 var currentPage = {
@@ -296,8 +279,28 @@ function loadMostPlayedBeatmaps(type, mode) {
 	else page = ++currentPage[mode][type];
 
 	api('users/most_played', { id: userID, mode: mode, p: page, l: 5, rx: preferRelax }, function (resp) {
+
 		if (resp.most_played_beatmaps == null) {
 			disableLoadMoreButton(type, mode);
+			table.html(
+				`<div class="map-single">
+					<div class="map-content1">
+						<div class="map-data">
+							<div class="map-image" style="background:linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)); background-size: cover;">
+								<div class="map-grade rank-SHD">: (</div>
+							</div>
+							<div class="map-title-block">
+								<div class="map-title">
+									<h4>No score available</h4>
+								</div>
+								<div class="play-stats">
+									Maybe you should play something?
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>`
+			)
 			return;
 		}
 
@@ -344,6 +347,11 @@ var scoreStore = {};
 function loadScoresPage(type, mode) {
 	var table = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] div[data-type=" + type + "] .scores");
 
+	// redirect it to most played load.
+	if (type == "most_played") {
+		return loadMostPlayedBeatmaps(type, mode)
+	}
+
 	var page;
 	if (preferRelax == 1) page = ++rPage[mode][type];
 	else if (preferRelax == 2) page = ++aPage[mode][type];
@@ -359,8 +367,11 @@ function loadScoresPage(type, mode) {
 			uid: userID,
 			actual_id: window.actualID
 		}, function (r) {
-			if (type === 'first')
-				document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
+			if (type === 'first') {// add first places count
+				var rxAsSring = preferRelax ? preferRelax == 2 ? "a" : "r" : ""
+				var spanSuffix = `${mode}${rxAsSring}`
+				$(`#first-scores-span-${spanSuffix}`).text(`(${r.total} in total)`);
+			}
 
 			if (r.scores == null) {
 				disableLoadMoreButton(type, mode);
@@ -430,8 +441,8 @@ function loadScoresPage(type, mode) {
 									</div>
 								</div>
 								<div data-btns-score-id='${v.id}'>
-									${downloadStar(v.id)}
-									${userID == window.actualID && !document.querySelector(`[data-pinnedscoreid='${v.id}']`) ? pinButton(v.id, preferRelax) : ""}
+									${downloadStar(v.id)} 
+									${userID == window.actualID && !v.pinned ? pinButton(v.id, preferRelax) : ""}
 								</div>
 								<div class="score-details_icon-block">
 									<i class="angle right icon"></i>
@@ -631,7 +642,7 @@ function unpinButton(id, rx) {
 }
 
 function downloadStar(id) {
-	return "<a href='/web/replays/" + id + "' class='new downloadstar'><i class='star icon'></i></a>";
+	return `<a href='/web/replays/${id}' class='new downloadstar' title="Download Replay"><i class="fa-solid fa-download icon"></i></a>`;
 }
 function weightedPP(type, page, idx, pp) {
 	if (type != "best" || pp == 0)

@@ -778,6 +778,15 @@ a.camouflaged:hover {
   font-size: 10px;
 }
 
+.bn {
+  color: #8636ff;
+  padding: 0px 7px;
+  font-weight: 700;
+  background: #000000b8;
+  border-radius: 6px;
+  font-size: 10px;
+}
+
 .ui.grid>.row>.full-centered.column {
   display: inline-flex;
   justify-content: center;
