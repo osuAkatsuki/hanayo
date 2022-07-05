@@ -8,7 +8,8 @@
     var wl = window.location;
     window.history.replaceState('', document.title,
       "/b/" + b + "?mode=" + m + "&rx=" + rx + wl.hash);
-    api(`scores?sort=${"pp" ? rx != 0 : "score"},desc&sort=id,asc`, {
+    var Score = rx ? "pp" : "score"
+    api(`scores?sort=${Score},desc`, {
       mode : m,
       relax: rx,
       b : b,
@@ -23,7 +24,7 @@
         data.scores = [];
       }
       var i = 0;
-      data.scores.sort(function(a, b) { return b.score - a.score; });
+      data.scores.sort(function(a, b) { return b.Score - a.Score; });
       data.scores.forEach(function(score) {
         var user = score.user;
         var scoreRank = getRank(m, score.mods, score.accuracy, score.count_300, score.count_100, score.count_50, score.count_miss);
