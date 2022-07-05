@@ -91,6 +91,34 @@ var bbcodeCompiler = func() bbcode.Compiler {
 		return bbcode.DefaultTagCompiler(node)
 	})
 
+	// add british english.
+	compiler.SetTag("centre", func(node *bbcode.BBCodeNode) (*bbcode.HTMLTag, bool) {
+		out := bbcode.NewHTMLTag("")
+		out.Name = "div"
+		out.Attrs["style"] = "text-align: center;"
+		return out, true
+	})
+
+	compiler.SetTag("colour", func(node *bbcode.BBCodeNode) (*bbcode.HTMLTag, bool) {
+		out := bbcode.NewHTMLTag("")
+		out.Name = "span"
+		sanitize := func(r rune) rune {
+			if r == '#' || r == ',' || r == '.' || r == '(' || r == ')' || r == '%' {
+				return r
+			} else if r >= '0' && r <= '9' {
+				return r
+			} else if r >= 'a' && r <= 'z' {
+				return r
+			} else if r >= 'A' && r <= 'Z' {
+				return r
+			}
+			return -1
+		}
+		color := strings.Map(sanitize, node.GetOpeningTag().Value)
+		out.Attrs["style"] = "color: " + color + ";"
+		return out, true
+	})
+
 	compiler.SetTag("youtube", func(node *bbcode.BBCodeNode) (*bbcode.HTMLTag, bool) {
 		var youtubeID string
 
@@ -108,7 +136,7 @@ var bbcodeCompiler = func() bbcode.Compiler {
 		tag := bbcode.NewHTMLTag("")
 		tag.Name = "iframe"
 		tag.Attrs = map[string]string{
-			"style":           "width: 100%; max-height: 100%;",
+			"style":           "width: 80%; max-height: 80%;",
 			"src":             "https://www.youtube.com/embed/" + youtubeID,
 			"frameborder":     "0",
 			"allowfullscreen": "",
@@ -148,7 +176,7 @@ var bbcodeCompiler = func() bbcode.Compiler {
 		if args["compact"] != "" {
 			out.Attrs["class"] += "compact-container "
 		}
-		if args["center"] != "" {
+		if args["center"] != "" || args["centre"] != "" {
 			out.Attrs["style"] += "margin: 0 auto;"
 		}
 		return out, true
