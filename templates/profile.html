@@ -56,7 +56,13 @@
 					</div>
 					<div class="fcolumn">
 						<div class="top-side">
-							<div class="username"><h1>{{ .username }}</h1>
+							<div class="username">
+								<h1 style="white-space: nowrap !important;">
+									{{ if .clan.id }}
+										<a href="/c/{{ .clan.id }}" title="{{ .clan.name }}">{{ .clan.tag }}</a>
+									{{ end }}
+									{{ .username }}
+								</h1>
 							    {{ if (or $cm $project $product) }}
 							    <div class="admin">
 									{{ if $project }}
@@ -70,11 +76,13 @@
 								{{ else if $support }}
 								<div class="mod">SUPPORT TEAM</div>
 								{{ else if $dev }}
-								<div class="dev">DEV</div>
+								<div class="dev">DEVELOPER</div>
+								{{ else if $bn }}
+								<div class="bn">BEATMAP NOMINATOR</div>
 								{{ else if $premium }}
-								<div class="premium"><i class="fa-solid fa-heart"></i></div>
+								<div class="premium">PREMIUM <i class="fa-solid fa-heart"></i></div>
 								{{ else if $supporter }}
-								<div class="supporter"><i class="fa-solid fa-heart"></i></div>
+								<div class="supporter">SUPPORTER <i class="fa-solid fa-heart"></i></div>
 								{{ end }}
 							</div>
 							<div class="flex country-status">
@@ -279,24 +287,17 @@
 			</div>
 		</div>
 		<div class="vark-list-grid wide column load-data" id="user-scores">
-			{{ with $global.Get "users/userpage?id=%.0f" .id }}
-			{{ if .userpage }}
-			{{ with parseUserpage .userpage }}
-			<div class="ui raised segment twemoji" id="userpage-content">
-			    {{ . }}
+			<div class="ui raised segment twemoji" id="userpage-content" style="display: none;">
 			</div>
-			{{ end }}
-			{{ end }}
-			{{ end }}
 
 			<div id="scores-zone">
 				{{ range _range 4 }}
-				{{ $rx := . }}
-				{{ range _range 6 }}
-				<div data-mode="{{ . }}" {{ if or (ne $rx (int $preferRelax)) (ne . (int $favouritemode)) }} hidden{{ end }}
-					data-loaded="0" data-rx="{{ $rx }}">
-				</div>
-				{{ end }}
+					{{ $rx := . }}
+					{{ range _range 6 }}
+						<div data-mode="{{ . }}" {{ if or (ne $rx (int $preferRelax)) (ne . (int $favouritemode)) }} hidden{{ end }}
+							data-loaded="0" data-rx="{{ $rx }}">
+						</div>
+					{{ end }}
 				{{ end }}
 			</div>
 		

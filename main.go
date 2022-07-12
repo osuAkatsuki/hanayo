@@ -36,22 +36,22 @@ var startTime = time.Now()
 var (
 	config struct {
 		// Essential configuration that must be always checked for every environment.
-		ListenTo    string `description:"ip:port from which to take requests."`
-		Unix        bool   `description:"Whether ListenTo is an unix socket."`
-		DSN         string `description:"MySQL server DSN"`
-		RedisEnable bool
-		AvatarURL   string
-		BaseURL     string
-		API         string
-		BanchoAPI   string
+		ListenTo      string `description:"ip:port from which to take requests."`
+		Unix          bool   `description:"Whether ListenTo is an unix socket."`
+		DSN           string `description:"MySQL server DSN"`
+		RedisEnable   bool
+		AvatarURL     string
+		BaseURL       string
+		API           string
+		BanchoAPI     string
 		CheesegullAPI string
-		APISecret   string
-		Offline     bool `description:"If this is true, files will be served from the local server instead of the CDN."`
+		APISecret     string
+		Offline       bool `description:"If this is true, files will be served from the local server instead of the CDN."`
 
 		MainRippleFolder string `description:"Folder where all the non-go projects are contained, such as old-frontend, lets, ci-system. Used for changelog."`
 		AvatarsFolder    string `description:"location folder of avatars, used for placing the avatars from the avatar change page."`
-		EnableS3	bool `description:"Whether to use S3 for Avatars"`
-		S3Bucket	string
+		EnableS3         bool   `description:"Whether to use S3 for Avatars"`
+		S3Bucket         string
 
 		CookieSecret string
 
