@@ -13,7 +13,7 @@ $(document).ready(function () {
 		newSearch = "?mode=" + favouriteMode;
 	}
 
-	if (wl.search.indexOf("rx=") === -1 || wl.search.indexOf("?rx=") != -1) 
+	if (wl.search.indexOf("rx=") === -1 || wl.search.indexOf("?rx=") != -1)
 		newSearch += "&rx=" + preferRelax;
 
 	if (wl.search != newSearch)
@@ -30,7 +30,6 @@ $(document).ready(function () {
 			return;
 
 		preferRelax = $(this).data("rx");
-		console.log(favouriteMode ,preferRelax)
 		checkRelaxMania(favouriteMode, preferRelax);
 		$("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]:not(.simple-banner-swtich)").removeAttr("hidden");
@@ -49,7 +48,6 @@ $(document).ready(function () {
 			return;
 		var m = $(this).data("mode");
 		favouriteMode = m;
-		console.log(favouriteMode ,preferRelax)
 		checkRelaxMania(m, preferRelax);
 		$("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + m + "][data-rx=" + preferRelax + "]:not(.simple-banner-swtich)").removeAttr("hidden");
@@ -153,21 +151,21 @@ function setFriend(i) {
 	switch (i) {
 		case 0:
 			b
-			.addClass("blue")
-			.attr("title", T("Add friend"))
-			.html(`<i class="fas fa-user-plus"></i>`);
+				.addClass("blue")
+				.attr("title", T("Add friend"))
+				.html(`<i class="fas fa-user-plus"></i>`);
 			break;
 		case 1:
 			b
-			.addClass("green")
-			.attr("title", T("Remove friend"))
-			.html(`<i class="fas fa-user-times"></i>`);
+				.addClass("green")
+				.attr("title", T("Remove friend"))
+				.html(`<i class="fas fa-user-times"></i>`);
 			break;
 		case 2:
 			b
-			.addClass("red")
-			.attr("title", T("Unmutual friend"))
-			.html(`<i class="fas fa-user-friends"></i>`);
+				.addClass("red")
+				.attr("title", T("Unmutual friend"))
+				.html(`<i class="fas fa-user-friends"></i>`);
 			break;
 	}
 	b.attr("data-friends", i > 0 ? 1 : 0)
@@ -213,7 +211,7 @@ function setDefaultMapTable() {
 				)
 			)
 		)
-	;
+		;
 }
 i18next.on('loaded', function (loaded) {
 	setDefaultScoreTable();
@@ -267,25 +265,43 @@ function loadMoreMostPlayed() {
 }
 // currentPage for each mode
 var currentPage = {
-	0: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	1: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	2: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	3: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0}
+	0: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	1: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	2: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	3: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 }
 };
 
 var rPage = {
-	0: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	1: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	2: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	3: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0}
+	0: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	1: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	2: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	3: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 }
 };
 
 var aPage = {
-	0: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	1: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	2: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0},
-	3: {pinned: 0, best: 0, most_played: 0, recent: 0, first: 0}
+	0: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	1: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	2: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
+	3: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 }
 };
+
+const scoreNotFoundElement = `<div class="map-single">
+<div class="map-content1">
+	<div class="map-data">
+		<div class="map-image" style="background:linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)); background-size: cover;">
+			<div class="map-grade rank-SHD">: (</div>
+		</div>
+		<div class="map-title-block">
+			<div class="map-title">
+				<h4>No score available</h4>
+			</div>
+			<div class="play-stats">
+				Maybe you should play something?
+			</div>
+		</div>
+	</div>
+</div>
+</div>`
 
 function loadMostPlayedBeatmaps(type, mode) {
 	var mostPlayedTable = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] div[data-type=" + type + "] .scores");
@@ -297,6 +313,7 @@ function loadMostPlayedBeatmaps(type, mode) {
 
 	api('users/most_played', { id: userID, mode: mode, p: page, l: 5, rx: preferRelax }, function (resp) {
 		if (resp.most_played_beatmaps == null) {
+			mostPlayedTable.html(scoreNotFoundElement)
 			disableLoadMoreButton(type, mode);
 			return;
 		}
@@ -306,7 +323,7 @@ function loadMostPlayedBeatmaps(type, mode) {
 			<div class="new map-single" style="cursor: auto">
 				<div class="map-content1">
 					<div class="map-data">
-						<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${el.beatmap.beatmapset_id}/covers/list.jpg); background-size: cover;">
+						<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${el.beatmap.beatmapset_id}/covers/cover@2x.jpg); background-size: cover;">
 						</div>
 						<div class="map-title-block">
 							<div class="map-title">
@@ -329,7 +346,7 @@ function loadMostPlayedBeatmaps(type, mode) {
 					</div>
 				</div>
 			</div>`
-			)	
+			)
 		})
 
 		var enable = true;
@@ -361,31 +378,17 @@ function loadScoresPage(type, mode) {
 		}, function (r) {
 			if (type === 'first')
 				document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
-
 			if (r.scores == null) {
 				disableLoadMoreButton(type, mode);
-				table.html(
-					`<div class="map-single">
-						<div class="map-content1">
-							<div class="map-data">
-								<div class="map-image" style="background:linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)); background-size: cover;">
-									<div class="map-grade rank-SHD">: (</div>
-								</div>
-								<div class="map-title-block">
-									<div class="map-title">
-										<h4>No score available</h4>
-									</div>
-									<div class="play-stats">
-										Maybe you should play something?
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>`
-				)
+				table.html(scoreNotFoundElement)
 				return;
+			} else {
+				if (r.scores.length === 0) {
+					disableLoadMoreButton(type, mode);
+					table.html(scoreNotFoundElement)
+					return;
+				}
 			}
-
 
 			r.scores.forEach(function (v, idx) {
 				scoreStore[v.id] = v;
@@ -398,7 +401,7 @@ function loadScoresPage(type, mode) {
 				<div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
 					<div class="map-content1">
 						<div class="map-data">
-							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id}/covers/list.jpg); background-size: cover;">
+							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id}/covers/cover@2x.jpg); background-size: cover;">
 								<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "+")}</div>
 							</div>
 							<div class="map-title-block">
@@ -466,7 +469,8 @@ function loadScoresPage(type, mode) {
 			rx: preferRelax,
 			id: userID,
 		}, function (r) {
-			if (r.scores == null) {
+			if (r.scores.length === 0) {
+				table.html(scoreNotFoundElement)
 				disableLoadMoreButton(type, mode);
 				return;
 			}
@@ -505,7 +509,7 @@ function do_pin(table, score, mode) {
 	<div class="new map-single complete-${score.completed}" data-pinnedscoreid="${score.id}">
 		<div class="map-content1">
 			<div class="map-data">
-				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${score.beatmap.beatmapset_id}/covers/list.jpg); background-size: cover;">
+				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${score.beatmap.beatmapset_id}/covers/cover@2x.jpg); background-size: cover;">
 					<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "+")}</div>
 				</div>
 				<div class="map-title-block">
@@ -548,8 +552,7 @@ function do_pin(table, score, mode) {
 	`);
 }
 
-function pinSuccess(data)
-{
+function pinSuccess(data) {
 	score = scoreStore[data['score_id']]
 
 	var table = $("#scores-zone div[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "] div[data-type=pinned] .scores");
@@ -598,7 +601,6 @@ function pin_api(endpoint, data, success, failure, post) {
 				console.warn(data);
 				showMessage("error", errorMessage);
 			}
-			console.log(data)
 			success(data);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -613,8 +615,7 @@ function pin_api(endpoint, data, success, failure, post) {
 	});
 };
 
-function pinScore(id, rx)
-{
+function pinScore(id, rx) {
 	pin_api("pin", { id: id, rx: rx }, pinSuccess, function (data) { }, true);
 }
 
