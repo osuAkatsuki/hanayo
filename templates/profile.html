@@ -27,15 +27,15 @@
 </head>
 
 <script>
-	window.favouriteMode = {{ $favouritemode }};
-	window.preferRelax = {{ $preferRelax }};
-	window.userID = {{ .id }};
-	window.actualID = {{ $realid }};
+	window.favouriteMode = "{{ $favouritemode }}";
+	window.preferRelax = "{{ $preferRelax }}";
+	window.userID = parseInt("{{ .id }}");
+	window.actualID = parseInt("{{ $realid }}");
 </script>
 
 <link rel="stylesheet" href="/static/css/pages/profile.css">
 
-<div class="profile heading" style="background:linear-gradient( rgb(0 0 0 / 50%), rgb(0 0 0 / 50%) ), url(https://i.pinimg.com/originals/b8/2f/28/b82f28a7e9c8fcb3868d3d94652c107c.gif) no-repeat top/110%">
+<div class="profile heading" style="background:linear-gradient( rgb(0 0 0 / 50%), rgb(0 0 0 / 50%) ), url() no-repeat top/110%">
 	<div class="ui container user-profile">
 		{{ $user := . }}
 
