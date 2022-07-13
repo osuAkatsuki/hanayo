@@ -25,11 +25,11 @@
 		</style>
 	</head>
 	<body>
-		<div class="ui full height main wrapper" id="app"
+		<div class="ui full height main wrapper" id="app" 
 			{{ if and .DisableHH .KyutGrill }}
-				style="background-image: url('{{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ .KyutGrill }}{{ end }}');"
+				style="--user-bg: url('{{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ .KyutGrill }}{{ end }}');"
 			{{ else if .SolidColour }}
-				style="background-color: {{ .SolidColour }}"
+				style="--user-bg: {{ .SolidColour }}"
 			{{ end }}>
 			{{ template "navbar" . }}
 

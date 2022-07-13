@@ -430,6 +430,10 @@
   .map-grade {
     font-size: 3rem
   }
+
+  .map-padding {
+    padding-bottom: 1.2rem;
+  }
 }
 
 @media only screen and (max-width: 500px) {
