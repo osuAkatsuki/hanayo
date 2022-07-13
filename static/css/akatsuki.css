@@ -1132,3 +1132,7 @@ li.language-select:hover:before, li.language-select.selected:before {
   margin-bottom: 1rem;
   border-radius: 0.5rem;
 }
+
+.map-padding {
+  padding-bottom: 1.2rem;
+}

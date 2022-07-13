@@ -291,7 +291,7 @@ const scoreNotFoundElement = `<div class="map-single">
 		<div class="map-image" style="background:linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)); background-size: cover;">
 			<div class="map-grade rank-SHD">: (</div>
 		</div>
-		<div class="map-title-block">
+		<div class="map-title-block map-padding">
 			<div class="map-title">
 				<h4>No score available</h4>
 			</div>
@@ -378,6 +378,8 @@ function loadScoresPage(type, mode) {
 		}, function (r) {
 			if (type === 'first')
 				document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
+
+			console.log(r, type)
 			if (r.scores == null) {
 				disableLoadMoreButton(type, mode);
 				table.html(scoreNotFoundElement)
@@ -392,17 +394,12 @@ function loadScoresPage(type, mode) {
 
 			r.scores.forEach(function (v, idx) {
 				scoreStore[v.id] = v;
-				if (v.completed != 0) {
-					var scoreRank = getRank(mode, v.mods, v.accuracy, v.count_300, v.count_100, v.count_50, v.count_miss);
-				} else {
-					var scoreRank = 'F';
-				};
 				table.append(`
 				<div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
 					<div class="map-content1">
 						<div class="map-data">
 							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id}/covers/cover@2x.jpg); background-size: cover;">
-								<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "+")}</div>
+								<div class="map-grade rank-${v.rank}">${v.rank.replace("HD", "+")}</div>
 							</div>
 							<div class="map-title-block">
 								<div class="map-title"><a class="beatmap-link">
