@@ -27,8 +27,8 @@
 </head>
 
 <script>
-	window.favouriteMode = "{{ $favouritemode }}";
-	window.preferRelax = "{{ $preferRelax }}";
+	window.favouriteMode = parseInt("{{ $favouritemode }}");
+	window.preferRelax = parseInt("{{ $preferRelax }}");
 	window.userID = parseInt("{{ .id }}");
 	window.actualID = parseInt("{{ $realid }}");
 </script>

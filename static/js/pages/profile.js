@@ -285,7 +285,7 @@ var aPage = {
 	3: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 }
 };
 
-const scoreNotFoundElement = `<div class="map-single">
+const scoreNotFoundElement = `<div class="map-single" id="not-found-container">
 <div class="map-content1">
 	<div class="map-data">
 		<div class="map-image" style="background:linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)); background-size: cover;">
@@ -394,12 +394,19 @@ function loadScoresPage(type, mode) {
 
 			r.scores.forEach(function (v, idx) {
 				scoreStore[v.id] = v;
+
+				if (v.completed != 0) {
+					var scoreRank = getRank(mode, v.mods, v.accuracy, v.count_300, v.count_100, v.count_50, v.count_miss);
+				} else {
+					var scoreRank = 'F';
+				}
+
 				table.append(`
 				<div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
 					<div class="map-content1">
 						<div class="map-data">
 							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id}/covers/cover@2x.jpg); background-size: cover;">
-								<div class="map-grade rank-${v.rank}">${v.rank.replace("HD", "+")}</div>
+								<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
 							</div>
 							<div class="map-title-block">
 								<div class="map-title"><a class="beatmap-link">
@@ -431,7 +438,7 @@ function loadScoresPage(type, mode) {
 								</div>
 								<div data-btns-score-id='${v.id}'>
 									${downloadStar(v.id)}
-									${userID == window.actualID && !document.querySelector(`[data-pinnedscoreid='${v.id}']`) ? pinButton(v.id, preferRelax) : ""}
+									${userID == window.actualID && !v.pinned ? pinButton(v.id, preferRelax) : ""}
 								</div>
 								<div class="score-details_icon-block">
 									<i class="angle right icon"></i>
@@ -507,7 +514,7 @@ function do_pin(table, score, mode) {
 		<div class="map-content1">
 			<div class="map-data">
 				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${score.beatmap.beatmapset_id}/covers/cover@2x.jpg); background-size: cover;">
-					<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "+")}</div>
+					<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
 				</div>
 				<div class="map-title-block">
 					<div class="map-title"><a class="beatmap-link">
@@ -555,8 +562,19 @@ function pinSuccess(data) {
 	var table = $("#scores-zone div[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "] div[data-type=pinned] .scores");
 	if (!table) return showMessage("error", "Tell Flame to fix this");
 
+	notFoundElement = table.find("#not-found-container")
+	if (table[0].childElementCount === 1 && notFoundElement) {
+		notFoundElement.remove()
+	}
+
 	do_pin(table, score, favouriteMode);
 	$(".new.timeago").timeago().removeClass("new");
+	$(".new.downloadstar").click(function (e) {
+		e.stopPropagation();
+	}).removeClass("new");
+	$(".new.unpinbutton").click(function (e) {
+		e.stopPropagation();
+	}).removeClass("new");
 
 	var otherScores = $(`[data-btns-score-id="${data['score_id']}"]`)
 	otherScores.find('.pinbutton').remove();
@@ -565,11 +583,20 @@ function pinSuccess(data) {
 }
 
 function unpinSuccess(data) {
+	var table = $("#scores-zone div[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "] div[data-type=pinned] .scores");
 	var row = $(`div[data-pinnedscoreid=${data['score_id']}]`)
 	row.remove()
 
+	if (table[0].childElementCount === 0) {
+		table.html(scoreNotFoundElement)
+	}
+
 	var otherScores = $(`[data-btns-score-id="${data['score_id']}"]`)
 	otherScores.append(pinButton(data['score_id'], preferRelax))
+
+	$(".new.pinbutton").click(function (e) {
+		e.stopPropagation();
+	}).removeClass("new");
 
 	showMessage("success", "Score unpinned.");
 }
@@ -621,16 +648,17 @@ function unpinScore(id, rx) {
 }
 
 function pinButton(id, rx) {
-	return `<a href='#' class='new pinbutton' onclick='pinScore("${id}", ${rx})'><i class='pin icon'></i></a>`
+	return `<a href="#" class="new pinbutton" title="Pin Score" onclick='pinScore("${id}", ${rx})'><i class='pin icon'></i></a>`
 }
 
 function unpinButton(id, rx) {
-	return `<a href='#' class='new unpinbutton' onclick='unpinScore("${id}", ${rx})'><i class='pin icon'></i></a>`
+	return `<a href="#" class="new unpinbutton" title="Unpin Score" onclick='unpinScore("${id}", ${rx})'><i class='pin icon'></i></a>`
 }
 
 function downloadStar(id) {
-	return "<a href='/web/replays/" + id + "' class='new downloadstar'><i class='star icon'></i></a>";
+	return "<a href='/web/replays/" + id + "' title='Download Replay' class='new downloadstar'><i class='fa-solid fa-download icon'></i></a>";
 }
+
 function weightedPP(type, page, idx, pp) {
 	if (type != "best" || pp == 0)
 		return "";
