@@ -59,6 +59,7 @@ $(document).ready(function () {
 		window.history.replaceState('', document.title, `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`);
 	});
 	initialiseAchievements();
+	initialiseUserpage();
 	initialiseFriends();
 	// load scores page for the current favourite mode
 	var i = function () { initialiseScores($("#scores-zone>div[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]"), favouriteMode) };
@@ -69,6 +70,18 @@ $(document).ready(function () {
 			i();
 		});
 });
+
+function initialiseUserpage() {
+	api("users/userpage", { id: userID }, (resp) => {
+		var userpage = $("#userpage-content")
+
+		if (!resp.userpage_compiled) return
+
+		userpage.css("display", "")
+		userpage.html(resp.userpage_compiled)
+		userpage.removeClass("loading")
+	})
+}
 
 function initialiseAchievements() {
 	api('users/achievements' + (currentUserID == userID ? '?all' : ''),
