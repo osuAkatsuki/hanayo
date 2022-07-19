@@ -37,11 +37,11 @@
         id="app"
         {{ if and .DisableHH .KyutGrill }}
           style="--user-bg:
-          url('{{ if .KyutGrillAbsolute }}
-            {{ .KyutGrill }}
+          url({{ if .KyutGrillAbsolute }}
+            '{{ .KyutGrill }}'
           {{ else }}
-            /static/headers/{{ .KyutGrill }}
-          {{ end }}');"
+            '/static/headers/{{ .KyutGrill }}'
+          {{ end }});"
         {{ else if .SolidColour }}
           style="--user-bg: {{ .SolidColour }}"
         {{ end }}>
@@ -87,12 +87,12 @@
         {{ if not .DisableHH }}
           <div
             class="huge heading {{ if .HeadingOnRight }}right{{ end }} dropped"
-            style="background: linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%) ), url('
+            style="background: linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%) ), url(
             {{ if .KyutGrillAbsolute }}
-              {{ .KyutGrill }}
+              '{{ .KyutGrill }}'
             {{ else }}
-              /static/headers/{{ or .KyutGrill "default.jpg" }}
-            {{ end }}'); background-size: cover">
+              '/static/headers/{{ or .KyutGrill "default.jpg" }}'
+            {{ end }}); background-size: cover">
             <div class="ui container">
               <h1>
                 {{ if .HeadingTitle }}
