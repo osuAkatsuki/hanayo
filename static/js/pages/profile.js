@@ -656,7 +656,7 @@ function unpinButton(id, rx) {
 }
 
 function downloadStar(id) {
-	return `<a href="/web/replays/${id}" title="Download Replay" class='new downloadstar'><i class='fa-solid fa-download icon'></i></a>`;
+	return "<a href='/web/replays/" + id + "' title='Download Replay' class='new downloadstar'><i class='fa-solid fa-download icon'></i></a>";
 }
 
 function weightedPP(type, page, idx, pp) {
