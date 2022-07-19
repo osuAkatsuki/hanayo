@@ -1,38 +1,45 @@
+{{/* prettier-ignore-start */}}
 {{/*###
 NoCompile=true
 */}}
+{{/* prettier-ignore-end */}}
 {{ define "userGroup" }}
-{{ with . }}
-<div class="column">
-	<a class="player" href="/u/{{ .id }}">
-		<div class="front">
-			<img class="user-avatar" src="{{ config "AvatarURL" }}/{{ .id }}" alt="Avatar">
-			<h1 class="header">
-				{{ if .country }}
-					<img class="new-flag fixed--flag--cards" src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints .country }}.svg"></img>
-				{{ end }}
-				{{ .username }}
-			</h1>
-		</div>
-		{{ if .registered_on }}
-			<div class="sub-header" title="Registered">
-				<i class="sign in icon notlock-icon"></i>
-				{{ time .registered_on }}
-			</div>
-		{{ end }}
-	</a>
-</div>
-{{ end }}
+  {{ with . }}
+    <div class="column">
+      <a class="player" href="/u/{{ .id }}">
+        <div class="front">
+          <img
+            class="user-avatar"
+            src="{{ config "AvatarURL" }}/{{ .id }}"
+            alt="Avatar" />
+          <h1 class="header">
+            {{ if .country }}
+              <img
+                class="new-flag fixed--flag--cards"
+                src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints .country }}.svg" />
+            {{ end }}
+            {{ .username }}
+          </h1>
+        </div>
+        {{ if .registered_on }}
+          <div class="sub-header" title="Registered">
+            <i class="sign in icon notlock-icon"></i>
+            {{ time .registered_on }}
+          </div>
+        {{ end }}
+      </a>
+    </div>
+  {{ end }}
 {{ end }}
 
 {{ define "users" }}
-{{ with . }}
-	{{ if .members }}
-		<div class="ui two column center aligned stackable grid" id="members">
-			{{ range .members }}
-			{{ template "userGroup" . }}
-			{{ end }}
-		</div>
-	{{ end }}
-{{ end }}
+  {{ with . }}
+    {{ if .members }}
+      <div class="ui two column center aligned stackable grid" id="members">
+        {{ range .members }}
+          {{ template "userGroup" . }}
+        {{ end }}
+      </div>
+    {{ end }}
+  {{ end }}
 {{ end }}

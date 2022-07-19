@@ -1,110 +1,159 @@
 {{ define "base" }}
-{{ $cf := .ClientFlags }}
-{{ $ds := band $cf 1 }}
-{{ $   := . }}
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+  {{ $cf := .ClientFlags }}
+  {{ $ds := band $cf 1 }}
+  {{ $   := . }}
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<title>{{ if .TitleBar }}{{ .T .TitleBar }} - {{ end }}Akatsuki</title>
+      <title>{{ if .TitleBar }}{{ .T .TitleBar }} -{{ end }}Akatsuki</title>
 
-		<link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css">
-		<link rel="stylesheet" type="text/css" href="/static/css/akatsuki.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="/static/css/semantic.min.css" />
+      <link rel="stylesheet" type="text/css" href="/static/css/akatsuki.css" />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
-		<script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
-		
-		<style>
-			body{
-				--base: 213;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="ui full height main wrapper" id="app" 
-			{{ if and .DisableHH .KyutGrill }}
-				style="--user-bg: url('{{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ .KyutGrill }}{{ end }}');"
-			{{ else if .SolidColour }}
-				style="--user-bg: {{ .SolidColour }}"
-			{{ end }}>
-			{{ template "navbar" . }}
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css" />
 
-			<div id="messages-container">
-				<noscript>Research has proven this website works 10000% better if you have JavaScript enabled.</noscript>
-				{{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
-					<div class="ui warning message">
-						{{ $.T "Your account is currently in restricted mode, and will not be able to perform certain actions. Your profile has been hidden from normal users. If you believe this was a mistake (or have waited more than 2 months since your latest offense), you may appeal by contacting 1 of our support team members on our <a href='/discord'>Discord</a>." | html }}
-					</div>
-				{{ end }}
-				{{ if .Messages }}
-						{{ range $i, $v := .Messages }}
-							<div class="ui {{ $v.Type }} message">
-								<i class="fa-solid fa-xmark"></i>
-								{{ html $v.Content }}
-							</div>
-						{{ end }}
-				{{ end }}
-				{{ $settings := systemSettings "website_maintenance" "game_maintenance" "website_global_alert" }}
-				{{ with $settings.website_global_alert.String }}
-					<div class="ui info message">
-						{{ . | html }}
-					</div>
-				{{ end }}
-				{{ with $settings.game_maintenance.Int }}
-					<div class="ui warning message">
-						{{ $.T "Akatsuki's score submission is currently in maintenance mode. You will not be allowed to submit scores for the time being." }}
-					</div>
-				{{ end }}
-				{{ with $settings.website_maintenance.Int }}
-					<div class="ui warning message">
-						{{ $.T "The Akatsuki website is currently in maintenance mode, and access has been limited for normal users." }}
-					</div>
-				{{ end }}
-				</div>
-			
-			{{ if not .DisableHH }}
-				<div class="huge heading {{ if .HeadingOnRight }}right{{ end }} dropped"
-					style="background: linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%) ), url({{ if .KyutGrillAbsolute }}{{ .KyutGrill }}{{ else }}/static/headers/{{ or .KyutGrill "default.jpg" }}{{ end }});background-size: cover">
-					<div class="ui container">
-						<h1>{{ if .HeadingTitle }}{{ .T .HeadingTitle | html }}{{ else }}{{ .T .TitleBar }}{{ end }}</h1>
-					</div>
-				</div>
-			{{ end }}
+      <style>
+        body {
+          --base: 213;
+        }
+      </style>
+    </head>
+    <body>
+      <div
+        class="ui full height main wrapper"
+        id="app"
+        {{ if and .DisableHH .KyutGrill }}
+          style="--user-bg:
+          url('{{ if .KyutGrillAbsolute }}
+            {{ .KyutGrill }}
+          {{ else }}
+            /static/headers/{{ .KyutGrill }}
+          {{ end }}');"
+        {{ else if .SolidColour }}
+          style="--user-bg: {{ .SolidColour }}"
+        {{ end }}>
+        {{ template "navbar" . }}
 
-			<div class="h-container">
-				{{ template "tpl" . }}
-			</div>
 
-		</div>
-		<center class="footer">
-			<div class="ui container center">
-			{{ .T "&copy; %d osu!Akatsuki, using Hanayo %s." (curryear) (version) | html }}
-				<a href="/team" title="{{ .T "Who is working on this thing?" }}"><i class="fa-solid fa-users"></i> {{ .T "Team" }}</a>
-				<a href="https://github.com/osuakatsuki" title="{{ .T "Git" }}"><i class="fa-brands fa-github"></i> {{ .T "Github" }}</a>
-				<div class="ui scrolling dropdown" style="margin-left: 5px;" id="language-selector">
-				{{ $lang := .Context.Language }}
-				{{ with $lang }}
-				{{ $info := languageInformationByNameShort . }}
-					<span class="text">
-						<img class="new-flag fixed--flag--margin" style="margin-bottom: 0.2em !important" src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints $info.CountryShort }}.svg"></img>{{ countryReadable $info.CountryShort }}
-					</span>
-				{{ else }}
-					<span class="default text">{{ .T "Language" }}</span>
-				{{ end }}
-					<i class="fa-solid fa-caret-down"></i>
-					<div class="menu">
-					{{ range languageInformation }}
-						<div class="language-select {{ if eq .NameShort $lang }}selected {{ end }}item" data-lang="{{ .NameShort }}">{{ country .CountryShort false }}{{ .Name }}</div>
-					{{ end }}
-					</div>
-				</div>
-			</div>
-		</center>
-		
+        <div id="messages-container">
+          <noscript>
+            Research has proven this website works 10000% better if you have
+            JavaScript enabled.
+          </noscript>
+          {{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
+            <div class="ui warning message">
+              {{ $.T "Your account is currently in restricted mode, and will not be able to perform certain actions. Your profile has been hidden from normal users. If you believe this was a mistake (or have waited more than 2 months since your latest offense), you may appeal by contacting 1 of our support team members on our <a href='/discord'>Discord</a>." | html }}
+            </div>
+          {{ end }}
+          {{ if .Messages }}
+            {{ range $i, $v := .Messages }}
+              <div class="ui {{ $v.Type }} message">
+                <i class="fa-solid fa-xmark"></i>
+                {{ html $v.Content }}
+              </div>
+            {{ end }}
+          {{ end }}
+          {{ $settings := systemSettings "website_maintenance" "game_maintenance" "website_global_alert" }}
+          {{ with $settings.website_global_alert.String }}
+            <div class="ui info message">
+              {{ . | html }}
+            </div>
+          {{ end }}
+          {{ with $settings.game_maintenance.Int }}
+            <div class="ui warning message">
+              {{ $.T "Akatsuki's score submission is currently in maintenance mode. You will not be allowed to submit scores for the time being." }}
+            </div>
+          {{ end }}
+          {{ with $settings.website_maintenance.Int }}
+            <div class="ui warning message">
+              {{ $.T "The Akatsuki website is currently in maintenance mode, and access has been limited for normal users." }}
+            </div>
+          {{ end }}
+        </div>
+
+        {{ if not .DisableHH }}
+          <div
+            class="huge heading {{ if .HeadingOnRight }}right{{ end }} dropped"
+            style="background: linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%) ), url('
+            {{ if .KyutGrillAbsolute }}
+              {{ .KyutGrill }}
+            {{ else }}
+              /static/headers/{{ or .KyutGrill "default.jpg" }}
+            {{ end }}'); background-size: cover">
+            <div class="ui container">
+              <h1>
+                {{ if .HeadingTitle }}
+                  {{ .T .HeadingTitle | html }}
+                {{ else }}
+                  {{ .T .TitleBar }}
+                {{ end }}
+              </h1>
+            </div>
+          </div>
+        {{ end }}
+
+
+        <div class="h-container">
+          {{ template "tpl" . }}
+        </div>
+      </div>
+      <center class="footer">
+        <div class="ui container center">
+          {{ .T "&copy; %d osu!Akatsuki, using Hanayo %s." (curryear) (version) | html }}
+          <a href="/team" title="{{ .T "Who is working on this thing?" }}">
+            <i class="fa-solid fa-users"></i>
+            {{ .T "Team" }}
+          </a>
+          <a href="https://github.com/osuakatsuki" title="{{ .T "Git" }}">
+            <i class="fa-brands fa-github"></i>
+            {{ .T "Github" }}
+          </a>
+          <div
+            class="ui scrolling dropdown"
+            style="margin-left: 5px;"
+            id="language-selector">
+            {{ $lang := .Context.Language }}
+            {{ with $lang }}
+              {{ $info := languageInformationByNameShort . }}
+              <span class="text">
+                <img
+                  class="new-flag fixed--flag--margin"
+                  style="margin-bottom: 0.2em !important;"
+                  src="https://twemoji.maxcdn.com/v/latest/svg/{{ countryCodepoints $info.CountryShort }}.svg" />
+                {{ countryReadable $info.CountryShort }}
+              </span>
+            {{ else }}
+              <span class="default text">{{ .T "Language" }}</span>
+            {{ end }}
+            <i class="fa-solid fa-caret-down"></i>
+            <div class="menu">
+              {{ range languageInformation }}
+                <div
+                  class="language-select {{ if eq .NameShort $lang }}
+                    selected
+                  {{ end }}item"
+                  data-lang="{{ .NameShort }}">
+                  {{ country .CountryShort false }}{{ .Name }}
+                </div>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </center>
+
 		<script>
 			var hanayoConf = {
 				avatars:   '{{ .Conf.AvatarURL }}',
@@ -114,23 +163,25 @@
 			};
 			var currentUserID = '{{ .Context.User.ID }}';
 		</script>
-		<script>
-			$(".language-select").on('click', function(event){
-			    event.stopPropagation();
-			    event.stopImmediatePropagation();
-				var lang = $(this).data("lang");
-				document.cookie = "language=" + lang + ";path=/;max-age=31536000";
-				window.location.reload()
-			});
-		</script>
+      <script>
+        $(".language-select").on("click", function (event) {
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+          var lang = $(this).data("lang");
+          document.cookie = "language=" + lang + ";path=/;max-age=31536000";
+          window.location.reload();
+        });
+      </script>
 
-		<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
-		<script src="/static/js/dist.min.js"></script>
-		{{ if .Scripts }}
-			{{ range .Scripts }}
-				<script src="{{ . }}"></script>
-			{{ end }}
-		{{ end }}
-	</body>
-</html>
+      <script
+        src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"
+        crossorigin="anonymous"></script>
+      <script src="/static/js/dist.min.js"></script>
+      {{ if .Scripts }}
+        {{ range .Scripts }}
+          <script src="{{ . }}"></script>
+        {{ end }}
+      {{ end }}
+    </body>
+  </html>
 {{ end }}
