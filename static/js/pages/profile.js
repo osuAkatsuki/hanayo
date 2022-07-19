@@ -216,6 +216,10 @@ function initialiseScores(el, mode) {
 
 	var first = defaultScoreTable.clone(true);
 	var recent = defaultScoreTable.clone(true);
+
+	let rxAsString = preferRelax != 0 ? (preferRelax == 1 ? "r" : "a") : "v"
+	let firstSuffix = `${rxAsString}${mode}`
+
 	pinned.attr("data-type", "pinned");
 	best.attr("data-type", "best");
 	most_played.attr("data-type", "most_played");
@@ -225,7 +229,7 @@ function initialiseScores(el, mode) {
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Pinned scores")}</h2></div>`, pinned),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Best scores")}</h2></div>`, best),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Most played beatmaps")}</h2></div>`, most_played),
-		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("First Place Ranks")} <span id='1stotal' style='font-size: medium;'>(.. in total)</span></h2></div>`, first),
+		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("First Place Ranks")} <span id='first-${firstSuffix}' style='font-size: medium;'>(.. in total)</span></h2></div>`, first),
 		$("<div class='ui segment margin sui' />").append(`<div class='header-top'><h2 class='ui header'>${T("Recent scores (24h)")}</h2></div>`, recent),
 	));
 	loadScoresPage("pinned", mode);
@@ -363,8 +367,11 @@ function loadScoresPage(type, mode) {
 			uid: userID,
 			actual_id: window.actualID
 		}, function (r) {
-			if (type === 'first')
-				document.getElementById('1stotal').innerHTML = '(' + r.total + ' in total)';
+			if (type === 'first') {
+				let rxAsString = preferRelax != 0 ? (preferRelax == 1 ? "r" : "a") : "v"
+				let firstSuffix = `${rxAsString}${mode}`
+				$(`#first-${firstSuffix}`).text(`(${r.total} in total)`)
+			}
 
 			console.log(r, type)
 			if (r.scores == null) {
