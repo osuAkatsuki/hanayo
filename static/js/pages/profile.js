@@ -204,28 +204,6 @@ function setDefaultScoreTable() {
 		;
 }
 
-var defaultMapTable;
-function setDefaultMapTable() {
-	defaultMapTable = $("<table class='ui table score-table' />")
-		.append(
-			$("<div class='scores' />")
-		)
-		.append(
-			$("<tbody />")
-		)
-		.append(
-			$("<tfoot />").append(
-				$("<tr />").append(
-					$("<th colspan=2 />").append(
-						$("<div class='ui right floated pagination menu' />").append(
-							$("<a class='disabled item load-more-button'>" + T("Load more") + "</a>").click(loadMoreMostPlayed)
-						)
-					)
-				)
-			)
-		)
-		;
-}
 i18next.on('loaded', function (loaded) {
 	setDefaultScoreTable();
 });
@@ -234,7 +212,6 @@ function initialiseScores(el, mode) {
 	var pinned = defaultScoreTable.clone(true);
 	var best = defaultScoreTable.clone(true);
 
-	setDefaultMapTable();
 	var most_played = defaultScoreTable.clone(true);
 
 	var first = defaultScoreTable.clone(true);
@@ -267,15 +244,7 @@ function loadMoreClick() {
 	var mode = t.parents("div[data-mode]").data("mode");
 	loadScoresPage(type, mode);
 }
-function loadMoreMostPlayed() {
-	var t = $(this);
-	if (t.hasClass("disabled"))
-		return;
-	t.addClass("disabled");
-	var type = t.parents("table[data-type]").data("type");
-	var mode = t.parents("div[data-mode]").data("mode");
-	loadMostPlayedBeatmaps(type, mode);
-}
+
 // currentPage for each mode
 var currentPage = {
 	0: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
@@ -373,6 +342,11 @@ function loadMostPlayedBeatmaps(type, mode) {
 var scoreStore = {};
 function loadScoresPage(type, mode) {
 	var table = $("#scores-zone div[data-mode=" + mode + "][data-rx=" + preferRelax + "] div[data-type=" + type + "] .scores");
+
+	// redirect it to most played load.
+	if (type == "most_played") {
+		return loadMostPlayedBeatmaps(type, mode)
+	}
 
 	var page;
 	if (preferRelax == 1) page = ++rPage[mode][type];
