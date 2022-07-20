@@ -25,7 +25,7 @@ $(document).ready(function() {
 	/*if (wl.search.indexOf("rx=") === -1) {
 		
 	}*/
-	checkRelaxMania(favouriteMode, rx);
+	toggleModeAvailability(favouriteMode, rx);
 	setMode(favouriteMode, rx);
 
 	$("#rx-menu>.item").click(function(e) {
@@ -35,7 +35,7 @@ $(document).ready(function() {
 		var nrx = $(this).data("rx");
 		$("#rx-menu>.active.item").removeClass("active");
 		window.rx = nrx;
-		checkRelaxMania(favouriteMode, rx);
+		toggleModeAvailability(favouriteMode, rx);
 		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + favouriteMode + (rx != 0 ? (rx != 2 ? 'r' : 'a') : '') + "]:not(.item)").removeAttr("hidden");
 		setMode(favouriteMode, rx);
@@ -50,7 +50,7 @@ $(document).ready(function() {
 		var m = $(this).data("mode");
 		$("#mode-menu>.active.item").removeClass("active");
 		//todo: let new stats table show and hide old
-		checkRelaxMania(m, rx);
+		toggleModeAvailability(m, rx);
 		window.favouriteMode = m;
 		$("[data-mode]:not(.item):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + m + (rx != 0 ? (rx != 2 ? 'r' : 'a') : '') + "]:not(.item)").removeAttr("hidden");
@@ -125,29 +125,34 @@ function tableRow(title, data) {
 	return `<tr><td><b>${title}</b></td> <td class="right aligned">${data}</td></tr>`;
 }
 
-function checkRelaxMania(mode, rx) {
-	if (rx == 1) {
-		for (i = 0; i <= 3; i++) {
-			$(`a.item[data-mode='${i}']`).removeClass('disabled')
-		}
-		$("a.item[data-mode='3']").addClass('disabled')
-	} else if (rx == 2) {
-		for (i = 1; i <= 3; i++) {
-			$(`a.item[data-mode='${i}']`).addClass('disabled')
-		}
-	} else {
-		for (i = 0; i <= 3; i++) {
-			$(`a.item[data-mode='${i}']`).removeClass('disabled')
-		}
+function toggleModeAvailability(mode, rx) {
+	for (i = 0; i <= 3; i++) {
+		$(`a.item[data-mode='${i}']`).removeClass('disabled')
 	}
 
-	if (mode === 3) {
+	for (i = 0; i <= 2; i++) {
+		$(`a.item[data-rx='${i}']`).removeClass('disabled')
+	}
+
+	if (rx == 1) {
+		// relax does not have mania
+		$("a.item[data-mode='3']").addClass('disabled')
+	} else if (rx == 2) {
+		// autopilot does not have taiko, catch, or mania
+		$("a.item[data-mode='1']").addClass('disabled')
+		$("a.item[data-mode='2']").addClass('disabled')
+		$("a.item[data-mode='3']").addClass('disabled')
+	}
+
+	if (mode == 1) {
+		// taiko does not have autopilot
+		$("a.item[data-rx='2']").addClass('disabled')
+	} else if (mode == 2) {
+		// catch does not have autopilot
+		$("a.item[data-rx='2']").addClass('disabled')
+	} else if (mode == 3) {
+		// mania does not have relax or autopilot
 		$("a.item[data-rx='1']").addClass('disabled')
 		$("a.item[data-rx='2']").addClass('disabled')
-	} else if (mode === 1 || mode == 2) {
-		$("a.item[data-rx='2']").addClass('disabled')
-	} else {
-		$("a.item[data-rx='1']").removeClass('disabled')
-		$("a.item[data-rx='2']").removeClass('disabled')
 	}
 }

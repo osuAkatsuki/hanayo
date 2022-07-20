@@ -22,7 +22,7 @@ $(document).ready(function () {
 		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
 
 	setDefaultScoreTable();
-	checkRelaxMania(favouriteMode, preferRelax);
+	toggleModeAvailability(favouriteMode, preferRelax);
 
 	$("#rx-menu>.simple-banner-swtich").click(function (e) {
 		e.preventDefault();
@@ -30,7 +30,7 @@ $(document).ready(function () {
 			return;
 
 		preferRelax = $(this).data("rx");
-		checkRelaxMania(favouriteMode, preferRelax);
+		toggleModeAvailability(favouriteMode, preferRelax);
 		$("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]:not(.simple-banner-swtich)").removeAttr("hidden");
 		$("#rx-menu>.active.simple-banner-swtich").removeClass("active");
@@ -48,7 +48,7 @@ $(document).ready(function () {
 			return;
 		var m = $(this).data("mode");
 		favouriteMode = m;
-		checkRelaxMania(m, preferRelax);
+		toggleModeAvailability(favouriteMode, preferRelax);
 		$("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + m + "][data-rx=" + preferRelax + "]:not(.simple-banner-swtich)").removeAttr("hidden");
 		$("#mode-menu>.active.simple-banner-swtich").removeClass("active");
@@ -844,29 +844,34 @@ function beatmapLink(type, id) {
 	return "<a href='/b/" + id + "'>" + id + '</a>';
 }
 
-function checkRelaxMania(mode, rx) {
-	if (rx == 1) {
-		for (i = 0; i <= 3; i++) {
-			$(`.simple-banner-swtich[data-mode='${i}']`).removeClass('disabled')
-		}
-		$(".simple-banner-swtich[data-mode='3']").addClass('disabled')
-	} else if (rx == 2) {
-		for (i = 1; i <= 3; i++) {
-			$(`.simple-banner-swtich[data-mode='${i}']`).addClass('disabled')
-		}
-	} else {
-		for (i = 0; i <= 3; i++) {
-			$(`.simple-banner-swtich[data-mode='${i}']`).removeClass('disabled')
-		}
+function toggleModeAvailability(mode, rx) {
+	for (i = 0; i <= 3; i++) {
+		$(`.simple-banner-swtich[data-mode='${i}']`).removeClass('disabled')
 	}
 
-	if (mode === 3) {
+	for (i = 0; i <= 2; i++) {
+		$(`.simple-banner-swtich[data-rx='${i}']`).removeClass('disabled')
+	}
+
+	if (rx == 1) {
+		// relax does not have mania
+		$(".simple-banner-swtich[data-mode='3']").addClass('disabled')
+	} else if (rx == 2) {
+		// autopilot does not have taiko, catch, or mania
+		$(".simple-banner-swtich[data-mode='1']").addClass('disabled')
+		$(".simple-banner-swtich[data-mode='2']").addClass('disabled')
+		$(".simple-banner-swtich[data-mode='3']").addClass('disabled')
+	}
+
+	if (mode == 1) {
+		// taiko does not have autopilot
+		$(".simple-banner-swtich[data-rx='2']").addClass('disabled')
+	} else if (mode == 2) {
+		// catch does not have autopilot
+		$(".simple-banner-swtich[data-rx='2']").addClass('disabled')
+	} else if (mode == 3) {
+		// mania does not have relax or autopilot
 		$(".simple-banner-swtich[data-rx='1']").addClass('disabled')
 		$(".simple-banner-swtich[data-rx='2']").addClass('disabled')
-	} else if (mode === 1 || mode === 2) {
-		$(".simple-banner-swtich[data-rx='2']").addClass('disabled')
-	} else {
-		$(".simple-banner-swtich[data-rx='1']").removeClass('disabled')
-		$(".simple-banner-swtich[data-rx='2']").removeClass('disabled')
 	}
 }
