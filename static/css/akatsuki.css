@@ -1034,10 +1034,6 @@ li.language-select:hover:before, li.language-select.selected:before {
     background: transparent !important;
     font-weight: 600;
   }
-
-  .osu-title {
-    display: none;
-  }
 }
 
 .badge-image {
