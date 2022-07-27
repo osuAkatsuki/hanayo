@@ -15,10 +15,10 @@ import (
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/pariz/gountries"
 	"github.com/rjeczalik/notify"
 	"github.com/thehowl/conf"
 	"zxq.co/ripple/rippleapi/common"
+	"github.com/biter777/countries"
 )
 
 var templates = make(map[string]*template.Template)
@@ -27,19 +27,34 @@ var baseTemplates = [...]string{
 	"templates/navbar.html",
 	"templates/simplepag.html",
 }
+
+var countriesList = map[string]string{
+
+}
 var simplePages []templateConfig
 
-var gdb = gountries.New()
+func createCountryList() map[string]string {
+	if len(countriesList) == 0 {
+		for _, country := range countries.All() {
+			countriesList[country.Alpha2()] = country.String()
+		}
+	}
+
+	return countriesList
+}
 
 func countryReadable(s string) string {
+	s = strings.ToUpper(s)
 	if s == "XX" || s == "" {
 		return ""
 	}
-	reg, err := gdb.FindCountryByAlpha(s)
-	if err != nil {
+
+	countryMap := createCountryList()
+	if _, found := countryMap[s]; !found {
 		return ""
 	}
-	return reg.Name.Common
+
+	return countryMap[s]
 }
 
 func loadTemplates(subdir string) {

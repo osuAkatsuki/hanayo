@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/RangelReale/osin v1.0.1
 	github.com/asaskevich/govalidator v0.0.0-20171111151018-521b25f4b05f
-	github.com/aws/aws-sdk-go v1.40.49
+	github.com/biter777/countries v1.5.6
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/structs v1.1.0
 	github.com/felipeweb/osin-mysql v0.0.0-20170620113854-269603eb06cf
@@ -56,7 +56,6 @@ require (
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/gorilla/sessions v1.1.3 // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/json-iterator/go v1.1.5 // indirect
 	github.com/klauspost/compress v1.4.1 // indirect
 	github.com/klauspost/cpuid v1.2.0 // indirect
