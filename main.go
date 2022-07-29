@@ -11,103 +11,53 @@ import (
 	"time"
 
 	"github.com/fatih/structs"
-	"github.com/getsentry/raven-go"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/johnniedoe/contrib/gzip"
+	beatmapsHandlers "github.com/osuAkatsuki/hanayo/app/handlers/beatmaps"
+	clansHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans"
+	clanCreationHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans/create"
+	errorHandlers "github.com/osuAkatsuki/hanayo/app/handlers/errors"
+	ircHandlers "github.com/osuAkatsuki/hanayo/app/handlers/irc"
+	"github.com/osuAkatsuki/hanayo/app/handlers/misc"
+	miscHandlers "github.com/osuAkatsuki/hanayo/app/handlers/misc"
+	profilesHandlers "github.com/osuAkatsuki/hanayo/app/handlers/profiles"
+	profileEditHandlers "github.com/osuAkatsuki/hanayo/app/handlers/profiles/settings"
+	accountRecoveryHandlers "github.com/osuAkatsuki/hanayo/app/handlers/recovery"
+	loginHandlers "github.com/osuAkatsuki/hanayo/app/handlers/sessions/login"
+	logoutHandlers "github.com/osuAkatsuki/hanayo/app/handlers/sessions/logout"
+	registerHandlers "github.com/osuAkatsuki/hanayo/app/handlers/sessions/register"
+	middleware "github.com/osuAkatsuki/hanayo/app/middleware"
+	"github.com/osuAkatsuki/hanayo/app/middleware/pagemappings"
+	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
+	sessionsmanager "github.com/osuAkatsuki/hanayo/app/sessions"
+	"github.com/osuAkatsuki/hanayo/app/states/services"
+	"github.com/osuAkatsuki/hanayo/app/states/settings"
+	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
+	"github.com/osuAkatsuki/hanayo/app/version"
+	"github.com/osuAkatsuki/hanayo/internal/btcconversions"
+	"github.com/osuAkatsuki/hanayo/internal/csrf/cieca"
 	"github.com/thehowl/conf"
 	"github.com/thehowl/qsql"
 	"gopkg.in/mailgun/mailgun-go.v1"
 	"gopkg.in/redis.v5"
-	"zxq.co/ripple/hanayo/modules/btcaddress"
-	"zxq.co/ripple/hanayo/modules/btcconversions"
-	"zxq.co/ripple/hanayo/routers/oauth"
-	"zxq.co/ripple/hanayo/routers/pagemappings"
-	"zxq.co/ripple/hanayo/services"
-	"zxq.co/ripple/hanayo/services/cieca"
 	schiavo "zxq.co/ripple/schiavolib"
 	"zxq.co/x/rs"
 )
 
 var startTime = time.Now()
 
-var (
-	config struct {
-		// Essential configuration that must be always checked for every environment.
-		ListenTo      string `description:"ip:port from which to take requests."`
-		Unix          bool   `description:"Whether ListenTo is an unix socket."`
-		DSN           string `description:"MySQL server DSN"`
-		RedisEnable   bool
-		AvatarURL     string
-		BaseURL       string
-		API           string
-		BanchoAPI     string
-		CheesegullAPI string
-		APISecret     string
-		Offline       bool `description:"If this is true, files will be served from the local server instead of the CDN."`
-
-		MainRippleFolder string `description:"Folder where all the non-go projects are contained, such as old-frontend, lets, ci-system. Used for changelog."`
-		AvatarsFolder    string `description:"location folder of avatars, used for placing the avatars from the avatar change page."`
-		EnableS3         bool   `description:"Whether to use S3 for Avatars"`
-		S3Bucket         string
-
-		CookieSecret string
-
-		RedisMaxConnections int
-		RedisNetwork        string
-		RedisAddress        string
-		RedisPassword       string
-
-		DiscordServer string
-
-		BaseAPIPublic string
-
-		Production int `description:"This is a fake configuration value. All of the following from now on should only really be set in a production environment."`
-
-		MailgunDomain        string
-		MailgunPrivateAPIKey string
-		MailgunPublicAPIKey  string
-		MailgunFrom          string
-
-		RecaptchaSite    string
-		RecaptchaPrivate string
-
-		DiscordOAuthID     string
-		DiscordOAuthSecret string
-		DonorBotURL        string
-		DonorBotSecret     string
-
-		CoinbaseAPIKey    string
-		CoinbaseAPISecret string
-
-		SentryDSN string
-
-		IP_API string
-	}
-	configMap map[string]interface{}
-	db        *sqlx.DB
-	qb        *qsql.DB
-	mg        mailgun.Mailgun
-	rd        *redis.Client
-	//sess      *session.Session
-)
-
-// Services etc
-var (
-	CSRF services.CSRF
-)
-
 func main() {
-	fmt.Println("hanayo " + version)
+	fmt.Println("hanayo " + version.Version)
 
-	err := conf.Load(&config, "hanayo.conf")
+	err := conf.Load(&settings.Config, "hanayo.conf")
 	switch err {
 	case nil:
 		// carry on
 	case conf.ErrNoFile:
-		conf.Export(config, "hanayo.conf")
+		conf.Export(settings.Config, "hanayo.conf")
 		fmt.Println("The configuration file was not found. We created one for you.")
 		return
 	default:
@@ -115,18 +65,18 @@ func main() {
 	}
 
 	var configDefaults = map[*string]string{
-		&config.ListenTo:         ":45221",
-		&config.CookieSecret:     rs.String(46),
-		&config.AvatarURL:        "https://a.akatsuki.pw",
-		&config.BaseURL:          "https://akatsuki.pw",
-		&config.BanchoAPI:        "https://c.akatsuki.pw",
-		&config.CheesegullAPI:    "https://api.chimu.moe/cheesegull",
-		&config.API:              "https://localhost:40001/api/v1/",
-		&config.APISecret:        "Potato",
-		&config.IP_API:           "https://ip.zxq.co",
-		&config.DiscordServer:    "#",
-		&config.MainRippleFolder: "/home/akatsuki",
-		&config.MailgunFrom:      `"Akatsuki" <noreply@akatsuki.pw>`,
+		&settings.Config.ListenTo:         ":45221",
+		&settings.Config.CookieSecret:     rs.String(46),
+		&settings.Config.AvatarURL:        "https://a.akatsuki.pw",
+		&settings.Config.BaseURL:          "https://akatsuki.pw",
+		&settings.Config.BanchoAPI:        "https://c.akatsuki.pw",
+		&settings.Config.CheesegullAPI:    "https://api.chimu.moe/cheesegull",
+		&settings.Config.API:              "https://localhost:40001/api/v1/",
+		&settings.Config.APISecret:        "Potato",
+		&settings.Config.IP_API:           "https://ip.zxq.co",
+		&settings.Config.DiscordServer:    "#",
+		&settings.Config.MainRippleFolder: "/home/akatsuki",
+		&settings.Config.MailgunFrom:      `"Akatsuki" <noreply@akatsuki.pw>`,
 	}
 	for key, value := range configDefaults {
 		if *key == "" {
@@ -134,17 +84,20 @@ func main() {
 		}
 	}
 
-	configMap = structs.Map(config)
+	services.ConfigMap = structs.Map(settings.Config)
 
 	// initialise db
-	db, err = sqlx.Open("mysql", config.DSN+"?parseTime=true")
+	db, err := sqlx.Open("mysql", settings.Config.DSN+"?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
-	qb = qsql.New(db.DB)
+	services.DB = db
+
+	qb := qsql.New(db.DB)
 	if err != nil {
 		panic(err)
 	}
+	services.QB = qb
 
 	// if config.EnableS3 {
 	// 	sess = session.Must(session.NewSessionWithOptions(session.Options{
@@ -153,36 +106,30 @@ func main() {
 	// }
 
 	// initialise mailgun
-	mg = mailgun.NewMailgun(
-		config.MailgunDomain,
-		config.MailgunPrivateAPIKey,
-		config.MailgunPublicAPIKey,
+	mg := mailgun.NewMailgun(
+		settings.Config.MailgunDomain,
+		settings.Config.MailgunPrivateAPIKey,
+		settings.Config.MailgunPublicAPIKey,
 	)
+	services.MG = mg
 
 	// initialise CSRF service
-	CSRF = cieca.NewCSRF()
+	services.CSRF = cieca.NewCSRF()
 
 	if gin.Mode() == gin.DebugMode {
 		fmt.Println("Development environment detected. Starting fsnotify on template folder...")
-		err := reloader()
+		err := tu.Reloader()
 		if err != nil {
 			fmt.Println(err)
 		}
 	}
 
 	// initialise redis
-	rd = redis.NewClient(&redis.Options{
-		Addr:     config.RedisAddress,
-		Password: config.RedisPassword,
+	rd := redis.NewClient(&redis.Options{
+		Addr:     settings.Config.RedisAddress,
+		Password: settings.Config.RedisPassword,
 	})
-
-	// initialise oauth
-	setUpOauth()
-
-	// initialise btcaddress
-	btcaddress.Redis = rd
-	btcaddress.APIKey = config.CoinbaseAPIKey
-	btcaddress.APISecret = config.CoinbaseAPISecret
+	services.RD = rd
 
 	// initialise schiavo
 	schiavo.Prefix = "hanayo"
@@ -193,26 +140,26 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 
 	gobRegisters := []interface{}{
-		[]message{},
-		errorMessage{},
-		infoMessage{},
-		neutralMessage{},
-		warningMessage{},
-		successMessage{},
+		[]msg.Message{},
+		msg.ErrorMessage{},
+		msg.InfoMessage{},
+		msg.NeutralMessage{},
+		msg.WarningMessage{},
+		msg.SuccessMessage{},
 	}
 	for _, el := range gobRegisters {
 		gob.Register(el)
 	}
 
 	fmt.Println("Importing templates...")
-	loadTemplates("")
+	tu.LoadTemplates("")
 
 	fmt.Println("Setting up rate limiter...")
-	setUpLimiter()
+	middleware.SetUpLimiter()
 
 	fmt.Println("Exporting configuration...")
 
-	conf.Export(config, "hanayo.conf")
+	conf.Export(settings.Config, "hanayo.conf")
 
 	fmt.Println("Intialisation:", time.Since(startTime))
 
@@ -222,7 +169,7 @@ func main() {
 func httpLoop() {
 	for {
 		e := generateEngine()
-		fmt.Println("Listening on", config.ListenTo)
+		fmt.Println("Listening on", settings.Config.ListenTo)
 		if !startuato(e) {
 			break
 		}
@@ -232,115 +179,92 @@ func httpLoop() {
 func generateEngine() *gin.Engine {
 	fmt.Println("Starting session system...")
 	var store sessions.Store
-	if config.RedisMaxConnections != 0 {
+	if settings.Config.RedisMaxConnections != 0 {
 		var err error
 		store, err = sessions.NewRedisStore(
-			config.RedisMaxConnections,
-			config.RedisNetwork,
-			config.RedisAddress,
-			config.RedisPassword,
-			[]byte(config.CookieSecret),
+			settings.Config.RedisMaxConnections,
+			settings.Config.RedisNetwork,
+			settings.Config.RedisAddress,
+			settings.Config.RedisPassword,
+			[]byte(settings.Config.CookieSecret),
 		)
 		if err != nil {
 			fmt.Println(err)
-			store = sessions.NewCookieStore([]byte(config.CookieSecret))
+			store = sessions.NewCookieStore([]byte(settings.Config.CookieSecret))
 		}
 	} else {
-		store = sessions.NewCookieStore([]byte(config.CookieSecret))
+		store = sessions.NewCookieStore([]byte(settings.Config.CookieSecret))
 	}
 
 	r := gin.Default()
-
-	// sentry
-	if config.SentryDSN != "" {
-		ravenClient, err := raven.New(config.SentryDSN)
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			r.Use(Recovery(ravenClient, false))
-		}
-	}
 
 	r.Use(
 		gzip.Gzip(gzip.DefaultCompression),
 		pagemappings.CheckRedirect,
 		sessions.Sessions("session", store),
-		sessionInitializer(),
-		rateLimiter(false),
-		twoFALock,
+		sessionsmanager.SessionInitializer(),
+		middleware.RateLimiter(false),
 	)
 
 	r.Static("/static", "static")
 	r.StaticFile("/favicon.ico", "static/favicon.ico")
 
-	r.POST("/login", loginSubmit)
-	r.GET("/logout", logout)
+	r.POST("/login", loginHandlers.LoginSubmitHandler)
+	r.GET("/logout", logoutHandlers.LogoutSubmitHandler)
 
-	r.GET("/", homepagePage)
+	r.GET("/", miscHandlers.HomepagePageHandler)
 
-	r.GET("/register", register)
-	r.POST("/register", registerSubmit)
-	r.GET("/register/verify", verifyAccount)
-	r.GET("/register/welcome", welcome)
+	r.GET("/register", registerHandlers.RegisterPageHandler)
+	r.POST("/register", registerHandlers.RegisterSubmitHandler)
+	r.GET("/register/verify", registerHandlers.VerifyAccountPageHandler)
+	r.GET("/register/welcome", registerHandlers.WelcomePageHandler)
 
-	r.GET("/merge", mergeGET)
-	r.POST("/merge", mergePOST)
+	r.GET("/clans/create", clanCreationHandlers.ClanCreatePageHandler)
+	r.POST("/clans/create", clanCreationHandlers.ClanCreateSubmitHandler)
 
-	r.GET("/clans/create", ccreate)
-	r.POST("/clans/create", ccreateSubmit)
+	r.GET("/u/:user", profilesHandlers.UserProfilePageHandler)
+	r.GET("/rx/u/:user", func(c *gin.Context) { // redirect for old links.
+		c.Redirect(301, fmt.Sprintf("/u/%s?rx=1", c.Param("user")))
+	})
 
-	r.GET("/u/:user", userProfile)
-	r.GET("/rx/u/:user", relaxProfile)
-	r.GET("/c/:cid", clanPage)
-	r.GET("/b/:bid", beatmapInfo)
+	r.GET("/c/:cid", clansHandlers.ClanPageHandler)
+	r.GET("/b/:bid", beatmapsHandlers.BeatmapPageHandler)
 
-	r.POST("/pwreset", passwordReset)
-	r.GET("/pwreset/continue", passwordResetContinue)
-	r.POST("/pwreset/continue", passwordResetContinueSubmit)
+	// TODO: maybe change this long names?
+	r.POST(
+		"/pwreset",
+		accountRecoveryHandlers.PasswordResetPageHandler,
+	)
+	r.GET(
+		"/pwreset/continue",
+		accountRecoveryHandlers.PasswordResetContinuePageHandler,
+	)
+	r.POST(
+		"/pwreset/continue",
+		accountRecoveryHandlers.PasswordResetContinueSubmitHandler,
+	)
 
-	r.GET("/2fa_gateway", tfaGateway)
-	r.GET("/2fa_gateway/clear", clear2fa)
-	r.GET("/2fa_gateway/verify", verify2fa)
-	r.GET("/2fa_gateway/recover", recover2fa)
-	r.POST("/2fa_gateway/recover", recover2faSubmit)
+	r.POST("/irc/generate", ircHandlers.IrcGenTokenSubmitHandler)
 
-	r.POST("/irc/generate", ircGenToken)
-
-	r.GET("/settings/password", changePassword)
-	r.GET("/settings/authorized_applications", authorizedApplications)
-	r.POST("/settings/authorized_applications/revoke", revokeAuthorization)
-	r.POST("/settings/password", changePasswordSubmit)
-	r.POST("/settings/userpage/parse", parseBBCode)
-	r.POST("/settings/avatar", avatarSubmit)
-	r.POST("/settings/2fa/disable", disable2fa)
-	r.POST("/settings/2fa/totp", totpSetup)
-	r.POST("/settings/flag", changeFlag)
-	r.POST("/settings/username", changeName)
-	r.GET("/settings/discord/finish", discordFinish)
-	r.POST("/settings/profbackground/:type", profBackground)
-	r.POST("/dev/tokens/create", createAPIToken)
-	r.POST("/dev/tokens/delete", deleteAPIToken)
-	r.POST("/dev/tokens/edit", editAPIToken)
-	r.GET("/dev/apps", getOAuthApplications)
-	r.GET("/dev/apps/edit", editOAuthApplication)
-	r.POST("/dev/apps/edit", editOAuthApplicationSubmit)
-	r.POST("/dev/apps/delete", deleteOAuthApplication)
-
-	r.GET("/oauth/authorize", oauth.Authorize)
-	r.POST("/oauth/authorize", oauth.Authorize)
-	r.GET("/oauth/token", oauth.Token)
-	r.POST("/oauth/token", oauth.Token)
+	r.GET("/settings/password", profileEditHandlers.ChangePasswordPageHandler)
+	r.POST("/settings/password", profileEditHandlers.ChangePasswordSubmitHandler)
+	r.POST("/settings/userpage/parse", profileEditHandlers.ParseBBCodeSubmitHandler)
+	r.POST("/settings/avatar", profileEditHandlers.AvatarSubmitHandler)
+	r.POST("/settings/flag", profileEditHandlers.FlagChangeSubmitHandler)
+	r.POST("/settings/username", profileEditHandlers.NameChangeSubmitHandler)
+	//r.GET("/settings/discord/finish", profileEditHandlers.discordFinish)
+	r.POST(
+		"/settings/profbackground/:type",
+		profileEditHandlers.ProfileBackgroundSubmitHandler,
+	)
 
 	r.GET("/donate/rates", btcconversions.GetRates)
 
-	r.Any("/blog/*url", blogRedirect)
+	r.GET("/about", misc.AboutPageHandler)
 
-	//r.GET("/", homepagePage)
-	r.GET("/about", aboutPage)
+	tu.LoadSimplePages(r)
 
-	loadSimplePages(r)
-
-	r.NoRoute(notFound)
+	r.NoRoute(errorHandlers.NotFoundHandler)
 
 	return r
 }

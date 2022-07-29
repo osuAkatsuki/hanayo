@@ -19,31 +19,6 @@
 // this object contains tiny snippets that were deemed too small to be worth
 // their own file.
 var singlePageSnippets = {
-  "/2fa_gateway" : function() {
-    $('#telegram-code')
-      .on('input', function() {
-        if ($(this).val().length >= 6) {
-          $.get("/2fa_gateway/verify", {
-            token : $(this).val().trim().substr(0, 8),
-          },
-          function(resp) {
-            switch (resp) {
-            case "0":
-              $("#telegram-code").closest(".field").addClass("success");
-              redir = redir ? redir : "/";
-              window.location.href = redir;
-              break;
-            case "1":
-              $("#telegram-code").closest(".field").addClass("error");
-              break;
-            }
-          });
-        } else {
-          $("#telegram-code").closest(".field").removeClass("error");
-        }
-      });
-  },
-
   "/clans" : function() {
      function e() {
     var e = window.location;
