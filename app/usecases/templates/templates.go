@@ -161,6 +161,7 @@ func Resp(c *gin.Context, statusCode int, tpl string, data interface{}) {
 		corrected.SetContext(sessions.GetContext(c))
 		corrected.SetGinContext(c)
 		corrected.SetSession(sess)
+		data = corrected // correct the data structure.
 	}
 	sess.Save()
 	buf := &bytes.Buffer{}
