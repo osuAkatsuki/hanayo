@@ -232,7 +232,7 @@ var emojis = []string{
 var emojiReplacer = func() *strings.Replacer {
 	var list []string
 	for _, e := range emojis {
-		list = append(list, ":"+e+":", "[img=/static/emotes/"+e+".png]:"+e+":[/img]")
+		list = append(list, ":"+e+":", "[img=/static/images/emotes/"+e+".png]:"+e+":[/img]")
 	}
 	return strings.NewReplacer(list...)
 }()

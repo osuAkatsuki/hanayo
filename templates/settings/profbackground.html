@@ -41,7 +41,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
             data-type="1"
             {{ if ne $type 1 }}hidden{{ end }}>
             {{ if and (eq $type 1) $value }}
-              <img src="/static/profbackgrounds/{{ $value }}" />
+              <img src="/static/images/profbackgrounds/{{ $value }}" />
             {{ else }}
               No image selected
             {{ end }}
@@ -53,7 +53,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
             data-type="3"
             {{ if ne $type 3 }}hidden{{ end }}>
             {{ if and (eq $type 3) $value }}
-              <img src="/static/profbackgrounds/{{ $value }}" />
+              <img src="/static/images/profbackgrounds/{{ $value }}" />
             {{ else }}
               No image selected
             {{ end }}

@@ -40,7 +40,7 @@
           url({{ if .KyutGrillAbsolute }}
             '{{ .KyutGrill }}'
           {{ else }}
-            '/static/headers/{{ .KyutGrill }}'
+            '/static/images/headers/{{ .KyutGrill }}'
           {{ end }});"
         {{ else if .SolidColour }}
           style="--user-bg: {{ .SolidColour }}"
@@ -91,7 +91,7 @@
             {{ if .KyutGrillAbsolute }}
               '{{ .KyutGrill }}'
             {{ else }}
-              '/static/headers/{{ or .KyutGrill "default.jpg" }}'
+              '/static/images/headers/{{ or .KyutGrill "default.jpg" }}'
             {{ end }}); background-size: cover">
             <div class="ui container">
               <h1>

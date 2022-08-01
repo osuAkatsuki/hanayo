@@ -62,7 +62,7 @@ func UserProfilePageHandler(c *gin.Context) {
 		services.DB.Get(&profileBackground, "SELECT type, value FROM profile_backgrounds WHERE uid = ?", data.UserID)
 		switch profileBackground.Type {
 		case 1:
-			data.KyutGrill = "/static/profbackgrounds/" + profileBackground.Value
+			data.KyutGrill = "/static/images/profbackgrounds/" + profileBackground.Value
 			data.KyutGrillAbsolute = true
 		case 2:
 			data.SolidColour = profileBackground.Value
