@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package main
@@ -8,24 +9,24 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/hanayo/app/states/listener"
+	"github.com/osuAkatsuki/hanayo/app/states/settings"
 )
-
-var l net.Listener
 
 func startuato(engine *gin.Engine) bool {
 	var err error
 
 	// Listen on a TCP or a UNIX domain socket (TCP here).
 	if config.Unix {
-		l, err = net.Listen("unix", config.ListenTo)
+		listener.Listener, err = net.Listen("unix", settings.Config.ListenTo)
 	} else {
-		l, err = net.Listen("tcp", config.ListenTo)
+		listener.Listener, err = net.Listen("tcp", settings.Config.ListenTo)
 	}
 	if err != nil {
 		log.Fatalln(err)
 		return false
 	}
 
-	http.Serve(l, engine)
+	http.Serve(listener.Listener, engine)
 	return true
 }

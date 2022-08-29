@@ -1,5 +1,0 @@
-144.217.254.156
-TheHangout
-Hey! We've rewritten the switcher fully in an attempt to improve the user experience.
-
-If you have any issues or suggestions, feel free to contact cmyui(#0425) directly!
