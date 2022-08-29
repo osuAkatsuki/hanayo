@@ -209,8 +209,8 @@ func generateEngine() *gin.Engine {
 		middleware.RateLimiter(false),
 	)
 
-	r.Static("/static", "static")
-	r.StaticFile("/favicon.ico", "static/favicon.ico")
+	r.Static("/static", "web/static")
+	r.StaticFile("/favicon.ico", "web/static/favicon.ico")
 
 	r.POST("/login", loginHandlers.LoginSubmitHandler)
 	r.GET("/logout", logoutHandlers.LogoutSubmitHandler)

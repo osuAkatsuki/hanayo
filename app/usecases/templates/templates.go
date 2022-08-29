@@ -28,14 +28,14 @@ import (
 
 var templates = make(map[string]*template.Template)
 var baseTemplates = [...]string{
-	"templates/base.html",
-	"templates/navbar.html",
-	"templates/simplepag.html",
+	"web/templates/base.html",
+	"web/templates/navbar.html",
+	"web/templates/simplepag.html",
 }
 
 func Reloader() error {
 	c := make(chan notify.EventInfo, 1)
-	if err := notify.Watch("./templates/...", c, notify.All); err != nil {
+	if err := notify.Watch("./web/templates/...", c, notify.All); err != nil {
 		return err
 	}
 	go func() {
@@ -56,7 +56,7 @@ func Reloader() error {
 }
 
 func LoadTemplates(subdir string) {
-	ts, err := ioutil.ReadDir("templates" + subdir)
+	ts, err := ioutil.ReadDir("web/templates" + subdir)
 	if err != nil {
 		panic(err)
 	}
@@ -73,7 +73,7 @@ func LoadTemplates(subdir string) {
 			continue
 		}
 
-		fullName := "templates" + subdir + "/" + i.Name()
+		fullName := "web/templates" + subdir + "/" + i.Name()
 		_c := parseConfig(fullName)
 		var c mt.TemplateConfig
 		if _c != nil {
@@ -83,7 +83,7 @@ func LoadTemplates(subdir string) {
 			continue
 		}
 
-		var files = c.Inc("templates" + subdir + "/")
+		var files = c.Inc("web/templates" + subdir + "/")
 		files = append(files, fullName)
 
 		// do not compile base templates on their own
@@ -134,7 +134,7 @@ func parseConfig(s string) *mt.TemplateConfig {
 				continue
 			}
 			conf.LoadRaw(&t, []byte(buff))
-			t.Template = strings.TrimPrefix(s, "templates/")
+			t.Template = strings.TrimPrefix(s, "web/templates/")
 			return &t
 		}
 		if !inConfig {
