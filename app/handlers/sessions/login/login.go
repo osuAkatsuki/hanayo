@@ -19,7 +19,6 @@ import (
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
 	"golang.org/x/crypto/bcrypt"
-	"zxq.co/x/rs"
 )
 
 func LoginSubmitHandler(c *gin.Context) {
@@ -121,7 +120,7 @@ func LoginSubmitHandler(c *gin.Context) {
 
 	sess.Set("userid", data.ID)
 	sess.Set("pw", cryptography.MakeMD5(data.Password))
-	sess.Set("logout", rs.String(15))
+	sess.Set("logout", common.RandomString(15))
 
 	AfterLogin(c, data.ID, data.Country, data.Flags)
 
