@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 
-	"zxq.co/ripple/rippleapi/common"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 )
 
 type Context struct {

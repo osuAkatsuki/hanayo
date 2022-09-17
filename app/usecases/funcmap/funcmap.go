@@ -17,6 +17,7 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	"github.com/osuAkatsuki/hanayo/app/states/settings"
@@ -31,7 +32,6 @@ import (
 	"golang.org/x/oauth2"
 	discordoauth "zxq.co/ripple/go-discord-oauth"
 	"zxq.co/ripple/playstyle"
-	"zxq.co/ripple/rippleapi/common"
 )
 
 // funcMap contains useful functions for the various templates.

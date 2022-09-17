@@ -4,9 +4,9 @@ import (
 	"database/sql"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	"github.com/osuAkatsuki/hanayo/app/usecases/auth/cryptography"
-	"zxq.co/ripple/rippleapi/common"
 )
 
 func ClientIP(c *gin.Context) string {

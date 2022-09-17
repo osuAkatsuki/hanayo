@@ -253,7 +253,7 @@ func generateEngine() *gin.Engine {
 	r.POST("/settings/password", profileEditHandlers.ChangePasswordSubmitHandler)
 	r.POST("/settings/userpage/parse", profileEditHandlers.ParseBBCodeSubmitHandler)
 	r.POST("/settings/avatar", profileEditHandlers.AvatarSubmitHandler)
-	r.POST("/settings/flag", profileEditHandlers.FlagChangeSubmitHandler)
+	// r.POST("/settings/flag", profileEditHandlers.FlagChangeSubmitHandler)
 	r.POST("/settings/username", profileEditHandlers.NameChangeSubmitHandler)
 	//r.GET("/settings/discord/finish", profileEditHandlers.discordFinish)
 	r.POST(

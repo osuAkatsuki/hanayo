@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
@@ -18,7 +19,6 @@ import (
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
 	"golang.org/x/crypto/bcrypt"
-	"zxq.co/ripple/rippleapi/common"
 	"zxq.co/x/rs"
 )
 
