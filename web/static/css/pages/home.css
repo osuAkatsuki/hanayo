@@ -30,7 +30,7 @@ button:focus {
 
 .masthead.segment {
     position: relative;
-    z-index: 3;
+    z-index: 0;
     margin: 0em;
     min-height: 240px;
     padding: 4em 0em;
