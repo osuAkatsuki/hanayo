@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
@@ -15,7 +16,6 @@ import (
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	"github.com/osuAkatsuki/hanayo/app/usecases/misc"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
-	"zxq.co/ripple/rippleapi/common"
 )
 
 func ClanCreatePageHandler(c *gin.Context) {
