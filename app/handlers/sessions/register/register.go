@@ -10,6 +10,7 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
@@ -22,7 +23,6 @@ import (
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
-	"zxq.co/ripple/rippleapi/common"
 	schiavo "zxq.co/ripple/schiavolib"
 )
 

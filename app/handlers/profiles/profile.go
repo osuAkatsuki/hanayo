@@ -5,13 +5,13 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
-	"zxq.co/ripple/rippleapi/common"
 )
 
 func UserProfilePageHandler(c *gin.Context) {

@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
@@ -15,7 +16,6 @@ import (
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	"github.com/osuAkatsuki/hanayo/app/usecases/misc"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
-	"zxq.co/x/rs"
 )
 
 func ClanCreatePageHandler(c *gin.Context) {
@@ -63,10 +63,10 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 
 	// The actual registration.
 
-	invite := rs.String(8)
+	invite := common.RandomString(8)
 
 	for services.DB.QueryRow("SELECT 1 FROM clans WHERE invite = ?", invite).Scan(new(int)) != sql.ErrNoRows {
-		invite = rs.String(8)
+		invite = common.RandomString(8)
 	}
 
 	res, err := services.DB.Exec(`INSERT INTO clans(name, description, icon, tag, owner, invite, status)
