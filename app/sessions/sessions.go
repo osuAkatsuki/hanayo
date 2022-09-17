@@ -7,14 +7,13 @@ import (
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	"github.com/osuAkatsuki/hanayo/app/usecases/auth/cryptography"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
-	"zxq.co/ripple/rippleapi/common"
-	"zxq.co/x/rs"
 )
 
 func SessionInitializer() func(c *gin.Context) {
@@ -39,7 +38,7 @@ func SessionInitializer() func(c *gin.Context) {
 			}
 
 			if sess.Get("logout") == nil {
-				sess.Set("logout", rs.String(15))
+				sess.Set("logout", common.RandomString(15))
 			}
 
 			ctx.User.Privileges = common.UserPrivileges(pRaw)

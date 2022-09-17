@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
@@ -18,8 +19,6 @@ import (
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
 	"golang.org/x/crypto/bcrypt"
-	"zxq.co/ripple/rippleapi/common"
-	"zxq.co/x/rs"
 )
 
 func LoginSubmitHandler(c *gin.Context) {
@@ -121,7 +120,7 @@ func LoginSubmitHandler(c *gin.Context) {
 
 	sess.Set("userid", data.ID)
 	sess.Set("pw", cryptography.MakeMD5(data.Password))
-	sess.Set("logout", rs.String(15))
+	sess.Set("logout", common.RandomString(15))
 
 	AfterLogin(c, data.ID, data.Country, data.Flags)
 

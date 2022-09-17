@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
-	"zxq.co/x/rs"
 )
 
 func SetYCookie(userID int, c *gin.Context) {
@@ -24,7 +24,7 @@ func SetYCookie(userID int, c *gin.Context) {
 		return
 	}
 	for {
-		token = fmt.Sprintf("%x", sha256.Sum256([]byte(rs.String(32))))
+		token = fmt.Sprintf("%x", sha256.Sum256([]byte(common.RandomString(32))))
 		if services.DB.QueryRow("SELECT 1 FROM identity_tokens WHERE token = ? LIMIT 1", token).Scan(new(int)) == sql.ErrNoRows {
 			break
 		}

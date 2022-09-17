@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
@@ -15,35 +16,18 @@ import (
 	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
 )
 
-func FlagChangeSubmitHandler(c *gin.Context) {
-	if sessions.GetContext(c).User.ID == 0 {
-		tu.Resp403(c)
-		return
-	}
-
-	if c.PostForm("country") != "" {
-		services.DB.Exec("UPDATE users_stats SET country = ? WHERE id = ?", c.PostForm("country"), sessions.GetContext(c).User.ID)
-		services.DB.Exec("UPDATE rx_stats SET country = ? WHERE id = ?", c.PostForm("country"), sessions.GetContext(c).User.ID)
-		services.RD.Publish("api:change_country", strconv.Itoa(int(sessions.GetContext(c).User.ID)))
-
-		sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Flag changed")})
-		sessions.GetSession(c).Save()
-
-		c.Redirect(302, "/u/"+strconv.Itoa(int(sessions.GetContext(c).User.ID)))
-	} else {
-		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
-		sessions.GetSession(c).Save()
-
-		c.Redirect(302, "/u/"+strconv.Itoa(int(sessions.GetContext(c).User.ID)))
-	}
-
-}
-
 func NameChangeSubmitHandler(c *gin.Context) {
-	if sessions.GetContext(c).User.ID == 0 {
+	ctx := sessions.GetContext(c)
+	if ctx.User.ID == 0 {
 		tu.Resp403(c)
 		return
 	}
+
+	if ctx.User.Privileges&common.UserPrivilegeDonor == 0 {
+		tu.Resp403(c)
+		return
+	}
+
 	if c.PostForm("name") != "" {
 		username := strings.TrimSpace(c.PostForm("name"))
 		// check if username already taken

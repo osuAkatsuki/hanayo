@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
@@ -14,8 +15,6 @@ import (
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	"gopkg.in/mailgun/mailgun-go.v1"
-	"zxq.co/ripple/rippleapi/common"
-	"zxq.co/x/rs"
 )
 
 func PasswordResetPageHandler(c *gin.Context) {
@@ -60,7 +59,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 	}
 
 	// generate key
-	key := rs.String(50)
+	key := common.RandomString(50)
 
 	// TODO: WHY THE FUCK DOES THIS USE USERNAME AND NOT ID PLEASE WRITE MIGRATION
 	_, err = services.DB.Exec("INSERT INTO password_recovery(k, u) VALUES (?, ?)", key, username)

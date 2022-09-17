@@ -4,9 +4,9 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	csrf "github.com/osuAkatsuki/hanayo/internal/csrf"
 	"github.com/thehowl/cieca"
-	"zxq.co/x/rs"
 )
 
 // NewCSRF creates a new CSRF service as described in the services.CSRF
@@ -24,7 +24,7 @@ type ciecaCSRF struct {
 func (c *ciecaCSRF) Generate(u int) (string, error) {
 	var s string
 	for {
-		s = rs.String(10)
+		s = common.RandomString(10)
 		_, e := c.GetWithExist(s)
 		if !e {
 			break

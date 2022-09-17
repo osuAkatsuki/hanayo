@@ -16,6 +16,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/johnniedoe/contrib/gzip"
+	"github.com/osuAkatsuki/akatsuki-api/common"
 	beatmapsHandlers "github.com/osuAkatsuki/hanayo/app/handlers/beatmaps"
 	clansHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans"
 	clanCreationHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans/create"
@@ -45,7 +46,6 @@ import (
 	"gopkg.in/mailgun/mailgun-go.v1"
 	"gopkg.in/redis.v5"
 	schiavo "zxq.co/ripple/schiavolib"
-	"zxq.co/x/rs"
 )
 
 var startTime = time.Now()
@@ -67,7 +67,7 @@ func main() {
 
 	var configDefaults = map[*string]string{
 		&settings.Config.ListenTo:         ":45221",
-		&settings.Config.CookieSecret:     rs.String(46),
+		&settings.Config.CookieSecret:     common.RandomString(46),
 		&settings.Config.AvatarURL:        "https://a.akatsuki.pw",
 		&settings.Config.BaseURL:          "https://akatsuki.pw",
 		&settings.Config.BanchoAPI:        "https://c.akatsuki.pw",
@@ -253,7 +253,7 @@ func generateEngine() *gin.Engine {
 	r.POST("/settings/password", profileEditHandlers.ChangePasswordSubmitHandler)
 	r.POST("/settings/userpage/parse", profileEditHandlers.ParseBBCodeSubmitHandler)
 	r.POST("/settings/avatar", profileEditHandlers.AvatarSubmitHandler)
-	r.POST("/settings/flag", profileEditHandlers.FlagChangeSubmitHandler)
+	// r.POST("/settings/flag", profileEditHandlers.FlagChangeSubmitHandler)
 	r.POST("/settings/username", profileEditHandlers.NameChangeSubmitHandler)
 	//r.GET("/settings/discord/finish", profileEditHandlers.discordFinish)
 	r.POST(
