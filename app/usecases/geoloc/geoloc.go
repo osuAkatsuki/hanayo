@@ -4,18 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/biter777/countries"
+	"github.com/pariz/gountries"
 )
 
-var countriesMap = map[string]string{}
-
-func CreateCountryList() {
-	if len(countriesMap) == 0 {
-		for _, country := range countries.All() {
-			countriesMap[country.Alpha2()] = country.String()
-		}
-	}
-}
+var countrySelector = gountries.New()
 
 func CountryToCodepoints(isoCode string) string {
 	var charList []string
@@ -33,9 +25,11 @@ func CountryReadable(s string) string {
 		return ""
 	}
 
-	if _, found := countriesMap[s]; !found {
+	country, err := countrySelector.FindCountryByAlpha(s)
+
+	if err != nil {
 		return ""
 	}
 
-	return countriesMap[s]
+	return country.Name.Common
 }
