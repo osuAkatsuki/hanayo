@@ -9,8 +9,6 @@ github.com/asaskevich/govalidator v0.0.0-20171111151018-521b25f4b05f h1:xHxhygLk
 github.com/asaskevich/govalidator v0.0.0-20171111151018-521b25f4b05f/go.mod h1:lB+ZfQJz7igIIfQNfa7Ml4HSf2uFQQRzpGGRXenZAgY=
 github.com/aymerick/douceur v0.2.0 h1:Mv+mAeH1Q+n9Fr+oyamOlAkUNPWPlA8PPGR0QAaYuPk=
 github.com/aymerick/douceur v0.2.0/go.mod h1:wlT5vV2O3h55X9m7iVYN0TBM0NH/MmbLnd30/FjWUq4=
-github.com/biter777/countries v1.5.6 h1:YdvI0OYZR4gmI8BO+LrAuKmoZgiv4RrMdGBj6iORfn8=
-github.com/biter777/countries v1.5.6/go.mod h1:1HSpZ526mYqKJcpT5Ti1kcGQ0L0SrXWIaptUWjFfv2E=
 github.com/boj/redistore v0.0.0-20160128113310-fc113767cd6b h1:PfxLkkgJYE095CKZji++BNwZjxWfoAF21WFPzkzOZEs=
 github.com/boj/redistore v0.0.0-20160128113310-fc113767cd6b/go.mod h1:5r9chGCb4uUhBCGMDDCYfyHU/awSRoBeG53Zaj1crhU=
 github.com/buaazp/fasthttprouter v0.1.1/go.mod h1:h/Ap5oRVLeItGKTVBb+heQPks+HdIUtGmI4H5WCYijM=
@@ -115,6 +113,8 @@ github.com/osuAkatsuki/akatsuki-api v0.0.0-20220818215820-00d613f34df5 h1:TWxLoc
 github.com/osuAkatsuki/akatsuki-api v0.0.0-20220818215820-00d613f34df5/go.mod h1:zwBDPgGswbPSRThtE0Ci7p9qJMXE5RtG8VikTw4cLOQ=
 github.com/osuripple/cheesegull v2.1.1-0.20180422113429-9bdfa825f309+incompatible h1:zbfH0D54qreA8tvhxHBcsJYENqzwgp+OL7A9GGOKO3E=
 github.com/osuripple/cheesegull v2.1.1-0.20180422113429-9bdfa825f309+incompatible/go.mod h1:qPMgVmeGHvtWYlC9Ryh3Tls0Pslqn3JrLGGyLohHXIU=
+github.com/pariz/gountries v0.1.6 h1:Cu8sBSvD6HvAtzinKJ7Yw8q4wAF2dD7oXjA5yDJQt1I=
+github.com/pariz/gountries v0.1.6/go.mod h1:Et5QWMc75++5nUKSYKNtz/uc+2LHl4LKhNd6zwdTu+0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
@@ -246,8 +246,6 @@ zxq.co/ripple/go-discord-oauth v0.0.0-20161117211055-348e08feccb5/go.mod h1:TMub
 zxq.co/ripple/ocl v0.0.0-20190423081600-ba6c1b2f7885/go.mod h1:YagunUAfVRcfr3+9WSusjzwj7qno8fDwan+my3WrGM0=
 zxq.co/ripple/playstyle v0.0.0-20161106144235-198984a13cb6 h1:83Ged5YKF2OFWSPQ6loGhApO33Lyjfa6f0roTrMsN64=
 zxq.co/ripple/playstyle v0.0.0-20161106144235-198984a13cb6/go.mod h1:ByMeVpw6pHJ7JLr8m/ANnb5uGD5qcO8qwkRdU9vCNrs=
-zxq.co/ripple/rippleapi v0.0.0-20180719135835-50ffa4e066dd h1:UicNfSwG/7zhaUOO7ozCvvB6iiE7XvUzT0pG+X54pWg=
-zxq.co/ripple/rippleapi v0.0.0-20180719135835-50ffa4e066dd/go.mod h1:2IjMtSKvePttIB8QgwN5oVoYtDjY/kn9n2WMA0MhO9M=
 zxq.co/ripple/schiavolib v0.0.0-20161109210250-9cdc674dad07 h1:fQIulgq6BDqgUiRGn1UU29Upms+eAmZxIPuF4KZFNAU=
 zxq.co/ripple/schiavolib v0.0.0-20161109210250-9cdc674dad07/go.mod h1:W6Gj7lSJNvs8oFN4bvrzoi+vcjDAEVyMfzguWzUYaok=
 zxq.co/ripple/semantic-icons-ugc v0.0.0-20190527150307-87f54f9a60d6/go.mod h1:S0iTdeNHcAoRTLk1CC56FzpKNJ3mPhf3BIlz8OJz6SI=

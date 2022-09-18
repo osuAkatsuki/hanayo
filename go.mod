@@ -4,7 +4,6 @@ go 1.19
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20171111151018-521b25f4b05f
-	github.com/biter777/countries v1.5.6
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/structs v1.1.0
 	github.com/frustra/bbcode v0.0.0-20201127003707-6ef347fbe1c8
@@ -16,6 +15,7 @@ require (
 	github.com/microcosm-cc/bluemonday v1.0.20
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/osuripple/cheesegull v2.1.1-0.20180422113429-9bdfa825f309+incompatible
+	github.com/pariz/gountries v0.1.6
 	github.com/rcrowley/goagain v0.0.0-20140424170347-f2f192b5d1a9
 	github.com/rjeczalik/notify v0.9.3-0.20181126183243-629144ba06a1
 	github.com/russross/blackfriday/v2 v2.1.0
@@ -29,7 +29,6 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 	zxq.co/ripple/go-discord-oauth v0.0.0-20161117211055-348e08feccb5
 	zxq.co/ripple/playstyle v0.0.0-20161106144235-198984a13cb6
-	zxq.co/ripple/rippleapi v0.0.0-20180719135835-50ffa4e066dd
 	zxq.co/ripple/schiavolib v0.0.0-20161109210250-9cdc674dad07
 )
 

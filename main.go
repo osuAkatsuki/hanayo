@@ -36,7 +36,6 @@ import (
 	sessionsmanager "github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	"github.com/osuAkatsuki/hanayo/app/states/settings"
-	gu "github.com/osuAkatsuki/hanayo/app/usecases/geoloc"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	"github.com/osuAkatsuki/hanayo/app/version"
 	"github.com/osuAkatsuki/hanayo/internal/btcconversions"
@@ -151,8 +150,6 @@ func main() {
 	for _, el := range gobRegisters {
 		gob.Register(el)
 	}
-
-	gu.CreateCountryList()
 
 	fmt.Println("Importing templates...")
 	tu.LoadTemplates("")
