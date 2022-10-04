@@ -67,7 +67,7 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 	email := strings.ToLower(c.PostForm("email"))
 	if services.DB.QueryRow("SELECT 1 FROM users WHERE email LIKE ?", email).
 		Scan(new(int)) != sql.ErrNoRows {
-		messages = append(messages, msg.ErrorMessage{lu.T(c, "The email is already in use!")})
+		messages = append(messages, msg.ErrorMessage{lu.T(c, "This email is already in use!")})
 		return
 	}
 
