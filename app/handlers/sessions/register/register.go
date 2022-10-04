@@ -8,7 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
@@ -56,6 +55,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 	// check username is valid by our criteria
 	username := strings.TrimSpace(c.PostForm("username"))
+	email := strings.ToLower(c.PostForm("email"))
 
 	if x := uu.ValidateUsername(username); x != "" {
 		registerResp(c, msg.ErrorMessage{lu.T(c, x)})
@@ -83,8 +83,8 @@ func RegisterSubmitHandler(c *gin.Context) {
 	}
 
 	// check email is valid
-	if !govalidator.IsEmail(c.PostForm("email")) {
-		registerResp(c, msg.ErrorMessage{lu.T(c, "Please pass a valid email address.")})
+	if !uu.ValidateEmail(email) {
+		registerResp(c, msg.ErrorMessage{lu.T(c, "Please use a valid email address.")})
 		return
 	}
 
@@ -113,7 +113,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	}
 
 	// check whether an user with that email already exists
-	if services.DB.QueryRow("SELECT 1 FROM users WHERE email = ?", c.PostForm("email")).
+	if services.DB.QueryRow("SELECT 1 FROM users WHERE email LIKE ?", email).
 		Scan(new(int)) != sql.ErrNoRows {
 		registerResp(c, msg.ErrorMessage{lu.T(c, "An user with that email address already exists!")})
 		return
@@ -148,7 +148,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	}
 
 	res, err := services.DB.Exec(`INSERT INTO users(username, username_safe, password_md5, salt, email, register_datetime, privileges, password_version, latest_activity) VALUES (?, ?, ?, '', ?, ?, ?, 2, ?);`,
-		username, uu.SafeUsername(username), pass, c.PostForm("email"), time.Now().Unix(), common.UserPrivilegePendingVerification, time.Now().Unix())
+		username, uu.SafeUsername(username), pass, email, time.Now().Unix(), common.UserPrivilegePendingVerification, time.Now().Unix())
 
 	if err != nil {
 		registerResp(c, msg.ErrorMessage{lu.T(c, "Whoops, an error slipped in. You might have been registered, though. I don't know.")})
