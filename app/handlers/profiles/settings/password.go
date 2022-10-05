@@ -1,6 +1,9 @@
 package settings
 
 import (
+	"database/sql"
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
@@ -10,6 +13,7 @@ import (
 	"github.com/osuAkatsuki/hanayo/app/usecases/auth/cryptography"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
+	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
 )
 
 func ChangePasswordPageHandler(c *gin.Context) {
@@ -59,7 +63,20 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 	}
 
 	uq := new(common.UpdateQuery)
-	uq.Add("email", c.PostForm("email"))
+
+	email := strings.ToLower(c.PostForm("email"))
+	if services.DB.QueryRow("SELECT 1 FROM users WHERE email LIKE ?", email).
+		Scan(new(int)) != sql.ErrNoRows {
+		messages = append(messages, msg.ErrorMessage{lu.T(c, "This email is already in use!")})
+		return
+	}
+
+	if !uu.ValidateEmail(email) {
+		messages = append(messages, msg.ErrorMessage{lu.T(c, "Please use a valid email address.")})
+		return
+	}
+
+	uq.Add("email", email)
 	if c.PostForm("newpassword") != "" {
 		if s := au.ValidatePassword(c.PostForm("newpassword")); s != "" {
 			messages = append(messages, msg.ErrorMessage{lu.T(c, s)})

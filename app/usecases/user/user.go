@@ -8,10 +8,14 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-email-validator/go-email-validator/pkg/ev"
+	"github.com/go-email-validator/go-email-validator/pkg/ev/evmail"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	"github.com/osuAkatsuki/hanayo/app/states/settings"
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 )
+
+var EmailValidator = ev.NewDepBuilder(nil).Build()
 
 func ValidateUsername(s string) string {
 
@@ -33,6 +37,16 @@ func ValidateUsername(s string) string {
 
 func SafeUsername(u string) string {
 	return strings.Replace(strings.TrimSpace(strings.ToLower(u)), " ", "_", -1)
+}
+
+func ValidateEmail(email string) bool {
+
+	result := make(chan ev.ValidationResult)
+	go func() {
+		result <- EmailValidator.Validate(ev.NewInput(evmail.FromString(email)))
+	}()
+
+	return (<-result).IsValid()
 }
 
 func AddToUserNotes(message string, user int) {
