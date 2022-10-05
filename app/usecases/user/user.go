@@ -9,13 +9,24 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-email-validator/go-email-validator/pkg/ev"
+	"github.com/go-email-validator/go-email-validator/pkg/ev/contains"
+	"github.com/go-email-validator/go-email-validator/pkg/ev/disposable"
 	"github.com/go-email-validator/go-email-validator/pkg/ev/evmail"
+	"github.com/go-email-validator/go-email-validator/pkg/ev/role"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	"github.com/osuAkatsuki/hanayo/app/states/settings"
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 )
 
-var EmailValidator = ev.NewDepBuilder(nil).Build()
+// build validator without smtp check as it caused issues.
+var EmailValidator = ev.NewDepBuilder(
+	ev.ValidatorMap{
+		ev.RoleValidatorName:       ev.NewRoleValidator(role.NewRBEASetRole()),
+		ev.DisposableValidatorName: ev.NewDisposableValidator(contains.NewFunc(disposable.MailChecker)),
+		ev.SyntaxValidatorName:     ev.NewSyntaxValidator(),
+		ev.MXValidatorName:         ev.DefaultNewMXValidator(),
+	},
+).Build()
 
 func ValidateUsername(s string) string {
 
