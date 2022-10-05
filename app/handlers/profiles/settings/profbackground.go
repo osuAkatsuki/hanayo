@@ -55,7 +55,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			return
 		}
 		img = resize.Thumbnail(2496, 1404, img, resize.Bilinear)
-		f, err := os.Create(fmt.Sprintf("static/profbackgrounds/%d.jpg", ctx.User.ID))
+		f, err := os.Create(fmt.Sprintf("web/static/images/profbackgrounds/%d.jpg", ctx.User.ID))
 		defer f.Close()
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
