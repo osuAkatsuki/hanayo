@@ -65,18 +65,25 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 	uq := new(common.UpdateQuery)
 
 	email := strings.ToLower(c.PostForm("email"))
-	if services.DB.QueryRow("SELECT 1 FROM users WHERE email LIKE ?", email).
-		Scan(new(int)) != sql.ErrNoRows {
-		messages = append(messages, msg.ErrorMessage{lu.T(c, "This email is already in use!")})
-		return
+
+	var currentEmail string
+	services.DB.Get(&currentEmail, "SELECT email FROM users WHERE id = ?", ctx.User.ID)
+
+	if email != "" && email != currentEmail {
+		if services.DB.QueryRow("SELECT 1 FROM users WHERE email LIKE ?", email).
+			Scan(new(int)) != sql.ErrNoRows {
+			messages = append(messages, msg.ErrorMessage{lu.T(c, "This email is already in use!")})
+			return
+		}
+
+		if !uu.ValidateEmail(email) {
+			messages = append(messages, msg.ErrorMessage{lu.T(c, "Please use a valid email address.")})
+			return
+		}
+
+		uq.Add("email", email)
 	}
 
-	if !uu.ValidateEmail(email) {
-		messages = append(messages, msg.ErrorMessage{lu.T(c, "Please use a valid email address.")})
-		return
-	}
-
-	uq.Add("email", email)
 	if c.PostForm("newpassword") != "" {
 		if s := au.ValidatePassword(c.PostForm("newpassword")); s != "" {
 			messages = append(messages, msg.ErrorMessage{lu.T(c, s)})
@@ -90,6 +97,7 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 		sess.Set("pw", cryptography.MakeMD5(pw))
 		sess.Save()
 	}
+
 	_, err := services.DB.Exec("UPDATE users SET "+uq.Fields()+" WHERE id = ? LIMIT 1", append(uq.Parameters, ctx.User.ID)...)
 	if err != nil {
 		c.Error(err)
