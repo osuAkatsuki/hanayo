@@ -2,6 +2,7 @@
 {{/*###
 Handler=/pwreset
 TitleBar=Reset password
+AdditionalJS=https://www.google.com/recaptcha/api.js
 */}}
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
@@ -25,15 +26,20 @@ TitleBar=Reset password
               action="/pwreset">
               {{ ieForm .Gin }}
               <div class="field">
-                <label>{{ .T "Username (or email)" }}</label>
+                <label>{{ .T "Username or Email Address" }}</label>
                 <input
                   tabindex="1"
                   type="text"
                   name="username"
-                  placeholder="{{ .T "Username" }}"
+                  placeholder="{{ .T "e.g. Aika" }}"
                   value="{{ .FormData.username }}"
                   required />
               </div>
+              {{ with config "RecaptchaSite" }}
+                <div class="field">
+                  <div class="g-recaptcha" data-sitekey="{{ . }}"></div>
+                </div>
+              {{ end }}
             </form>
           </div>
           <div class="ui right aligned segment">

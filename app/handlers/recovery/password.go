@@ -13,6 +13,7 @@ import (
 	"github.com/osuAkatsuki/hanayo/app/states/settings"
 	au "github.com/osuAkatsuki/hanayo/app/usecases/auth"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
+	"github.com/osuAkatsuki/hanayo/app/usecases/misc"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	"gopkg.in/mailgun/mailgun-go.v1"
 )
@@ -24,10 +25,18 @@ func PasswordResetPageHandler(c *gin.Context) {
 		return
 	}
 
-	field := "username"
+	// recaptcha verify
+	if settings.Config.RecaptchaPrivate != "" && !misc.RecaptchaCheck(c) {
+		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Captcha is invalid.")})
+		return
+	}
+
+	field := "username_safe"
 	if strings.Contains(c.PostForm("username"), "@") {
 		field = "email"
 	}
+
+	user_safe := common.SafeUsername(c.PostForm("username"))
 
 	var (
 		id         int
@@ -37,7 +46,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 	)
 
 	err := services.DB.QueryRow("SELECT id, username, email, privileges FROM users WHERE "+field+" = ?",
-		c.PostForm("username")).
+		user_safe).
 		Scan(&id, &username, &email, &privileges)
 
 	switch err {
