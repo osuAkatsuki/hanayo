@@ -147,20 +147,46 @@ func RegisterSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	res, err := services.DB.Exec(`INSERT INTO users(username, username_safe, password_md5, salt, email, register_datetime, privileges, password_version, latest_activity) VALUES (?, ?, ?, '', ?, ?, ?, 2, ?);`,
+	tx, err := services.DB.Begin()
+
+	res, err := tx.Exec(`INSERT INTO users(username, username_safe, password_md5, salt, email, register_datetime, privileges, password_version, latest_activity) VALUES (?, ?, ?, '', ?, ?, ?, 2, ?);`,
 		username, uu.SafeUsername(username), pass, email, time.Now().Unix(), common.UserPrivilegePendingVerification, time.Now().Unix())
 
 	if err != nil {
-		registerResp(c, msg.ErrorMessage{lu.T(c, "Whoops, an error slipped in. You might have been registered, though. I don't know.")})
+		tx.Rollback()
+		c.Error(err)
+		eh.Resp500(c)
 		return
 	}
 
 	lid, _ := res.LastInsertId()
 
-	services.DB.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	_, err = tx.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	if err != nil {
+		tx.Rollback()
+		c.Error(err)
+		eh.Resp500(c)
+		return
+	}
 
-	services.DB.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
-	services.DB.Exec("INSERT INTO `ap_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, country) VALUES (?, ?, 'black', '', 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	_, err = tx.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	if err != nil {
+		tx.Rollback()
+		c.Error(err)
+		eh.Resp500(c)
+		return
+	}
+
+	_, err = tx.Exec("INSERT INTO `ap_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, country) VALUES (?, ?, 'black', '', 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	if err != nil {
+		tx.Rollback()
+		c.Error(err)
+		eh.Resp500(c)
+		return
+	}
+
+	tx.Commit()
+
 	/* Beta Keys
 	db.Exec("UPDATE `beta_keys` set used = 1 where key = ?", key)
 
