@@ -95,11 +95,12 @@ $("#rx-menu .item").click(function(t) {
       var wl = window.location;
       window.history.replaceState(
         '', document.title,
-        wl.pathname + "?mode=" + favouriteMode + "&p=" + page +
+        wl.pathname + "?mode=" + favouriteMode + "&rx=" + rx + "&p=" + page +
               (country != "" ? "&country=" + encodeURI(country) : "") +
               wl.hash);
       api("leaderboard", {
         mode : favouriteMode,
+        rx : rx,
         p : page,
         l : 50,
         country : country,
