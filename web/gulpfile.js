@@ -12,7 +12,7 @@ gulp.task("build", [
 ])
 
 gulp.task("watch", function() {
-	gulp.watch(["static/*.js", "!static/dist.min.js"], ["minify-js"])
+	gulp.watch(["static/js/*.js", "!static/js/dist.min.js"], ["minify-js"])
 	gulp.watch("semantic/src/**/*", ["build-semantic"])
 })
 
@@ -26,14 +26,13 @@ gulp.task("build-semantic", function() {
 gulp.task("minify-js", function() {
 	gulp
 		.src([
-			"static/licenseheader.js",
 			"node_modules/jquery/dist/jquery.min.js",
 			"node_modules/timeago/jquery.timeago.js",
-			"static/semantic.min.js",
+			"static/js/semantic.min.js",
 			"node_modules/i18next/i18next.min.js",
 			"node_modules/i18next-xhr-backend/i18nextXHRBackend.min.js",
-			"static/key_plural.js",
-			"static/ripple.js",
+			"static/js/key_plural.js",
+			"static/js/akatsuki_src.js",
 		])
 		.pipe(plumber())
 		.pipe(concat("dist.min.js"))
