@@ -44,5 +44,5 @@ gulp.task("minify-js", function() {
 			mangle: true,
 			preserveComments: "license"
 		}))
-		.pipe(gulp.dest("./static"))
+		.pipe(gulp.dest("./static/js"))
 })

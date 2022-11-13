@@ -5,7 +5,7 @@ $(document).ready(function() {
 	if (newPathName.split('/')[2] != clanID) {
 		newPathName = "/c/" + clanID + wl.search;
 	}
-	
+
 	// todo: same for relax check /// build proper path (using doubled replaceState can confuse users)
 	var b = wl.search.length !== 0;
 	if (wl.search.indexOf("mode=") === -1) {
@@ -16,14 +16,14 @@ $(document).ready(function() {
 		newPathName += (b ? '&' : '?') + "rx=" + rx;
 		b = true;
 	}
-		
+
 	/*if (!b && wl.pathname != newPathName)
 		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
 	else*/
 		window.history.replaceState('', document.title, newPathName + wl.hash);
-	
+
 	/*if (wl.search.indexOf("rx=") === -1) {
-		
+
 	}*/
 	toggleModeAvailability(favouriteMode, rx);
 	setMode(favouriteMode, rx);
@@ -31,7 +31,7 @@ $(document).ready(function() {
 	$("#rx-menu>.item").click(function(e) {
 		e.preventDefault();
 		if ($(this).hasClass("active")) return;
-		
+
 		var nrx = $(this).data("rx");
 		$("#rx-menu>.active.item").removeClass("active");
 		window.rx = nrx;
@@ -42,11 +42,11 @@ $(document).ready(function() {
 		$(this).addClass("active");
 		window.history.replaceState('', document.title, wl.pathname + "?mode=" + favouriteMode + "&rx=" + nrx + wl.hash);
 	});
-	
+
 	$("#mode-menu>.item").click(function(e) {
 		e.preventDefault();
 		if ($(this).hasClass("active")) return;
-		
+
 		var m = $(this).data("mode");
 		$("#mode-menu>.active.item").removeClass("active");
 		//todo: let new stats table show and hide old
@@ -58,15 +58,15 @@ $(document).ready(function() {
 		$(this).addClass("active");
 		window.history.replaceState('', document.title, wl.pathname + "?mode=" + m + "&rx=" + rx + wl.hash);
 	});
-	
+
 	$("#join-btn>.item").click(function(e) {
 		e.preventDefault();
 		if (!currentUserID) return;
-		
+
 		var btn = $(this);
 		joinClan({ id: clanID }, btn);
 	});
-	
+
 	$("#leave-btn>.item").click(function(e) {
 		e.preventDefault();
 		if (!currentUserID) return;
@@ -94,7 +94,7 @@ function joinClan(obj, btn) {
 			showMessage("error", "Invite was not found.");
 			return;
 		}
-		
+
 		btn.text("Leave");
 		btn.attr("id", "leave-btn");
 		btn.css("background-color", "rgba(255,0,0,.3)");
@@ -111,8 +111,8 @@ function setMode(mode, rx) {
 	let eldx = document.getElementById(mode + (rx != 0 ? (rx != 2 ? 'r' : 'a') : ''));
 	api("clans/stats", { id: clanID, m: mode, rx: rx }, function (e) {
 		var data = e.clan.chosen_mode;
-		eldx.innerHTML = `` + tableRow("Global Rank", addCommas(data.global_leaderboard_rank)) 
-		+ tableRow("Performance", addCommas(data.pp)+"pp") 
+		eldx.innerHTML = `` + tableRow("Global Rank", addCommas(data.global_leaderboard_rank))
+		+ tableRow("Performance", addCommas(data.pp)+"pp")
 		+ tableRow("Ranked Score", addCommas(data.ranked_score))
 		+ tableRow("Total Score", addCommas(data.total_score))
 		+ tableRow("Total Playcount", addCommas(data.playcount))
@@ -123,4 +123,33 @@ function setMode(mode, rx) {
 
 function tableRow(title, data) {
 	return `<tr><td><b>${title}</b></td> <td class="right aligned">${data}</td></tr>`;
+}
+
+function toggleModeAvailability(mode, rx) {
+	for (i = 0; i <= 3; i++) {
+		$(`[data-mode='${i}']`).removeClass('disabled')
+	}
+
+	for (i = 0; i <= 2; i++) {
+		$(`[data-rx='${i}']`).removeClass('disabled')
+	}
+
+	if (rx == 1) {
+		// relax does not have mania
+		$("[data-mode='3']").addClass('disabled')
+	} else if (rx == 2) {
+		// autopilot does not have taiko, catch, or mania
+		$("[data-mode='1']").addClass('disabled')
+		$("[data-mode='2']").addClass('disabled')
+		$("[data-mode='3']").addClass('disabled')
+	}
+
+	if (mode == 1 || mode == 2) {
+		// taiko or catch does not have autopilot
+		$("[data-rx='2']").addClass('disabled')
+	} else if (mode == 3) {
+		// mania does not have relax or autopilot
+		$("[data-rx='1']").addClass('disabled')
+		$("[data-rx='2']").addClass('disabled')
+	}
 }

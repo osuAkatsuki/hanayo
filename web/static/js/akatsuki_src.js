@@ -1,6 +1,7 @@
 /*!
- * ripple.js
- * Copyright (C) 2016-2018 Morgan Bazalgette and Giuseppe Guerra
+ * akatsuki_src.js
+ * Copyright (C) 2016 Morgan Bazalgette and Giuseppe Guerra
+ * Copyright (C) 2017 Akatsuki
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -23,7 +24,7 @@ var singlePageSnippets = {
      function e() {
     var e = window.location;
     window.history.replaceState("", document.title, e.pathname + "?mode=" + favouriteMode + "&p=" + page + "&rx=" + !!rx + "&sort=" + sort + e.hash);
-	
+
 	if (sort == "1s") {
 		api("clans/stats/first", {
 			m: favouriteMode,
@@ -41,7 +42,7 @@ var singlePageSnippets = {
 		})
 		return;
 	}
-	
+
 	api("clans/stats/all", {
         m: favouriteMode,
         p: page,
@@ -85,7 +86,7 @@ $("#rx-menu .item").click(function(t) {
 	e();
 })
 
-  }
+  },
 
   "/leaderboard" : function() {
     page = page === 0 ? 1 : page;
