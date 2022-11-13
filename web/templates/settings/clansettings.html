@@ -126,7 +126,7 @@ Include=menu.html
                 {{ end }}
               {{ end }}
               <script>
-                $("button[name = 'member']").click(function (e) {
+                $("button[name = 'member']").on("click", function (e) {
                   e.preventDefault();
                   api(
                     "clans/kick",

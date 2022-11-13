@@ -91,14 +91,14 @@
   changeDifficulty(beatmapID);
   // loadLeaderboard(beatmapID, currentMode);
   $("#diff-menu .item")
-    .click(function(e) {
+    .on("click", function(e) {
       e.preventDefault();
       $(this).addClass("active");
       beatmapID = $(this).data("bid");
       changeDifficulty(beatmapID);
     });
   $("#mode-menu .item")
-    .click(function(e) {
+    .on("click", function(e) {
       e.preventDefault();
       $("#mode-menu .active.item").removeClass("active");
       $(this).addClass("active");
@@ -107,7 +107,7 @@
       currentModeChanged = true;
     });
   $("#cmode-menu .item")
-    .click(function(e) {
+    .on("click", function(e) {
       e.preventDefault();
       $("#cmode-menu .active.item").removeClass("active");
       $(this).addClass("active");

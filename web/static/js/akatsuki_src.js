@@ -68,7 +68,7 @@ page = 0 === page ? 1 : page;
 $("#rx-menu ." + (1 === rx ? 1 : 0) + ".item").addClass("active");
 e();
 setupSimplepag(e);
-$("#mode-menu .item").click(function(t) {
+$("#mode-menu .item").on("click", function(t) {
     t.preventDefault();
 	$("#mode-menu .active.item").removeClass("active");
 	$(this).addClass("active");
@@ -77,7 +77,7 @@ $("#mode-menu .item").click(function(t) {
 	e();
 })
 
-$("#rx-menu .item").click(function(t) {
+$("#rx-menu .item").on("click", function(t) {
     t.preventDefault();
 	$("#rx-menu .active.item").removeClass("active");
 	$(this).addClass("active");
@@ -140,11 +140,11 @@ $("#rx-menu .item").click(function(t) {
 
     // country stuff
     $("#country-chooser-modal")
-      .click(function() {
+      .on("click", function() {
         $(".ui.modal").modal("show");
       });
     $(".lb-country")
-      .click(function() {
+      .on("click", function() {
         country = $(this).data("country");
         page = 1;
         $(".ui.modal").modal("hide");
@@ -154,7 +154,7 @@ $("#rx-menu .item").click(function(t) {
     loadLeaderboard();
     setupSimplepag(loadLeaderboard);
     $("#mode-menu .item")
-      .click(function(e) {
+      .on("click", function(e) {
         e.preventDefault();
         $("#mode-menu .active.item").removeClass("active");
         $(this).addClass("active");
@@ -164,13 +164,13 @@ $("#rx-menu .item").click(function(t) {
         loadLeaderboard();
       });
   $("#rx-menu .item")
-      .click(function(e) {
+      .on("click", function(e) {
         e.preventDefault();
         $("#rx-menu .active.item").removeClass("active");
         $(this).addClass("active");
         country = "";
         page = 1;
-    rx = $(this).data("rx");
+        rx = $(this).data("rx");
         loadLeaderboard();
       });
   },
@@ -221,11 +221,11 @@ $("#rx-menu .item").click(function(t) {
 
     // country stuff
     $("#country-chooser-modal")
-      .click(function() {
+      .on("click", function() {
         $(".ui.modal").modal("show");
       });
     $(".lb-country")
-      .click(function() {
+      .on("click", function() {
         country = $(this).data("country");
         page = 1;
         $(".ui.modal").modal("hide");
@@ -235,7 +235,7 @@ $("#rx-menu .item").click(function(t) {
     loadScoreLeaderboard();
     setupSimplepag(loadScoreLeaderboard);
     $("#mode-menu .item")
-      .click(function(e) {
+      .on("click", function(e) {
         e.preventDefault();
         $("#mode-menu .active.item").removeClass("active");
         $(this).addClass("active");
@@ -245,7 +245,7 @@ $("#rx-menu .item").click(function(t) {
         loadScoreLeaderboard();
       });
   $("#rx-menu .item")
-      .click(function(e) {
+      .on("click", function(e) {
         e.preventDefault();
         $("#rx-menu .active.item").removeClass("active");
         $(this).addClass("active");
@@ -258,7 +258,7 @@ $("#rx-menu .item").click(function(t) {
 
   "/friends" : function() {
     $(".smalltext.button")
-      .click(function() {
+      .on("click", function() {
         var t = $(this);
         var delAdd = t.data("deleted") === "1" ? "add" : "del";
         console.log(delAdd);
@@ -280,7 +280,7 @@ $("#rx-menu .item").click(function(t) {
   },
 
   "/team" : function() {
-    $("#everyone").click(function() { $(".ui.modal").modal("show"); });
+    $("#everyone").on("click", function() { $(".ui.modal").modal("show"); });
   },
 
   "/register/verify" : function() {
@@ -655,7 +655,7 @@ $(document)
     $("time.timeago").timeago();
 
     $("#language-select")
-      .click(function() {
+      .on("click", function() {
         var lang = $(this).data("lang");
         document.cookie = "language=" + lang + ";path=/;max-age=31536000";
         window.location.reload();
@@ -744,13 +744,13 @@ function escapeHTML(str) {
 
 function setupSimplepag(callback) {
   var el = $(".simplepag");
-  el.find(".left.floated .item").click(function() {
+  el.find(".left.floated .item").on("click", function() {
     if ($(this).hasClass("disabled"))
       return false;
     page--;
     callback();
   });
-  el.find(".right.floated .item").click(function() {
+  el.find(".right.floated .item").on("click", function() {
     if ($(this).hasClass("disabled"))
       return false;
     page++;

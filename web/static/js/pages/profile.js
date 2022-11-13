@@ -24,7 +24,7 @@ $(document).ready(function () {
 	setDefaultScoreTable();
 	toggleModeAvailability(favouriteMode, preferRelax);
 
-	$("#rx-menu>.simple-banner-swtich").click(function (e) {
+	$("#rx-menu>.simple-banner-swtich").on("click", function (e) {
 		e.preventDefault();
 		if ($(this).hasClass("active"))
 			return;
@@ -42,7 +42,7 @@ $(document).ready(function () {
 	});
 
 	// when an item in the mode menu is clicked, it means we should change the mode.
-	$("#mode-menu>.simple-banner-swtich").click(function (e) {
+	$("#mode-menu>.simple-banner-swtich").on("click", function (e) {
 		e.preventDefault();
 		if ($(this).hasClass("active"))
 			return;
@@ -137,7 +137,7 @@ function initialiseAchievements() {
 			} else {
 				$("#load-more-achievements")
 					.removeClass("disabled")
-					.click(function () {
+					.on("click", function () {
 						$(this).remove();
 						displayAchievements(-1, false);
 					});
@@ -445,13 +445,13 @@ function loadScoresPage(type, mode) {
 			});
 			$(".new.timeago").timeago().removeClass("new");
 			$(".new.map-single").click(viewScoreInfo).removeClass("new");
-			$(".new.downloadstar").click(function (e) {
+			$(".new.downloadstar").on("click", function (e) {
 				e.stopPropagation();
 			}).removeClass("new");
-			$(".new.pinbutton").click(function (e) {
+			$(".new.pinbutton").on("click", function (e) {
 				e.stopPropagation();
 			}).removeClass("new");
-			$(".new.unpinbutton").click(function (e) {
+			$(".new.unpinbutton").on("click", function (e) {
 				e.stopPropagation();
 			}).removeClass("new");
 			var enable = true;
@@ -476,13 +476,13 @@ function loadScoresPage(type, mode) {
 			r.scores.forEach(score => do_pin(table, score, mode));
 			$(".new.timeago").timeago().removeClass("new");
 			$(".new.map-single").click(viewScoreInfo).removeClass("new");
-			$(".new.downloadstar").click(function (e) {
+			$(".new.downloadstar").on("click", function (e) {
 				e.stopPropagation();
 			}).removeClass("new");
-			$(".new.pinbutton").click(function (e) {
+			$(".new.pinbutton").on("click", function (e) {
 				e.stopPropagation();
 			}).removeClass("new");
-			$(".new.unpinbutton").click(function (e) {
+			$(".new.unpinbutton").on("click", function (e) {
 				e.stopPropagation();
 			}).removeClass("new");
 			var enable = true;
@@ -563,10 +563,10 @@ function pinSuccess(data) {
 
 	do_pin(table, score, favouriteMode);
 	$(".new.timeago").timeago().removeClass("new");
-	$(".new.downloadstar").click(function (e) {
+	$(".new.downloadstar").on("click", function (e) {
 		e.stopPropagation();
 	}).removeClass("new");
-	$(".new.unpinbutton").click(function (e) {
+	$(".new.unpinbutton").on("click", function (e) {
 		e.stopPropagation();
 	}).removeClass("new");
 
@@ -588,7 +588,7 @@ function unpinSuccess(data) {
 	var otherScores = $(`[data-btns-score-id="${data['score_id']}"]`)
 	otherScores.append(pinButton(data['score_id'], preferRelax))
 
-	$(".new.pinbutton").click(function (e) {
+	$(".new.pinbutton").on("click", function (e) {
 		e.stopPropagation();
 	}).removeClass("new");
 

@@ -536,7 +536,7 @@ var logoColours = [...]string{
 const ieUnfucker = `<input type="submit" class="ie" name="submit" value="submit">
 <script>
 var deferredToPageLoad = function() {
-	$("button[form]").click(function() {
+	$("button[form]").on("click", function() {
 		$("form#" + $(this).attr("form") + " input.ie").click();
 	});
 };

@@ -28,7 +28,7 @@ $(document).ready(function() {
 	toggleModeAvailability(favouriteMode, rx);
 	setMode(favouriteMode, rx);
 
-	$("#rx-menu>.item").click(function(e) {
+	$("#rx-menu>.item").on("click", function(e) {
 		e.preventDefault();
 		if ($(this).hasClass("active")) return;
 
@@ -43,7 +43,7 @@ $(document).ready(function() {
 		window.history.replaceState('', document.title, wl.pathname + "?mode=" + favouriteMode + "&rx=" + nrx + wl.hash);
 	});
 
-	$("#mode-menu>.item").click(function(e) {
+	$("#mode-menu>.item").on("click", function(e) {
 		e.preventDefault();
 		if ($(this).hasClass("active")) return;
 
@@ -59,7 +59,7 @@ $(document).ready(function() {
 		window.history.replaceState('', document.title, wl.pathname + "?mode=" + m + "&rx=" + rx + wl.hash);
 	});
 
-	$("#join-btn>.item").click(function(e) {
+	$("#join-btn>.item").on("click", function(e) {
 		e.preventDefault();
 		if (!currentUserID) return;
 
@@ -67,7 +67,7 @@ $(document).ready(function() {
 		joinClan({ id: clanID }, btn);
 	});
 
-	$("#leave-btn>.item").click(function(e) {
+	$("#leave-btn>.item").on("click", function(e) {
 		e.preventDefault();
 		if (!currentUserID) return;
 		var thiss = $(this);

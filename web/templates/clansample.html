@@ -189,7 +189,7 @@ Include=clan_member.html
                         </a>
                       </div>
                       <script>
-                        $("#inv-btn>.item").click(function (e) {
+                        $("#inv-btn>.item").on("click", function (e) {
                           e.preventDefault();
                           if (!currentUserID) return;
 
