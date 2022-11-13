@@ -1,6 +1,7 @@
 /*!
- * ripple.js
- * Copyright (C) 2016-2018 Morgan Bazalgette and Giuseppe Guerra
+ * akatsuki_src.js
+ * Copyright (C) 2016 Morgan Bazalgette and Giuseppe Guerra
+ * Copyright (C) 2017 Akatsuki
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
