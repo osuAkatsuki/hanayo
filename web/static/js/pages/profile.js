@@ -22,7 +22,7 @@ $(document).ready(function () {
 		window.history.replaceState('', document.title, newPathName + wl.search + wl.hash);
 
 	setDefaultScoreTable();
-	toggleModeAvailability(favouriteMode, preferRelax);
+	checkRelaxMania(favouriteMode, preferRelax);
 
 	$("#rx-menu>.simple-banner-swtich").click(function (e) {
 		e.preventDefault();
@@ -30,7 +30,7 @@ $(document).ready(function () {
 			return;
 
 		preferRelax = $(this).data("rx");
-		toggleModeAvailability(favouriteMode, preferRelax);
+		checkRelaxMania(favouriteMode, preferRelax);
 		$("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + favouriteMode + "][data-rx=" + preferRelax + "]:not(.simple-banner-swtich)").removeAttr("hidden");
 		$("#rx-menu>.active.simple-banner-swtich").removeClass("active");
@@ -48,7 +48,7 @@ $(document).ready(function () {
 			return;
 		var m = $(this).data("mode");
 		favouriteMode = m;
-		toggleModeAvailability(m, preferRelax);
+		checkRelaxMania(m, preferRelax);
 		$("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr("hidden", "");
 		$("[data-mode=" + m + "][data-rx=" + preferRelax + "]:not(.simple-banner-swtich)").removeAttr("hidden");
 		$("#mode-menu>.active.simple-banner-swtich").removeClass("active");
@@ -395,18 +395,6 @@ function loadScoresPage(type, mode) {
 					var scoreRank = 'F';
 				}
 
-				if (score.completed < 2) {
-					var replay_download_html = "";
-				} else {
-					var replay_download_html = downloadStar(score.id)
-				}
-
-				if (userID == window.actualID && !v.pinned && score.completed >= 2) {
-					var pinned_button_html = pinButton(v.id, preferRelax)
-				} else {
-					var pinned_button_html = ""
-				}
-				
 				table.append(`
 				<div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
 					<div class="map-content1">
@@ -443,8 +431,8 @@ function loadScoresPage(type, mode) {
 									</div>
 								</div>
 								<div data-btns-score-id='${v.id}'>
-									${replay_download_html}
-									${pinned_button_html}
+									${downloadStar(v.id)}
+									${userID == window.actualID && !v.pinned ? pinButton(v.id, preferRelax) : ""}
 								</div>
 								<div class="score-details_icon-block">
 									<i class="angle right icon"></i>
@@ -717,17 +705,11 @@ function viewScoreInfo() {
 		hd[trans[i]] = val;
 	});
 
-	if (s.completed < 2) {
-		var file = 'No Replay File.';
-	} else {
-		var file = "<a href='/web/replays/" + s.id + "' class='new downloadstar'>Replay</a>";
-	}
-
 	data = $.extend(data, hd, {
 		"Ranked?": T(s.completed == 3 ? "Yes" : "No"),
 		"Achieved": s.time,
 		"Mode": modes[s.play_mode],
-		"File": file,
+		"File": "<a href='/web/replays/" + s.id + "' class='new downloadstar'>Replay</a>",
 	});
 
 	var els = [];
@@ -860,4 +842,31 @@ function beatmapLink(type, id) {
 	if (type == "s")
 		return "<a href='/s/" + id + "'>" + id + '</a>';
 	return "<a href='/b/" + id + "'>" + id + '</a>';
+}
+
+function checkRelaxMania(mode, rx) {
+	if (rx == 1) {
+		for (i = 0; i <= 3; i++) {
+			$(`.simple-banner-swtich[data-mode='${i}']`).removeClass('disabled')
+		}
+		$(".simple-banner-swtich[data-mode='3']").addClass('disabled')
+	} else if (rx == 2) {
+		for (i = 1; i <= 3; i++) {
+			$(`.simple-banner-swtich[data-mode='${i}']`).addClass('disabled')
+		}
+	} else {
+		for (i = 0; i <= 3; i++) {
+			$(`.simple-banner-swtich[data-mode='${i}']`).removeClass('disabled')
+		}
+	}
+
+	if (mode === 3) {
+		$(".simple-banner-swtich[data-rx='1']").addClass('disabled')
+		$(".simple-banner-swtich[data-rx='2']").addClass('disabled')
+	} else if (mode === 1 || mode === 2) {
+		$(".simple-banner-swtich[data-rx='2']").addClass('disabled')
+	} else {
+		$(".simple-banner-swtich[data-rx='1']").removeClass('disabled')
+		$(".simple-banner-swtich[data-rx='2']").removeClass('disabled')
+	}
 }

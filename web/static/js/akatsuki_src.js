@@ -23,7 +23,7 @@ var singlePageSnippets = {
      function e() {
     var e = window.location;
     window.history.replaceState("", document.title, e.pathname + "?mode=" + favouriteMode + "&p=" + page + "&rx=" + !!rx + "&sort=" + sort + e.hash);
-	
+
 	if (sort == "1s") {
 		api("clans/stats/first", {
 			m: favouriteMode,
@@ -41,7 +41,7 @@ var singlePageSnippets = {
 		})
 		return;
 	}
-	
+
 	api("clans/stats/all", {
         m: favouriteMode,
         p: page,
@@ -85,7 +85,7 @@ $("#rx-menu .item").click(function(t) {
 	e();
 })
 
-  }
+  },
 
   "/leaderboard" : function() {
     page = page === 0 ? 1 : page;
