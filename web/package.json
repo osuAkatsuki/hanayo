@@ -21,6 +21,7 @@
     "gulp-uglify": "^3.0.2",
     "jquery": "^3.6.1",
     "timeago": "^1.6.7",
+    "uglify-save-license": "^0.4.1",
     "vue": "^3.2.45"
   },
   "overrides": {
