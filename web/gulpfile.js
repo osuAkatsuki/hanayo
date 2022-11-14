@@ -5,25 +5,9 @@ var uglify  = require("gulp-uglify")
 var flatten = require("gulp-flatten")
 var concat  = require("gulp-concat")
 var babel   = require("gulp-babel")
+var saveLicense = require('uglify-save-license');
 
-gulp.task("default", ["build"])
-gulp.task("build", [
-	"minify-js",
-])
-
-gulp.task("watch", function() {
-	gulp.watch(["static/js/*.js", "!static/js/dist.min.js"], ["minify-js"])
-	gulp.watch("semantic/src/**/*", ["build-semantic"])
-})
-
-gulp.task("build-semantic", function() {
-	gulp.src("./semantic/gulpfile.js")
-		.pipe(chug({
-			tasks: ['build']
-		}))
-})
-
-gulp.task("minify-js", function() {
+gulp.task("minify-js", async function() {
 	gulp
 		.src([
 			"node_modules/jquery/dist/jquery.min.js",
@@ -41,8 +25,25 @@ gulp.task("minify-js", function() {
 		})) breaks vue */
 		.pipe(flatten())
 		.pipe(uglify({
+			output: {
+				comments: saveLicense
+			},
 			mangle: true,
-			preserveComments: "license"
 		}))
 		.pipe(gulp.dest("./static/js"))
+})
+
+gulp.task("build", gulp.series("minify-js"))
+gulp.task("default", gulp.series("build"))
+
+gulp.task("watch", function() {
+	gulp.watch(["static/js/*.js", "!static/js/dist.min.js"], ["minify-js"])
+	gulp.watch("semantic/src/**/*", ["build-semantic"])
+})
+
+gulp.task("build-semantic", function() {
+	gulp.src("./semantic/gulpfile.js")
+		.pipe(chug({
+			tasks: ['build']
+		}))
 })
