@@ -1,12 +1,12 @@
 (function (factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['jquery'], factory);
-  } else if (typeof module === 'object' && typeof module.exports === 'object') {
-    factory(require('jquery'));
+  if (typeof define === "function" && define.amd) {
+    define(["jquery"], factory);
+  } else if (typeof module === "object" && typeof module.exports === "object") {
+    factory(require("jquery"));
   } else {
     factory(jQuery);
   }
-}(function (jQuery) {
+})(function (jQuery) {
   // Finnish
   jQuery.timeago.settings.strings = {
     prefixAgo: null,
@@ -23,9 +23,9 @@
     month: "kuukausi",
     months: "%d kuukautta",
     year: "vuosi",
-    years: "%d vuotta"
+    years: "%d vuotta",
   };
-  
+
   // The above is not a great localization because one would usually
   // write "2 days ago" in Finnish as "2 päivää sitten", however
   // one would write "2 days into the future" as "2:n päivän päästä"
@@ -35,4 +35,4 @@
   // As workaround, the above localizations will say
   // "2 päivää tulevaisuudessa" which is understandable but
   // not as fluent.
-}));
+});

@@ -1,12 +1,12 @@
 (function (factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['jquery'], factory);
-  } else if (typeof module === 'object' && typeof module.exports === 'object') {
-    factory(require('jquery'));
+  if (typeof define === "function" && define.amd) {
+    define(["jquery"], factory);
+  } else if (typeof module === "object" && typeof module.exports === "object") {
+    factory(require("jquery"));
   } else {
     factory(jQuery);
   }
-}(function (jQuery) {
+})(function (jQuery) {
   // Dutch
   jQuery.timeago.settings.strings = {
     prefixAgo: null,
@@ -25,6 +25,6 @@
     year: "ongeveer een jaar",
     years: "%d jaar",
     wordSeparator: " ",
-    numbers: []
+    numbers: [],
   };
-}));
+});
