@@ -12,5 +12,5 @@ jQuery.timeago.settings.strings = {
   month: "circa un mese",
   months: "%d mesi",
   year: "circa un anno",
-  years: "%d anni"
+  years: "%d anni",
 };

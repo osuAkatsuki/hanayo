@@ -1,144 +1,144 @@
 .user-avatar {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 500px;
-    object-fit: cover;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 500px;
+  object-fit: cover;
 }
 
 .header {
-    margin-top: 0.2rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
 }
 
 .sub-header {
-    margin-top: 0.1rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  margin-top: 0.1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .player {
-    background: #2f2f2f;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    transition: 0.1s ease;
-    cursor: pointer
+  background: #2f2f2f;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transition: 0.1s ease;
+  cursor: pointer;
 }
 
 .player:hover {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 .front {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .notlock-icon {
-    height: auto !important;
+  height: auto !important;
 }
 
 .profile.heading {
-    height: 170px;
-    display: flex;
-    align-items: flex-end;
-    background: hsl(var(--base), 35%, 15%);
+  height: 170px;
+  display: flex;
+  align-items: flex-end;
+  background: hsl(var(--base), 35%, 15%);
 }
 
 .user-profile {
-    margin-bottom: 22px;
-    transition: 0.3s ease;
+  margin-bottom: 22px;
+  transition: 0.3s ease;
 }
 
-@media(max-width:767px) {
-    .profile.heading {
-        justify-content: center;
-        align-items: center;
-    }
-    .profile.heading h1 {
-        font-size: 24pt;
-        padding-bottom: 10px
-    }
-    .flex {
-        justify-content: center;
-    }
-    .user-profile {
-        margin-bottom: 0px;
-    }
-    #user-rank {
-        display: none
-    }
-    #user-info {
-        width: 100% !important;
-    }
+@media (max-width: 767px) {
+  .profile.heading {
+    justify-content: center;
+    align-items: center;
+  }
+  .profile.heading h1 {
+    font-size: 24pt;
+    padding-bottom: 10px;
+  }
+  .flex {
+    justify-content: center;
+  }
+  .user-profile {
+    margin-bottom: 0px;
+  }
+  #user-rank {
+    display: none;
+  }
+  #user-info {
+    width: 100% !important;
+  }
 }
 
-@media(min-width:767px) {
-    .profile.heading h1 {
-        font-size: 28pt;
-    }
+@media (min-width: 767px) {
+  .profile.heading h1 {
+    font-size: 28pt;
+  }
 }
 
 .profile.heading h1 {
-    color: #f9f9f9;
-    text-shadow: 0 2px 10px #000;
-    margin-bottom: 0px;
+  color: #f9f9f9;
+  text-shadow: 0 2px 10px #000;
+  margin-bottom: 0px;
 }
 
 .username {
-    display: flex;
-    gap: 8px;
-    align-items: center;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .flex {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-end;
 }
 
 .flex2 {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
 }
 
 .top-side {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .pflag {
-    width: 28px;
+  width: 28px;
 }
 
 @media screen and (max-width: 600px) {
-    .subtitle {
-        width: 200px;
-    }
+  .subtitle {
+    width: 200px;
+  }
 }
 
 .center-side {
-    display: flex;
-    gap: 6px;
+  display: flex;
+  gap: 6px;
 }
 
 .ui.heading {
-    margin-bottom: 0.1rem;
+  margin-bottom: 0.1rem;
 }
 
 .row {
-    padding: 0.2rem 0rem !important;
+  padding: 0.2rem 0rem !important;
 }
 
 .no-border {
-    border: 0px !important;
+  border: 0px !important;
 }

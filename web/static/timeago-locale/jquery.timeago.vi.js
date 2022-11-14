@@ -1,15 +1,15 @@
 (function (factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['jquery'], factory);
-  } else if (typeof module === 'object' && typeof module.exports === 'object') {
-    factory(require('jquery'));
+  if (typeof define === "function" && define.amd) {
+    define(["jquery"], factory);
+  } else if (typeof module === "object" && typeof module.exports === "object") {
+    factory(require("jquery"));
   } else {
     factory(jQuery);
   }
-}(function (jQuery) {
+})(function (jQuery) {
   // Vietnamese
   jQuery.timeago.settings.strings = {
-    prefixAgo: 'cách đây',
+    prefixAgo: "cách đây",
     prefixFromNow: null,
     suffixAgo: null,
     suffixFromNow: "trước",
@@ -25,6 +25,6 @@
     year: "khoảng một năm",
     years: "%d năm",
     wordSeparator: " ",
-    numbers: []
+    numbers: [],
   };
-}));
+});

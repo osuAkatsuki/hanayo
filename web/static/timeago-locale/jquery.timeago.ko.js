@@ -16,5 +16,5 @@ jQuery.timeago.settings.strings = {
   year: "약 1년",
   years: "%d년",
   wordSeparator: " ",
-  numbers: []
+  numbers: [],
 };
