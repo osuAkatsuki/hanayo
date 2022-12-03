@@ -16,55 +16,55 @@ KyutGrill=team2.jpg
         </h3>
       </div>
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Project Management Team" }}</h1>
-        <p>
-          {{ .T "Project managers are responsible for overlooking Akatsuki itself, overlooking the rest of the team." }}
-          <br />
-        </p>
-        {{ template "users" (.Get "badges/members?id=%d" 4) }}
-      </div>
-      <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Product Management Team" }}</h1>
         <p>
-          {{ .T "Product managers are responsible for envisionining Akatsuki's future, and create ideas in order to shape the server." }}
+          {{ .T "Responsible for envisionining Akatsuki's future, and create ideas in order to shape the server." }}
           <br />
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 30) }}
       </div>
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Community Management Team" }}</h1>
+        <h1 class="ui heading">{{ .T "Product Development Team" }}</h1>
         <p>
-          {{ .T "Community managers manage not only the community, but also the management team itself." }}
-          <br />
-        </p>
-        {{ template "users" (.Get "badges/members?id=%d" 4) }}
-      </div>
-      <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Development Team" }}</h1>
-        <p>
-          {{ .T "Developers implement, and maintain the server's infrastructure - they keep the server running, and take care of it's maintenance." }}
+          {{ .T "Responsible for implementing, and maintaining Akatsuki's infrastructure - they keep the server running, and take care of it's maintenance." }}
           <br />
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 2) }}
       </div>
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Event Management Team" }}</h1>
+        <h1 class="ui heading">{{ .T "Community Management Team" }}</h1>
         <p>
-          {{ .T "Event Managers host events such as competitions and tournaments, keeping the community thriving." }}
+          {{ .T "Responsible for not only the community, but also the management team itself." }}
+          <br />
+        </p>
+        {{ template "users" (.Get "badges/members?id=%d" 97) }}
+      </div>
+      <div class="ui center aligned segment">
+        <h1 class="ui heading">{{ .T "Account Management" }}</h1>
+        <p>
+          {{ .T "Responsible for appeals, account issues, etc." }}
+          <br />
+        </p>
+        {{ template "users" (.Get "badges/members?id=%d" 32) }}
+      </div>
+      <div class="ui center aligned segment">
+        <h1 class="ui heading">{{ .T "Event Management" }}</h1>
+        <p>
+          {{ .T "Responsible for hosting events such as competitions and tournaments, keeping the community thriving." }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 78) }}
       </div>
       <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Beatmap Nomination Team" }}</h1>
         <p>
-          {{ .T "Beatmap Nominators handle all beatmap related inquiries; such as ranked requests." }}
+          {{ .T "Responsible for handling all beatmap related inquiries; such as beatmaps status requests." }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 53) }}
       </div>
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Akatsuki Scorewatch Team" }}</h1>
+        <h1 class="ui heading">{{ .T "Social Media Management Team" }}</h1>
         <p>
-          {{ .T "These members help select scores for <a href='https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ'>Akatsuki's YouTube channel</a>." | html }}
+          {{ .T "Responsible for managing Akatsuki's social media, such as our <a href='https://www.youtube.com/@akatsuki_osu'>YouTube</a> and <a href='https://www.twitter.com/@akatsuki_osu'>Twitter</a> accounts." | html }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 86) }}
       </div>
@@ -102,9 +102,6 @@ KyutGrill=team2.jpg
           </li>
           <li>
             {{ .T "<b><a href='https://ripple.moe'>Ripple</a></b>, for a stable base to build off of - we would not exist without your work." | html }}
-          </li>
-          <li>
-            {{ .T "<b><a href='https://gatari.pw'>Gatari</a></b>, for the resources for our current frontend." | html }}
           </li>
           <li>
             {{ .T "<b><a href='https://akatsuki.pw/u/1000'>rumoi</a></b>, for his work on <a href='https://github.com/rumoi/ruri'>ruri</a>, and our anticheat." | html }}
