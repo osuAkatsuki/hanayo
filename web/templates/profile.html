@@ -57,7 +57,6 @@
           {{ $dev := has .privileges 165387 }}
           {{ $cm := has .privileges 1036539 }}
           {{ $product := has .privileges 1046779 }}
-          {{ $project := has .privileges 7340027 }}
           {{ $support := has .privileges 4283 }}
           {{ $bn := has .privileges 267 }}
           {{ $premium := has .privileges 8388608 }}
@@ -84,20 +83,18 @@
                         {{ end }}
                         {{ .username }}
                       </h1>
-                      {{ if (or $cm $project $product) }}
+                      {{ if (or $cm $product) }}
                         <div class="admin">
-                          {{ if $project }}
-                            PROJECT MANAGER
-                          {{ else if $product }}
+                          {{ if $product }}
                             PRODUCT MANAGER
                           {{ else if $cm }}
                             COMMUNITY MANAGER
                           {{ end }}
                         </div>
                       {{ else if $support }}
-                        <div class="mod">SUPPORT TEAM</div>
+                        <div class="mod">ACCOUNT MANAGER</div>
                       {{ else if $dev }}
-                        <div class="dev">DEVELOPER</div>
+                        <div class="dev">PRODUCT DEVELOPER</div>
                       {{ else if $bn }}
                         <div class="bn">BEATMAP NOMINATOR</div>
                       {{ else if $premium }}
