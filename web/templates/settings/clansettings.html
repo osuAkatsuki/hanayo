@@ -58,9 +58,9 @@ Include=menu.html
                     Clan Status
                   </label>
                   <select class="ui dropdown" tabindex="4" name="status" data-cast="int">
-                    <option value="0">Closed</option>
-                    <option value="1">Open</option>
-                    <option value="2">Invite Only</option>
+                    <option value="0" {{ if eq $status 0 }}selected{{ end }}>Closed</option>
+                    <option value="1" {{ if eq $status 1 }}selected{{ end }}>Open</option>
+                    <option value="2" {{ if eq $status 2 }}selected{{ end }}>Invite Only</option>
                   </select>
                 </div>
                 {{ if has .Context.User.Privileges 8388612 }}
