@@ -1139,3 +1139,7 @@ body::-webkit-scrollbar-thumb {
   margin-bottom: 1rem;
   border-radius: 0.5rem;
 }
+
+.apexcharts-tooltip-title {
+  text-align: center !important;
+}

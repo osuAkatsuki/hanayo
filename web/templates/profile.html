@@ -46,6 +46,7 @@
 		window.preferRelax = parseInt("{{ $preferRelax }}");
 		window.userID = parseInt("{{ .id }}");
 		window.actualID = parseInt("{{ $realid }}");
+    window.graphType = "rank";
 	</script>
 
       <link rel="stylesheet" href="/static/css/pages/profile.css" />
@@ -417,9 +418,41 @@
           </div>
           <div class="vark-list-grid wide column load-data" id="user-scores">
             <div
+              class="ui segment"
+              id="profile-history-content">
+              <div class="ui small buttons">
+                <button
+                  class="ui button active"
+                  id="chart-btn-rank"
+                  onclick="changeChart('rank')">
+                  {{ $global.T "Rank" }}
+                </button>
+                <button
+                  class="ui button"
+                  id="chart-btn-pp"
+                  onclick="changeChart('pp')">
+                  {{ $global.T "PP" }}
+                </button>
+              </div>
+              <div id="profile-history-graph" style="display: none;"></div>
+              <div id="profile-history-not-found" style="display: none">
+                <div class="ui icon message" style="background: rgb(34, 33, 33)">
+                  <div class="content">
+                    <div class="header">
+                      {{ $global.T "No graph data found" }}
+                    </div>
+                    <p>
+                      {{ $global.T "No graph data found for this user" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
               class="ui raised segment twemoji"
               id="userpage-content"
-              style="display: none;"></div>
+              style="display: none;">
+            </div>
 
             <div id="scores-zone">
               {{ range _range 4 }}
