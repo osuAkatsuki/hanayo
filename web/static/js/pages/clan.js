@@ -82,7 +82,7 @@ $(document).ready(function () {
     if (!currentUserID) return;
 
     var btn = $(this);
-    joinClan({ id: clanID }, btn);
+    joinClan({ id: parseInt(clanID) }, btn);
   });
 
   $("#leave-btn>.item").on("click", function (e) {
@@ -91,7 +91,7 @@ $(document).ready(function () {
     var thiss = $(this);
     api(
       "clans/leave",
-      { id: clanID },
+      null,
       function (t) {
         if (t.message === "disbanded") {
           location.replace("/");
