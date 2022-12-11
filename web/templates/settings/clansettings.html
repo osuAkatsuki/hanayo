@@ -21,7 +21,7 @@ Include=menu.html
               {{ $desc := or $d.description.String "" }}
               {{ $icon := or $d.icon.String "" }}
               {{ $bg := or $d.background.String "" }}
-              {{ $status := or $d.status.String "" }}
+              {{ $status := or $d.status.Int 0 }}
               <form id="register-form" class="ui form">
                 <div class="field">
                   <label class="left aligned">
@@ -57,7 +57,7 @@ Include=menu.html
                   <label class="left aligned">
                     Clan Status
                   </label>
-                  <select tabindex="4" name="status">
+                  <select class="ui dropdown" tabindex="4" name="status" data-cast="int">
                     <option value="0">Closed</option>
                     <option value="1">Open</option>
                     <option value="2">Invite Only</option>
