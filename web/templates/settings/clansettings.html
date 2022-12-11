@@ -21,10 +21,11 @@ Include=menu.html
               {{ $desc := or $d.description.String "" }}
               {{ $icon := or $d.icon.String "" }}
               {{ $bg := or $d.background.String "" }}
+              {{ $status := or $d.status.String "" }}
               <form id="register-form" class="ui form">
                 <div class="field">
                   <label class="left aligned">
-                    Clantag (2 to 6 characters)
+                    Clan Tag (2 to 6 characters)
                   </label>
                   <input
                     tabindex="1"
@@ -52,13 +53,23 @@ Include=menu.html
                     placeholder="Icon"
                     value="{{ $icon }}" />
                 </div>
+                <div class="field">
+                  <label class="left aligned">
+                    Clan Status
+                  </label>
+                  <select tabindex="4" name="status">
+                    <option value="0">Closed</option>
+                    <option value="1">Open</option>
+                    <option value="2">Invite Only</option>
+                  </select>
+                </div>
                 {{ if has .Context.User.Privileges 8388612 }}
                   <div class="field">
                     <label class="left aligned">
                       {{ "Background [URL] (optional)" }}
                     </label>
                     <input
-                      tabindex="4"
+                      tabindex="5"
                       type="url"
                       name="bg"
                       placeholder="Background URL"
@@ -69,7 +80,7 @@ Include=menu.html
               </form>
               <br />
               <button
-                tabindex="5"
+                tabindex="6"
                 class="ui primary button"
                 type="submit"
                 form="register-form">
