@@ -128,6 +128,7 @@
     $("#cmode-" + currentCmode).addClass("active");
 
     loadLeaderboard(bid, currentMode, currentCmode);
+    toggleModeAvailability(currentMode, currentCmode);
   }
   window.loadLeaderboard = loadLeaderboard;
   window.changeDifficulty = changeDifficulty;
@@ -145,6 +146,7 @@
     $(this).addClass("active");
     currentMode = $(this).data("mode");
     loadLeaderboard(beatmapID, currentMode, currentCmode);
+    toggleModeAvailability(currentMode, currentCmode);
     currentModeChanged = true;
   });
   $("#cmode-menu .item").on("click", function (e) {
@@ -153,6 +155,7 @@
     $(this).addClass("active");
     currentCmode = $(this).data("cmode");
     loadLeaderboard(beatmapID, currentMode, currentCmode);
+    toggleModeAvailability(currentMode, currentCmode);
     currentCmodeChanged = true;
   });
   $("table.sortable").tablesort();
@@ -210,5 +213,33 @@ function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
       if (acc > 70) return "C";
 
       return "D";
+  }
+}
+function toggleModeAvailability(mode, rx) {
+  $("[data-mode='1']").removeClass("disabled");
+  $("[data-mode='2']").removeClass("disabled");
+  $("[data-mode='3']").removeClass("disabled");
+
+  $("[data-cmode='1']").removeClass("disabled");
+  $("[data-cmode='2']").removeClass("disabled");
+  $("[data-cmode='3']").removeClass("disabled");
+
+  if (rx == 1) {
+    // relax does not have mania
+    $("[data-mode='3']").addClass("disabled");
+  } else if (rx == 2) {
+    // autopilot does not have taiko, catch, or mania
+    $("[data-mode='1']").addClass("disabled");
+    $("[data-mode='2']").addClass("disabled");
+    $("[data-mode='3']").addClass("disabled");
+  }
+
+  if (mode == 1 || mode == 2) {
+    // taiko or catch does not have autopilot
+    $("[data-cmode='2']").addClass("disabled");
+  } else if (mode == 3) {
+    // mania does not have relax or autopilot
+    $("[data-cmode='1']").addClass("disabled");
+    $("[data-cmode='2']").addClass("disabled");
   }
 }
