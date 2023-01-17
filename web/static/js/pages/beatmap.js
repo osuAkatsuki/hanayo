@@ -15,7 +15,7 @@
     api(
       `scores?sort=${Score},desc`,
       {
-        mode: m,
+        m: m,
         relax: rx,
         b: b,
         p: 1,
