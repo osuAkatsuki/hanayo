@@ -226,11 +226,9 @@ function toggleModeAvailability(mode, rx) {
 
   if (rx == 1) {
     // relax does not have mania
-    console.log("hey this is relax");
     $("[data-mode='3']").addClass("disabled");
   } else if (rx == 2) {
     // autopilot does not have taiko, catch, or mania
-    console.log("hey this is autopilot")
     $("[data-mode='1']").addClass("disabled");
     $("[data-mode='2']").addClass("disabled");
     $("[data-mode='3']").addClass("disabled");
@@ -238,7 +236,6 @@ function toggleModeAvailability(mode, rx) {
 
   if (mode == 1 || mode == 2) {
     // taiko or catch does not have autopilot
-    console.log("hey this is either taiko or catch");
     $("[data-cmode='2']").addClass("disabled");
   } else if (mode == 3) {
     // mania does not have relax or autopilot
