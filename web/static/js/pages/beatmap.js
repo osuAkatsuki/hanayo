@@ -102,13 +102,21 @@
     $("#bpm").html(diff.BPM);
 
     // hide mode for non-std maps
-    console.log("favMode", favMode);
     if (diff.Mode != 0) {
-      currentMode = currentModeChanged ? currentMode : favMode;
+      currentMode = diff.Mode;
       $("#mode-menu").hide();
     } else {
-      currentMode = diff.Mode;
+      if (currentMode === null) {
+        currentMode = favMode;
+      }
       $("#mode-menu").show();
+    }
+
+    if (diff.Mode == 3) {
+      currentCmode = 0;
+      $("#cmode-menu").hide();
+    } else {
+      $("cmode-menu").show();
     }
 
     // update mode menu
