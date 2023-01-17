@@ -239,7 +239,6 @@ function toggleModeAvailability(mode, rx) {
     $("[data-cmode='2']").addClass("disabled");
   } else if (mode == 3) {
     // mania does not have relax or autopilot
-    console.log("hey this is mania");
     $("[data-cmode='1']").addClass("disabled");
     $("[data-cmode='2']").addClass("disabled");
   }
