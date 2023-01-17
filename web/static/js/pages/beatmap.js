@@ -216,13 +216,13 @@ function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
   }
 }
 function toggleModeAvailability(mode, rx) {
-  for (i = 0; i <= 3; i++) {
-    $(`[data-mode='${i}']`).removeClass("disabled");
-  }
+  $("[data-mode='1']").removeClass("disabled");
+  $("[data-mode='2']").removeClass("disabled");
+  $("[data-mode='3']").removeClass("disabled");
 
-  for (i = 0; i <= 2; i++) {
-    $(`[data-cmode='${i}']`).removeClass("disabled");
-  }
+  $("[data-cmode='1']").removeClass("disabled");
+  $("[data-cmode='2']").removeClass("disabled");
+  $("[data-cmode='3']").removeClass("disabled");
 
   if (rx == 1) {
     // relax does not have mania
