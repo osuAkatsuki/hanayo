@@ -48,16 +48,9 @@
             "+"
           )}</a>`;
           tb.append(
-            $("<tr />").append(
+            $("<tr class='l-player' />").append(
               $("<td data-sort-value=" + ++i + " />").html(
                 `#${(page - 1) * 50 + i}`
-              ),
-              $("<td />").html(scoreRankIcon),
-              $("<td data-sort-value=" + score.score + " />").html(
-                addCommas(score.score)
-              ),
-              $("<td data-sort-value=" + score.accuracy + " />").text(
-                score.accuracy.toFixed(2) + "%"
               ),
               $("<td />").html(
                 "<a href='/u/" +
@@ -69,18 +62,25 @@
                   escapeHTML(user.username) +
                   "</a>"
               ),
-              $("<td data-sort-value=" + score.max_combo + " />").text(
+              $("<td class='center aligned' />").html(scoreRankIcon),
+              $("<td class='center aligned' data-sort-value=" + score.score + " />").html(
+                addCommas(score.score)
+              ),
+              $("<td class='center aligned' data-sort-value=" + score.accuracy + " />").text(
+                score.accuracy.toFixed(2) + "%"
+              ),
+              $("<td class='center aligned' data-sort-value=" + score.max_combo + " />").text(
                 addCommas(score.max_combo) + "x"
               ),
-              $("<td data-sort-value=" + score.pp + " />").html(
+              $("<td class='center aligned' data-sort-value=" + score.pp + " />").html(
                 score.pp.toFixed(2)
               ),
-              $("<td />").html(getScoreMods(score.mods, true)),
-              $("<td />").html(timeSince(Date.parse(score.time))),
-              $("<td />").html(
+              $("<td class='center aligned' />").html(getScoreMods(score.mods, true)),
+              $("<td class='center aligned' data-sort-value=" + Date.parse(score.time).valueOf() + " />").html(timeSince(Date.parse(score.time))),
+              $("<td class='center aligned' />").html(
                 "<a href='/web/replays/" + 
                 score.id + 
-                "' title='Download Replay' class='new downloadstar'><i class='fa-solid fa-download icon'></i></a>"
+                "' title='Download Replay' class='new downloadstar'><i class='fa-solid fa-download icon'></i>Get</a>"
               )
             )
           );
@@ -109,19 +109,23 @@
     // hide mode for non-std maps
     if (diff.Mode != 0) {
       currentMode = diff.Mode;
-      $("#mode-menu").hide();
+      $("#rx-column").removeClass("five wide column").addClass("sixteen wide column");
+      $("#mode-column").hide();
     } else {
       if (currentMode === null) {
         currentMode = favMode;
       }
-      $("#mode-menu").show();
+      $("#rx-column").removeClass("sixteen wide column").addClass("five wide column");
+      $("#mode-column").show();
     }
 
     if (diff.Mode == 3) {
       currentCmode = 0;
-      $("#cmode-menu").hide();
+      $("#mode-column").removeClass("eleven wide column").addClass("sixteen wide column");
+      $("#rx-column").hide();
     } else {
-      $("cmode-menu").show();
+      $("#mode-column").removeClass("sixteen wide column").addClass("eleven wide column");
+      $("#rx-column").show();
     }
 
     // update mode menu

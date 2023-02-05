@@ -1105,7 +1105,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .rank--bmap--font {
-  font-size: 1.5em;
+  font-size: 1.4em;
 }
 
 .noUi-connect {
@@ -1142,4 +1142,8 @@ body::-webkit-scrollbar-thumb {
 
 .apexcharts-tooltip-title {
   text-align: center !important;
+}
+
+.width-30 {
+  width: 30%;
 }

@@ -1,4 +1,5 @@
 {{ define "tpl" }}
+  <link rel="stylesheet" href="/static/css/pages/leaderboard.css" />
   <div class="ui container">
     {{ $ := . }}
     {{ if ne .Beatmapset.ID 0 }}
@@ -125,93 +126,103 @@
         </div>
       </div>
 
-  <script>
-    {{ $p := .Gin.Query "p" }}
-    {{ $curMode := atoi (.Gin.Query "mode") }}
-    {{ $relax := atoi (.Gin.Query "rx") }}
-    {{ $favModeRaw := .Get "users/self/favourite_mode" }}
-    var beatmapID = {{ .Beatmap.ID }};
-    var setData = JSON.parse({{ .SetJSON }});
-    var page = {{ $p | atoint | atLeastOne }};
-    // defaults to 0
-    var currentMode = {{ $curMode }};
-    var currentCmode = parseInt({{ $relax }}) || 0;
-    var currentModeChanged = false;
-    var currentCmodeChanged = false;
-    var favMode = parseInt({{ $favModeRaw.favourite_mode }}) || 0;
+      <script>
+        {{ $p := .Gin.Query "p" }}
+        {{ $curMode := atoi (.Gin.Query "mode") }}
+        {{ $relax := atoi (.Gin.Query "rx") }}
+        {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+        var beatmapID = {{ .Beatmap.ID }};
+        var setData = JSON.parse({{ .SetJSON }});
+        var page = {{ $p | atoint | atLeastOne }};
+        // defaults to 0
+        var currentMode = {{ $curMode }};
+        var currentCmode = parseInt({{ $relax }}) || 0;
+        var currentModeChanged = false;
+        var currentCmodeChanged = false;
+        var favMode = parseInt({{ $favModeRaw.favourite_mode }}) || 0;
 
-    var previewAudio = document.querySelector("#beatmap-preview")
-    var previewText = document.querySelector("#preview-text")
-    var previewIcon = $("#preview-icon")
-    var previewPlaying = false
-    previewAudio.volume = 0.2
+        var previewAudio = document.querySelector("#beatmap-preview")
+        var previewText = document.querySelector("#preview-text")
+        var previewIcon = $("#preview-icon")
+        var previewPlaying = false
+        previewAudio.volume = 0.2
 
-    previewAudio.onplaying = () => {
-    	previewPlaying = true
-    	previewText.innerHTML = '{{ .T "Pause" }}';
-    	previewIcon.removeClass("fa-play").addClass("fa-pause");
-    }
+        previewAudio.onplaying = () => {
+          previewPlaying = true
+          previewText.innerHTML = '{{ .T "Pause" }}';
+          previewIcon.removeClass("fa-play").addClass("fa-pause");
+        }
 
-    previewAudio.onpause = () => {
-    	previewPlaying = false
-    	previewText.innerHTML = '{{ .T "Play" }}';
-    	previewIcon.removeClass("fa-pause").addClass("fa-play");
-    }
+        previewAudio.onpause = () => {
+          previewPlaying = false
+          previewText.innerHTML = '{{ .T "Play" }}';
+          previewIcon.removeClass("fa-pause").addClass("fa-play");
+        }
 
-    previewAudio.onended = () => {
-    	previewPlaying = false
-    	previewText.innerHTML = '{{ .T "Play" }}';
-    	previewIcon.removeClass("fa-pause").addClass("fa-play");
+        previewAudio.onended = () => {
+          previewPlaying = false
+          previewText.innerHTML = '{{ .T "Play" }}';
+          previewIcon.removeClass("fa-pause").addClass("fa-play");
 
-    }
+        }
 
-    // Le curse.
-    const playPreview = () => {
-    	previewPlaying ? previewAudio.pause() : previewAudio.play()
-    }
-  </script>
+        // Le curse.
+        const playPreview = () => {
+          previewPlaying ? previewAudio.pause() : previewAudio.play()
+        }
+      </script>
 
-      <div class="ui three item menu" id="cmode-menu">
-        {{ range $k, $v := cmodes }}
-          <a
-            class="item"
-            id="cmode-{{ $k }}"
-            data-cmode="{{ $k }}"
-            href="/b/{{ $.Beatmap.ID }}?mode={{ $curMode }}&rx={{ $k }}">
-            {{ $v }}
-          </a>
-        {{ end }}
+      <div class="akat-box ui segment">
+        <div class="ui grid stackable">
+          
+          <div class="five wide column" id="rx-column">
+            <div class="ui three item menu" id="cmode-menu">
+              {{ range $k, $v := cmodes }}
+                <a
+                  class="item"
+                  id="cmode-{{ $k }}"
+                  data-cmode="{{ $k }}"
+                  href="/b/{{ $.Beatmap.ID }}?mode={{ $curMode }}&rx={{ $k }}">
+                  {{ $v }}
+                </a>
+              {{ end }}
+            </div>
+          </div>
+
+          <div class="eleven wide column" id="mode-column">
+            <div class="ui four item menu" id="mode-menu">
+              {{ range $k, $v := modes }}
+                <a
+                  class="item"
+                  id="mode-{{ $k }}"
+                  data-mode="{{ $k }}"
+                  href="/b/{{ $.Beatmap.ID }}?mode={{ $k }}&rx={{ $relax }}">
+                  {{ $v }}
+                </a>
+              {{ end }}
+            </div>
+          </div>
+
+        </div>
+
+        <table class="ui table sortable leaderboard-table">
+          <thead>
+            <tr>
+              <th class="t-heading center aligned">{{ .T "Rank" }}</th>
+              <th class="t-heading center aligned width-30 disabled">{{ .T "Player" }}</th>
+              <th class="t-heading center aligned">{{ .T "Grade" }}</th>
+              <th class="t-heading center aligned">{{ .T "Score" }}</th>
+              <th class="t-heading center aligned">{{ .T "Accuracy" }}</th>
+              <th class="t-heading center aligned">{{ .T "Combo" }} ({{ .Beatmap.MaxCombo }})</th>
+              <th class="t-heading center aligned">{{ .T "PP" }}</th>
+              <th class="t-heading center aligned disabled">{{ .T "Mods" }}</th>
+              <th class="t-heading center aligned">{{ .T "Time" }}</th>
+              <th class="t-heading center aligned disabled">{{ .T "Replay" }}</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
-
-      <div class="ui four item menu" id="mode-menu">
-        {{ range $k, $v := modes }}
-          <a
-            class="item"
-            id="mode-{{ $k }}"
-            data-mode="{{ $k }}"
-            href="/b/{{ $.Beatmap.ID }}?mode={{ $k }}&rx={{ $relax }}">
-            {{ $v }}
-          </a>
-        {{ end }}
-      </div>
-
-      <table class="ui sortable table">
-        <thead>
-          <tr>
-            <th class="one wide">{{ .T "Rank" }}</th>
-            <th class="one wide">{{ .T "Grade" }}</th>
-            <th class="two wide">{{ .T "Score" }}</th>
-            <th class="two wide">{{ .T "Accuracy" }}</th>
-            <th class="three wide">{{ .T "Player" }}</th>
-            <th class="two wide">{{ .T "Combo" }} ({{ .Beatmap.MaxCombo }})</th>
-            <th class="two wide">{{ .T "PP" }}</th>
-            <th class="two wide">{{ .T "Mods" }}</th>
-            <th class="one wide">{{ .T "Time" }}</th>
-            <th class="one wide">{{ .T "Replay" }}</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
     {{ end }}
   </div>
 {{ end }}
