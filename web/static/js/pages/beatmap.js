@@ -76,7 +76,12 @@
                 score.pp.toFixed(2)
               ),
               $("<td />").html(getScoreMods(score.mods, true)),
-              $("<td />").html(timeSince(Date.parse(score.time)))
+              $("<td />").html(timeSince(Date.parse(score.time))),
+              $("<td />").html(
+                "<a href='/web/replays/" + 
+                score.id + 
+                "' title='Download Replay' class='new downloadstar'><i class='fa-solid fa-download icon'></i></a>"
+              )
             )
           );
         });
