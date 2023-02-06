@@ -72,8 +72,8 @@
               $("<td class='center aligned' data-sort-value=" + score.max_combo + " />").text(
                 addCommas(score.max_combo) + "x"
               ),
-              $("<td class='center aligned' data-sort-value=" + score.pp + " />").html(
-                score.pp.toFixed(2)
+              $("<td class='center aligned' data-sort-value=" + score.pp.toFixed(0) + " />").html(
+                score.pp.toFixed(0) + "pp"
               ),
               $("<td class='center aligned' />").html(getScoreMods(score.mods, true)),
               $("<td class='center aligned' data-sort-value=" + Date.parse(score.time).valueOf() + " />").html(timeSince(Date.parse(score.time))),
