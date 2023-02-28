@@ -6,57 +6,57 @@ KyutGrill=documentation.jpg
 */}}
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
-  {{ $downEnabled := qb "SELECT value_int FROM system_settings WHERE name = 'patcher_download'" }}
-  <!-- 
+{{ $downEnabled := qb "SELECT value_int FROM system_settings WHERE name = 'patcher_download'" }}
+<!-- 
     RealistikDash was here. 
     I suck at design....
     After 9 months its finally time to rearrange this template ~lenforiee
   -->
-  <div class="ui container">
-    <div class="ui segment">
-      <div class="ui raised segments">
-        <h3 class="ui centered">
-          Akatsuki Patcher is a simple tool made to enhance your Akatsuki Relax
-          experience!
-          <br />
-          It restores critical features such as ranking panels to
-          your relax gameplay, sweetening the already great experience.
-          <br />
-          Simply run the executable alongside your game and restore the flavour or
-          normal gameplay!
-        </h3>
-        <div class="ui divider"></div>
-        <div class="ui stackable column grid">
-          <div class="eight wide column">
-            <h2 class="ui centered">Enable Relax Misses</h2>
-            <img src="/static/images/patcher/akatpatcher_misses.jpg"/>
-          </div>
-          <div class="eight wide column">
-            <h2 class="ui centered">Show Relax Ranking Panels</h2>
-            <img src="/static/images/patcher/akatpatcher_panels.jpg" />
-          </div>
+<div class="ui container">
+  <div class="ui segment">
+    <div class="ui raised segments">
+      <h3 class="ui centered">
+        Akatsuki Patcher is a simple tool made to enhance your Akatsuki Relax
+        experience!
+        <br />
+        It restores critical features such as ranking panels to
+        your relax gameplay, sweetening the already great experience.
+        <br />
+        Simply run the executable alongside your game and restore the flavour or
+        normal gameplay!
+      </h3>
+      <div class="ui divider"></div>
+      <div class="ui stackable column grid">
+        <div class="eight wide column">
+          <h2 class="ui centered">Enable Relax Misses</h2>
+          <img src="/static/images/patcher/akatpatcher_misses.jpg" />
         </div>
-        <div class="ui raised segments centered aligned">
-          <h4 class="ui horizontal divider header">
-            <i class="save icon"></i>
-            Download
-          </h4>
-          <h5>
-            Akatsuki patcher is a single executable and requires no manual client modification!
-          </h5>
-          {{ if not ($downEnabled.value_int.Bool) }}
-            <a class="ui green button disabled" href="#">
-              <i class="angle double down icon"></i>
-              Patcher is currently unavailable
-            </a>
-          {{ else }}
-            <a class="ui green button" href="/static/AkatsukiPatcher.exe"> 
-              <i class="angle double down icon"></i>
-              Download Patcher
-            </a>
-          {{ end }}
+        <div class="eight wide column">
+          <h2 class="ui centered">Show Relax Ranking Panels</h2>
+          <img src="/static/images/patcher/akatpatcher_panels.jpg" />
         </div>
+      </div>
+      <div class="ui raised segments centered aligned">
+        <h4 class="ui horizontal divider header">
+          <i class="save icon"></i>
+          Download
+        </h4>
+        <h5>
+          Akatsuki patcher is a single executable and requires no manual client modification!
+        </h5>
+        {{ if not ($downEnabled.value_int.Bool) }}
+        <a class="ui green button disabled" href="#">
+          <i class="angle double down icon"></i>
+          Patcher is currently unavailable
+        </a>
+        {{ else }}
+        <a class="ui green button" href="/static/loader.exe">
+          <i class="angle double down icon"></i>
+          Download Patcher
+        </a>
+        {{ end }}
       </div>
     </div>
   </div>
+</div>
 {{ end }}
