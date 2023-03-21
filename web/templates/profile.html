@@ -112,7 +112,7 @@
                     <div class="flex country-status">
                       <div class="tcolumn flex2">
                         <img
-                          src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{{ countryCodepoints .country }}.svg"
+                          src="/static/images/flags/{{ countryCodepoints .country }}.svg"
                           class="pflag" />
                         {{ countryReadable .country }}
                         <div class="tcolumn">
@@ -323,7 +323,7 @@
                                   <a
                                     href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}">
                                     <img
-                                      src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{{ countryCodepoints $user.country }}.svg"
+                                      src="/static/images/flags/{{ countryCodepoints $user.country }}.svg"
                                       class="new-flag new-flag-margin" />
                                   </a>
                                 </b>
