@@ -21,7 +21,9 @@ type BaseTemplateData struct {
 	Scripts           []string
 	KyutGrill         string
 	KyutGrillAbsolute bool
+	KyutType          bool
 	SolidColour       string
+	ColourType        bool
 	DisableHH         bool // HH = Huge Heading
 	Messages          []msg.Message
 	RequestInfo       map[string]interface{}
