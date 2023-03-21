@@ -99,7 +99,7 @@ KyutGrill=dev.jpg
           {{ range countryList 500 }}
             <div class="ui clickable column lb-country" data-country="{{ . }}">
               <img
-                src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{{ countryCodepoints . }}.svg"
+                src="/static/images/flags/{{ countryCodepoints . }}.svg"
                 class="new-flag fixed--flag--margin" />
               {{ countryReadable . }}
             </div>

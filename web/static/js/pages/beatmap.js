@@ -55,7 +55,7 @@
               $("<td />").html(
                 "<a href='/u/" +
                   user.id +
-                  "' title='View profile'><img src='https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/" +
+                  "' title='View profile'><img src='/static/images/flags/" +
                   countryToCodepoints(user.country.toUpperCase()) +
                   ".svg' class='new-flag fixed--flag--margin'></img>" +
                   " " +

@@ -179,7 +179,7 @@ var FuncMap = template.FuncMap{
 			}
 		}
 		codepoints := geoloc.CountryToCodepoints(s)
-		return template.HTML(fmt.Sprintf(`<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/%s.svg" class="new-flag"></img>%s`, codepoints, c))
+		return template.HTML(fmt.Sprintf(`<img src="/static/images/flags/%s.svg" class="new-flag"></img>%s`, codepoints, c))
 	},
 	// humanize pretty-prints a float, e.g.
 	//     humanize(1000) == "1,000"
