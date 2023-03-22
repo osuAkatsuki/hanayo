@@ -18,6 +18,10 @@
   white-space: nowrap !important;
 }
 
+.psmaller-text {
+  font-size: 14px;
+}
+
 .profile-info-container {
   display: flex;
   flex-direction: column;
@@ -292,6 +296,10 @@
 
   .action-button {
     font-size: 10px !important;
+  }
+
+  .psmaller-text {
+    font-size: 15px;
   }
 }
 

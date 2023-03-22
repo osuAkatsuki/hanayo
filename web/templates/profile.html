@@ -171,13 +171,13 @@
                           {{ end }}
                         {{ end }}
                       </div>
-                      <div class="bottom-side">
+                      <div class="bottom-side psmaller-text">
                         Player Since:
                         <b>
                           {{ $global.T "%s" (time $user.registered_on) | html }}
                         </b>
                       </div>
-                      <div class="bottom-side">
+                      <div class="bottom-side psmaller-text">
                         Last Seen:
                         <b>
                           {{ $global.T "%s" (time $user.latest_activity) | html }}
