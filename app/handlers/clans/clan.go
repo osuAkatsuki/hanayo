@@ -48,8 +48,9 @@ func ClanPageHandler(c *gin.Context) {
 		if services.DB.QueryRow("SELECT 1 FROM clans WHERE id = ?", clanID).Scan(new(string)) != sql.ErrNoRows {
 			var bg string
 			services.DB.QueryRow("SELECT background FROM clans WHERE id = ?", clanID).Scan(&bg)
-			data.KyutGrill = bg
-			data.KyutGrillAbsolute = true
+			data.BannerContent = bg
+			data.BannerAbsolute = true
+			data.BannerType = 1
 		}
 	}
 

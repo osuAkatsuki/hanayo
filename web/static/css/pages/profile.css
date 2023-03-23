@@ -43,15 +43,7 @@
   background-size: cover;
   background-position: 50%;
   height: 250px;
-  background-color: var(--user-bg);
-}
-
-.profile-heading-default {
-  position: relative;
-  background-size: cover;
-  background-position: 50%;
-  height: 250px;
-  background-color: rgb(5, 5, 5);
+  background-color: var(--user-bg, rgb(5, 5, 5));
 }
 
 .profile-heading-customisation {

@@ -208,11 +208,12 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 func registerResp(c *gin.Context, messages ...msg.Message) {
 	tu.Resp(c, 200, "register/register.html", &models.BaseTemplateData{
-		TitleBar:  "Register",
-		KyutGrill: "register.jpg",
-		Scripts:   []string{"https://www.google.com/recaptcha/api.js"},
-		Messages:  messages,
-		FormData:  misc.NormaliseURLValues(c.Request.PostForm),
+		TitleBar:      "Register",
+		BannerContent: "register.jpg",
+		BannerType:    1,
+		Scripts:       []string{"https://www.google.com/recaptcha/api.js"},
+		Messages:      messages,
+		FormData:      misc.NormaliseURLValues(c.Request.PostForm),
 	})
 }
 
@@ -263,7 +264,8 @@ func VerifyAccountPageHandler(c *gin.Context) {
 	tu.Resp(c, 200, "register/verify.html", &models.BaseTemplateData{
 		TitleBar:       "Welcome to Akatsuki!",
 		HeadingOnRight: true,
-		KyutGrill:      "welcome.jpg",
+		BannerContent:  "welcome.jpg",
+		BannerType:     1,
 	})
 }
 
@@ -294,7 +296,8 @@ func WelcomePageHandler(c *gin.Context) {
 	tu.Resp(c, 200, "register/welcome.html", &models.BaseTemplateData{
 		TitleBar:       t,
 		HeadingOnRight: true,
-		KyutGrill:      "welcome.jpg",
+		BannerContent:  "welcome.jpg",
+		BannerType:     1,
 	})
 }
 

@@ -53,12 +53,10 @@
 
       <div class="ui container margin">
         <div class="profile-info-container">
-          {{ if .KyutType }}
+          {{ if _or (eq $global.BannerType 1) (eq $global.BannerType 3) }}
             <div class="profile-heading-image radius-top">
-          {{ else if .ColourType }}
-            <div class="profile-heading-solid radius-top">
           {{ else }}
-            <div class="profile-heading-default radius-top">
+            <div class="profile-heading-solid radius-top">
           {{ end }}
             <div class="profile-heading-customisation"></div>
             <div class="profile-info">

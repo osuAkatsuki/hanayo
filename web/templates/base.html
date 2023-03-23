@@ -36,15 +36,15 @@
       <div
         class="ui full height main wrapper"
         id="app"
-        {{ if and .DisableHH .KyutGrill }}
+        {{ if and .DisableHH (_or (eq .BannerType 1) (eq .BannerType 3)) }}
           style="--user-bg:
-          url({{ if .KyutGrillAbsolute }}
-            '{{ .KyutGrill }}'
+          url({{ if .BannerAbsolute }}
+            '{{ .BannerContent }}'
           {{ else }}
-            '/static/images/headers/{{ .KyutGrill }}'
+            '/static/images/headers/{{ .BannerContent }}'
           {{ end }});"
-        {{ else if .SolidColour }}
-          style="--user-bg: {{ .SolidColour }}"
+        {{ else if eq .BannerType 2 }}
+          style="--user-bg: {{ .BannerContent }}"
         {{ end }}>
         {{ template "navbar" . }}
 
@@ -85,14 +85,14 @@
           {{ end }}
         </div>
 
-        {{ if not .DisableHH }}
+        {{ if and (not .DisableHH) (_or (eq .BannerType 1) (eq .BannerType 3)) }}
           <div
             class="huge heading {{ if .HeadingOnRight }}right{{ end }} dropped"
             style="background: linear-gradient( rgb(0 0 0 / 35%), rgb(0 0 0 / 35%) ), url(
-            {{ if .KyutGrillAbsolute }}
-              '{{ .KyutGrill }}'
+            {{ if .BannerAbsolute }}
+              '{{ .BannerContent }}'
             {{ else }}
-              '/static/images/headers/{{ or .KyutGrill "default.jpg" }}'
+              '/static/images/headers/{{ or .BannerContent "default.jpg" }}'
             {{ end }}); background-size: cover">
             <div class="ui container">
               <h1>
