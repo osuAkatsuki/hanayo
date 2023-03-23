@@ -28,9 +28,11 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
               <option value="2" {{ if eq $type 2 }}selected{{ end }}>
                 {{ .T "Solid colour" }}
               </option>
+              {{ if has .Context.User.Privileges 8388612 }}
                 <option value="3" {{ if eq $type 3 }}selected{{ end }}>
                   {{ .T "Gif" }}
                 </option>
+              {{ end }}
             </select>
           </p>
           <div
