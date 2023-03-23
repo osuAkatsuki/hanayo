@@ -18,7 +18,8 @@ type TemplateConfig struct {
 	// Stuff that used to be in simpleTemplate
 	Handler          string
 	TitleBar         string
-	KyutGrill        string
+	BannerContent    string
+	BannerType       int
 	MinPrivileges    uint64
 	HugeHeadingRight bool
 	AdditionalJS     string

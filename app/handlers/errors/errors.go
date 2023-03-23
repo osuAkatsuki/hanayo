@@ -8,8 +8,9 @@ import (
 
 func NotFoundHandler(c *gin.Context) {
 	tu.Resp(c, 404, "not_found.html", &models.BaseTemplateData{
-		TitleBar:  "Not Found",
-		KyutGrill: "not_found.jpg",
+		TitleBar:      "Not Found",
+		BannerContent: "not_found.jpg",
+		BannerType:    1,
 	})
 }
 

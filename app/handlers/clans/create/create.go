@@ -88,10 +88,11 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 
 func clanCreateResp(c *gin.Context, messages ...msg.Message) {
 	tu.Resp(c, 200, "clans/create.html", &models.BaseTemplateData{
-		TitleBar:  "Create Clan",
-		KyutGrill: "register.jpg",
-		Messages:  messages,
-		FormData:  misc.NormaliseURLValues(c.Request.PostForm),
+		TitleBar:      "Create Clan",
+		BannerContent: "register.jpg",
+		BannerType:    1,
+		Messages:      messages,
+		FormData:      misc.NormaliseURLValues(c.Request.PostForm),
 	})
 }
 

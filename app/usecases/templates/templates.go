@@ -211,7 +211,8 @@ func SimpleReply(c *gin.Context, errs ...msg.Message) error {
 func Simple(c *gin.Context, p mt.TemplateConfig, errs []msg.Message, requestInfo map[string]interface{}) {
 	Resp(c, 200, p.Template, &models.BaseTemplateData{
 		TitleBar:       p.TitleBar,
-		KyutGrill:      p.KyutGrill,
+		BannerContent:  p.BannerContent,
+		BannerType:     p.BannerType,
 		Scripts:        p.GetAdditionalJS(),
 		HeadingOnRight: p.HugeHeadingRight,
 		FormData:       misc.NormaliseURLValues(c.Request.PostForm),

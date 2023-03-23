@@ -15,18 +15,16 @@ import (
 )
 
 type BaseTemplateData struct {
-	TitleBar          string // required
-	HeadingTitle      string
-	HeadingOnRight    bool
-	Scripts           []string
-	KyutGrill         string
-	KyutGrillAbsolute bool
-	KyutType          bool
-	SolidColour       string
-	ColourType        bool
-	DisableHH         bool // HH = Huge Heading
-	Messages          []msg.Message
-	RequestInfo       map[string]interface{}
+	TitleBar       string // required
+	HeadingTitle   string
+	HeadingOnRight bool
+	Scripts        []string
+	BannerContent  string
+	BannerAbsolute bool
+	BannerType     int  // 0 = none, 1 = image, 2 = colour, 3 = animated.
+	DisableHH      bool // HH = Huge Heading
+	Messages       []msg.Message
+	RequestInfo    map[string]interface{}
 
 	// ignore, they're set by resp()
 	Context  Context

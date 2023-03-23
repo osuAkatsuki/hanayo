@@ -3,6 +3,7 @@ package settings
 import (
 	"fmt"
 	"image"
+	"image/gif"
 	"image/jpeg"
 	"os"
 	"regexp"
@@ -10,7 +11,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nfnt/resize"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
@@ -54,7 +54,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
 			return
 		}
-		img = resize.Thumbnail(2496, 1404, img, resize.Bilinear)
+		//img = resize.Resize(1127, 250, img, resize.Bilinear)
 		f, err := os.Create(fmt.Sprintf("web/static/images/profbackgrounds/%d.jpg", ctx.User.ID))
 		defer f.Close()
 		if err != nil {
@@ -80,7 +80,37 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			return
 		}
 		saveProfileBackground(ctx, 2, col)
+	case "3":
+		// gifs
+		file, _, err := c.Request.FormFile("value")
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
+			return
+		}
+		gifImage, err := gif.DecodeAll(file)
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
+			return
+		}
+		// TODO: implement resizing for gifs
+		// TODO: implement gif compression
+
+		f, err := os.Create(fmt.Sprintf("web/static/images/profbackgrounds/%d.gif", ctx.User.ID))
+		defer f.Close()
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
+			c.Error(err)
+			return
+		}
+		err = gif.EncodeAll(f, gifImage)
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
+			c.Error(err)
+			return
+		}
+		saveProfileBackground(ctx, 3, fmt.Sprintf("%d.gif?%d", ctx.User.ID, time.Now().Unix()))
 	}
+
 }
 
 func saveProfileBackground(ctx models.Context, t int, val string) {
