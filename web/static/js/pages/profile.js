@@ -31,6 +31,7 @@ $(document).ready(function () {
 
   setDefaultScoreTable();
   toggleModeAvailability(favouriteMode, preferRelax);
+  applyPeakRankLabel();
 
   $("#rx-menu>.simple-banner-swtich").on("click", function (e) {
     e.preventDefault();
@@ -65,6 +66,7 @@ $(document).ready(function () {
       `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`
     );
     initialiseChartGraph(graphType, true);
+    applyPeakRankLabel();
   });
 
   // when an item in the mode menu is clicked, it means we should change the mode.
@@ -106,6 +108,7 @@ $(document).ready(function () {
   initialiseUserpage();
   initialiseFriends();
   initialiseChartGraph(graphType, false);
+  applyPeakRankLabel();
   // load scores page for the current favourite mode
   var i = function () {
     initialiseScores(
@@ -137,6 +140,37 @@ function createLabels(dataLength) {
     }
   }
   return labels.reverse()
+}
+
+function applyPeakRankLabel() {
+  var modeVal = favouriteMode;
+  if (preferRelax == 1) {
+    modeVal += 4;
+  } else if (preferRelax == 2) {
+    modeVal += 7;
+  }
+
+  var rankLabel = $(`#global-rank-${preferRelax}-${favouriteMode}`)
+  var rankRowText = $(`#global-row-rank-${preferRelax}-${favouriteMode}`)
+  var rankRow = $(`#global-row-${preferRelax}-${favouriteMode}`)
+  if (!rankLabel) return
+
+  api("profile-history/peak-rank", { user_id: userID, mode: modeVal }, (resp) => {
+    if (!resp.data.rank) {
+      return
+    }
+
+    var rank = addCommas(resp.data.rank)
+    var date = Date.parse(resp.data.captured_at)
+
+    // using en-gb because we want `09 Mar 2022` syntax.
+    var formatter = new Intl.DateTimeFormat('en-gb', {day: 'numeric', month: 'short', year: 'numeric'})
+    var formattedDate = formatter.format(date)
+    rankLabel.attr("data-tooltip", `Peak rank: #${rank} on ${formattedDate}`)
+    rankRow.removeAttr("hidden")
+    rankRowText.text(`#${rank} on ${formattedDate}`)
+  });
+
 }
 
 function changeChart(type) {
