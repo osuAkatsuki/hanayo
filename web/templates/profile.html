@@ -220,7 +220,7 @@
                         {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }}
                           hidden
                         {{ end }}>
-                          <div class="profile-rank">
+                          <div id="global-rank-{{ $rx }}-{{ $k }}" class="profile-rank">
                             <i class="fa fa-globe" aria-hidden="true"></i>
                             #{{ with .global_leaderboard_rank }}{{ humanize . }}{{ else }}{{ $global.T "N/A" }}{{ end }}
                           </div>
@@ -349,6 +349,10 @@
                               <td class="right aligned">#{{ . }}</td>
                             </tr>
                           {{ end }}
+                          <tr id="global-row-{{ $rx }}-{{ $k }}" hidden>
+                            <td><b>{{ $global.T "Peak global rank" }}</b></td>
+                            <td class="right aligned" id="global-row-rank-{{ $rx }}-{{ $k }}"></td>
+                          </tr>
                           {{ with .country_leaderboard_rank }}
                             <tr>
                               <td>
