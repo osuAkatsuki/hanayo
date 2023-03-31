@@ -1,1 +1,1 @@
-the front-facing portion of https://akatsuki.pw
+the front-facing portion of https://akatsuki.gg

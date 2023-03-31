@@ -19,10 +19,10 @@
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content="https://akatsuki.pw/u/{{ $global.UserID }}?mode=0&rx=1" />
+          content="https://akatsuki.gg/u/{{ $global.UserID }}?mode=0&rx=1" />
         <meta
           property="og:image"
-          content="https://a.akatsuki.pw/{{ $global.UserID }}" />
+          content="https://a.akatsuki.gg/{{ $global.UserID }}" />
         <meta
           property="og:description"
           content="{{ .username }} is a player from {{ country .country true }}." />
@@ -34,10 +34,10 @@
           content="{{ .username }}'s profile | Akatsuki" />
         <meta
           name="twitter:image"
-          content="https://a.akatsuki.pw/{{ $global.UserID }}?mode=0&rx=1" />
+          content="https://a.akatsuki.gg/{{ $global.UserID }}?mode=0&rx=1" />
         <meta
           name="twitter:url"
-          content="https://akatsuki.pw/u/{{ $global.UserID }}" />
+          content="https://akatsuki.gg/u/{{ $global.UserID }}" />
         <meta name="twitter:card" content="" />
       </head>
 
@@ -81,7 +81,7 @@
               <div id="profile-info" class="ui grid">
                 <div class="row">
                   <div style="width: auto" class="avatar-column column">
-                    <img src="https://a.akatsuki.pw/{{ .id }}" alt="avatar" class="profile-avatar"/>
+                    <img src="https://a.akatsuki.gg/{{ .id }}" alt="avatar" class="profile-avatar"/>
                   </div>
                   <div class="ten wide column">
                     <div class="profile-user-info">
@@ -196,14 +196,14 @@
                         {{ if has $global.Context.User.Privileges 16 }}
                           {{/* AdminManageUsers */}}
                           <a
-                            href="http://old.akatsuki.pw/index.php?p=103&id={{ $global.UserID }}"
+                            href="http://old.akatsuki.gg/index.php?p=103&id={{ $global.UserID }}"
                             target="_blank"
                             title="Edit user"
                             class="ui purple button action-button">
                             <i class="fa-solid fa-folder-open"></i>
                           </a>
                           <a
-                            href="http://old.akatsuki.pw/index.php?p=104&id={{ $global.UserID }}"
+                            href="http://old.akatsuki.gg/index.php?p=104&id={{ $global.UserID }}"
                             target="_blank"
                             title="Edit username"
                             class="ui red button action-button">
