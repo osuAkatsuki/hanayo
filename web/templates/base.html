@@ -56,7 +56,7 @@
           </noscript>
           {{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
             <div class="ui warning message">
-              {{ $.T "Your account is currently in restricted mode, and will not be able to perform certain actions. Your profile has been hidden from normal users. If you believe this was a mistake (or have waited more than 2 months since your latest offense), you may appeal by contacting 1 of our support team members on our <a href='/discord'>Discord</a>." | html }}
+              {{ $.T "Your account is currently in restricted mode, and will not be able to perform certain actions. Your profile has been hidden from normal users. Please read our page about <a href='/doc/restrictions_appeals'>restrictions & appeals</a> to figure out what to do next." | html }}
             </div>
           {{ end }}
           {{ if .Messages }}
