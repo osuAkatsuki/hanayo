@@ -69,9 +69,9 @@ func main() {
 	var configDefaults = map[*string]string{
 		&settings.Config.ListenTo:         ":45221",
 		&settings.Config.CookieSecret:     common.RandomString(46),
-		&settings.Config.AvatarURL:        "https://a.akatsuki.pw",
-		&settings.Config.BaseURL:          "https://akatsuki.pw",
-		&settings.Config.BanchoAPI:        "https://c.akatsuki.pw",
+		&settings.Config.AvatarURL:        "https://a.akatsuki.gg",
+		&settings.Config.BaseURL:          "https://akatsuki.gg",
+		&settings.Config.BanchoAPI:        "https://c.akatsuki.gg",
 		&settings.Config.CheesegullAPI:    "https://api.chimu.moe/cheesegull",
 		&settings.Config.API:              "https://localhost:40001/api/v1/",
 		&settings.Config.APISecret:        "Potato",

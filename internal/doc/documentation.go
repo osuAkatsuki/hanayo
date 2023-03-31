@@ -108,7 +108,7 @@ func updateIPs() {
 	}
 	ipLastUpdated = time.Now()
 
-	resp, err := http.Get("https://akatsuki.pw/static/current.json")
+	resp, err := http.Get("https://akatsuki.gg/static/current.json")
 	if err != nil {
 		fmt.Println("error updating IPs", err)
 		return
