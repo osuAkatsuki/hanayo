@@ -22,7 +22,6 @@ import (
 	clanCreationHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans/create"
 	errorHandlers "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	ircHandlers "github.com/osuAkatsuki/hanayo/app/handlers/irc"
-	"github.com/osuAkatsuki/hanayo/app/handlers/misc"
 	miscHandlers "github.com/osuAkatsuki/hanayo/app/handlers/misc"
 	profilesHandlers "github.com/osuAkatsuki/hanayo/app/handlers/profiles"
 	profileEditHandlers "github.com/osuAkatsuki/hanayo/app/handlers/profiles/settings"
@@ -269,7 +268,7 @@ func generateEngine() *gin.Engine {
 
 	r.GET("/donate/rates", btcconversions.GetRates)
 
-	r.GET("/about", misc.AboutPageHandler)
+	r.GET("/about", miscHandlers.AboutPageHandler)
 
 	tu.LoadSimplePages(r)
 
