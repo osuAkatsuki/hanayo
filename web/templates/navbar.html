@@ -63,7 +63,7 @@
           <div class="ui dropdown item">
             <img
               class="ui avatar image"
-              src="{{ config "AvatarURL" }}/{{ .Context.User.ID }}" />
+              src="{{ config "APP_AVATAR_URL" }}/{{ .Context.User.ID }}" />
             <span>{{ .Context.User.Username }}</span>
             <div class="menu">
               {{ navbarItem .Path (.T "Profile") (printf "/u/%d" .Context.User.ID) }}
@@ -91,7 +91,7 @@
           <a href="/u/{{ .Context.User.ID }}" class="user">
             <img
               class="avatar"
-              src="{{ config "AvatarURL" }}/{{ .Context.User.ID }}" />
+              src="{{ .Conf.APP_AVATAR_URL }}/{{ .Context.User.ID }}" />
             <div class="username">
               {{ .Context.User.Username }}
             </div>
