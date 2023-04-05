@@ -2,8 +2,6 @@ package register
 
 import (
 	"database/sql"
-	"fmt"
-	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -22,7 +20,6 @@ import (
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
-	schiavo "zxq.co/ripple/schiavolib"
 )
 
 func RegisterPageHandler(c *gin.Context) {
@@ -125,15 +122,14 @@ func RegisterSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	uMulti, criteria := tryBotnets(c)
-	if criteria != "" {
-		schiavo.CMs.Send(
-			fmt.Sprintf(
-				"User **%s** registered with the same %s as %s (%s/u/%s). **POSSIBLE MULTIACCOUNT!!!**. Waiting for ingame verification...",
-				username, criteria, uMulti, settings.Config.BaseURL, url.QueryEscape(uMulti),
-			),
-		)
-	}
+	// TODO: make it send discord webhook
+	// uMulti, criteria := tryBotnets(c)
+	// if criteria != "" {
+	// 		fmt.Sprintf(
+	// 			"User **%s** registered with the same %s as %s (%s/u/%s). **POSSIBLE MULTIACCOUNT!!!**. Waiting for ingame verification...",
+	// 			username, criteria, uMulti, settings.Config.BaseURL, url.QueryEscape(uMulti),
+	// 		),
+	// }
 
 	// The actual registration.
 	pass, err := au.GeneratePassword(c.PostForm("password"))
