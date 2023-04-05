@@ -12,3 +12,4 @@ static/oauth-apps/*
 static/cmyui/*
 !static/oauth-apps/.keep
 static/akatsukiPatcher.exe
+.env
