@@ -42,7 +42,6 @@ import (
 	"github.com/thehowl/conf"
 	"github.com/thehowl/qsql"
 	gintrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
-	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 	"gopkg.in/mailgun/mailgun-go.v1"
 	"gopkg.in/redis.v5"
 	schiavo "zxq.co/ripple/schiavolib"
@@ -164,23 +163,9 @@ func main() {
 
 	fmt.Println("Intialisation:", time.Since(startTime))
 
-	tracer.Start(
-		tracer.WithEnv("production"),
-		tracer.WithService("hanayo"),
-	)
-	defer tracer.Stop()
-
-	httpLoop()
-}
-
-func httpLoop() {
-	for {
-		e := generateEngine()
-		fmt.Println("Listening on", settings.Config.ListenTo)
-		if !startuato(e) {
-			break
-		}
-	}
+	r := generateEngine()
+	fmt.Println("Listening on", settings.Config.ListenTo)
+	r.Run(settings.Config.ListenTo)
 }
 
 func generateEngine() *gin.Engine {
