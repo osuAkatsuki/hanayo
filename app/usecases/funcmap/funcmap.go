@@ -20,7 +20,7 @@ import (
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
-	"github.com/osuAkatsuki/hanayo/app/states/settings"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	"github.com/osuAkatsuki/hanayo/app/usecases/geoloc"
 	"github.com/osuAkatsuki/hanayo/app/usecases/misc"
 	"github.com/osuAkatsuki/hanayo/app/version"
@@ -29,8 +29,6 @@ import (
 	fasuimappings "github.com/osuAkatsuki/hanayo/internal/fa-semantic-mappings"
 	"github.com/russross/blackfriday/v2"
 	"github.com/thehowl/qsql"
-	"golang.org/x/oauth2"
-	discordoauth "zxq.co/ripple/go-discord-oauth"
 	"zxq.co/ripple/playstyle"
 )
 
@@ -417,7 +415,8 @@ var FuncMap = template.FuncMap{
 	// bget makes a request to the bancho api
 	// https://docs.ripple.moe/docs/banchoapi/v1
 	"bget": func(ept string, qs ...interface{}) map[string]interface{} {
-		d, err := http.Get(fmt.Sprintf(settings.Config.BanchoAPI+"/api/v1/"+ept, qs...))
+		settings := settingsState.GetSettings()
+		d, err := http.Get(fmt.Sprintf(settings.APP_BANCHO_URL+"/api/v1/"+ept, qs...))
 		if err != nil {
 			return nil
 		}
@@ -454,7 +453,7 @@ var FuncMap = template.FuncMap{
 	"systemSettings": systemSettings,
 	// authCodeURL gets the auth code for discord
 	"authCodeURL": func(u int) string {
-		return getDiscord().AuthCodeURL(misc.MustCSRFGenerate(u))
+		return "" //getDiscord().AuthCodeURL(misc.MustCSRFGenerate(u))
 	},
 	// perc returns a percentage
 	"perc": func(i, total float64) string {
@@ -589,15 +588,15 @@ func systemSettings(names ...string) map[string]systemSetting {
 	return settings
 }
 
-func getDiscord() *oauth2.Config {
-	return &oauth2.Config{
-		ClientID:     settings.Config.DiscordOAuthID,
-		ClientSecret: settings.Config.DiscordOAuthSecret,
-		RedirectURL:  settings.Config.BaseURL + "/settings/discord/finish",
-		Endpoint:     discordoauth.Endpoint,
-		Scopes:       []string{"identify"},
-	}
-}
+// func getDiscord() *oauth2.Config {
+// 	return &oauth2.Config{
+// 		ClientID:     settings.Config.DiscordOAuthID,
+// 		ClientSecret: settings.Config.DiscordOAuthSecret,
+// 		RedirectURL:  settings.Config.BaseURL + "/settings/discord/finish",
+// 		Endpoint:     discordoauth.Endpoint,
+// 		Scopes:       []string{"identify"},
+// 	}
+// }
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
