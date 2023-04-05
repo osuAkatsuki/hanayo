@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
-	"github.com/osuAkatsuki/hanayo/app/states/settings"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 )
 
@@ -17,8 +17,9 @@ import (
 //go:generate go run scripts/top_passwords.go
 
 func RecaptchaCheck(c *gin.Context) bool {
+	settings := settingsState.GetSettings()
 	f := make(url.Values)
-	f.Add("secret", settings.Config.RecaptchaPrivate)
+	f.Add("secret", settings.RECAPTCHA_SECRET_KEY)
 	f.Add("response", c.PostForm("g-recaptcha-response"))
 	f.Add("remoteip", su.ClientIP(c))
 

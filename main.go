@@ -16,7 +16,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/johnniedoe/contrib/gzip"
-	"github.com/osuAkatsuki/akatsuki-api/common"
 	beatmapsHandlers "github.com/osuAkatsuki/hanayo/app/handlers/beatmaps"
 	clansHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans"
 	clanCreationHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans/create"
@@ -34,12 +33,11 @@ import (
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	sessionsmanager "github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
-	"github.com/osuAkatsuki/hanayo/app/states/settings"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	"github.com/osuAkatsuki/hanayo/app/version"
 	"github.com/osuAkatsuki/hanayo/internal/btcconversions"
 	"github.com/osuAkatsuki/hanayo/internal/csrf/cieca"
-	"github.com/thehowl/conf"
 	"github.com/thehowl/qsql"
 	gintrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
 	"gopkg.in/mailgun/mailgun-go.v1"
@@ -51,42 +49,20 @@ var startTime = time.Now()
 func main() {
 	fmt.Println("hanayo " + version.Version)
 
-	err := conf.Load(&settings.Config, "hanayo.conf")
-	switch err {
-	case nil:
-		// carry on
-	case conf.ErrNoFile:
-		conf.Export(settings.Config, "hanayo.conf")
-		fmt.Println("The configuration file was not found. We created one for you.")
-		return
-	default:
-		panic(err)
-	}
+	settings := settingsState.LoadSettings()
 
-	var configDefaults = map[*string]string{
-		&settings.Config.ListenTo:         ":45221",
-		&settings.Config.CookieSecret:     common.RandomString(46),
-		&settings.Config.AvatarURL:        "https://a.akatsuki.gg",
-		&settings.Config.BaseURL:          "https://akatsuki.gg",
-		&settings.Config.BanchoAPI:        "https://c.akatsuki.gg",
-		&settings.Config.CheesegullAPI:    "https://api.chimu.moe/cheesegull",
-		&settings.Config.API:              "https://localhost:40001/api/v1/",
-		&settings.Config.APISecret:        "Potato",
-		&settings.Config.IP_API:           "https://ip.zxq.co",
-		&settings.Config.DiscordServer:    "#",
-		&settings.Config.MainRippleFolder: "/home/akatsuki",
-		&settings.Config.MailgunFrom:      `"Akatsuki" <noreply@akatsuki.pw>`,
-	}
-	for key, value := range configDefaults {
-		if *key == "" {
-			*key = value
-		}
-	}
-
-	services.ConfigMap = structs.Map(settings.Config)
+	services.ConfigMap = structs.Map(settings)
 
 	// initialise db
-	db, err := sqlx.Open("mysql", settings.Config.DSN+"?parseTime=true")
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true",
+		settings.DB_USER,
+		settings.DB_PASS,
+		settings.DB_HOST,
+		settings.DB_PORT,
+		settings.DB_NAME,
+	)
+
+	db, err := sqlx.Open(settings.DB_TYPE, dsn)
 	if err != nil {
 		panic(err)
 	}
@@ -106,9 +82,9 @@ func main() {
 
 	// initialise mailgun
 	mg := mailgun.NewMailgun(
-		settings.Config.MailgunDomain,
-		settings.Config.MailgunPrivateAPIKey,
-		settings.Config.MailgunPublicAPIKey,
+		settings.MAILGUN_DOMAIN,
+		settings.MAILGUN_API_KEY,
+		settings.MAILGUN_PUBLIC_KEY,
 	)
 	services.MG = mg
 
@@ -125,8 +101,9 @@ func main() {
 
 	// initialise redis
 	rd := redis.NewClient(&redis.Options{
-		Addr:     settings.Config.RedisAddress,
-		Password: settings.Config.RedisPassword,
+		Addr:     fmt.Sprintf("%s:%d", settings.REDIS_HOST, settings.REDIS_PORT),
+		Password: settings.REDIS_PASS,
+		DB:       settings.REDIS_DB,
 	})
 	services.RD = rd
 
@@ -152,35 +129,36 @@ func main() {
 	fmt.Println("Setting up rate limiter...")
 	middleware.SetUpLimiter()
 
-	fmt.Println("Exporting configuration...")
-
-	conf.Export(settings.Config, "hanayo.conf")
-
 	fmt.Println("Intialisation:", time.Since(startTime))
 
 	r := generateEngine()
-	fmt.Println("Listening on", settings.Config.ListenTo)
-	r.Run(settings.Config.ListenTo)
+	fmt.Println("Listening on port:", settings.APP_PORT)
+
+	err = r.Run(fmt.Sprintf(":%d", settings.APP_PORT))
+	if err != nil {
+		panic(err)
+	}
 }
 
 func generateEngine() *gin.Engine {
 	fmt.Println("Starting session system...")
+	settings := settingsState.GetSettings()
 	var store sessions.Store
-	if settings.Config.RedisMaxConnections != 0 {
-		var err error
+	var err error
+	if settings.REDIS_MAX_CONNECTIONS != 0 {
 		store, err = sessions.NewRedisStore(
-			settings.Config.RedisMaxConnections,
-			settings.Config.RedisNetwork,
-			settings.Config.RedisAddress,
-			settings.Config.RedisPassword,
-			[]byte(settings.Config.CookieSecret),
+			settings.REDIS_MAX_CONNECTIONS,
+			settings.REDIS_NETWORK_TYPE,
+			fmt.Sprintf("%s:%d", settings.REDIS_HOST, settings.REDIS_PORT),
+			settings.REDIS_PASS,
+			[]byte(settings.APP_COOKIE_SECRET),
 		)
-		if err != nil {
-			fmt.Println(err)
-			store = sessions.NewCookieStore([]byte(settings.Config.CookieSecret))
-		}
 	} else {
-		store = sessions.NewCookieStore([]byte(settings.Config.CookieSecret))
+		store = sessions.NewCookieStore([]byte(settings.APP_COOKIE_SECRET))
+	}
+
+	if err != nil {
+		panic(err)
 	}
 
 	r := gin.Default()

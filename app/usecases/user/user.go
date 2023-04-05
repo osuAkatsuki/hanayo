@@ -14,7 +14,7 @@ import (
 	"github.com/go-email-validator/go-email-validator/pkg/ev/evmail"
 	"github.com/go-email-validator/go-email-validator/pkg/ev/role"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
-	"github.com/osuAkatsuki/hanayo/app/states/settings"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 )
 
@@ -76,7 +76,8 @@ func LogIP(c *gin.Context, user int) {
 }
 
 func SetCountry(c *gin.Context, user int) error {
-	raw, err := http.Get(settings.Config.IP_API + "/" + su.ClientIP(c) + "/country")
+	settings := settingsState.GetSettings()
+	raw, err := http.Get(settings.IP_LOOKUP_URL + "/" + su.ClientIP(c) + "/country")
 	if err != nil {
 		return err
 	}

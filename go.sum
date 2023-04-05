@@ -604,8 +604,6 @@ golang.org/x/net v0.0.0-20220826154423-83b083e8dc8b h1:ZmngSVLe/wycRns9MKikG9OWI
 golang.org/x/net v0.0.0-20220826154423-83b083e8dc8b/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=
 golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
 golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
-golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d h1:TzXSXBo42m9gQenoE3b9BGiEpg5IG2JkU5FkPIawgtw=
-golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
 golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20181108010431-42b317875d0f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
@@ -782,8 +780,6 @@ sigs.k8s.io/structured-merge-diff v0.0.0-20190525122527-15d366b2352e/go.mod h1:w
 sigs.k8s.io/yaml v1.1.0/go.mod h1:UJmg0vDUVViEyp3mgSv9WPwZCDxu4rQW1olrI1uml+o=
 sourcegraph.com/sourcegraph/appdash v0.0.0-20190731080439-ebfcffb1b5c0/go.mod h1:hI742Nqp5OhwiqlzhgfbWU4mW4yO10fP+LoT9WOswdU=
 zxq.co/ripple/agplwarning v0.0.0-20180204130109-bd4406595c7e/go.mod h1:sshTr/Z/WGWO+mj1Q/cCwFXwqa1FlWVGpYe1db98+G0=
-zxq.co/ripple/go-discord-oauth v0.0.0-20161117211055-348e08feccb5 h1:/lJ07q0+yA/HNC70eFQBecKFQ7OdPSEVKmlrJ8ZYI7c=
-zxq.co/ripple/go-discord-oauth v0.0.0-20161117211055-348e08feccb5/go.mod h1:TMubb2ioFfnSJYY7QDUSa3tgMzmlvNy1I0Gbw4sDYy4=
 zxq.co/ripple/ocl v0.0.0-20190423081600-ba6c1b2f7885/go.mod h1:YagunUAfVRcfr3+9WSusjzwj7qno8fDwan+my3WrGM0=
 zxq.co/ripple/playstyle v0.0.0-20161106144235-198984a13cb6 h1:83Ged5YKF2OFWSPQ6loGhApO33Lyjfa6f0roTrMsN64=
 zxq.co/ripple/playstyle v0.0.0-20161106144235-198984a13cb6/go.mod h1:ByMeVpw6pHJ7JLr8m/ANnb5uGD5qcO8qwkRdU9vCNrs=

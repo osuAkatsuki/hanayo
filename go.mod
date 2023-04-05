@@ -12,6 +12,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/johnniedoe/contrib v0.0.0-20150821124612-d553224621be
+	github.com/joho/godotenv v1.4.0
 	github.com/microcosm-cc/bluemonday v1.0.20
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/osuripple/cheesegull v2.1.1-0.20180422113429-9bdfa825f309+incompatible
@@ -22,12 +23,10 @@ require (
 	github.com/thehowl/conf v0.1.1-0.20161010150023-bdfc17531a74
 	github.com/thehowl/qsql v0.0.0-20160712153739-9b9405451f47
 	golang.org/x/crypto v0.0.0-20220214200702-86341886e292
-	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	gopkg.in/DataDog/dd-trace-go.v1 v1.43.1
 	gopkg.in/mailgun/mailgun-go.v1 v1.1.1
 	gopkg.in/redis.v5 v5.2.9
 	gopkg.in/yaml.v2 v2.4.0
-	zxq.co/ripple/go-discord-oauth v0.0.0-20161117211055-348e08feccb5
 	zxq.co/ripple/playstyle v0.0.0-20161106144235-198984a13cb6
 )
 
@@ -57,7 +56,6 @@ require (
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
-	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
