@@ -44,7 +44,6 @@ import (
 	gintrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
 	"gopkg.in/mailgun/mailgun-go.v1"
 	"gopkg.in/redis.v5"
-	schiavo "zxq.co/ripple/schiavolib"
 )
 
 var startTime = time.Now()
@@ -130,10 +129,6 @@ func main() {
 		Password: settings.Config.RedisPassword,
 	})
 	services.RD = rd
-
-	// initialise schiavo
-	schiavo.Prefix = "hanayo"
-	schiavo.Bunker.Send(fmt.Sprintf("STARTUATO, mode: %s", gin.Mode()))
 
 	// even if it's not release, we say that it's release
 	// so that gin doesn't spam
