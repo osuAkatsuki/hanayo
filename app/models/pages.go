@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
-	"github.com/osuAkatsuki/hanayo/app/states/settings"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	cheesegull "github.com/osuripple/cheesegull/models"
 )
@@ -51,13 +51,14 @@ func (b *BaseTemplateData) SetSession(sess sessions.Session) {
 }
 func (b BaseTemplateData) Get(s string, params ...interface{}) map[string]interface{} {
 	s = fmt.Sprintf(s, params...)
-	req, err := http.NewRequest("GET", settings.Config.API+s, nil)
+	settings := settingsState.GetSettings()
+	req, err := http.NewRequest("GET", settings.APP_API_URL+"/"+s, nil)
 	if err != nil {
 		b.Gin.Error(err)
 		return nil
 	}
 	req.Header.Set("User-Agent", "hanayo")
-	req.Header.Set("H-Key", settings.Config.APISecret)
+	req.Header.Set("H-Key", settings.APP_HANAYO_KEY)
 	req.Header.Set("X-Ripple-Token", b.Context.Token)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -82,7 +83,8 @@ func (b BaseTemplateData) Has(privs uint64) bool {
 	return uint64(b.Context.User.Privileges)&privs == privs
 }
 func (b BaseTemplateData) Conf() interface{} {
-	return settings.Config
+	settings := settingsState.GetSettings()
+	return settings
 }
 
 func (b *BaseTemplateData) T(s string, args ...interface{}) string {
