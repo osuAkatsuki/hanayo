@@ -15,4 +15,4 @@ RUN go build
 
 EXPOSE 80
 
-CMD ["./hanayo"]
+CMD ["./scripts/start.sh"]
