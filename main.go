@@ -62,7 +62,7 @@ func main() {
 		settings.DB_NAME,
 	)
 
-	db, err := sqlx.Open(settings.DB_TYPE, dsn)
+	db, err := sqlx.Open(settings.DB_SCHEME, dsn)
 	if err != nil {
 		panic(err)
 	}
