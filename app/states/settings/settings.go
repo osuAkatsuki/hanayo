@@ -90,7 +90,7 @@ func LoadSettings() Settings {
 	settings.BEATMAP_MIRROR_API_URL = getEnv("BEATMAP_MIRROR_API_URL")
 	settings.DISCORD_SERVER_URL = getEnv("DISCORD_SERVER_URL")
 
-	settings.DB_TYPE = getEnv("DB_TYPE")
+	settings.DB_SCHEME = getEnv("DB_SCHEME")
 	settings.DB_HOST = getEnv("DB_HOST")
 	settings.DB_PORT = strToInt(getEnv("DB_PORT"))
 	settings.DB_USER = getEnv("DB_USER")
