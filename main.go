@@ -158,6 +158,7 @@ func generateEngine() *gin.Engine {
 	}
 
 	if err != nil {
+		fmt.Println(err)
 		panic(err)
 	}
 
