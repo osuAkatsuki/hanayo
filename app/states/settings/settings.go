@@ -44,7 +44,7 @@ type Settings struct {
 
 	// TODO: add S3 bucket.
 
-	DB_TYPE string
+	DB_SCHEME string
 	DB_HOST string
 	DB_PORT int
 	DB_USER string
