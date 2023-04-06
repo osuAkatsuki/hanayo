@@ -1,0 +1,11 @@
+app:
+  name: hanayo
+  environment: staging
+  group: frontend
+  container:
+    image:
+      repository: registry.digitalocean.com/akatsuki/hanayo
+      tag: latest
+    imagePullSecrets:
+      - name: akatsuki
+    port: 80
