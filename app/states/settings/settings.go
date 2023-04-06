@@ -30,7 +30,7 @@ type Settings struct {
 	APP_COOKIE_SECRET string
 	APP_HANAYO_KEY    string
 
-	APP_PRODUCTION bool
+	APP_ENV string
 
 	APP_BASE_URL   string
 	APP_AVATAR_URL string
@@ -78,7 +78,7 @@ func LoadSettings() Settings {
 	settings.APP_COOKIE_SECRET = getEnv("APP_COOKIE_SECRET")
 	settings.APP_HANAYO_KEY = getEnv("APP_HANAYO_KEY")
 
-	settings.APP_PRODUCTION = strToBool(getEnv("APP_PRODUCTION"))
+	settings.APP_ENV = getEnv("APP_ENV")
 
 	settings.APP_BASE_URL = getEnv("APP_BASE_URL")
 	settings.APP_AVATAR_URL = getEnv("APP_AVATAR_URL")
