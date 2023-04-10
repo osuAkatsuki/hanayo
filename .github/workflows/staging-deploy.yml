@@ -1,0 +1,58 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  staging-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out latest commit
+      uses: actions/checkout@v3
+
+    - name: Install digitalocean command line interface
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+    - name: Log-in to digitalocean container registry
+      run: doctl registry login --expiry-seconds 600
+
+    - name: Build container image
+      run: docker build -t registry.digitalocean.com/akatsuki/hanayo:latest .
+
+    - name: Push image to digitalocean container registry
+      run: docker push registry.digitalocean.com/akatsuki/hanayo:latest
+
+    - name: Save kubeconfig from digitalocean
+      run: doctl k8s cluster kubeconfig save --expiry-seconds 600 akatsuki-staging
+
+    - name: Install helm
+      uses: azure/setup-helm@v3
+      with:
+        version: 'latest'
+        token: ${{ secrets.GITHUB_TOKEN }}
+      id: install
+
+    - name: Install helm-diff
+      run: helm plugin install https://github.com/databus23/helm-diff
+
+    - name: Checkout common-helm-charts repo
+      uses: actions/checkout@v3
+      with:
+        repository: osuAkatsuki/common-helm-charts
+        token: ${{ secrets.COMMON_HELM_CHARTS_PAT }}
+        path: common-helm-charts
+
+    - name: Show manifest diff since previous release
+      run: helm diff upgrade --allow-unreleased --values chart/values.yaml hanayo-staging common-helm-charts/microservice-base/
+
+    - name: Deploy service to staging cluster
+      run: helm upgrade --install --atomic --values chart/values.yaml hanayo-staging common-helm-charts/microservice-base/
