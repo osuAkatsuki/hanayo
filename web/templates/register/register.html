@@ -70,7 +70,7 @@
                   pattern="^.{8,}$"
                   oninput="matchPasswords(this)" />
               </div>
-              {{ with config "RecaptchaSite" }}
+              {{ with config "RECAPTCHA_SITE_KEY" }}
                 <div class="field">
                   <div class="g-recaptcha" data-sitekey="{{ . }}"></div>
                 </div>

@@ -2,8 +2,6 @@ package register
 
 import (
 	"database/sql"
-	"fmt"
-	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -15,14 +13,13 @@ import (
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
-	"github.com/osuAkatsuki/hanayo/app/states/settings"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	au "github.com/osuAkatsuki/hanayo/app/usecases/auth"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	"github.com/osuAkatsuki/hanayo/app/usecases/misc"
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
-	schiavo "zxq.co/ripple/schiavolib"
 )
 
 func RegisterPageHandler(c *gin.Context) {
@@ -43,6 +40,7 @@ func RegisterPageHandler(c *gin.Context) {
 }
 
 func RegisterSubmitHandler(c *gin.Context) {
+	settings := settingsState.GetSettings()
 	if sessions.GetContext(c).User.ID != 0 {
 		tu.Resp403(c)
 		return
@@ -120,20 +118,19 @@ func RegisterSubmitHandler(c *gin.Context) {
 	}
 
 	// recaptcha verify
-	if settings.Config.RecaptchaPrivate != "" && !misc.RecaptchaCheck(c) {
+	if settings.RECAPTCHA_SECRET_KEY != "" && !misc.RecaptchaCheck(c) {
 		registerResp(c, msg.ErrorMessage{lu.T(c, "Captcha is invalid.")})
 		return
 	}
 
-	uMulti, criteria := tryBotnets(c)
-	if criteria != "" {
-		schiavo.CMs.Send(
-			fmt.Sprintf(
-				"User **%s** registered with the same %s as %s (%s/u/%s). **POSSIBLE MULTIACCOUNT!!!**. Waiting for ingame verification...",
-				username, criteria, uMulti, settings.Config.BaseURL, url.QueryEscape(uMulti),
-			),
-		)
-	}
+	// TODO: make it send discord webhook
+	// uMulti, criteria := tryBotnets(c)
+	// if criteria != "" {
+	// 		fmt.Sprintf(
+	// 			"User **%s** registered with the same %s as %s (%s/u/%s). **POSSIBLE MULTIACCOUNT!!!**. Waiting for ingame verification...",
+	// 			username, criteria, uMulti, settings.APP_BASE_URL, url.QueryEscape(uMulti),
+	// 		),
+	// }
 
 	// The actual registration.
 	pass, err := au.GeneratePassword(c.PostForm("password"))

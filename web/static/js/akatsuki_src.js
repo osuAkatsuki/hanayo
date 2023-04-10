@@ -804,7 +804,7 @@ function api(endpoint, data, success, failure, post) {
   $.ajax({
     method: post ? "POST" : "GET",
     dataType: "json",
-    url: hanayoConf.baseAPI + "/api/v1/" + endpoint,
+    url: hanayoConf.baseAPI + "/" + endpoint,
     data: post ? JSON.stringify(data) : data,
     contentType: post ? "application/json; charset=utf-8" : "",
     success: function (data) {
