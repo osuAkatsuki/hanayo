@@ -1,17 +1,13 @@
-name: build
+name: production-deploy
 
-on:
-  push:
-    branches:
-      - master
-      - k8s
+on: workflow_dispatch
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  staging-deployment:
+  production-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +28,7 @@ jobs:
     - name: Push image to digitalocean container registry
       run: docker push registry.digitalocean.com/akatsuki/hanayo:latest
 
-    - name: Save digitalocean kubeconfig
+    - name: Save kubeconfig from digitalocean
       run: doctl k8s cluster kubeconfig save --expiry-seconds 600 akatsuki-staging
 
     - name: Install helm
@@ -52,8 +48,8 @@ jobs:
         token: ${{ secrets.COMMON_HELM_CHARTS_PAT }}
         path: common-helm-charts
 
-    - name: Show diff
+    - name: Show manifest diff since previous release
       run: helm diff upgrade --allow-unreleased --values chart/values.yaml hanayo-staging common-helm-charts/microservice-base/
 
-    - name: Deploy service
+    - name: Deploy service to staging cluster
       run: helm upgrade --install --atomic --values chart/values.yaml hanayo-staging common-helm-charts/microservice-base/
