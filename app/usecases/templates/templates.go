@@ -18,6 +18,7 @@ import (
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	mt "github.com/osuAkatsuki/hanayo/app/models/templates"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
+	"github.com/osuAkatsuki/hanayo/app/states/listener"
 	"github.com/osuAkatsuki/hanayo/app/usecases/funcmap"
 	loc "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	"github.com/osuAkatsuki/hanayo/app/usecases/misc"
@@ -46,6 +47,7 @@ func Reloader() error {
 			fmt.Println("Change detected! Refreshing templates")
 			simplePages = []mt.TemplateConfig{}
 			LoadTemplates("")
+			listener.Listener.Close()
 			last = time.Now()
 		}
 		defer notify.Stop(c)

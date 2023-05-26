@@ -1,122 +1,56 @@
 package settings
 
-import (
-	"os"
-	"strconv"
+var (
+	Config struct {
+		// Essential configuration that must be always checked for every environment.
+		ListenTo      string `description:"ip:port from which to take requests."`
+		Unix          bool   `description:"Whether ListenTo is an unix socket."`
+		DSN           string `description:"MySQL server DSN"`
+		RedisEnable   bool
+		AvatarURL     string
+		BaseURL       string
+		API           string
+		BanchoAPI     string
+		CheesegullAPI string
+		APISecret     string
+		Offline       bool `description:"If this is true, files will be served from the local server instead of the CDN."`
 
-	"github.com/joho/godotenv"
-)
+		MainRippleFolder string `description:"Folder where all the non-go projects are contained, such as old-frontend, lets, ci-system. Used for changelog."`
+		AvatarsFolder    string `description:"location folder of avatars, used for placing the avatars from the avatar change page."`
+		EnableS3         bool   `description:"Whether to use S3 for Avatars"`
+		S3Bucket         string
 
-func getEnv(key string) string {
-	val, exists := os.LookupEnv(key)
-	if !exists {
-		panic("Missing environment variable: " + key)
+		CookieSecret string
+
+		RedisMaxConnections int
+		RedisNetwork        string
+		RedisAddress        string
+		RedisPassword       string
+
+		DiscordServer string
+
+		BaseAPIPublic string
+
+		Production int `description:"This is a fake configuration value. All of the following from now on should only really be set in a production environment."`
+
+		MailgunDomain        string
+		MailgunPrivateAPIKey string
+		MailgunPublicAPIKey  string
+		MailgunFrom          string
+
+		RecaptchaSite    string
+		RecaptchaPrivate string
+
+		DiscordOAuthID     string
+		DiscordOAuthSecret string
+		DonorBotURL        string
+		DonorBotSecret     string
+
+		CoinbaseAPIKey    string
+		CoinbaseAPISecret string
+
+		SentryDSN string
+
+		IP_API string
 	}
-	return val
-}
-
-func strToInt(s string) int {
-	val, _ := strconv.Atoi(s)
-	return val
-}
-
-func strToBool(s string) bool {
-	val, _ := strconv.ParseBool(s)
-	return val
-}
-
-type Settings struct {
-	APP_PORT          int
-	APP_COOKIE_SECRET string
-	APP_HANAYO_KEY    string
-
-	APP_ENV string
-
-	APP_BASE_URL   string
-	APP_AVATAR_URL string
-	APP_API_URL    string
-	APP_BANCHO_URL string
-
-	APP_AVATAR_PATH string
-
-	BEATMAP_MIRROR_API_URL string
-	DISCORD_SERVER_URL     string
-
-	// TODO: add S3 bucket.
-
-	DB_SCHEME string
-	DB_HOST string
-	DB_PORT int
-	DB_USER string
-	DB_PASS string
-	DB_NAME string
-
-	REDIS_MAX_CONNECTIONS int
-	REDIS_NETWORK_TYPE    string
-	REDIS_HOST            string
-	REDIS_PORT            int
-	REDIS_PASS            string
-	REDIS_DB              int
-
-	MAILGUN_DOMAIN     string
-	MAILGUN_API_KEY    string
-	MAILGUN_PUBLIC_KEY string
-	MAILGUN_FROM       string
-
-	RECAPTCHA_SITE_KEY   string
-	RECAPTCHA_SECRET_KEY string
-
-	IP_LOOKUP_URL string
-}
-
-var settings = Settings{}
-
-func LoadSettings() Settings {
-	godotenv.Load()
-
-	settings.APP_PORT = strToInt(getEnv("APP_PORT"))
-	settings.APP_COOKIE_SECRET = getEnv("APP_COOKIE_SECRET")
-	settings.APP_HANAYO_KEY = getEnv("APP_HANAYO_KEY")
-
-	settings.APP_ENV = getEnv("APP_ENV")
-
-	settings.APP_BASE_URL = getEnv("APP_BASE_URL")
-	settings.APP_AVATAR_URL = getEnv("APP_AVATAR_URL")
-	settings.APP_API_URL = getEnv("APP_API_URL")
-	settings.APP_BANCHO_URL = getEnv("APP_BANCHO_URL")
-
-	settings.APP_AVATAR_PATH = getEnv("APP_AVATAR_PATH")
-
-	settings.BEATMAP_MIRROR_API_URL = getEnv("BEATMAP_MIRROR_API_URL")
-	settings.DISCORD_SERVER_URL = getEnv("DISCORD_SERVER_URL")
-
-	settings.DB_SCHEME = getEnv("DB_SCHEME")
-	settings.DB_HOST = getEnv("DB_HOST")
-	settings.DB_PORT = strToInt(getEnv("DB_PORT"))
-	settings.DB_USER = getEnv("DB_USER")
-	settings.DB_PASS = getEnv("DB_PASS")
-	settings.DB_NAME = getEnv("DB_NAME")
-
-	settings.REDIS_MAX_CONNECTIONS = strToInt(getEnv("REDIS_MAX_CONNECTIONS"))
-	settings.REDIS_NETWORK_TYPE = getEnv("REDIS_NETWORK_TYPE")
-	settings.REDIS_HOST = getEnv("REDIS_HOST")
-	settings.REDIS_PORT = strToInt(getEnv("REDIS_PORT"))
-	settings.REDIS_PASS = getEnv("REDIS_PASS")
-	settings.REDIS_DB = strToInt(getEnv("REDIS_DB"))
-
-	settings.MAILGUN_DOMAIN = getEnv("MAILGUN_DOMAIN")
-	settings.MAILGUN_API_KEY = getEnv("MAILGUN_API_KEY")
-	settings.MAILGUN_PUBLIC_KEY = getEnv("MAILGUN_PUBLIC_KEY")
-	settings.MAILGUN_FROM = getEnv("MAILGUN_FROM")
-
-	settings.RECAPTCHA_SITE_KEY = getEnv("RECAPTCHA_SITE_KEY")
-	settings.RECAPTCHA_SECRET_KEY = getEnv("RECAPTCHA_SECRET_KEY")
-
-	settings.IP_LOOKUP_URL = getEnv("IP_LOOKUP_URL")
-
-	return settings
-}
-
-func GetSettings() Settings {
-	return settings
-}
+)

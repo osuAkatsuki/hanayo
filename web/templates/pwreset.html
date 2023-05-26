@@ -35,7 +35,7 @@ AdditionalJS=https://www.google.com/recaptcha/api.js
                   value="{{ .FormData.username }}"
                   required />
               </div>
-              {{ with config "RECAPTCHA_SITE_KEY" }}
+              {{ with config "RecaptchaSite" }}
                 <div class="field">
                   <div class="g-recaptcha" data-sitekey="{{ . }}"></div>
                 </div>

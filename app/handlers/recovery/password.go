@@ -10,7 +10,7 @@ import (
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
-	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
+	"github.com/osuAkatsuki/hanayo/app/states/settings"
 	au "github.com/osuAkatsuki/hanayo/app/usecases/auth"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	"github.com/osuAkatsuki/hanayo/app/usecases/misc"
@@ -19,7 +19,6 @@ import (
 )
 
 func PasswordResetPageHandler(c *gin.Context) {
-	settings := settingsState.GetSettings()
 	ctx := sessions.GetContext(c)
 	if ctx.User.ID != 0 {
 		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "You're already logged in!")})
@@ -27,7 +26,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 	}
 
 	// recaptcha verify
-	if settings.RECAPTCHA_SECRET_KEY != "" && !misc.RecaptchaCheck(c) {
+	if settings.Config.RecaptchaPrivate != "" && !misc.RecaptchaCheck(c) {
 		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Captcha is invalid.")})
 		return
 	}
@@ -83,10 +82,10 @@ func PasswordResetPageHandler(c *gin.Context) {
 	content := lu.T(c,
 		"Hey <b>%s</b>!<br/><br/>Someone (<i>which we really hope was you</i>), requested a password reset for your account. In case it was you, please <a href='%s'>click here</a> to reset your password on Akatsuki.<br/>Otherwise, silently ignore this email.",
 		username,
-		settings.APP_BASE_URL+"/pwreset/continue?k="+key,
+		settings.Config.BaseURL+"/pwreset/continue?k="+key,
 	)
 	mailMessage := mailgun.NewMessage(
-		settings.MAILGUN_FROM,
+		settings.Config.MailgunFrom,
 		lu.T(c, "Akatsuki password recovery instructions"),
 		content,
 		email,

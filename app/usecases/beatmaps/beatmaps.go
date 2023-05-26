@@ -6,13 +6,12 @@ import (
 	"net/http"
 	"strconv"
 
-	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
+	"github.com/osuAkatsuki/hanayo/app/states/settings"
 	"github.com/osuripple/cheesegull/models"
 )
 
 func GetBeatmapData(b string) (beatmap models.Beatmap, err error) {
-	settings := settingsState.GetSettings()
-	resp, err := http.Get(settings.BEATMAP_MIRROR_API_URL + "/b/" + b)
+	resp, err := http.Get(settings.Config.CheesegullAPI + "/b/" + b)
 	if err != nil {
 		return beatmap, err
 	}
@@ -31,8 +30,7 @@ func GetBeatmapData(b string) (beatmap models.Beatmap, err error) {
 }
 
 func GetBeatmapSetData(beatmap models.Beatmap) (bset models.Set, err error) {
-	settings := settingsState.GetSettings()
-	resp, err := http.Get(settings.BEATMAP_MIRROR_API_URL + "/s/" + strconv.Itoa(beatmap.ParentSetID))
+	resp, err := http.Get(settings.Config.CheesegullAPI + "/s/" + strconv.Itoa(beatmap.ParentSetID))
 	if err != nil {
 		return bset, err
 	}

@@ -157,10 +157,10 @@
 
 		<script>
 			var hanayoConf = {
-				avatars:   '{{ .Conf.APP_AVATAR_URL }}',
-				banchoAPI: '{{ .Conf.APP_BANCHO_URL }}',
-				baseAPI:   '{{ .Conf.APP_API_URL }}',
-				cheesegullAPI: '{{ .Conf.BEATMAP_MIRROR_API_URL }}',
+				avatars:   '{{ .Conf.AvatarURL }}',
+				banchoAPI: '{{ .Conf.BanchoAPI }}',
+				baseAPI:   '{{ .Conf.BaseURL }}',
+				cheesegullAPI: '{{ .Conf.CheesegullAPI }}',
 			};
 			var currentUserID = '{{ .Context.User.ID }}';
 		</script>

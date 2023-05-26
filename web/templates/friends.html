@@ -26,7 +26,7 @@ BannerType=1
                   <div class="front">
                     <img
                       class="user-avatar"
-                      src="{{ config "APP_AVATAR_URL" }}/{{ .id }}"
+                      src="{{ config "AvatarURL" }}/{{ .id }}"
                       alt="Avatar"
                       {{ if not (has .privileges 1) }}
                         style="opacity: 0.5"
