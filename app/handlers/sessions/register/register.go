@@ -197,7 +197,11 @@ func RegisterSubmitHandler(c *gin.Context) {
 	//db.Exec("DELETE FROM beta_keys WHERE beta_key = ?", c.PostForm("key"))
 
 	uu.SetYCookie(int(lid), c)
-	uu.LogIP(c, int(lid))
+
+	err = uu.LogIP(c, int(lid))
+	if err != nil {
+		fmt.Println("Error logging IP: ", err.Error())
+	}
 
 	services.RD.Incr("ripple:registered_users")
 

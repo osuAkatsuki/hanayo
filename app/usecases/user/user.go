@@ -60,19 +60,23 @@ func ValidateEmail(email string) bool {
 	return (<-result).IsValid()
 }
 
-func AddToUserNotes(message string, user int) {
+func AddToUserNotes(message string, user int) error {
 	message = "\n[" + time.Now().Format("2006-01-02") + "] " + message
 
-	services.DB.Exec("UPDATE users SET notes = CONCAT(COALESCE(notes, ''), ?) WHERE id = ?",
+	_, err := services.DB.Exec("UPDATE users SET notes = CONCAT(COALESCE(notes, ''), CONVERT(? USING utf8mb4)) WHERE id = ?",
 		message, user)
+
+	return err
 }
 
-func LogIP(c *gin.Context, user int) {
-	services.DB.Exec(
+func LogIP(c *gin.Context, user int) error {
+	_, err := services.DB.Exec(
 		`INSERT INTO ip_user (userid, ip, occurencies) VALUES (?, ?, '1') ON 
 		DUPLICATE KEY UPDATE occurencies = occurencies + 1`,
 		user, su.ClientIP(c),
 	)
+
+	return err
 }
 
 func SetCountry(c *gin.Context, user int) error {
