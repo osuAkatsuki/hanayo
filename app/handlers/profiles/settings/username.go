@@ -54,7 +54,17 @@ func NameChangeSubmitHandler(c *gin.Context) {
 		services.DB.Exec("UPDATE rx_stats SET username = ? WHERE id = ?", username, sessions.GetContext(c).User.ID)
 		services.DB.Exec("UPDATE users SET username = ?, username_safe = ? WHERE id = ?", username, uu.SafeUsername(username), sessions.GetContext(c).User.ID)
 
-		uu.AddToUserNotes(fmt.Sprintf("Username change: %s -> %s", sessions.GetContext(c).User.Username, username), sessions.GetContext(c).User.ID)
+		logErr := uu.AddToUserNotes(fmt.Sprintf("Username change (self): %s -> %s", sessions.GetContext(c).User.Username, username), sessions.GetContext(c).User.ID)
+		if logErr != nil {
+			sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
+			sessions.GetSession(c).Save()
+
+			fmt.Println("Error adding to user notes: ", logErr.Error())
+
+			c.Redirect(302, "/u/"+strconv.Itoa(int(sessions.GetContext(c).User.ID)))
+			return
+		}
+
 		services.RD.Publish("api:change_username", strconv.Itoa(int(sessions.GetContext(c).User.ID)))
 
 		sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Username changed")})
