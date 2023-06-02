@@ -118,7 +118,7 @@ var FuncMap = template.FuncMap{
 	},
 	// parseUserpage compiles BBCode to HTML.
 	"parseUserpage": func(s string) template.HTML {
-		return template.HTML(bbcode.Compile(s))
+		return template.HTML(bbcode.ConvertBBCodeToHTML(s))
 	},
 	// time converts a RFC3339 timestamp to the HTML element <time>.
 	"time": func(s string) template.HTML {

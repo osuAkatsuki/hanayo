@@ -11,6 +11,7 @@ MinPrivileges=2
 {{ define "tpl" }}
   {{ $ := . }}
   {{ $can_userpage := qb "SELECT 1 FROM users WHERE id = ? AND userpage_allowed LIMIT 1" .Context.User.ID }}
+  <link rel="stylesheet" href="/static/css/pages/bbcode.css" />
   <div class="ui container">
     <div class="ui stackable grid">
       {{ template "settingsSidebar" . }}
@@ -21,8 +22,8 @@ MinPrivileges=2
             {{ with .Get "users/userpage?id=%d" .Context.User.ID }}
               <form class="ui form" method="post">
                 <textarea tabindex="1" class="monospace" name="data">
-{{ .userpage }}</textarea
-                >
+                  {{ .userpage }}
+                </textarea>
                 <p>
                   <a
                     href="https://docs.ripple.moe/docs/misc/hanayo_bbcode"
@@ -50,4 +51,24 @@ MinPrivileges=2
       </div>
     </div>
   </div>
+  <script>
+    function toggleBBCodeBox(e) {
+
+      identifier = $(e).attr("id").split("-")[1];
+      contentBox = $("#content-" + identifier);
+      icon = $("#icon-" + identifier);
+
+      if (contentBox.hasClass("bbcode-hidden")) {
+        contentBox.slideDown(100, () => {
+          contentBox.removeClass("bbcode-hidden");
+          icon.removeClass("fa-angle-right").addClass("fa-angle-down");
+        })
+      } else {
+        contentBox.slideUp(100, () => {
+          contentBox.addClass("bbcode-hidden");
+          icon.removeClass("fa-angle-down").addClass("fa-angle-right");
+        })
+      }
+    }
+  </script>
 {{ end }}

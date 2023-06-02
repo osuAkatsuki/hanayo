@@ -5,7 +5,6 @@ go 1.20
 require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/structs v1.1.0
-	github.com/frustra/bbcode v0.0.0-20201127003707-6ef347fbe1c8
 	github.com/gin-gonic/contrib v0.0.0-20181101072842-54170a7b0b4b
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-email-validator/go-email-validator v0.0.0-20220810051442-a2133f859f98
@@ -13,7 +12,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/johnniedoe/contrib v0.0.0-20150821124612-d553224621be
 	github.com/joho/godotenv v1.4.0
-	github.com/microcosm-cc/bluemonday v1.0.20
+	github.com/microcosm-cc/bluemonday v1.0.24
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/osuripple/cheesegull v2.1.1-0.20180422113429-9bdfa825f309+incompatible
 	github.com/pariz/gountries v0.1.6
@@ -112,8 +111,8 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.34.0 // indirect
-	golang.org/x/net v0.0.0-20220826154423-83b083e8dc8b // indirect
-	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
+	golang.org/x/net v0.10.0 // indirect
+	golang.org/x/sys v0.8.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
