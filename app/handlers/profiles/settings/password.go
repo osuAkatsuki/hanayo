@@ -2,6 +2,7 @@ package settings
 
 import (
 	"database/sql"
+	"fmt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -79,6 +80,11 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 		if !uu.ValidateEmail(email) {
 			messages = append(messages, msg.ErrorMessage{lu.T(c, "Please use a valid email address.")})
 			return
+		}
+
+		err := uu.AddToUserNotes(fmt.Sprintf("Email changed (self): %s -> %s", currentEmail, email), ctx.User.ID)
+		if err != nil {
+			c.Error(err)
 		}
 
 		uq.Add("email", email)
