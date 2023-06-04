@@ -133,7 +133,7 @@ func parseColour(text string) string { // support both colour and color
 }
 
 func parseAudio(text string) string {
-	regex := regexp.MustCompile(`\[audio\]([^[]+)\[\/audio\]`)
+	regex := regexp.MustCompile(`\[audio\]([^[]+)\[\/audio\]\n?`)
 
 	text = regex.ReplaceAllString(text, "<audio controls='controls' preload='none' src='$1'></audio>")
 	return text
@@ -169,7 +169,7 @@ func parseSize(text string) string {
 		size, _ := strconv.Atoi(groups[1])
 		size = Clamp(size, 30, 200)
 
-		return "<span style='font-size: " + strconv.Itoa(size) + "%'>"
+		return fmt.Sprintf("<span style='font-size: %d%%'>", size)
 	})
 
 	text = strings.Replace(text, "[/size]", "</span>", -1)
@@ -177,7 +177,7 @@ func parseSize(text string) string {
 }
 
 func parseEmail(text string) string {
-	regex := regexp.MustCompile(`\[email\]((.+)@(.+))\[\/email\]`)
+	regex := regexp.MustCompile(`\[email\](([^[]+)@([^[]+))\[\/email\]`)
 	text = regex.ReplaceAllString(text, "<a rel='nofollow' href='mailto:$1'>$1</a>")
 
 	regex2 := regexp.MustCompile(`\[email=(([^[]+)@([^[]+))\]`)
@@ -245,40 +245,54 @@ func parseList(text string) string {
 }
 
 func parseImagemap(text string) string {
-	regex := regexp.MustCompile(`\[imagemap\]\s+(?P<image_url>.+?)(?P<lines>(?:\s+.+?){6}\s+)+\[\/imagemap\]`)
+	regex := regexp.MustCompile(`\[imagemap\]\s+(?P<image_url>.+?)(?P<lines>(?:\s+.+?){6}\s+)+\[\/imagemap\]\n?`)
 	matches := regex.FindStringSubmatch(text)
 
 	if matches != nil {
-		pseudoHtml := "<div class='bbcode-imagemap'><img src='" + matches[regex.SubexpIndex("image_url")] + "' class='bbcode-imagemap-image' loading='lazy'>"
+		pseudoHtml := fmt.Sprintf(
+			"<div class='bbcode-imagemap'><img src='%s' class='bbcode-imagemap-image' loading='lazy'>",
+			matches[regex.SubexpIndex("image_url")],
+		)
 
 		lineRegex := regexp.MustCompile(`(?m)^\s*(?P<x>\S+)\s+(?P<y>\S+)\s+(?P<width>\S+)\s+(?P<height>\S+)\s+(?P<redirect>\S+)\s+(?P<title>.+?)\s*$`)
 		lines := lineRegex.FindAllStringSubmatch(matches[regex.SubexpIndex("lines")], -1)
 
 		for _, line := range lines {
 
+			redirect := line[lineRegex.SubexpIndex("redirect")]
+			xAxis, _ := strconv.Atoi(line[lineRegex.SubexpIndex("x")])
+			yAxis, _ := strconv.Atoi(line[lineRegex.SubexpIndex("y")])
+			width, _ := strconv.Atoi(line[lineRegex.SubexpIndex("width")])
+			height, _ := strconv.Atoi(line[lineRegex.SubexpIndex("height")])
+			title := line[lineRegex.SubexpIndex("title")]
+
 			tag := "a"
-			if line[lineRegex.SubexpIndex("redirect")] == "#" {
+			if redirect == "#" {
 				tag = "span"
 			}
 
-			topInt, _ := strconv.Atoi(line[lineRegex.SubexpIndex("y")])
-			tooltipPos := ""
-			if topInt < 13 {
+			xAxisClamped := Clamp(xAxis, 0, 100)
+			yAxisClamped := Clamp(yAxis, 0, 100)
+			widthClamped := Clamp(width, 0, 100)
+			heightClamped := Clamp(height, 0, 100)
+
+			tooltipPos := "top center"
+			if yAxisClamped < 13 {
 				tooltipPos = "bottom center"
-			} else {
-				tooltipPos = "top center"
 			}
 
-			pseudoHtml +=
-				"<" + tag + `
-				 class='bbcode-imagemap-tooltip'
-				 href='` + line[lineRegex.SubexpIndex("redirect")] + `' 
-				 style='left: ` + line[lineRegex.SubexpIndex("x")] + `%; 
-				 top: ` + line[lineRegex.SubexpIndex("y")] + `%; 
-				 width: ` + line[lineRegex.SubexpIndex("width")] + `%; 
-				 height: ` + line[lineRegex.SubexpIndex("height")] + `%;' 
-				 data-tooltip='` + line[lineRegex.SubexpIndex("title")] + `'
-				 data-position='` + tooltipPos + `'> </` + tag + ">"
+			pseudoHtml += fmt.Sprintf(
+				"<%s class='bbcode-imagemap-tooltip' href='%s' style='left: %d%%; top: %d%%; width: %d%%; height: %d%%;' data-tooltip='%s' data-position='%s'></%s>",
+				tag,
+				redirect,
+				xAxisClamped,
+				yAxisClamped,
+				widthClamped,
+				heightClamped,
+				title,
+				tooltipPos,
+				tag,
+			)
 		}
 
 		pseudoHtml += "</div>"
@@ -325,8 +339,34 @@ func parseBox(text string) string {
 
 func parseYoutube(text string) string {
 
-	text = strings.Replace(text, "[youtube]", "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/", -1)
-	text = strings.Replace(text, "[/youtube]", "?rel=0' frameborder='0' allowfullscreen></iframe></div></div>", -1)
+	regex := regexp.MustCompile(`\[youtube\]https:\/\/(.*)youtube\.com\/watch\?v=([^&]+)`)
+	text = regex.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/$2")
+
+	regex2 := regexp.MustCompile(`\[youtube\]https:\/\/(.*)youtu\.be\/([^?]+)`)
+	text = regex2.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/$2")
+
+	regex3 := regexp.MustCompile(`\[youtube\]https:\/\/(.*)youtube\.com\/embed\/([^?]+)`)
+	text = regex3.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/$2")
+
+	regex4 := regexp.MustCompile(`\[youtube\](.*)`)
+	text = regex4.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/$1")
+
+	regex5 := regexp.MustCompile(`\[\/youtube\]\n?`)
+	text = regex5.ReplaceAllString(text, "?rel=0' frameborder='0' allowfullscreen></iframe></div></div>")
+
+	return text
+}
+
+func parseTwitch(text string) string {
+
+	regex := regexp.MustCompile(`\[twitch\]https:\/\/(.*)\.twitch\.tv\/(.*)\/clip\/([^?]+)`)
+	text = regex.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://clips.twitch.tv/embed?clip=$3")
+
+	regex2 := regexp.MustCompile(`\[twitch\](.*)`)
+	text = regex2.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://clips.twitch.tv/embed?clip=$1")
+
+	regex3 := regexp.MustCompile(`\[\/twitch\]\n?`)
+	text = regex3.ReplaceAllString(text, "&parent=staging.akatsuki.pw' frameborder='0' allowfullscreen></iframe></div></div>")
 
 	return text
 }
@@ -392,11 +432,12 @@ func ConvertBBCodeToHTML(bbcode string) string {
 	bbcode = parseUrl(bbcode)
 	bbcode = parseSeparator(bbcode)
 	bbcode = parseYoutube(bbcode)
+	bbcode = parseTwitch(bbcode)
 	bbcode = parseProfile(bbcode)
 
 	bbcode = strings.Replace(bbcode, "\n", "<br>", -1)
 
-	bbcodeFinal := "<div class='bbcode-container'>" + bbcode + "</div>"
+	bbcodeFinal := fmt.Sprintf("<div class='bbcode-container'>%s</div>", bbcode)
 
 	// Sanitize HTML
 	return policy.Sanitize(bbcodeFinal)
