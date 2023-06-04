@@ -49,24 +49,4 @@ MinPrivileges=2
       </div>
     </div>
   </div>
-  <script>
-    function toggleBBCodeBox(e) {
-
-      identifier = $(e).attr("id").split("-")[1];
-      contentBox = $("#content-" + identifier);
-      icon = $("#icon-" + identifier);
-
-      if (contentBox.hasClass("bbcode-hidden")) {
-        contentBox.slideDown(100, () => {
-          contentBox.removeClass("bbcode-hidden");
-          icon.removeClass("fa-angle-right").addClass("fa-angle-down");
-        })
-      } else {
-        contentBox.slideUp(100, () => {
-          contentBox.addClass("bbcode-hidden");
-          icon.removeClass("fa-angle-down").addClass("fa-angle-right");
-        })
-      }
-    }
-  </script>
 {{ end }}
