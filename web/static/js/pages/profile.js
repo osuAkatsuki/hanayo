@@ -365,7 +365,7 @@ function initialiseUserpage() {
       return
     };
 
-    userpage.html(resp.userpage_compiled);
+    userpage.html(twemoji.parse(resp.userpage_compiled));
   });
 }
 

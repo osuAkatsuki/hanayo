@@ -256,7 +256,7 @@ func parseList(text string) string {
 }
 
 func parseImagemap(text string) string {
-	regex := regexp.MustCompile(`\[imagemap\]\s+(?P<image_url>.+?)(?P<lines>(?:\s+.+?){6}\s+)+\[\/imagemap\]\n?`)
+	regex := regexp.MustCompile(`(?s)\[imagemap\]\s+(?P<image_url>.+?)(?P<lines>(?:\s+.+?)\s+)+\[\/imagemap\]\n?`)
 	matches := regex.FindStringSubmatch(text)
 
 	if matches != nil {
