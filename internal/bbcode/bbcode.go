@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/osuAkatsuki/hanayo/app/states/settings"
 )
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -389,7 +390,10 @@ func parseTwitch(text string) string {
 	text = regex2.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://clips.twitch.tv/embed?clip=$1")
 
 	regex3 := regexp.MustCompile(`\[\/twitch\]\n?`)
-	text = regex3.ReplaceAllString(text, "&parent=staging.akatsuki.pw' frameborder='0' allowfullscreen></iframe></div></div>")
+	text = regex3.ReplaceAllString(text, fmt.Sprintf(
+		"&parent=%s' frameborder='0' allowfullscreen></iframe></div></div>",
+		strings.Split(settings.GetSettings().APP_BASE_URL, "://")[1],
+	))
 
 	return text
 }
