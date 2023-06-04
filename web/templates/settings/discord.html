@@ -29,7 +29,7 @@ MinPrivileges=6
               </b>
             </p>
             <p>
-              {{ .T "Discord is a chatroom with text and voice channels, bots and lots of other cool features. You can <b>download Discord for free <a href=\"http://discord.gg/\" target=\"_blank\">here</a></b> and you can <b>join our official Discord server <a href=\"%s\" target=\"_blank\">here</a></b>." (config "DiscordServer") | html }}
+              {{ .T "Discord is a chatroom with text and voice channels, bots and lots of other cool features. You can <b>download Discord for free <a href=\"http://discord.gg/\" target=\"_blank\">here</a></b> and you can <b>join our official Discord server <a href=\"%s\" target=\"_blank\">here</a></b>." (config "DISCORD_SERVER_URL") | html }}
             </p>
             <p>
               {{ .T "Here's what you get if you link your Discord account:" }}
@@ -42,7 +42,7 @@ MinPrivileges=6
               <li>{{ .T "Custom role with custom username" }}</li>
             </ul>
             <p>
-              {{ .T "To get these perks, first of all <a href=\"%s\" target=\"_blank\">join our Discord server</a>, then click this fancy button:" (config "DiscordServer") | html }}
+              {{ .T "To get these perks, first of all <a href=\"%s\" target=\"_blank\">join our Discord server</a>, then click this fancy button:" (config "DISCORD_SERVER_URL") | html }}
             </p>
             <p class="centered">
               <a

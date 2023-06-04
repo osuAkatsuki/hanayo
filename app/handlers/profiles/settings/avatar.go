@@ -12,12 +12,13 @@ import (
 	"github.com/nfnt/resize"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
-	"github.com/osuAkatsuki/hanayo/app/states/settings"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 )
 
 func AvatarSubmitHandler(c *gin.Context) {
+	settings := settingsState.GetSettings()
 	ctx := sessions.GetContext(c)
 	if ctx.User.ID == 0 {
 		tu.Resp403(c)
@@ -27,7 +28,7 @@ func AvatarSubmitHandler(c *gin.Context) {
 	defer func() {
 		tu.SimpleReply(c, m)
 	}()
-	if settings.Config.AvatarsFolder == "" {
+	if settings.APP_AVATAR_PATH == "" {
 		m = msg.ErrorMessage{lu.T(c, "Changing avatar is currently not possible.")}
 		return
 	}
@@ -43,7 +44,7 @@ func AvatarSubmitHandler(c *gin.Context) {
 	}
 	img = resize.Thumbnail(256, 256, img, resize.Bilinear)
 
-	f, err := os.Create(fmt.Sprintf("%s/%d.png", settings.Config.AvatarsFolder, ctx.User.ID))
+	f, err := os.Create(fmt.Sprintf("%s/%d.png", settings.APP_AVATAR_PATH, ctx.User.ID))
 	defer f.Close()
 	if err != nil {
 		m = msg.ErrorMessage{lu.T(c, "An error occurred.")}

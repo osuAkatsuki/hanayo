@@ -1,0 +1,15 @@
+node_modules
+hanayo
+hanayo.conf
+team.json
+static/profbackgrounds/*
+web/static/images/profbackgrounds/*
+static/avatars/*
+!static/profbackgrounds/.keep
+semantic/gulpfile.tmp.*.js
+/_
+static/oauth-apps/*
+static/cmyui/*
+!static/oauth-apps/.keep
+static/akatsukiPatcher.exe
+.env
