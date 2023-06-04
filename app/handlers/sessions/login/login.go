@@ -2,6 +2,7 @@ package login
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"strconv"
 	"strings"
@@ -149,5 +150,9 @@ func AfterLogin(c *gin.Context, id int, country string, flags uint) {
 	if country == "XX" {
 		uu.SetCountry(c, id)
 	}
-	uu.LogIP(c, id)
+
+	err = uu.LogIP(c, id)
+	if err != nil {
+		fmt.Println("Error logging IP: ", err.Error())
+	}
 }
