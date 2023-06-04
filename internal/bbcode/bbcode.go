@@ -403,8 +403,7 @@ func parseCode(text string) string {
 
 // Ripple specific.
 func parseSeparator(text string) string {
-	text = strings.Replace(text, "[hr]", "<div class='ui divider'>", -1)
-	text = strings.Replace(text, "[/hr]", "</div>", -1)
+	text = strings.Replace(text, "[hr]", "<div class='ui divider'></div>", -1)
 	return text
 }
 
