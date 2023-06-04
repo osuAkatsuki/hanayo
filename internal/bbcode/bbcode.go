@@ -22,7 +22,18 @@ func RandStringBytes(n int) string {
 }
 
 // Google implementation of clamp function
-func Clamp(x, min, max int) int {
+func Clamp(x int, min int, max int) int {
+	switch {
+	case x < min:
+		return min
+	case x > max:
+		return max
+	default:
+		return x
+	}
+}
+
+func ClampFloat(x float64, min float64, max float64) float64 {
 	switch {
 	case x < min:
 		return min
@@ -260,10 +271,22 @@ func parseImagemap(text string) string {
 		for _, line := range lines {
 
 			redirect := line[lineRegex.SubexpIndex("redirect")]
-			xAxis, _ := strconv.Atoi(line[lineRegex.SubexpIndex("x")])
-			yAxis, _ := strconv.Atoi(line[lineRegex.SubexpIndex("y")])
-			width, _ := strconv.Atoi(line[lineRegex.SubexpIndex("width")])
-			height, _ := strconv.Atoi(line[lineRegex.SubexpIndex("height")])
+			xAxis, err := strconv.ParseFloat(line[lineRegex.SubexpIndex("x")], 64)
+			if err != nil {
+				xAxis = 0.0
+			}
+			yAxis, err := strconv.ParseFloat(line[lineRegex.SubexpIndex("y")], 64)
+			if err != nil {
+				yAxis = 0.0
+			}
+			width, err := strconv.ParseFloat(line[lineRegex.SubexpIndex("width")], 64)
+			if err != nil {
+				width = 0.0
+			}
+			height, err := strconv.ParseFloat(line[lineRegex.SubexpIndex("height")], 64)
+			if err != nil {
+				height = 0.0
+			}
 			title := line[lineRegex.SubexpIndex("title")]
 
 			tag := "a"
@@ -271,18 +294,18 @@ func parseImagemap(text string) string {
 				tag = "span"
 			}
 
-			xAxisClamped := Clamp(xAxis, 0, 100)
-			yAxisClamped := Clamp(yAxis, 0, 100)
-			widthClamped := Clamp(width, 0, 100)
-			heightClamped := Clamp(height, 0, 100)
+			xAxisClamped := ClampFloat(xAxis, float64(0.0), float64(100.0))
+			yAxisClamped := ClampFloat(yAxis, float64(0.0), float64(100.0))
+			widthClamped := ClampFloat(width, float64(0.0), float64(100.0))
+			heightClamped := ClampFloat(height, float64(0.0), float64(100.0))
 
 			tooltipPos := "top center"
-			if yAxisClamped < 13 {
+			if yAxisClamped < 13.0 {
 				tooltipPos = "bottom center"
 			}
 
 			pseudoHtml += fmt.Sprintf(
-				"<%s class='bbcode-imagemap-tooltip' href='%s' style='left: %d%%; top: %d%%; width: %d%%; height: %d%%;' data-tooltip='%s' data-position='%s'></%s>",
+				"<%s class='bbcode-imagemap-tooltip' href='%s' style='left: %f%%; top: %f%%; width: %f%%; height: %f%%;' data-tooltip='%s' data-position='%s'></%s>",
 				tag,
 				redirect,
 				xAxisClamped,
