@@ -353,11 +353,19 @@ function initialiseUserpage() {
   api("users/userpage", { id: userID }, (resp) => {
     var userpage = $("#userpage-content");
 
-    if (!resp.userpage_compiled) return;
-
     userpage.css("display", "");
-    userpage.html(resp.userpage_compiled);
     userpage.removeClass("loading");
+
+    if (!resp.userpage_compiled) {
+      userpage.html(
+        `<h5>` +
+        T("Nothing here. Yet.") +
+        `</h5>`
+      )
+      return
+    };
+
+    userpage.html(resp.userpage_compiled);
   });
 }
 
