@@ -11,6 +11,7 @@ MinPrivileges=2
 {{ define "tpl" }}
   {{ $ := . }}
   {{ $can_userpage := qb "SELECT 1 FROM users WHERE id = ? AND userpage_allowed LIMIT 1" .Context.User.ID }}
+  <link rel="stylesheet" href="/static/css/pages/bbcode.css" />
   <div class="ui container">
     <div class="ui stackable grid">
       {{ template "settingsSidebar" . }}
@@ -20,9 +21,7 @@ MinPrivileges=2
             {{ $f := ieForm .Gin }}
             {{ with .Get "users/userpage?id=%d" .Context.User.ID }}
               <form class="ui form" method="post">
-                <textarea tabindex="1" class="monospace" name="data">
-{{ .userpage }}</textarea
-                >
+                <textarea tabindex="1" class="monospace" name="data">{{ .userpage }}</textarea>
                 <p>
                   <a
                     href="https://docs.ripple.moe/docs/misc/hanayo_bbcode"

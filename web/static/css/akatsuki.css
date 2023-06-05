@@ -444,8 +444,10 @@ body.ds .subtitle b {
 }
 
 #userpage-content {
-  max-height: 330px;
+  max-height: 400px;
   overflow: auto;
+  scrollbar-width: thin;
+  padding: 16px;
 }
 
 #profile-actions {

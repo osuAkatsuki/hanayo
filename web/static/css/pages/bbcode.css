@@ -1,0 +1,139 @@
+/* All styles are taken from osu-web @ https://github.com/ppy/osu-web */
+
+.bbcode-blockquote {
+  font-size: inherit;
+  padding: 0 0 0 20px;
+  border: none;
+  position: relative;
+  color: #fff;
+  margin: 0;
+}
+
+.bbcode-blockquote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  border-radius: 10000px;
+  background-color: #fff;
+}
+
+.bbcode-code {
+  background-color: #171616;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  border: none;
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.25;
+  word-break: break-all;
+  word-wrap: break-word;
+  color: inherit;
+}
+
+.bbcode-spoiler {
+  background-color: #000 !important;
+  color: #000 !important;
+}
+
+.bbcode-notice {
+  min-height: 20px;
+  padding: 19px;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  margin: 0;
+  background: #171717;
+  border: 2px solid #353535;
+}
+
+.bbcode-imagemap {
+  position: relative;
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
+}
+
+.bbcode-imagemap-image {
+  max-width: 100%;
+  height: auto;
+  width: auto;
+  height: auto;
+  -o-object-fit: contain;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+.bbcode-imagemap-tooltip {
+  z-index: 999 !important;
+  display: block;
+  position: absolute;
+}
+
+.bbcode-box-btn {
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.bbcode-box-btn:hover span {
+  text-decoration: underline;
+}
+
+.bbcode-box-icon {
+  width: 20px;
+  display: block;
+  flex: none;
+  margin-top: 4px;
+}
+
+.bbcode-box-content {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.bbcode-video-box {
+  max-width: 425px;
+}
+
+.bbcode-video {
+  position: relative;
+  padding-bottom: 75%;
+}
+
+.bbcode-video iframe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bbcode-container ol {
+  padding-left: 20px;
+}
+
+.bbcode-container ul {
+  padding-left: 20px;
+}
+
+.bbcode-hidden {
+  display: none;
+}
+
+.bbcode-list-title {
+  list-style: none;
+  margin: 0;
+}
