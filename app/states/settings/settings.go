@@ -39,17 +39,18 @@ type Settings struct {
 
 	APP_AVATAR_PATH string
 
-	BEATMAP_MIRROR_API_URL string
-	DISCORD_SERVER_URL     string
+	BEATMAP_MIRROR_API_URL      string
+	BEATMAP_DOWNLOAD_MIRROR_URL string
+	DISCORD_SERVER_URL          string
 
 	// TODO: add S3 bucket.
 
 	DB_SCHEME string
-	DB_HOST string
-	DB_PORT int
-	DB_USER string
-	DB_PASS string
-	DB_NAME string
+	DB_HOST   string
+	DB_PORT   int
+	DB_USER   string
+	DB_PASS   string
+	DB_NAME   string
 
 	REDIS_MAX_CONNECTIONS int
 	REDIS_NETWORK_TYPE    string
@@ -88,6 +89,7 @@ func LoadSettings() Settings {
 	settings.APP_AVATAR_PATH = getEnv("APP_AVATAR_PATH")
 
 	settings.BEATMAP_MIRROR_API_URL = getEnv("BEATMAP_MIRROR_API_URL")
+	settings.BEATMAP_DOWNLOAD_MIRROR_URL = getEnv("BEATMAP_DOWNLOAD_MIRROR_URL")
 	settings.DISCORD_SERVER_URL = getEnv("DISCORD_SERVER_URL")
 
 	settings.DB_SCHEME = getEnv("DB_SCHEME")
