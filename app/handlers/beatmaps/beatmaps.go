@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	bu "github.com/osuAkatsuki/hanayo/app/usecases/beatmaps"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
@@ -23,15 +25,33 @@ func BeatmapPageHandler(c *gin.Context) {
 	if _, err := strconv.Atoi(b); err != nil {
 		c.Error(err)
 	} else {
-		data.Beatmap, err = bu.GetBeatmapData(b)
-		if err != nil {
-			c.Error(err)
-			return
-		}
-		data.Beatmapset, err = bu.GetBeatmapSetData(data.Beatmap)
-		if err != nil {
-			c.Error(err)
-			return
+
+		settings := settingsState.GetSettings()
+		if strings.Contains(settings.BEATMAP_MIRROR_API_URL, "https://osu.direct/api") {
+			data.Beatmapset, err = bu.GetBeatmapSetDataFromDirectAPI(b)
+			if err != nil {
+				c.Error(err)
+				return
+			}
+
+			bmapID, _ := strconv.Atoi(b)
+			for i := range data.Beatmapset.ChildrenBeatmaps {
+				if data.Beatmapset.ChildrenBeatmaps[i].ID == bmapID {
+					data.Beatmap = data.Beatmapset.ChildrenBeatmaps[i]
+					break
+				}
+			}
+		} else {
+			data.Beatmap, err = bu.GetBeatmapData(b)
+			if err != nil {
+				c.Error(err)
+				return
+			}
+			data.Beatmapset, err = bu.GetBeatmapSetData(data.Beatmap)
+			if err != nil {
+				c.Error(err)
+				return
+			}
 		}
 		sort.Slice(data.Beatmapset.ChildrenBeatmaps, func(i, j int) bool {
 			if data.Beatmapset.ChildrenBeatmaps[i].Mode != data.Beatmapset.ChildrenBeatmaps[j].Mode {
