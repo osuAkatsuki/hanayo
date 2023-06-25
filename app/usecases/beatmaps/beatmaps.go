@@ -10,6 +10,26 @@ import (
 	"github.com/osuripple/cheesegull/models"
 )
 
+func GetBeatmapSetDataFromDirectAPI(b string) (bset models.Set, err error) {
+	settings := settingsState.GetSettings()
+	resp, err := http.Get(settings.BEATMAP_MIRROR_API_URL + "/b/" + b + "?full")
+	if err != nil {
+		return bset, err
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return bset, err
+	}
+
+	err = json.Unmarshal(body, &bset)
+	if err != nil {
+		return bset, err
+	}
+
+	return bset, nil
+}
+
 func GetBeatmapData(b string) (beatmap models.Beatmap, err error) {
 	settings := settingsState.GetSettings()
 	resp, err := http.Get(settings.BEATMAP_MIRROR_API_URL + "/b/" + b)
