@@ -100,7 +100,7 @@
                     {{ $.T "Download" }}
                   </a>
                   <a
-                    href="https://chimu.moe/d/{{ .Beatmapset.ID }}"
+                    href="{{ .Conf.BEATMAP_DOWNLOAD_MIRROR_URL }}/{{ .Beatmapset.ID }}"
                     class="ui red labeled icon button">
                     <i class="fa-solid fa-download icon"></i>
                     {{ $.T "Mirror" }}
