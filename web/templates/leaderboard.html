@@ -17,7 +17,7 @@ BannerType=1
 
 	<script>
 		var favouriteMode = '{{ $favMode }}';
-		var rx = '{{ or (.Gin.Query "rx") 0 }}';
+		var rx = '{{ $relax }}';
 		var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
 		var sort = '{{ $sort }}'
 		var country = '{{ .Gin.Query "country" }}'.toLowerCase();
