@@ -14,13 +14,14 @@ BannerType=1
     {{ $favMode := _or (atoi
       (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0)
     }}
+    {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
     {{ $sort := or
       (.Gin.Query "sort") "1s"
     }}
 
   <script>
     var favouriteMode = "{{ $favMode }}";
-    var rx = '{{ or (.Gin.Query "rx") 0 }}';
+    var rx = '{{ $relax }}';
     var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
     var sort = "{{ $sort }}";
   </script>
