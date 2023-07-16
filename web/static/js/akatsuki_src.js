@@ -724,10 +724,8 @@ $(document).ready(function () {
       const hasAmpUserId = !!window.amplitude.getUserId()
 
       if (isAuthed && !hasAmpUserId) {
-          console.log("Authed for Amplitude")
           window.amplitude.setUserId(window.currentUserID);
       } else if (!isAuthed && hasAmpUserId) {
-          console.log("Reset Amplitude")
           window.amplitude.reset();
       }
   });
