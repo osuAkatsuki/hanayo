@@ -20,11 +20,6 @@
 // this object contains tiny snippets that were deemed too small to be worth
 // their own file.
 var singlePageSnippets = {
-  "/": function () {
-    console.log("has used id", window.currentUserID);
-    console.log("has amplitude device id", window.amplitude.getDeviceId());
-    console.log("has amplitude user id", window.amplitude.getUserId());
-  },
   "/clans": function () {
     function e() {
       var e = window.location;
@@ -721,6 +716,21 @@ $(document).ready(function () {
       twemoji.parse(v);
     });
   }
+
+  // amplitude
+  const AMPLITUDE_API_KEY = "d24b21f57762f540f5b9c9791b7e3f91"
+  amplitude.init(AMPLITUDE_API_KEY, {minIdLength: 4}).promise.then(function() {
+      const isAuthed = window.currentUserID && window.currentUserID !== '0'
+      const hasAmpUserId = !!window.amplitude.getUserId()
+
+      if (isAuthed && !hasAmpUserId) {
+          logging.info("Authed for Amplitude")
+          window.amplitude.setUserId(window.currentUserID);
+      } else if (!isAuthed && hasAmpUserId) {
+          logging.info("Reset Amplitude")
+          window.amplitude.reset();
+      }
+  });
 
   // ripple stuff
   var f = singlePageSnippets[window.location.pathname];
