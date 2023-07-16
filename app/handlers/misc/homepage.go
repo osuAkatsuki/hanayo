@@ -17,25 +17,22 @@ func HomepagePageHandler(c *gin.Context) {
 
 	defer tu.Resp(c, 200, "homepage.html", data)
 
-	eventOptions := amplitude.EventOptions{
-		IP:       c.ClientIP(),
-		Country:  c.Request.Header.Get("CF-IPCountry"),
-		City:     c.Request.Header.Get("CF-IPCity"),
-		Region:   c.Request.Header.Get("CF-Region"),
-		Language: c.Request.Header.Get("Accept-Language"),
-	}
-
-	// include user id if logged in
+	// Fire a homepage load event
 	ctx := sessions.GetContext(c)
 	if ctx.User.ID != 0 {
-		eventOptions.UserID = strconv.Itoa(ctx.User.ID)
+		services.Amplitude.Track(amplitude.Event{
+			EventType: "homepage_load",
+			EventOptions: amplitude.EventOptions{
+				IP:       c.ClientIP(),
+				Country:  c.Request.Header.Get("CF-IPCountry"),
+				City:     c.Request.Header.Get("CF-IPCity"),
+				Region:   c.Request.Header.Get("CF-Region"),
+				Language: c.Request.Header.Get("Accept-Language"),
+				UserID:   strconv.Itoa(ctx.User.ID),
+			},
+			EventProperties: map[string]interface{}{"source": "hanayo"},
+		})
 	}
-
-	services.Amplitude.Track(amplitude.Event{
-		EventType:       "homepage_load",
-		EventOptions:    eventOptions,
-		EventProperties: map[string]interface{}{"source": "hanayo"},
-	})
 
 	data.DisableHH = true
 }
