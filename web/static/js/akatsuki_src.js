@@ -709,6 +709,10 @@ $(document).ready(function () {
     });
   }
 
+  // amplitude
+  const AMPLITUDE_API_KEY = "d24b21f57762f540f5b9c9791b7e3f91"
+  amplitude.init(AMPLITUDE_API_KEY);
+
   // ripple stuff
   var f = singlePageSnippets[window.location.pathname];
   if (typeof f === "function") f();
