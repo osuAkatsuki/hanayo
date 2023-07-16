@@ -22,8 +22,8 @@
 var singlePageSnippets = {
   "/": function () {
     console.log("has used id", window.currentUserID);
-    console.log("has amplitude device id", amplitude.getDeviceId());
-    console.log("has amplitude user id", amplitude.getUserId());
+    console.log("has amplitude device id", window.amplitude.getDeviceId());
+    console.log("has amplitude user id", window.amplitude.getUserId());
   },
   "/clans": function () {
     function e() {
