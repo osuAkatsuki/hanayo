@@ -126,6 +126,13 @@ func LoginSubmitHandler(c *gin.Context) {
 		EventProperties: map[string]interface{}{"source": "hanayo"},
 	})
 
+	services.Amplitude.Identify(
+		amplitude.Identify{},
+		amplitude.EventOptions{
+			UserID: strconv.Itoa(data.ID),
+		},
+	)
+
 	uu.SetYCookie(data.ID, c)
 
 	sess.Set("userid", data.ID)
