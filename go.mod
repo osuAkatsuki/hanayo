@@ -60,6 +60,7 @@ require (
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
+	github.com/mileusna/useragent v1.3.3 // indirect
 	github.com/pegasus-kv/thrift v0.13.0 // indirect
 	github.com/philhofer/fwd v1.1.1 // indirect
 	github.com/prometheus/client_golang v1.10.0 // indirect
