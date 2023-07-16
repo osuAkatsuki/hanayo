@@ -22,13 +22,15 @@
 var singlePageSnippets = {
   "/login": function () {
     $("#login-form").on("submit", function (e) {
-      $.ajax({
-        url: "/login",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function (e) {
-          console.log('worked?')
-        },
+      e.preventDefault();
+      fetch('/login', {
+          method: 'POST',
+          body: $(this).serialize(),
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          }
+      }).then(function (response) {
+          console.log(response)
       })
     })
   },
