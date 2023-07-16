@@ -20,12 +20,6 @@
 // this object contains tiny snippets that were deemed too small to be worth
 // their own file.
 var singlePageSnippets = {
-  "/login": function () {
-    $("#login-form").on("submit", function (e) {
-      e.preventDefault();
-      $("login-form").submit();
-    });
-  },
   "/clans": function () {
     function e() {
       var e = window.location;
