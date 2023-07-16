@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
@@ -52,7 +53,7 @@ func LoginSubmitHandler(c *gin.Context) {
 		Flags           uint
 	}
 	err := services.DB.QueryRow(`
-	SELECT 
+	SELECT
 		u.id, u.password_md5,
 		u.username, u.password_version,
 		s.country, u.privileges, u.flags
@@ -116,6 +117,14 @@ func LoginSubmitHandler(c *gin.Context) {
 		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "You are not allowed to login. This means your account is either banned or locked.")})
 		return
 	}
+
+	services.Amplitude.Track(amplitude.Event{
+		EventType: "web_login",
+		EventOptions: amplitude.EventOptions{
+			UserID: strconv.Itoa(data.ID),
+		},
+		EventProperties: map[string]interface{}{"source": "hanayo"},
+	})
 
 	uu.SetYCookie(data.ID, c)
 

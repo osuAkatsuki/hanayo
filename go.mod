@@ -36,6 +36,7 @@ require (
 	github.com/FGRibreau/mailchecker/v4 v4.1.19 // indirect
 	github.com/Microsoft/go-winio v0.5.1 // indirect
 	github.com/XiaoMi/pegasus-go-client v0.0.0-20210427083443-f3b6b08bc4c2 // indirect
+	github.com/amplitude/analytics-go v1.0.1 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
