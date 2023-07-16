@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
@@ -157,9 +158,9 @@ func RegisterSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	lid, _ := res.LastInsertId()
+	userId, _ := res.LastInsertId()
 
-	_, err = tx.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	_, err = tx.Exec("INSERT INTO `users_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", userId, username, c.Request.Header.Get("CF-IPCountry"))
 	if err != nil {
 		tx.Rollback()
 		c.Error(err)
@@ -167,7 +168,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	_, err = tx.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	_, err = tx.Exec("INSERT INTO `rx_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 'black', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", userId, username, c.Request.Header.Get("CF-IPCountry"))
 	if err != nil {
 		tx.Rollback()
 		c.Error(err)
@@ -175,7 +176,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	_, err = tx.Exec("INSERT INTO `ap_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, country) VALUES (?, ?, 'black', '', 0, 0, 0, ?);", lid, username, c.Request.Header.Get("CF-IPCountry"))
+	_, err = tx.Exec("INSERT INTO `ap_stats`(id, username, user_color, user_style, ranked_score_std, playcount_std, total_score_std, country) VALUES (?, ?, 'black', '', 0, 0, 0, ?);", userId, username, c.Request.Header.Get("CF-IPCountry"))
 	if err != nil {
 		tx.Rollback()
 		c.Error(err)
@@ -194,9 +195,24 @@ func RegisterSubmitHandler(c *gin.Context) {
 	// delete the key c
 	//db.Exec("DELETE FROM beta_keys WHERE beta_key = ?", c.PostForm("key"))
 
-	uu.SetYCookie(int(lid), c)
+	services.Amplitude.Track(amplitude.Event{
+		EventType: "web_signup",
+		EventOptions: amplitude.EventOptions{
+			UserID: strconv.FormatInt(userId, 10),
+		},
+		EventProperties: map[string]interface{}{"source": "hanayo"},
+	})
 
-	err = uu.LogIP(c, int(lid))
+	services.Amplitude.Identify(
+		amplitude.Identify{},
+		amplitude.EventOptions{
+			UserID: strconv.FormatInt(userId, 10),
+		},
+	)
+
+	uu.SetYCookie(int(userId), c)
+
+	err = uu.LogIP(c, int(userId))
 	if err != nil {
 		fmt.Println("Error logging IP: ", err.Error())
 	}
@@ -205,7 +221,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 	//addMessage(c, successMessage{T(c, "You have been successfully registered on Akatsuki!")})
 	sessions.GetSession(c).Save()
-	c.Redirect(302, "/register/verify?u="+strconv.Itoa(int(lid)))
+	c.Redirect(302, "/register/verify?u="+strconv.Itoa(int(userId)))
 }
 
 func registerResp(c *gin.Context, messages ...msg.Message) {
