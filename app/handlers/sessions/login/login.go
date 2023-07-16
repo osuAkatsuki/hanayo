@@ -6,9 +6,11 @@ import (
 	"html/template"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/gin-gonic/gin"
+	"github.com/mileusna/useragent"
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
@@ -118,16 +120,46 @@ func LoginSubmitHandler(c *gin.Context) {
 		return
 	}
 
+	latitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLatitude"), 64)
+	if err != nil {
+		latitude = 0.0
+	}
+
+	longitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLongitude"), 64)
+	if err != nil {
+		longitude = 0.0
+	}
+
+	userAgent := useragent.Parse(c.Request.UserAgent())
+
 	services.Amplitude.Track(amplitude.Event{
 		EventType: "web_login",
 		EventOptions: amplitude.EventOptions{
-			UserID: strconv.Itoa(data.ID),
+			UserID:      strconv.Itoa(data.ID),
+			IP:          c.ClientIP(),
+			Country:     c.Request.Header.Get("CF-IPCountry"),
+			City:        c.Request.Header.Get("CF-IPCity"),
+			LocationLat: latitude,
+			LocationLng: longitude,
+			Region:      c.Request.Header.Get("CF-Region"),
+			Language:    c.Request.Header.Get("Accept-Language"),
+			OSName:      userAgent.OS,
+			OSVersion:   userAgent.OSVersion,
+			DeviceModel: userAgent.Device,
 		},
 		EventProperties: map[string]interface{}{"source": "hanayo"},
 	})
 
+	identifyObj := amplitude.Identify{}
+	identifyObj.Set("last_login", time.Now().Unix())
+	identifyObj.Set("last_login_country", data.Country)
+	identifyObj.Set("last_login_ip", c.ClientIP())
+	identifyObj.Set("os_name", userAgent.OS)
+	identifyObj.Set("os_version", userAgent.OSVersion)
+	identifyObj.Set("device_model", userAgent.Device)
+
 	services.Amplitude.Identify(
-		amplitude.Identify{},
+		identifyObj,
 		amplitude.EventOptions{
 			UserID: strconv.Itoa(data.ID),
 		},
