@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/fatih/structs"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -106,6 +107,9 @@ func main() {
 		DB:       settings.REDIS_DB,
 	})
 	services.RD = rd
+
+	amplitudeConfig := amplitude.NewConfig(settings.AMPLITUDE_API_KEY)
+	services.Amplitude = amplitude.NewClient(amplitudeConfig)
 
 	// even if it's not release, we say that it's release
 	// so that gin doesn't spam

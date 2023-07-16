@@ -1,6 +1,7 @@
 package services
 
 import (
+	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/jmoiron/sqlx"
 	csrf "github.com/osuAkatsuki/hanayo/internal/csrf"
 	"github.com/thehowl/qsql"
@@ -14,5 +15,6 @@ var (
 	QB        *qsql.DB
 	MG        mailgun.Mailgun
 	RD        *redis.Client
+	Amplitude amplitude.Client
 	CSRF      csrf.CSRF
 )

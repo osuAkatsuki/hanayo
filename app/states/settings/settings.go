@@ -68,6 +68,8 @@ type Settings struct {
 	RECAPTCHA_SECRET_KEY string
 
 	IP_LOOKUP_URL string
+
+	AMPLITUDE_API_KEY string
 }
 
 var settings = Settings{}
@@ -115,6 +117,8 @@ func LoadSettings() Settings {
 	settings.RECAPTCHA_SECRET_KEY = getEnv("RECAPTCHA_SECRET_KEY")
 
 	settings.IP_LOOKUP_URL = getEnv("IP_LOOKUP_URL")
+
+	settings.AMPLITUDE_API_KEY = getEnv("AMPLITUDE_API_KEY")
 
 	return settings
 }
