@@ -23,15 +23,17 @@ var singlePageSnippets = {
   "/login": function () {
     $("#login-form").on("submit", function (e) {
       e.preventDefault();
-      fetch('/login', {
-          method: 'POST',
-          body: $(this).serialize(),
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-          }
-      }).then(function (response) {
-          console.log(response)
-      })
+      $.ajax({
+        type: 'POST',
+        url: '/login',
+        data: $(this).serialize(),
+      }).success(function (data) {
+        if (data.redirect) {
+          window.location.href = data.redirect;
+        } else {
+          $("#login-error").html(data.error);
+        }
+      });
     })
   },
   "/clans": function () {
