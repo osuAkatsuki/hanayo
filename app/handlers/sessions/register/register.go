@@ -203,8 +203,9 @@ func RegisterSubmitHandler(c *gin.Context) {
 		EventProperties: map[string]interface{}{"source": "hanayo"},
 	})
 
+	identifyObj := amplitude.Identify{}
 	services.Amplitude.Identify(
-		amplitude.Identify{},
+		identifyObj,
 		amplitude.EventOptions{
 			UserID: strconv.FormatInt(userId, 10),
 		},
