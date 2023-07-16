@@ -149,14 +149,6 @@ var singlePageSnippets = {
   "/leaderboard": function () {
     page = page === 0 ? 1 : page;
 
-    const eventProperties = {
-      mode: favouriteMode,
-      rx: rx,
-      page: page,
-      country: country,
-    };
-    amplitude.track("leaderboard_page_load", eventProperties);
-
     function loadLeaderboard() {
       var wl = window.location;
       window.history.replaceState(
