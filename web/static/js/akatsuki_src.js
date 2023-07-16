@@ -23,17 +23,7 @@ var singlePageSnippets = {
   "/login": function () {
     $("#login-form").on("submit", function (e) {
       e.preventDefault();
-      $.ajax({
-        type: "POST",
-        url: "/login",
-        data: $(this).serialize(),
-        success: function (data, status, xhttp) {
-          window.location.href = "/";
-        },
-        error: function (data, status, xhttp) {
-          showMessage("error", errorMessage);
-        },
-      });
+      $("login-form").submit();
     });
   },
   "/clans": function () {
