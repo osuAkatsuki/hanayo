@@ -20,6 +20,18 @@
 // this object contains tiny snippets that were deemed too small to be worth
 // their own file.
 var singlePageSnippets = {
+  "/login": function () {
+    $("#login-form").on("submit", function (e) {
+      $.ajax({
+        url: "/login",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function (e) {
+          console.log('worked?')
+        },
+      })
+    })
+  },
   "/clans": function () {
     function e() {
       var e = window.location;
@@ -716,10 +728,6 @@ $(document).ready(function () {
       twemoji.parse(v);
     });
   }
-
-  // amplitude
-  const AMPLITUDE_API_KEY = "d24b21f57762f540f5b9c9791b7e3f91"
-  amplitude.init(AMPLITUDE_API_KEY);
 
   // ripple stuff
   var f = singlePageSnippets[window.location.pathname];
