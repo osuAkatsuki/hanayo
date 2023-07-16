@@ -20,6 +20,11 @@
 // this object contains tiny snippets that were deemed too small to be worth
 // their own file.
 var singlePageSnippets = {
+  "/": function () {
+    console.log("has used id", window.currentUserID);
+    console.log("has amplitude device id", amplitude.getDeviceId());
+    console.log("has amplitude user id", amplitude.getUserId());
+  },
   "/clans": function () {
     function e() {
       var e = window.location;
