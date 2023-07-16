@@ -109,6 +109,7 @@ func main() {
 	services.RD = rd
 
 	amplitudeConfig := amplitude.NewConfig(settings.AMPLITUDE_API_KEY)
+	amplitudeConfig.MinIDLength = 4 // our user ids start from 1000
 	services.Amplitude = amplitude.NewClient(amplitudeConfig)
 
 	// even if it's not release, we say that it's release
