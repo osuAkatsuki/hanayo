@@ -24,18 +24,17 @@ var singlePageSnippets = {
     $("#login-form").on("submit", function (e) {
       e.preventDefault();
       $.ajax({
-        type: 'POST',
-        url: '/login',
+        type: "POST",
+        url: "/login",
         data: $(this).serialize(),
-        success: function (data) {
-          if (data.redirect) {
-            window.location.href = data.redirect;
-          } else {
-            $("#login-error").html(data.error);
-          }
-        }
+        success: function (data, status, xhttp) {
+          window.location.href = "/";
+        },
+        error: function (data, status, xhttp) {
+          showMessage("error", errorMessage);
+        },
       });
-    })
+    });
   },
   "/clans": function () {
     function e() {
@@ -172,7 +171,7 @@ var singlePageSnippets = {
       page: page,
       country: country,
     };
-    amplitude.track('leaderboard_page_load', eventProperties);
+    amplitude.track("leaderboard_page_load", eventProperties);
 
     function loadLeaderboard() {
       var wl = window.location;
