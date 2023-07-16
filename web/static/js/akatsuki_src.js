@@ -27,11 +27,12 @@ var singlePageSnippets = {
         type: 'POST',
         url: '/login',
         data: $(this).serialize(),
-      }).success(function (data) {
-        if (data.redirect) {
-          window.location.href = data.redirect;
-        } else {
-          $("#login-error").html(data.error);
+        success: function (data) {
+          if (data.redirect) {
+            window.location.href = data.redirect;
+          } else {
+            $("#login-error").html(data.error);
+          }
         }
       });
     })
