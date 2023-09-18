@@ -157,14 +157,14 @@
                           {{ range .badges }}
                             <div class="badge" data-tooltip="{{ .name }}">
                               <a>
-                                <i class="{{ faIcon .icon }} small icon m-less"></i>
+                                <i class="{{ .icon }} small icon m-less"></i>
                               </a>
                             </div>
                           {{ end }}
                           {{ with .custom_badge }}
                             <div class="badge" data-tooltip="{{ .name }}">
                               <a>
-                                <i class="{{ faIcon .icon }} small icon m-less"></i>
+                                <i class="{{ .icon }} small icon m-less"></i>
                               </a>
                             </div>
                           {{ end }}
