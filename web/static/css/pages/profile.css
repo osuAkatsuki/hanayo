@@ -1,11 +1,11 @@
 :root {
-  --colour-community: #b02025;
+  --colour-community: #ff695e;
   --colour-accounts: #ff4404;
-  --colour-product: #2384fa;
+  --colour-product: #b02025;
   --colour-dev: #66a9f7;
   --colour-event: #ffd50a;
-  --colour-nominator: #8636ff;
-  --colour-scorewatcher: #d06ae7;
+  --colour-nominator: #a333c8;
+  --colour-scorewatcher:#e07fc4;
   --colour-supporter: #5fd5eb;
   --colour-premium: #fff176;
 }
