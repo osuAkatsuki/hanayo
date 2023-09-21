@@ -94,12 +94,12 @@
                         {{ end }}
                         {{ .username }}
                       </h1>
-                      {{ if $dev }}
-                        <div class="profile-label label-dev label-full">PRODUCT DEVELOPER</div>
-                        <div class="profile-label label-dev label-mobile">DEV</div>
-                      {{ else if $product }}
+                      {{ if $product }}
                         <div class="profile-label label-product label-full">PRODUCT MANAGER</div>
                         <div class="profile-label label-product label-mobile">PMT</div>
+                      {{ else if $dev }}
+                        <div class="profile-label label-dev label-full">PRODUCT DEVELOPER</div>
+                        <div class="profile-label label-dev label-mobile">DEV</div>
                       {{ else if $community }}
                         <div class="profile-label label-community label-full">COMMUNITY MANAGER</div>
                         <div class="profile-label label-community label-mobile">CMT</div>
