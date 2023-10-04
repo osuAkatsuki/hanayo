@@ -1,13 +1,15 @@
 {
-    overrides: [
+  overrides:
+    [
       {
         files: ["*.html"],
-        options: {
-          parser: "go-template",
-          bracketSameLine: true,
-          htmlWhitespaceSensitivity: "ignore",
-          plugins: [require.resolve('prettier-plugin-go-template')],
-        },
+        options:
+          {
+            parser: "go-template",
+            bracketSameLine: true,
+            htmlWhitespaceSensitivity: "ignore",
+            plugins: [require.resolve('prettier-plugin-go-template')],
+          },
       },
     ],
-  }
+}
