@@ -31,51 +31,6 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
           </div>
         </div>
       {{ end }}
-      <div class="ui segments">
-        <div class="ui segment">
-          <h2 class="ui header">
-            {{ $.T "Did you know?" }}
-            <div class="sub header">
-              {{ if .has_donor }}
-                {{ $.T "(Probably.)" }}
-              {{ else }}
-                {{ $.T "(Probably not.)" }}
-              {{ end }}
-            </div>
-          </h2>
-        </div>
-        <div class="ui segment">
-          <h3 class="ui header no top margin">
-            <i class="money icon"></i>
-            <div class="content">{{ $.T "Akatsuki is not cheap to run." }}</div>
-          </h3>
-          <blockquote>
-            {{ $.T "While we provide this service for free, we still have to pay for it. What if we always took the money out of our own pockets? 1. we would be broke, 2. we wouldn't be able to upgrade our hardware to accomodate our users. While we do have loads of software optimizations that allow us to have Akatsuki run crazy fast while still being on not such high-end hardware, the more users we have, the higher-end our hardware needs to be. So we are asking you for help on this :)." }}
-          </blockquote>
-          <h3 class="ui header">
-            <i class="book icon"></i>
-            <div class="content">{{ $.T "We are still students." }}</div>
-          </h3>
-          <blockquote>
-            {{ $.T "None of the Akatsuki developers currently have a day job, as we all occupied with other things, such as keeping Akatsuki running smoothly! This means that we get most of our income as students through investments, or occasional sidejobs." }}
-          </blockquote>
-          <h3 class="ui header">
-            <i class="mouse pointer icon"></i>
-            <div class="content">
-              {{ $.T "We do not have ads. And never will." }}
-            </div>
-          </h3>
-          <blockquote>
-            {{ $.T "You may have adblock enabled and have not noticed, but we don't have ads anywhere on our website. We believe ads are bad, as they can be very annoying to you and that you would rather spend a few bucks to help us rather than watch annoying ads all the time." }}
-          </blockquote>
-          <h3 class="ui header">
-            <i class="wizard icon"></i>
-            <div class="content">
-              {{ $.T "We love picking random icons from our icon library." }}
-            </div>
-          </h3>
-        </div>
-      </div>
       <div class="ui segment">
         <h1 class="ui center aligned header">
           {{ $.T "So what can you do?" }}
