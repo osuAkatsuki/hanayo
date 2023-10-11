@@ -13,7 +13,7 @@ fi
 
 if [[ $PULL_SECRETS_FROM_VAULT -eq 1 ]]; then
   pip install -i $PYPI_INDEX_URL akatsuki-cli
-  akatsuki vault get bancho-service $APP_ENV -o .env
+  akatsuki vault get hanayo $APP_ENV -o .env
   source .env
 fi
 
