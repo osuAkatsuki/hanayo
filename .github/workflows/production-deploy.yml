@@ -23,4 +23,4 @@ jobs:
             docker build -t hanayo:latest .
             cd /home/akatsuki/workbench
             docker-compose restart \
-              hanayo
+              hanayo-api
