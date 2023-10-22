@@ -14,7 +14,6 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/microcosm-cc/bluemonday v1.0.24
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
-	github.com/osuripple/cheesegull v2.1.1-0.20180422113429-9bdfa825f309+incompatible
 	github.com/pariz/gountries v0.1.6
 	github.com/rjeczalik/notify v0.9.3-0.20181126183243-629144ba06a1
 	github.com/russross/blackfriday/v2 v2.1.0

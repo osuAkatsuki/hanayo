@@ -10,8 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
+	beatmaps "github.com/osuAkatsuki/hanayo/app/usecases/beatmaps"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
-	cheesegull "github.com/osuripple/cheesegull/models"
 )
 
 type BaseTemplateData struct {
@@ -95,8 +95,8 @@ type BeatmapPageData struct {
 	BaseTemplateData
 
 	Found      bool
-	Beatmap    cheesegull.Beatmap
-	Beatmapset cheesegull.Set
+	Beatmap    beatmaps.Beatmap
+	Beatmapset beatmaps.BeatmapSet
 	SetJSON    string
 }
 

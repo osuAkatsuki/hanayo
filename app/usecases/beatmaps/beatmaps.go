@@ -5,12 +5,48 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"time"
 
 	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
-	"github.com/osuripple/cheesegull/models"
 )
 
-func GetBeatmapSetDataFromDirectAPI(b string) (bset models.Set, err error) {
+type Beatmap struct {
+	ID               int `json:"BeatmapID"`
+	ParentSetID      int
+	DiffName         string
+	FileMD5          string
+	Mode             int
+	BPM              float64
+	AR               float32
+	OD               float32
+	CS               float32
+	HP               float32
+	TotalLength      int
+	HitLength        int
+	Playcount        int
+	Passcount        int
+	MaxCombo         int
+	DifficultyRating float64
+}
+type BeatmapSet struct {
+	ID               int `json:"SetID"`
+	ChildrenBeatmaps []Beatmap
+	RankedStatus     int
+	ApprovedDate     time.Time
+	LastUpdate       time.Time
+	LastChecked      time.Time
+	Artist           string
+	Title            string
+	Creator          string
+	Source           string
+	Tags             string
+	HasVideo         int
+	Genre            int
+	Language         int
+	Favourites       int
+}
+
+func GetBeatmapSetDataFromDirectAPI(b string) (bset BeatmapSet, err error) {
 	settings := settingsState.GetSettings()
 	resp, err := http.Get(settings.BEATMAP_MIRROR_API_URL + "/b/" + b + "?full")
 	if err != nil {
@@ -30,7 +66,7 @@ func GetBeatmapSetDataFromDirectAPI(b string) (bset models.Set, err error) {
 	return bset, nil
 }
 
-func GetBeatmapData(b string) (beatmap models.Beatmap, err error) {
+func GetBeatmapData(b string) (beatmap Beatmap, err error) {
 	settings := settingsState.GetSettings()
 	resp, err := http.Get(settings.BEATMAP_MIRROR_API_URL + "/b/" + b)
 	if err != nil {
@@ -50,7 +86,7 @@ func GetBeatmapData(b string) (beatmap models.Beatmap, err error) {
 	return beatmap, nil
 }
 
-func GetBeatmapSetData(beatmap models.Beatmap) (bset models.Set, err error) {
+func GetBeatmapSetData(beatmap Beatmap) (bset BeatmapSet, err error) {
 	settings := settingsState.GetSettings()
 	resp, err := http.Get(settings.BEATMAP_MIRROR_API_URL + "/s/" + strconv.Itoa(beatmap.ParentSetID))
 	if err != nil {
