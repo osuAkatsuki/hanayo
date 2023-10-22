@@ -11,6 +11,8 @@ COPY . /srv/root
 
 RUN git submodule init && git submodule update --remote --recursive --merge
 
+RUN apt install -y python3-pip
+
 RUN go build
 
 EXPOSE 80
