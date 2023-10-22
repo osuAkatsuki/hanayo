@@ -105,7 +105,7 @@
                     <i class="fa-solid fa-download icon"></i>
                     {{ $.T "Mirror" }}
                   </a>
-                  {{ if .Beatmapset.HasVideo }}
+                  {{ if ne .Beatmapset.HasVideo 0 }}
                     <a
                       href="http://akatsuki.gg/d/{{ .Beatmapset.ID }}?novideo"
                       class="ui gray labeled icon button">
