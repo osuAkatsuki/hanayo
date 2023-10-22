@@ -40,7 +40,7 @@ type BeatmapSet struct {
 	Creator          string
 	Source           string
 	Tags             string
-	HasVideo         int
+	HasVideo         int // bool in cheesegull
 	Genre            int
 	Language         int
 	Favourites       int
