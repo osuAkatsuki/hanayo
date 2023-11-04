@@ -699,170 +699,128 @@ function loadScoresPage(type, mode) {
   else if (preferRelax == 2) page = ++aPage[mode][type];
   else page = ++currentPage[mode][type];
 
-  if (type != "pinned") {
-    api(
-      "users/scores/" + type,
-      {
-        mode: mode,
-        p: page,
-        l: 10,
-        rx: preferRelax,
-        id: userID,
-        uid: userID,
-        actual_id: window.actualID,
-      },
-      function (r) {
-        if (type === "first") {
-          let rxAsString =
-            preferRelax != 0 ? (preferRelax == 1 ? "r" : "a") : "v";
-          let firstSuffix = `${rxAsString}${mode}`;
-          $(`#first-${firstSuffix}`).text(`(${r.total} in total)`);
-        }
-
-        console.log(r, type);
-        if (r.scores == null) {
-          disableLoadMoreButton(type, mode);
-          table.html(scoreNotFoundElement);
-          return;
-        } else {
-          if (r.scores.length === 0) {
-            disableLoadMoreButton(type, mode);
-            table.html(scoreNotFoundElement);
-            return;
-          }
-        }
-
-        r.scores.forEach(function (v, idx) {
-          scoreStore[v.id] = v;
-
-          if (v.completed != 0) {
-            var scoreRank = getRank(
-              mode,
-              v.mods,
-              v.accuracy,
-              v.count_300,
-              v.count_100,
-              v.count_50,
-              v.count_miss
-            );
-          } else {
-            var scoreRank = "F";
-          }
-
-          table.append(`
-				<div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
-					<div class="map-content1">
-						<div class="map-data">
-							<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id
-            }/covers/cover@2x.jpg); background-size: cover;">
-								<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
-							</div>
-							<div class="map-title-block">
-								<div class="map-title"><a class="beatmap-link">
-									${escapeHTML(v.beatmap.song_name)}
-									</a>
-								</div>
-								<div class="play-stats">
-									${addCommas(
-              v.score
-            )} / ${addCommas(v.max_combo)}x / <b>${getScoreMods(v.mods, true)}</b>
-								</div>
-								<div class="map-date">
-									<time class="new timeago" datetime="${v.time}">
-										${v.time}
-									</time>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="map-content2">
-						<div class="score-details d-flex">
-							<div class="score-details_right-block">
-								<div class="score-details_pp-block">
-									<div class="map-pp">
-										${ppOrScore(v.pp, v.score)}
-									</div>
-									<div class="map-acc">accuracy:&nbsp;<b>
-										${v.accuracy.toFixed(2)}%
-										</b>
-									</div>
-								</div>
-								<div data-btns-score-id='${v.id}'>
-									${downloadStar(v.id)}
-									${userID == window.actualID && !v.pinned ? pinButton(v.id, preferRelax) : ""}
-								</div>
-								<div class="score-details_icon-block">
-									<i class="angle right icon"></i>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				`);
-        });
-        $(".new.timeago").timeago().removeClass("new");
-        $(".new.map-single").click(viewScoreInfo).removeClass("new");
-        $(".new.downloadstar")
-          .on("click", function (e) {
-            e.stopPropagation();
-          })
-          .removeClass("new");
-        $(".new.pinbutton")
-          .on("click", function (e) {
-            e.stopPropagation();
-          })
-          .removeClass("new");
-        $(".new.unpinbutton")
-          .on("click", function (e) {
-            e.stopPropagation();
-          })
-          .removeClass("new");
-        var enable = true;
-        if (r.scores.length != 10) enable = false;
-        disableLoadMoreButton(type, mode, enable);
+  api(
+    "users/scores/" + type,
+    {
+      mode: mode,
+      p: page,
+      l: 10,
+      rx: preferRelax,
+      id: userID,
+      uid: userID,
+      actual_id: window.actualID,
+    },
+    function (r) {
+      if (type === "first") {
+        let rxAsString =
+          preferRelax != 0 ? (preferRelax == 1 ? "r" : "a") : "v";
+        let firstSuffix = `${rxAsString}${mode}`;
+        $(`#first-${firstSuffix}`).text(`(${r.total} in total)`);
       }
-    );
-  } else {
-    pin_api(
-      "pinned",
-      {
-        mode: mode,
-        p: page,
-        l: 10,
-        rx: preferRelax,
-        id: userID,
-      },
-      function (r) {
+
+      console.log(r, type);
+      if (r.scores == null) {
+        disableLoadMoreButton(type, mode);
+        table.html(scoreNotFoundElement);
+        return;
+      } else {
         if (r.scores.length === 0) {
-          table.html(scoreNotFoundElement);
           disableLoadMoreButton(type, mode);
+          table.html(scoreNotFoundElement);
           return;
         }
-
-        r.scores.forEach((score) => do_pin(table, score, mode));
-        $(".new.timeago").timeago().removeClass("new");
-        $(".new.map-single").click(viewScoreInfo).removeClass("new");
-        $(".new.downloadstar")
-          .on("click", function (e) {
-            e.stopPropagation();
-          })
-          .removeClass("new");
-        $(".new.pinbutton")
-          .on("click", function (e) {
-            e.stopPropagation();
-          })
-          .removeClass("new");
-        $(".new.unpinbutton")
-          .on("click", function (e) {
-            e.stopPropagation();
-          })
-          .removeClass("new");
-        var enable = true;
-        if (r.scores.length != 10) enable = false;
-        disableLoadMoreButton(type, mode, enable);
       }
-    );
-  }
+
+      r.scores.forEach(function (v, idx) {
+        scoreStore[v.id] = v;
+
+        if (v.completed != 0) {
+          var scoreRank = getRank(
+            mode,
+            v.mods,
+            v.accuracy,
+            v.count_300,
+            v.count_100,
+            v.count_50,
+            v.count_miss
+          );
+        } else {
+          var scoreRank = "F";
+        }
+
+        table.append(`
+      <div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
+        <div class="map-content1">
+          <div class="map-data">
+            <div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id
+          }/covers/cover@2x.jpg); background-size: cover;">
+              <div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
+            </div>
+            <div class="map-title-block">
+              <div class="map-title"><a class="beatmap-link">
+                ${escapeHTML(v.beatmap.song_name)}
+                </a>
+              </div>
+              <div class="play-stats">
+                ${addCommas(
+            v.score
+          )} / ${addCommas(v.max_combo)}x / <b>${getScoreMods(v.mods, true)}</b>
+              </div>
+              <div class="map-date">
+                <time class="new timeago" datetime="${v.time}">
+                  ${v.time}
+                </time>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="map-content2">
+          <div class="score-details d-flex">
+            <div class="score-details_right-block">
+              <div class="score-details_pp-block">
+                <div class="map-pp">
+                  ${ppOrScore(v.pp, v.score)}
+                </div>
+                <div class="map-acc">accuracy:&nbsp;<b>
+                  ${v.accuracy.toFixed(2)}%
+                  </b>
+                </div>
+              </div>
+              <div data-btns-score-id='${v.id}'>
+                ${downloadStar(v.id)}
+                ${userID == window.actualID && !v.pinned ? pinButton(v.id, preferRelax) : ""}
+              </div>
+              <div class="score-details_icon-block">
+                <i class="angle right icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      `);
+      });
+      $(".new.timeago").timeago().removeClass("new");
+      $(".new.map-single").click(viewScoreInfo).removeClass("new");
+      $(".new.downloadstar")
+        .on("click", function (e) {
+          e.stopPropagation();
+        })
+        .removeClass("new");
+      $(".new.pinbutton")
+        .on("click", function (e) {
+          e.stopPropagation();
+        })
+        .removeClass("new");
+      $(".new.unpinbutton")
+        .on("click", function (e) {
+          e.stopPropagation();
+        })
+        .removeClass("new");
+      var enable = true;
+      if (r.scores.length != 10) enable = false;
+      disableLoadMoreButton(type, mode, enable);
+    }
+  );
 }
 function refreshTable(type) {
   loadScoresPage(type, mode);
@@ -998,53 +956,12 @@ function unpinSuccess(data) {
   showMessage("success", "Score unpinned.");
 }
 
-function pin_api(endpoint, data, success, failure, post) {
-  if (typeof data == "function") {
-    success = data;
-    data = null;
-  }
-  if (typeof failure == "boolean") {
-    post = failure;
-    failure = undefined;
-  }
-
-  var errorMessage =
-    "An error occurred while contacting the Akatsuki API. Please report this to an Akatsuki developer.";
-
-  $.ajax({
-    method: post ? "POST" : "GET",
-    dataType: "json",
-    url: hanayoConf.baseAPI + "/pinned/" + endpoint,
-    data: post ? JSON.stringify(data) : data,
-    contentType: post ? "application/json; charset=utf-8" : "",
-    success: function (data) {
-      if (data.code >= 500) {
-        console.warn(data);
-        showMessage("error", errorMessage);
-      }
-      success(data);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      if (
-        jqXHR.status >= 400 &&
-        jqXHR.status < 500 &&
-        typeof failure == "function"
-      ) {
-        failure(jqXHR.responseJSON);
-        return;
-      }
-      console.warn(jqXHR, textStatus, errorThrown);
-      showMessage("error", errorMessage);
-    },
-  });
-}
-
 function pinScore(id, rx) {
-  pin_api("pin", { id: id, rx: rx }, pinSuccess, function (data) { }, true);
+  api("users/scores/pin", { id: id, rx: rx }, pinSuccess, function (data) { }, true);
 }
 
 function unpinScore(id, rx) {
-  pin_api("unpin", { id: id, rx: rx }, unpinSuccess, function (data) { }, true);
+  api("users/scores/unpin", { id: id, rx: rx }, unpinSuccess, function (data) { }, true);
 }
 
 function pinButton(id, rx) {
