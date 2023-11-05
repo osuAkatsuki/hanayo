@@ -60,7 +60,10 @@ func AvatarSubmitHandler(c *gin.Context) {
 	// seek file to beginning
 	f.Seek(0, os.SEEK_SET)
 
-	sess := session.Must(session.NewSession())
+	sess := session.Must(session.NewSession(&aws.Config{
+		Region:   aws.String(settings.AWS_REGION),
+		Endpoint: aws.String(settings.AWS_ENDPOINT_URL),
+	}))
 	uploader := s3manager.NewUploader(sess)
 	result, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket:      aws.String(settings.AWS_BUCKET_NAME),
