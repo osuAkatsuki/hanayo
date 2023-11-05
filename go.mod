@@ -20,7 +20,7 @@ require (
 	github.com/thehowl/cieca v0.0.0-20161122163418-3d95e04c9b12
 	github.com/thehowl/conf v0.1.1-0.20161010150023-bdfc17531a74
 	github.com/thehowl/qsql v0.0.0-20160712153739-9b9405451f47
-	golang.org/x/crypto v0.0.0-20220214200702-86341886e292
+	golang.org/x/crypto v0.14.0
 	gopkg.in/DataDog/dd-trace-go.v1 v1.43.1
 	gopkg.in/mailgun/mailgun-go.v1 v1.1.1
 	gopkg.in/redis.v5 v5.2.9
@@ -37,6 +37,7 @@ require (
 	github.com/XiaoMi/pegasus-go-client v0.0.0-20210427083443-f3b6b08bc4c2 // indirect
 	github.com/amplitude/analytics-go v1.0.1 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/aws/aws-sdk-go v1.47.3 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d // indirect
@@ -55,6 +56,7 @@ require (
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
@@ -112,8 +114,8 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.34.0 // indirect
-	golang.org/x/net v0.10.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
+	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
