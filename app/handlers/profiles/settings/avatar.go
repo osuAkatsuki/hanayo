@@ -65,11 +65,11 @@ func AvatarSubmitHandler(c *gin.Context) {
 		Endpoint: aws.String(settings.AWS_ENDPOINT_URL),
 	}))
 	uploader := s3manager.NewUploader(sess)
-	result, err := uploader.Upload(&s3manager.UploadInput{
+	_, err = uploader.Upload(&s3manager.UploadInput{
 		Bucket:      aws.String(settings.AWS_BUCKET_NAME),
 		Key:         aws.String(fmt.Sprintf("avatars/%d.png", ctx.User.ID)),
 		Body:        f,
-		ContentType: "image/png",
+		ContentType: aws.String("image/png"),
 		// TODO: CacheControl?
 	})
 	if err != nil {
