@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - redis-ssl
 
 jobs:
   build:
