@@ -947,6 +947,7 @@ function unpinSuccess(data) {
   }
 
   var otherScores = $(`[data-btns-score-id="${data["score_id"]}"]`);
+  otherScores.find(".unpinbutton").remove();
   otherScores.append(pinButton(data["score_id"], preferRelax));
 
   $(".new.pinbutton")
