@@ -110,7 +110,9 @@ func main() {
 
 	var tlsConfig *tls.Config
 	if settings.REDIS_USE_SSL {
-		tlsConfig = &tls.Config{}
+		tlsConfig = &tls.Config{
+			ServerName: "ondigitalocean.com",
+		}
 	}
 
 	// initialise redis
