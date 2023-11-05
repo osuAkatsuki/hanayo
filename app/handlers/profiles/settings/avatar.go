@@ -6,6 +6,7 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	"image/png"
+	"io"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -58,7 +59,7 @@ func AvatarSubmitHandler(c *gin.Context) {
 		return
 	}
 	// seek file to beginning
-	f.Seek(0, os.SEEK_SET)
+	f.Seek(0, io.SeekStart)
 
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region:   aws.String(settings.AWS_REGION),
