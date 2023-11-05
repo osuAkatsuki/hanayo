@@ -8,6 +8,9 @@ import (
 	"image/png"
 	"os"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/gin-gonic/gin"
 	"github.com/nfnt/resize"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
@@ -28,10 +31,6 @@ func AvatarSubmitHandler(c *gin.Context) {
 	defer func() {
 		tu.SimpleReply(c, m)
 	}()
-	if settings.APP_AVATAR_PATH == "" {
-		m = msg.ErrorMessage{lu.T(c, "Changing avatar is currently not possible.")}
-		return
-	}
 	file, _, err := c.Request.FormFile("avatar")
 	if err != nil {
 		m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
@@ -44,15 +43,32 @@ func AvatarSubmitHandler(c *gin.Context) {
 	}
 	img = resize.Thumbnail(256, 256, img, resize.Bilinear)
 
-	f, err := os.Create(fmt.Sprintf("%s/%d.png", settings.APP_AVATAR_PATH, ctx.User.ID))
-	defer f.Close()
+	f, err := os.CreateTemp("", fmt.Sprintf("%d.png", ctx.User.ID))
 	if err != nil {
 		m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
 		c.Error(err)
 		return
 	}
+	defer os.Remove(f.Name())
 
 	err = png.Encode(f, img)
+	if err != nil {
+		m = msg.ErrorMessage{lu.T(c, "We were not able to save your avatar.")}
+		c.Error(err)
+		return
+	}
+	// seek file to beginning
+	f.Seek(0, os.SEEK_SET)
+
+	sess := session.Must(session.NewSession())
+	uploader := s3manager.NewUploader(sess)
+	result, err := uploader.Upload(&s3manager.UploadInput{
+		Bucket:      aws.String(settings.AWS_BUCKET_NAME),
+		Key:         aws.String(fmt.Sprintf("avatars/%d.png", ctx.User.ID)),
+		Body:        f,
+		ContentType: "image/png",
+		// TODO: CacheControl?
+	})
 	if err != nil {
 		m = msg.ErrorMessage{lu.T(c, "We were not able to save your avatar.")}
 		c.Error(err)
