@@ -789,6 +789,7 @@ function loadScoresPage(type, mode) {
               <div data-btns-score-id='${v.id}'>
                 ${downloadStar(v.id)}
                 ${userID == window.actualID && !v.pinned ? pinButton(v.id, preferRelax) : ""}
+                ${userID == window.actualID && v.pinned ? unpinButton(v.id, preferRelax) : ""}
               </div>
               <div class="score-details_icon-block">
                 <i class="angle right icon"></i>
