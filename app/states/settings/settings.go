@@ -37,8 +37,6 @@ type Settings struct {
 	APP_API_URL    string
 	APP_BANCHO_URL string
 
-	APP_AVATAR_PATH string
-
 	BEATMAP_MIRROR_API_URL      string
 	BEATMAP_DOWNLOAD_MIRROR_URL string
 	DISCORD_SERVER_URL          string
@@ -58,6 +56,12 @@ type Settings struct {
 	REDIS_PORT            int
 	REDIS_PASS            string
 	REDIS_DB              int
+
+	AWS_REGION            string
+	AWS_ACCESS_KEY_ID     string
+	AWS_SECRET_ACCESS_KEY string
+	AWS_ENDPOINT_URL      string
+	AWS_BUCKET_NAME       string
 
 	MAILGUN_DOMAIN     string
 	MAILGUN_API_KEY    string
@@ -88,8 +92,6 @@ func LoadSettings() Settings {
 	settings.APP_API_URL = getEnv("APP_API_URL")
 	settings.APP_BANCHO_URL = getEnv("APP_BANCHO_URL")
 
-	settings.APP_AVATAR_PATH = getEnv("APP_AVATAR_PATH")
-
 	settings.BEATMAP_MIRROR_API_URL = getEnv("BEATMAP_MIRROR_API_URL")
 	settings.BEATMAP_DOWNLOAD_MIRROR_URL = getEnv("BEATMAP_DOWNLOAD_MIRROR_URL")
 	settings.DISCORD_SERVER_URL = getEnv("DISCORD_SERVER_URL")
@@ -107,6 +109,12 @@ func LoadSettings() Settings {
 	settings.REDIS_PORT = strToInt(getEnv("REDIS_PORT"))
 	settings.REDIS_PASS = getEnv("REDIS_PASS")
 	settings.REDIS_DB = strToInt(getEnv("REDIS_DB"))
+
+	settings.AWS_REGION = getEnv("AWS_REGION")
+	settings.AWS_ACCESS_KEY_ID = getEnv("AWS_ACCESS_KEY_ID")
+	settings.AWS_SECRET_ACCESS_KEY = getEnv("AWS_SECRET_ACCESS_KEY")
+	settings.AWS_ENDPOINT_URL = getEnv("AWS_ENDPOINT_URL")
+	settings.AWS_BUCKET_NAME = getEnv("AWS_BUCKET_NAME")
 
 	settings.MAILGUN_DOMAIN = getEnv("MAILGUN_DOMAIN")
 	settings.MAILGUN_API_KEY = getEnv("MAILGUN_API_KEY")

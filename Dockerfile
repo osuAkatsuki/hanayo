@@ -4,10 +4,9 @@ RUN apt-get update && apt-get install git -y
 
 WORKDIR /srv/root
 
-COPY go.mod go.sum ./
-RUN go mod download && go mod verify
+COPY . .
 
-COPY . /srv/root
+RUN go mod download && go mod verify
 
 RUN git submodule init && git submodule update --remote --recursive --merge
 
