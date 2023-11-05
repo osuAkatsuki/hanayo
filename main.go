@@ -105,7 +105,7 @@ func main() {
 	var tlsConfig *tls.Config
 	if settings.REDIS_USE_SSL {
 		tlsConfig = &tls.Config{
-			ServerName: "*.c.db.ondigitalocean.com",
+			ServerName: settings.REDIS_SSL_SERVER_NAME,
 		}
 	}
 
