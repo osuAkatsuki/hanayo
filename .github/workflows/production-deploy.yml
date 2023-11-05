@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - avatars-on-s3
 
 jobs:
   build:
