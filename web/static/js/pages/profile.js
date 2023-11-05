@@ -747,9 +747,10 @@ function loadScoresPage(type, mode) {
         } else {
           var scoreRank = "F";
         }
-
+      
+        var dataPinned = type === "pinned" ? `data-pinnedscoreid="${v.id}"` : ""
         table.append(`
-      <div class="new map-single complete-${v.completed}" data-scoreid="${v.id}">
+      <div class="new map-single complete-${v.completed}" data-scoreid="${v.id}" ${dataPinned}>
         <div class="map-content1">
           <div class="map-data">
             <div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id
