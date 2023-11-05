@@ -6,6 +6,7 @@ package main
 // repo, but apparently, gin is dead.
 
 import (
+	"crypto/tls"
 	"encoding/gob"
 	"fmt"
 	"time"
@@ -101,10 +102,18 @@ func main() {
 	}
 
 	// initialise redis
+	var tlsConfig *tls.Config
+	if settings.REDIS_USE_SSL {
+		tlsConfig = &tls.Config{
+			ServerName: "*.c.db.ondigitalocean.com",
+		}
+	}
+
 	rd := redis.NewClient(&redis.Options{
-		Addr:     fmt.Sprintf("%s:%d", settings.REDIS_HOST, settings.REDIS_PORT),
-		Password: settings.REDIS_PASS,
-		DB:       settings.REDIS_DB,
+		Addr:      fmt.Sprintf("%s:%d", settings.REDIS_HOST, settings.REDIS_PORT),
+		Password:  settings.REDIS_PASS,
+		DB:        settings.REDIS_DB,
+		TLSConfig: tlsConfig,
 	})
 	services.RD = rd
 
