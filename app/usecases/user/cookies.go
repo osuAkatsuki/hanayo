@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"database/sql"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -17,6 +18,7 @@ func SetYCookie(userID int, c *gin.Context) {
 	err := services.DB.QueryRow("SELECT token FROM identity_tokens WHERE userid = ? LIMIT 1", userID).Scan(&token)
 	if err != nil && err != sql.ErrNoRows {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		return
 	}
 	if token != "" {
