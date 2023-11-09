@@ -2,6 +2,7 @@ package profiles
 
 import (
 	"database/sql"
+	"log/slog"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -28,6 +29,7 @@ func UserProfilePageHandler(c *gin.Context) {
 		err := services.DB.QueryRow("SELECT id, username, privileges FROM users WHERE username = ? AND "+ctx.OnlyUserPublic()+" LIMIT 1", u).Scan(&userID, &username, &privileges)
 		if err != nil && err != sql.ErrNoRows {
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 		}
 	} else {
 		err := services.DB.QueryRow(`SELECT id, username, privileges FROM users WHERE id = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
@@ -37,9 +39,11 @@ func UserProfilePageHandler(c *gin.Context) {
 			err := services.DB.QueryRow(`SELECT id, username, privileges FROM users WHERE username = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
 			if err != nil && err != sql.ErrNoRows {
 				c.Error(err)
+				slog.ErrorContext(c, err.Error())
 			}
 		default:
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 		}
 	}
 
