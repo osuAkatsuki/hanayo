@@ -7,6 +7,7 @@ import (
 	_ "image/jpeg"
 	"image/png"
 	"io"
+	"log/slog"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -76,6 +77,7 @@ func AvatarSubmitHandler(c *gin.Context) {
 	if err != nil {
 		m = msg.ErrorMessage{lu.T(c, "We were not able to save your avatar.")}
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		return
 	}
 

@@ -3,6 +3,7 @@ package misc
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strings"
@@ -27,12 +28,14 @@ func RecaptchaCheck(c *gin.Context) bool {
 		"application/x-www-form-urlencoded", strings.NewReader(f.Encode()))
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		return false
 	}
 
 	data, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		return false
 	}
 
@@ -42,6 +45,7 @@ func RecaptchaCheck(c *gin.Context) bool {
 	err = json.Unmarshal(data, &e)
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		return false
 	}
 
@@ -61,6 +65,7 @@ func NormaliseURLValues(uv url.Values) map[string]string {
 func MustCSRFGenerate(u int) string {
 	v, err := services.CSRF.Generate(u)
 	if err != nil {
+		slog.Error("Could not generate CSRF token", "error", err)
 		panic(err)
 	}
 	return v

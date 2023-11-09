@@ -1,6 +1,7 @@
 package sessions
 
 import (
+	"log/slog"
 	"net/http"
 	"net/url"
 	"time"
@@ -35,6 +36,7 @@ func SessionInitializer() func(c *gin.Context) {
 
 			if err != nil {
 				c.Error(err)
+				slog.ErrorContext(c, err.Error())
 			}
 
 			if sess.Get("logout") == nil {

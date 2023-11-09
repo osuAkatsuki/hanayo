@@ -5,6 +5,7 @@ import (
 	"image"
 	"image/gif"
 	"image/jpeg"
+	"log/slog"
 	"os"
 	"regexp"
 	"strings"
@@ -60,6 +61,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 			return
 		}
 		err = jpeg.Encode(f, img, &jpeg.Options{
@@ -68,6 +70,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 			return
 		}
 		saveProfileBackground(ctx, 1, fmt.Sprintf("%d.jpg?%d", ctx.User.ID, time.Now().Unix()))
@@ -100,12 +103,14 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 			return
 		}
 		err = gif.EncodeAll(f, gifImage)
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 			return
 		}
 		saveProfileBackground(ctx, 3, fmt.Sprintf("%d.gif?%d", ctx.User.ID, time.Now().Unix()))

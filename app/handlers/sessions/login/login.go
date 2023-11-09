@@ -2,8 +2,8 @@ package login
 
 import (
 	"database/sql"
-	"fmt"
 	"html/template"
+	"log/slog"
 	"strconv"
 	"strings"
 	"time"
@@ -77,6 +77,7 @@ func LoginSubmitHandler(c *gin.Context) {
 		return
 	case err != nil:
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -91,6 +92,7 @@ func LoginSubmitHandler(c *gin.Context) {
 		data.Password,
 		c.PostForm("password"),
 	); err != nil {
+		slog.Error("Error comparing passwords", "error", err.Error())
 		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Wrong password.")})
 		return
 	}
@@ -102,6 +104,8 @@ func LoginSubmitHandler(c *gin.Context) {
 			if _, err := services.DB.Exec("UPDATE users SET password_md5 = ? WHERE id = ?", string(pass), data.ID); err == nil {
 				data.Password = string(pass)
 			}
+		} else {
+			slog.Error("Error updating password", "error", err.Error())
 		}
 	}
 
@@ -122,11 +126,13 @@ func LoginSubmitHandler(c *gin.Context) {
 
 	latitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLatitude"), 64)
 	if err != nil {
+		slog.Error("Error parsing latitude", "error", err.Error())
 		latitude = 0.0
 	}
 
 	longitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLongitude"), 64)
 	if err != nil {
+		slog.Error("Error parsing longitude", "error", err.Error())
 		longitude = 0.0
 	}
 
@@ -192,6 +198,7 @@ func AfterLogin(c *gin.Context, id int, country string, flags uint) {
 	if err != nil {
 		eh.Resp500(c)
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		return
 	}
 	sessions.GetSession(c).Set("token", s)
@@ -201,6 +208,6 @@ func AfterLogin(c *gin.Context, id int, country string, flags uint) {
 
 	err = uu.LogIP(c, id)
 	if err != nil {
-		fmt.Println("Error logging IP: ", err.Error())
+		slog.Error("Error logging IP", "error", err.Error())
 	}
 }

@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"io"
 	"io/ioutil"
+	"log/slog"
 	"net/url"
 	"os"
 	"strings"
@@ -35,6 +36,7 @@ var baseTemplates = [...]string{
 func Reloader() error {
 	c := make(chan notify.EventInfo, 1)
 	if err := notify.Watch("./web/templates/...", c, notify.All); err != nil {
+		slog.Error("Could not watch templates", "error", err.Error())
 		return err
 	}
 	go func() {
@@ -56,6 +58,7 @@ func Reloader() error {
 func LoadTemplates(subdir string) {
 	ts, err := ioutil.ReadDir("web/templates" + subdir)
 	if err != nil {
+		slog.Error("Could not load templates", "error", err.Error())
 		panic(err)
 	}
 
@@ -116,6 +119,7 @@ func parseConfig(s string) *mt.TemplateConfig {
 	f, err := os.Open(s)
 	defer f.Close()
 	if err != nil {
+		slog.Error("Could not open template", "error", err.Error())
 		return nil
 	}
 	i := bufio.NewScanner(f)
@@ -170,6 +174,7 @@ func Resp(c *gin.Context, statusCode int, tpl string, data interface{}) {
 			"An error occurred while trying to render the page, and we have now been notified about it.",
 		)
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		return
 	}
 	c.Header("Content-Type", "text/html; charset=utf-8")
@@ -178,6 +183,7 @@ func Resp(c *gin.Context, statusCode int, tpl string, data interface{}) {
 	if err != nil {
 		c.Writer.WriteString("We don't know what's happening now.")
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		return
 	}
 }
