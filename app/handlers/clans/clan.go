@@ -2,6 +2,7 @@ package clans
 
 import (
 	"database/sql"
+	"log/slog"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -26,11 +27,13 @@ func ClanPageHandler(c *gin.Context) {
 		err := services.DB.QueryRow("SELECT id, name FROM clans WHERE name = ? LIMIT 1", i).Scan(&clanID, &clanName)
 		if err != nil && err != sql.ErrNoRows {
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 		}
 	} else {
 		err := services.DB.QueryRow("SELECT id, name FROM clans WHERE id = ? LIMIT 1", i).Scan(&clanID, &clanName)
 		if err != nil && err != sql.ErrNoRows {
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 		}
 	}
 
