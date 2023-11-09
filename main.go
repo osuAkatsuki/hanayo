@@ -8,7 +8,10 @@ package main
 import (
 	"encoding/gob"
 	"fmt"
+	"os"
 	"time"
+
+	"log/slog"
 
 	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/fatih/structs"
@@ -48,7 +51,11 @@ import (
 var startTime = time.Now()
 
 func main() {
-	fmt.Println("hanayo " + version.Version)
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
+	slog.SetDefault(logger)
+
+	slog.Info("hanayo " + version.Version)
 
 	settings := settingsState.LoadSettings()
 
@@ -93,7 +100,7 @@ func main() {
 	services.CSRF = cieca.NewCSRF()
 
 	if gin.Mode() == gin.DebugMode {
-		fmt.Println("Development environment detected. Starting fsnotify on template folder...")
+		slog.Info("Development environment detected. Starting fsnotify on template folder...")
 		err := tu.Reloader()
 		if err != nil {
 			fmt.Println(err)
