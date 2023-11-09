@@ -11,6 +11,13 @@ apps:
       env:
         - name: APP_COMPONENT
           value: api
+      resources:
+        limits:
+          cpu: 500m
+          memory: 300Mi
+        requests:
+          cpu: 250m
+          memory: 150Mi
       imagePullSecrets:
         - name: osuakatsuki-registry-secret
     service:
