@@ -2,6 +2,7 @@ package recovery
 
 import (
 	"database/sql"
+	"log/slog"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -58,6 +59,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 		return
 	default:
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -76,6 +78,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -96,6 +99,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -124,6 +128,7 @@ func PasswordResetContinuePageHandler(c *gin.Context) {
 		return
 	default:
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -143,6 +148,7 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		return
 	default:
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -157,6 +163,7 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 	pass, err := au.GeneratePassword(p)
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -165,6 +172,7 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		pass, username)
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -172,6 +180,7 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 	_, err = services.DB.Exec("DELETE FROM password_recovery WHERE k = ? LIMIT 1", c.PostForm("k"))
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
