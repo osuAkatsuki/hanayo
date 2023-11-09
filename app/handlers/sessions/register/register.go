@@ -2,7 +2,7 @@ package register
 
 import (
 	"database/sql"
-	"fmt"
+	"log/slog"
 	"strconv"
 	"strings"
 	"time"
@@ -138,6 +138,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	// The actual registration.
 	pass, err := au.GeneratePassword(c.PostForm("password"))
 	if err != nil {
+		slog.Error("error", "Error generating password: ", err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -155,6 +156,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	if err != nil {
 		tx.Rollback()
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -165,6 +167,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	if err != nil {
 		tx.Rollback()
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -173,6 +176,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	if err != nil {
 		tx.Rollback()
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -181,6 +185,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	if err != nil {
 		tx.Rollback()
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -198,11 +203,13 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 	latitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLatitude"), 64)
 	if err != nil {
+		slog.Error("error", "Error parsing latitude: ", err.Error())
 		latitude = 0.0
 	}
 
 	longitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLongitude"), 64)
 	if err != nil {
+		slog.Error("error", "Error parsing longitude: ", err.Error())
 		longitude = 0.0
 	}
 
@@ -243,7 +250,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 	err = uu.LogIP(c, int(userId))
 	if err != nil {
-		fmt.Println("Error logging IP: ", err.Error())
+		slog.Error("error", "Error logging IP: ", err.Error())
 	}
 
 	services.RD.Incr("ripple:registered_users")
@@ -371,6 +378,7 @@ func tryBotnets(c *gin.Context) (string, string) {
 	if err != nil {
 		if err != sql.ErrNoRows {
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 		}
 		return "", ""
 	}
@@ -384,6 +392,7 @@ func tryBotnets(c *gin.Context) (string, string) {
 	if err != nil {
 		if err != sql.ErrNoRows {
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 		}
 		return "", ""
 	}
