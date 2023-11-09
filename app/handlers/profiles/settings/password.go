@@ -3,6 +3,7 @@ package settings
 import (
 	"database/sql"
 	"fmt"
+	"log/slog"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -25,6 +26,7 @@ func ChangePasswordPageHandler(c *gin.Context) {
 	s, err := services.QB.QueryRow("SELECT email FROM users WHERE id = ?", ctx.User.ID)
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 	}
 	tu.Simple(c, tu.GetSimpleByFilename("settings/password.html"), nil, map[string]interface{}{
 		"email": s["email"],
@@ -41,6 +43,7 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 		s, err := services.QB.QueryRow("SELECT email FROM users WHERE id = ?", ctx.User.ID)
 		if err != nil {
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 		}
 		tu.Simple(c, tu.GetSimpleByFilename("settings/password.html"), messages, map[string]interface{}{
 			"email": s["email"],
@@ -85,6 +88,7 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 		err := uu.AddToUserNotes(fmt.Sprintf("Email changed (self): %s -> %s", currentEmail, email), ctx.User.ID)
 		if err != nil {
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 		}
 
 		uq.Add("email", email)
@@ -107,6 +111,7 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 	_, err := services.DB.Exec("UPDATE users SET "+uq.Fields()+" WHERE id = ? LIMIT 1", append(uq.Parameters, ctx.User.ID)...)
 	if err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 	}
 
 	services.DB.Exec("UPDATE users SET flags = flags & ~3 WHERE id = ? LIMIT 1", ctx.User.ID)
