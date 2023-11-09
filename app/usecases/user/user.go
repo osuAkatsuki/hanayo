@@ -90,7 +90,7 @@ func SetCountry(c *gin.Context, user int) error {
 	// Changed to io.ReadAll from ioutil.ReadAll as it is deprecated.
 	data, err := io.ReadAll(raw.Body)
 	if err != nil {
-		slog.Error("Could not read country!", "error", err.Error())
+		slog.Error("Could not read country", "error", err.Error())
 		return err
 	}
 	country := strings.TrimSpace(string(data))

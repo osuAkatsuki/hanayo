@@ -29,7 +29,7 @@ func CountryReadable(s string) string {
 	country, err := countrySelector.FindCountryByAlpha(s)
 
 	if err != nil {
-		slog.Error("Could not find country!", "error", err)
+		slog.Error("Could not find country", "error", err)
 		return ""
 	}
 
