@@ -84,7 +84,7 @@ func SetCountry(c *gin.Context, user int) error {
 	settings := settingsState.GetSettings()
 	raw, err := http.Get(settings.IP_LOOKUP_URL + "/" + su.ClientIP(c) + "/country")
 	if err != nil {
-		slog.Error("error", "Could not get country!", err.Error())
+		slog.Error("error", "Could not resolve country from ip!", err.Error())
 		return err
 	}
 	data, err := ioutil.ReadAll(raw.Body)
