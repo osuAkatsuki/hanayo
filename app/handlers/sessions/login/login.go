@@ -92,7 +92,7 @@ func LoginSubmitHandler(c *gin.Context) {
 		data.Password,
 		c.PostForm("password"),
 	); err != nil {
-		slog.Error("error", "Error comparing passwords: ", err.Error())
+		slog.Error("Error comparing passwords: ", "error", err.Error())
 		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Wrong password.")})
 		return
 	}
@@ -105,7 +105,7 @@ func LoginSubmitHandler(c *gin.Context) {
 				data.Password = string(pass)
 			}
 		} else {
-			slog.Error("error", "Error updating password: ", err.Error())
+			slog.Error("Error updating password: ", "error", err.Error())
 		}
 	}
 
@@ -126,13 +126,13 @@ func LoginSubmitHandler(c *gin.Context) {
 
 	latitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLatitude"), 64)
 	if err != nil {
-		slog.Error("error", "Error parsing latitude: ", err.Error())
+		slog.Error("Error parsing latitude: ", "error", err.Error())
 		latitude = 0.0
 	}
 
 	longitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLongitude"), 64)
 	if err != nil {
-		slog.Error("error", "Error parsing longitude: ", err.Error())
+		slog.Error("Error parsing longitude: ", "error", err.Error())
 		longitude = 0.0
 	}
 
@@ -208,6 +208,6 @@ func AfterLogin(c *gin.Context, id int, country string, flags uint) {
 
 	err = uu.LogIP(c, id)
 	if err != nil {
-		slog.Error("error", "Error logging IP: ", err.Error())
+		slog.Error("Error logging IP: ", "error", err.Error())
 	}
 }

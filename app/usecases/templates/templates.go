@@ -36,7 +36,7 @@ var baseTemplates = [...]string{
 func Reloader() error {
 	c := make(chan notify.EventInfo, 1)
 	if err := notify.Watch("./web/templates/...", c, notify.All); err != nil {
-		slog.Error("error", "Could not watch templates!", err.Error())
+		slog.Error("Could not watch templates!", "error", err.Error())
 		return err
 	}
 	go func() {
@@ -58,7 +58,7 @@ func Reloader() error {
 func LoadTemplates(subdir string) {
 	ts, err := ioutil.ReadDir("web/templates" + subdir)
 	if err != nil {
-		slog.Error("error", "Could not load templates!", err.Error())
+		slog.Error("Could not load templates!", "error", err.Error())
 		panic(err)
 	}
 
@@ -119,7 +119,7 @@ func parseConfig(s string) *mt.TemplateConfig {
 	f, err := os.Open(s)
 	defer f.Close()
 	if err != nil {
-		slog.Error("error", "Could not open template!", err.Error())
+		slog.Error("Could not open template!", "error", err.Error())
 		return nil
 	}
 	i := bufio.NewScanner(f)

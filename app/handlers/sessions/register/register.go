@@ -138,7 +138,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	// The actual registration.
 	pass, err := au.GeneratePassword(c.PostForm("password"))
 	if err != nil {
-		slog.Error("error", "Error generating password: ", err.Error())
+		slog.Error("Error generating password: ", "error", err.Error())
 		eh.Resp500(c)
 		return
 	}
@@ -203,13 +203,13 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 	latitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLatitude"), 64)
 	if err != nil {
-		slog.Error("error", "Error parsing latitude: ", err.Error())
+		slog.Error("Error parsing latitude: ", "error", err.Error())
 		latitude = 0.0
 	}
 
 	longitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLongitude"), 64)
 	if err != nil {
-		slog.Error("error", "Error parsing longitude: ", err.Error())
+		slog.Error("Error parsing longitude: ", "error", err.Error())
 		longitude = 0.0
 	}
 
@@ -250,7 +250,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 	err = uu.LogIP(c, int(userId))
 	if err != nil {
-		slog.Error("error", "Error logging IP: ", err.Error())
+		slog.Error("Error logging IP: ", "error", err.Error())
 	}
 
 	services.RD.Incr("ripple:registered_users")

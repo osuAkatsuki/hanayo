@@ -391,7 +391,7 @@ var FuncMap = template.FuncMap{
 	"qb": func(q string, p ...interface{}) map[string]qsql.String {
 		r, err := services.QB.QueryRow(q, p...)
 		if err != nil {
-			slog.Error("error", "Error in qb", err.Error())
+			slog.Error("Error in qb", "error", err.Error())
 		}
 		if r == nil {
 			return make(map[string]qsql.String, 0)
@@ -401,14 +401,14 @@ var FuncMap = template.FuncMap{
 	"qba": func(q string, p ...interface{}) []map[string]qsql.String {
 		r, err := services.QB.Query(q, p...)
 		if err != nil {
-			slog.Error("error", "Error in qba", err.Error())
+			slog.Error("Error in qba", "error", err.Error())
 		}
 		return r
 	},
 	"qbe": func(q string, p ...interface{}) int {
 		i, _, err := services.QB.Exec(q, p...)
 		if err != nil {
-			slog.Error("error", "Error in qbe", err.Error())
+			slog.Error("Error in qbe", "error", err.Error())
 		}
 		return i
 	},
@@ -419,7 +419,7 @@ var FuncMap = template.FuncMap{
 		settings := settingsState.GetSettings()
 		d, err := http.Get(fmt.Sprintf(settings.APP_BANCHO_URL+"/api/v1/"+ept, qs...))
 		if err != nil {
-			slog.Error("error", "Error in bget", err.Error())
+			slog.Error("Error in bget", "error", err.Error())
 			return nil
 		}
 		x := make(map[string]interface{})
@@ -580,7 +580,7 @@ func systemSettings(names ...string) map[string]systemSetting {
 	q, p, _ := sqlx.In("SELECT name, value_int as `int`, value_string as `string` FROM system_settings WHERE name IN (?)", names)
 	err := services.DB.Select(&settingsRaw, q, p...)
 	if err != nil {
-		slog.Error("error", "Error in systemSettings", err.Error())
+		slog.Error("Error in systemSettings", err.Error())
 		return nil
 	}
 	settings := make(map[string]systemSetting, len(names))

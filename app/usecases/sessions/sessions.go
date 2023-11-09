@@ -25,7 +25,7 @@ func GenerateToken(id int, c *gin.Context) (string, error) {
 					VALUES (   ?,        '0',           ?,     ?,     '1');`,
 		id, ClientIP(c), cryptography.MakeMD5(tok))
 	if err != nil {
-		slog.Error("error", "Could not generate token!", err.Error())
+		slog.Error("Could not generate token!", "error", err.Error())
 		return "", err
 	}
 	return tok, nil
@@ -39,7 +39,7 @@ func CheckToken(s string, id int, c *gin.Context) (string, error) {
 	if err := services.DB.QueryRow("SELECT 1 FROM tokens WHERE token = ?", cryptography.MakeMD5(s)).Scan(new(int)); err == sql.ErrNoRows {
 		return GenerateToken(id, c)
 	} else if err != nil {
-		slog.Error("error", "Could not check token!", err.Error())
+		slog.Error("Could not check token!", err.Error())
 		return "", err
 	}
 

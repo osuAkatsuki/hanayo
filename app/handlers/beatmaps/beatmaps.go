@@ -75,8 +75,7 @@ func BeatmapPageHandler(c *gin.Context) {
 	for i := range data.Beatmapset.ChildrenBeatmaps {
 		err := services.DB.QueryRow("SELECT playcount, passcount FROM beatmaps WHERE beatmap_md5 = ?", data.Beatmapset.ChildrenBeatmaps[i].FileMD5).Scan(&data.Beatmapset.ChildrenBeatmaps[i].Playcount, &data.Beatmapset.ChildrenBeatmaps[i].Passcount)
 		if err != nil {
-			fmt.Println(err)
-
+			slog.Error("Beatmap not found", "error", err.Error())
 			data.Beatmapset.ChildrenBeatmaps[i].Playcount = 0
 			data.Beatmapset.ChildrenBeatmaps[i].Passcount = 0
 		}

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"io/ioutil"
+	"io"
 	"log/slog"
 	"net/http"
 	"regexp"
@@ -87,9 +87,10 @@ func SetCountry(c *gin.Context, user int) error {
 		slog.Error("error", "Could not resolve country from ip!", err.Error())
 		return err
 	}
-	data, err := ioutil.ReadAll(raw.Body)
+	// Changed to io.ReadAll from ioutil.ReadAll as it is deprecated.
+	data, err := io.ReadAll(raw.Body)
 	if err != nil {
-		slog.Error("error", "Could not read country!", err.Error())
+		slog.Error("Could not read country!", "error", err.Error())
 		return err
 	}
 	country := strings.TrimSpace(string(data))

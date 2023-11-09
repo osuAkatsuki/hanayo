@@ -65,7 +65,7 @@ func NormaliseURLValues(uv url.Values) map[string]string {
 func MustCSRFGenerate(u int) string {
 	v, err := services.CSRF.Generate(u)
 	if err != nil {
-		slog.Error("error", "Could not generate CSRF token!", err)
+		slog.Error("Could not generate CSRF token!", "error", err)
 		panic(err)
 	}
 	return v
