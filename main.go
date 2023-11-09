@@ -11,7 +11,7 @@ import (
 	"os"
 	"time"
 
-	"log/slog"
+	"golang.org/x/exp/slog"
 
 	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/fatih/structs"

@@ -3,10 +3,11 @@ package beatmaps
 import (
 	"encoding/json"
 	"fmt"
-	"log/slog"
 	"sort"
 	"strconv"
 	"strings"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/hanayo/app/models"

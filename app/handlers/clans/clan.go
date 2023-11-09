@@ -2,8 +2,9 @@ package clans
 
 import (
 	"database/sql"
-	"log/slog"
 	"strconv"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/hanayo/app/models"

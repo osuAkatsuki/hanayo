@@ -8,11 +8,12 @@ import (
 	"html/template"
 	"io"
 	"io/ioutil"
-	"log/slog"
 	"net/url"
 	"os"
 	"strings"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/hanayo/app/models"

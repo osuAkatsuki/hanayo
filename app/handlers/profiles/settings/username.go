@@ -3,9 +3,10 @@ package settings
 import (
 	"database/sql"
 	"fmt"
-	"log/slog"
 	"strconv"
 	"strings"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"

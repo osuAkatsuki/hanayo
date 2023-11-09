@@ -1,10 +1,11 @@
 package sessions
 
 import (
-	"log/slog"
 	"net/http"
 	"net/url"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"

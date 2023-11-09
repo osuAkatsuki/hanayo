@@ -2,10 +2,11 @@ package create
 
 import (
 	"database/sql"
-	"log/slog"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"

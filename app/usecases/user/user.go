@@ -2,11 +2,12 @@ package user
 
 import (
 	"io"
-	"log/slog"
 	"net/http"
 	"regexp"
 	"strings"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-email-validator/go-email-validator/pkg/ev"

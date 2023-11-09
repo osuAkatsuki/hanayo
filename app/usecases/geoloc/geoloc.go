@@ -2,8 +2,9 @@ package geoloc
 
 import (
 	"fmt"
-	"log/slog"
 	"strings"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/pariz/gountries"
 )

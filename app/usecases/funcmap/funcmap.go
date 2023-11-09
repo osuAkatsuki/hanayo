@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
-	"log/slog"
 	"math"
 	"math/rand"
 	"net/http"
@@ -14,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/dustin/go-humanize"
 	"github.com/gin-gonic/gin"

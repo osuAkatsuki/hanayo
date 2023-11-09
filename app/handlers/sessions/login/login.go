@@ -3,10 +3,11 @@ package login
 import (
 	"database/sql"
 	"html/template"
-	"log/slog"
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/gin-gonic/gin"

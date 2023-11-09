@@ -5,11 +5,12 @@ import (
 	"image"
 	"image/gif"
 	"image/jpeg"
-	"log/slog"
 	"os"
 	"regexp"
 	"strings"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/hanayo/app/models"

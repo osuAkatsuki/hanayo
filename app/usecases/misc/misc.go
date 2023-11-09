@@ -3,10 +3,11 @@ package misc
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log/slog"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/hanayo/app/states/services"

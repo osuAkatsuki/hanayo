@@ -2,10 +2,11 @@ package register
 
 import (
 	"database/sql"
-	"log/slog"
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/gin-gonic/gin"

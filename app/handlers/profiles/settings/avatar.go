@@ -7,8 +7,9 @@ import (
 	_ "image/jpeg"
 	"image/png"
 	"io"
-	"log/slog"
 	"os"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"

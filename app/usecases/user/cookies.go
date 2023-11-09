@@ -4,9 +4,10 @@ import (
 	"crypto/sha256"
 	"database/sql"
 	"fmt"
-	"log/slog"
 	"net/http"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"
