@@ -2,6 +2,7 @@ package user
 
 import (
 	"io/ioutil"
+	"log/slog"
 	"net/http"
 	"regexp"
 	"strings"
@@ -71,7 +72,7 @@ func AddToUserNotes(message string, user int) error {
 
 func LogIP(c *gin.Context, user int) error {
 	_, err := services.DB.Exec(
-		`INSERT INTO ip_user (userid, ip, occurencies) VALUES (?, ?, '1') ON 
+		`INSERT INTO ip_user (userid, ip, occurencies) VALUES (?, ?, '1') ON
 		DUPLICATE KEY UPDATE occurencies = occurencies + 1`,
 		user, su.ClientIP(c),
 	)
@@ -83,10 +84,12 @@ func SetCountry(c *gin.Context, user int) error {
 	settings := settingsState.GetSettings()
 	raw, err := http.Get(settings.IP_LOOKUP_URL + "/" + su.ClientIP(c) + "/country")
 	if err != nil {
+		slog.Error("error", "Could not get country!", err.Error())
 		return err
 	}
 	data, err := ioutil.ReadAll(raw.Body)
 	if err != nil {
+		slog.Error("error", "Could not read country!", err.Error())
 		return err
 	}
 	country := strings.TrimSpace(string(data))
