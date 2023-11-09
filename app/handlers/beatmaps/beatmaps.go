@@ -3,6 +3,7 @@ package beatmaps
 import (
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"sort"
 	"strconv"
 	"strings"
@@ -24,6 +25,7 @@ func BeatmapPageHandler(c *gin.Context) {
 	b := c.Param("bid")
 	if _, err := strconv.Atoi(b); err != nil {
 		c.Error(err)
+		slog.ErrorContext(c, err.Error())
 	} else {
 
 		settings := settingsState.GetSettings()
@@ -31,6 +33,7 @@ func BeatmapPageHandler(c *gin.Context) {
 			data.Beatmapset, err = bu.GetBeatmapSetDataFromDirectAPI(b)
 			if err != nil {
 				c.Error(err)
+				slog.ErrorContext(c, err.Error())
 				return
 			}
 
@@ -45,11 +48,13 @@ func BeatmapPageHandler(c *gin.Context) {
 			data.Beatmap, err = bu.GetBeatmapData(b)
 			if err != nil {
 				c.Error(err)
+				slog.ErrorContext(c, err.Error())
 				return
 			}
 			data.Beatmapset, err = bu.GetBeatmapSetData(data.Beatmap)
 			if err != nil {
 				c.Error(err)
+				slog.ErrorContext(c, err.Error())
 				return
 			}
 		}
@@ -71,6 +76,7 @@ func BeatmapPageHandler(c *gin.Context) {
 		err := services.DB.QueryRow("SELECT playcount, passcount FROM beatmaps WHERE beatmap_md5 = ?", data.Beatmapset.ChildrenBeatmaps[i].FileMD5).Scan(&data.Beatmapset.ChildrenBeatmaps[i].Playcount, &data.Beatmapset.ChildrenBeatmaps[i].Passcount)
 		if err != nil {
 			fmt.Println(err)
+
 			data.Beatmapset.ChildrenBeatmaps[i].Playcount = 0
 			data.Beatmapset.ChildrenBeatmaps[i].Passcount = 0
 		}
