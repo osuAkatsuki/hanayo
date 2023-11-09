@@ -55,7 +55,7 @@ func main() {
 
 	slog.SetDefault(logger)
 
-	slog.Info("hanayo " + version.Version)
+	slog.Info("The server is starting up", "version", version.Version)
 
 	settings := settingsState.LoadSettings()
 
