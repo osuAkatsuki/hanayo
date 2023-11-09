@@ -2,7 +2,7 @@ package create
 
 import (
 	"database/sql"
-	"fmt"
+	"log/slog"
 	"regexp"
 	"strconv"
 	"strings"
@@ -74,7 +74,7 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 		username, c.PostForm("password"), c.PostForm("email"), tag, sessions.GetContext(c).User.ID, invite)
 	if err != nil {
 		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "Whoops, an error slipped in. Clan might have been created, though. I don't know.")})
-		fmt.Println(err)
+		slog.Error(err.Error())
 		return
 	}
 	lid, _ := res.LastInsertId()
