@@ -3,6 +3,7 @@ package settings
 import (
 	"database/sql"
 	"fmt"
+	"log/slog"
 	"strconv"
 	"strings"
 
@@ -59,7 +60,7 @@ func NameChangeSubmitHandler(c *gin.Context) {
 			sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
 			sessions.GetSession(c).Save()
 
-			fmt.Println("Error adding to user notes: ", logErr.Error())
+			slog.Error("error", "Error adding to user notes: ", logErr.Error())
 
 			c.Redirect(302, "/u/"+strconv.Itoa(int(sessions.GetContext(c).User.ID)))
 			return
