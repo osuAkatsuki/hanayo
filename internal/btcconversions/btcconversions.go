@@ -1,9 +1,10 @@
 package btcconversions
 
 import (
-	"fmt"
 	"net/http"
 	"time"
+
+	"golang.org/x/exp/slog"
 
 	"encoding/json"
 
@@ -42,7 +43,7 @@ type blockchainCurrency struct {
 func updateRates() {
 	resp, err := http.Get("https://blockchain.info/ticker")
 	if err != nil {
-		fmt.Println(err)
+		slog.Error("Failed to update blockchain rates", "error", err.Error())
 		return
 	}
 

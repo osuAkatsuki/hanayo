@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -46,7 +45,7 @@ func Reloader() error {
 			if !strings.HasSuffix(ev.Path(), ".html") || time.Since(last) < time.Second*3 {
 				continue
 			}
-			fmt.Println("Change detected! Refreshing templates")
+			slog.Info("Change detected! Refreshing templates")
 			simplePages = []mt.TemplateConfig{}
 			LoadTemplates("")
 			last = time.Now()

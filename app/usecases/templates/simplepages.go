@@ -1,11 +1,10 @@
 package templates
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	mt "github.com/osuAkatsuki/hanayo/app/models/templates"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
+	"golang.org/x/exp/slog"
 )
 
 var simplePages []mt.TemplateConfig
@@ -36,7 +35,7 @@ func GetSimple(h string) mt.TemplateConfig {
 			return s
 		}
 	}
-	fmt.Println("oh handler shit not found", h)
+	slog.Error("Template handler not found", "handler", h)
 	return mt.TemplateConfig{}
 }
 
@@ -46,6 +45,6 @@ func GetSimpleByFilename(f string) mt.TemplateConfig {
 			return s
 		}
 	}
-	fmt.Println("oh shit not found", f)
+	slog.Error("Template handler not found", "filename", f)
 	return mt.TemplateConfig{}
 }

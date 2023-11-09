@@ -103,7 +103,7 @@ func main() {
 		slog.Info("Development environment detected. Starting fsnotify on template folder...")
 		err := tu.Reloader()
 		if err != nil {
-			fmt.Println(err)
+			slog.Error("Failed to start template reload watcher", "error", err.Error())
 		}
 	}
 
@@ -135,16 +135,16 @@ func main() {
 		gob.Register(el)
 	}
 
-	fmt.Println("Importing templates...")
+	slog.Info("Importing templates")
 	tu.LoadTemplates("")
 
-	fmt.Println("Setting up rate limiter...")
+	slog.Info("Setting up rate limiter")
 	middleware.SetUpLimiter()
 
-	fmt.Println("Intialisation:", time.Since(startTime))
+	slog.Info("Intialisation", "time", time.Since(startTime))
 
 	r := generateEngine()
-	fmt.Println("Listening on port:", settings.APP_PORT)
+	slog.Info("Listening on port", "port", settings.APP_PORT)
 
 	err = r.Run(fmt.Sprintf(":%d", settings.APP_PORT))
 	if err != nil {
@@ -153,7 +153,7 @@ func main() {
 }
 
 func generateEngine() *gin.Engine {
-	fmt.Println("Starting session system...")
+	slog.Info("Starting session system")
 	settings := settingsState.GetSettings()
 	var store sessions.Store
 	var err error
@@ -170,7 +170,7 @@ func generateEngine() *gin.Engine {
 	}
 
 	if err != nil {
-		fmt.Println(err)
+		slog.Error("Failed to crreate redis store", "error", err.Error())
 		panic(err)
 	}
 

@@ -488,7 +488,7 @@ var FuncMap = template.FuncMap{
 			return ""
 		}
 		if err := x.Err(); err != nil {
-			fmt.Println(err)
+			slog.Error("An error occurred", "error", err.Error())
 		}
 		return x.Val()
 	},
