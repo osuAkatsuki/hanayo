@@ -2,10 +2,11 @@ package locale
 
 import (
 	"bufio"
-	"log/slog"
 	"os"
 	"strconv"
 	"strings"
+
+	"golang.org/x/exp/slog"
 )
 
 type po struct {
