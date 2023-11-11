@@ -156,7 +156,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                 <input
                   type="hidden"
                   name="business"
-                  value="cmyuiosu@gmail.com" />
+                  value="{{ config "PAYPAL_EMAIL_ADDRESS" }}"
+                />
                 <input type="hidden" name="cmd" value="_xclick" />
                 <input type="hidden" name="lc" value="GB" />
                 <input type="hidden" name="no_note" value="0" />
