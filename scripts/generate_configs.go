@@ -4,7 +4,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/thehowl/conf"
@@ -45,7 +44,7 @@ var simplePages = [...]simplePage{
 
 func main() {
 	for _, p := range simplePages {
-		fmt.Print("=> ", p.Handler+" ... ")
+		slog.Info("Generating config for", "handler", p.Handler)
 		noTemplateP := noTemplate{
 			Handler:       p.Handler,
 			TitleBar:      p.TitleBar,
