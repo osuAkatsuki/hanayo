@@ -41,8 +41,7 @@ func parse(s *bufio.Scanner) *po {
 		case strings.HasPrefix(line, "msgid "):
 			unq, err := strconv.Unquote(strings.TrimSpace(strings.TrimPrefix(line, "msgid")))
 			if err != nil {
-				slog.Info(line)
-				slog.Error("Error while parsing po file", "error", err.Error())
+				slog.Error("Error while parsing po file", "error", err.Error(), "line", line)
 				return nil
 			}
 
@@ -66,8 +65,7 @@ func parse(s *bufio.Scanner) *po {
 		case strings.HasPrefix(line, "msgstr "):
 			unq, err := strconv.Unquote(strings.TrimSpace(strings.TrimPrefix(line, "msgstr")))
 			if err != nil {
-				slog.Info(line)
-				slog.Error("Error while parsing po file", "error", err.Error())
+				slog.Error("Error while parsing po file", "error", err.Error(), "line", line)
 				return nil
 			}
 			currentString = unq
@@ -82,8 +80,7 @@ func parse(s *bufio.Scanner) *po {
 
 			unq, err := strconv.Unquote(strings.TrimSpace(line))
 			if err != nil {
-				slog.Info(line)
-				slog.Error("Error while parsing po file", "error", err.Error())
+				slog.Error("Error while parsing po file", "error", err.Error(), "line", line)
 				return nil
 			}
 			switch current {
