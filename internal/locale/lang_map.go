@@ -2,16 +2,17 @@ package locale
 
 import (
 	"fmt"
-	"io/ioutil"
+	"golang.org/x/exp/slog"
+	"os"
 	"strings"
 )
 
 var languageMap = make(map[string]*po, 20)
 
 func loadLanguages() {
-	files, err := ioutil.ReadDir("./locale/locales")
+	files, err := os.ReadDir("./locale/locales")
 	if err != nil {
-		fmt.Println("loadLanguages", err)
+		slog.Error("Error reading locale directory", "error", err.Error())
 		return
 	}
 	for _, file := range files {
@@ -21,11 +22,11 @@ func loadLanguages() {
 
 		p, err := parseFile("./locale/locales/" + file.Name())
 		if err != nil {
-			fmt.Println(file.Name(), ":", err)
+			slog.Error("Error parsing po file", "error", err.Error())
 			continue
 		}
 		if p == nil {
-			fmt.Println(file.Name(), ":", "p is nil")
+			slog.Error("Error parsing po file", "error", "p is nil", "file_name", file.Name())
 		}
 
 		langName := strings.TrimPrefix(strings.TrimSuffix(file.Name(), ".po"), "templates-")
