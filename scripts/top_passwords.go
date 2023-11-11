@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 package main
@@ -5,6 +6,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"golang.org/x/exp/slog"
 	"net/http"
 	"os"
 )
@@ -47,5 +49,5 @@ func main() {
 
 	f.Write([]byte{'}', '\n'})
 
-	fmt.Println("generate: top_passwords.go")
+	slog.Info("generate: top_passwords.go")
 }

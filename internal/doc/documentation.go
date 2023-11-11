@@ -1,12 +1,14 @@
 package doc
 
 import (
-	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 	"time"
+
+	"golang.org/x/exp/slog"
 )
 
 const referenceLanguage = "en"
@@ -22,7 +24,7 @@ type File struct {
 
 // Data retrieves data from file's actual file on disk.
 func (f File) Data() (string, error) {
-	data, err := ioutil.ReadFile(f.referencesFile)
+	data, err := os.ReadFile(f.referencesFile)
 	updateIPs()
 	res := strings.NewReplacer(
 		"{ipmain}", ipMain,
@@ -103,21 +105,21 @@ var (
 )
 
 func updateIPs() {
-	if time.Now().Sub(ipLastUpdated) < time.Hour*24*14 {
+	if time.Since(ipLastUpdated) < time.Hour*24*14 {
 		return
 	}
 	ipLastUpdated = time.Now()
 
 	resp, err := http.Get("https://akatsuki.gg/static/current.json")
 	if err != nil {
-		fmt.Println("error updating IPs", err)
+		slog.Error("error updating IPs", "error", err.Error())
 		return
 	}
 
-	data, err := ioutil.ReadAll(resp.Body)
+	data, err := io.ReadAll(resp.Body)
 	resp.Body.Close()
 	if err != nil {
-		fmt.Println("error updating IPs", err)
+		slog.Error("error updating IPs", "error", err.Error())
 		return
 	}
 

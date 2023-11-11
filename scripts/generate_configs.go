@@ -4,10 +4,10 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
+	"os"
 
 	"github.com/thehowl/conf"
+	"golang.org/x/exp/slog"
 )
 
 type simplePage struct {
@@ -44,7 +44,7 @@ var simplePages = [...]simplePage{
 
 func main() {
 	for _, p := range simplePages {
-		fmt.Print("=> ", p.Handler+" ... ")
+		slog.Info("Generating config for", "handler", p.Handler)
 		noTemplateP := noTemplate{
 			Handler:       p.Handler,
 			TitleBar:      p.TitleBar,
@@ -55,19 +55,22 @@ func main() {
 		d := []byte("{{/*###\n")
 		confData, err := conf.ExportRaw(&noTemplateP)
 		if err != nil {
+			slog.Error("Error exporting config", "error", err.Error())
 			panic(err)
 		}
 		d = append(d, confData...)
-		fileData, err := ioutil.ReadFile("templates/" + p.Template)
+		fileData, err := os.ReadFile("templates/" + p.Template)
 		if err != nil {
+			slog.Error("Error reading file", "error", err.Error())
 			panic(err)
 		}
 		d = append(d, []byte("*/}}\n")...)
 		d = append(d, fileData...)
-		err = ioutil.WriteFile("templates/"+p.Template, d, 0644)
+		err = os.WriteFile("templates/"+p.Template, d, 0644)
 		if err != nil {
+			slog.Error("Error writing file", "error", err.Error())
 			panic(err)
 		}
-		fmt.Println("ok.")
+		slog.Info("ok.")
 	}
 }
