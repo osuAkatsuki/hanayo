@@ -1,6 +1,7 @@
 package btcconversions
 
 import (
+	"log/slog"
 	"net/http"
 	"time"
 
