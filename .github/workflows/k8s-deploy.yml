@@ -46,6 +46,7 @@ jobs:
             mkdir -p $HOME/.kube
             echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
             sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
       - name: Install helm
         uses: azure/setup-helm@v3
         with:
@@ -63,6 +64,10 @@ jobs:
           token: ${{ secrets.COMMON_HELM_CHARTS_PAT }}
           path: common-helm-charts
 
+      - name: Clear pending deployments
+        run: |
+          kubectl get secret -lname=hanayo-production -lstatus=pending-upgrade -oname | xargs --no-run-if-empty kubectl delete
+
       - name: Show manifest diff since previous release
         run: |
           helm diff upgrade \
@@ -70,6 +75,7 @@ jobs:
           --values chart/values.yaml \
           hanayo-production \
           common-helm-charts/microservice-base/
+
       - name: Deploy service to production cluster
         run: |
           helm upgrade \
