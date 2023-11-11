@@ -73,6 +73,8 @@ type Settings struct {
 
 	IP_LOOKUP_URL string
 
+	PAYPAL_EMAIL_ADDRESS string
+
 	AMPLITUDE_API_KEY string
 }
 
@@ -125,6 +127,8 @@ func LoadSettings() Settings {
 	settings.RECAPTCHA_SECRET_KEY = getEnv("RECAPTCHA_SECRET_KEY")
 
 	settings.IP_LOOKUP_URL = getEnv("IP_LOOKUP_URL")
+
+	settings.PAYPAL_EMAIL_ADDRESS = getEnv("PAYPAL_EMAIL_ADDRESS")
 
 	settings.AMPLITUDE_API_KEY = getEnv("AMPLITUDE_API_KEY")
 
