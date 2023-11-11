@@ -6,12 +6,14 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io"
-	"golang.org/x/exp/slog"
 	"net/http"
 	"os"
 	"regexp"
 	"strings"
+
+	"golang.org/x/exp/slog"
 )
 
 func main() {
@@ -46,7 +48,7 @@ func main() {
 			panic(err)
 		}
 		f.Write([]byte(fileHeader))
-		slog.Info("mapping.go", "file", f, "var Mappings = %#v\n", classMappings)
+		fmt.Fprintf(f, "var Mappings = %#v\n", classMappings)
 		slog.Info("generate: mappings.go")
 	} else {
 		slog.Info(string(b))
