@@ -6,10 +6,10 @@ import (
 	"bytes"
 	"crypto/md5"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 
+	"golang.org/x/exp/slog"
 	"gopkg.in/yaml.v2"
 )
 
@@ -17,7 +17,7 @@ func init() {
 	// When we start the program, we should load the documentation files.
 	err := loadDocFiles()
 	if err != nil {
-		fmt.Println("error while loading documentation:", err)
+		slog.Error("Error while loading documentation", "error", err.Error())
 	}
 }
 
@@ -31,16 +31,17 @@ type rawFile struct {
 func loadDocFiles() error {
 	langs, err := loadLanguagesAvailable()
 	if err != nil {
+		slog.Error("Error loading languages available", "error", err.Error())
 		return err
 	}
 
-	files, err := ioutil.ReadDir("website-docs/" + referenceLanguage)
+	files, err := os.ReadDir("website-docs/" + referenceLanguage)
 	if err != nil {
 		return err
 	}
 
 	for _, file := range files {
-		data, err := ioutil.ReadFile("website-docs/" + referenceLanguage + "/" + file.Name())
+		data, err := os.ReadFile("website-docs/" + referenceLanguage + "/" + file.Name())
 		if err != nil {
 			return err
 		}
@@ -88,7 +89,7 @@ func loadHeader(b []byte) rawFile {
 	var f rawFile
 	err := yaml.Unmarshal([]byte(conf), &f)
 	if err != nil {
-		fmt.Println("Error unmarshaling yaml:", err)
+		slog.Error("Error unmarshaling yaml", "error", err.Error())
 		return rawFile{}
 	}
 
@@ -96,7 +97,7 @@ func loadHeader(b []byte) rawFile {
 }
 
 func loadLanguagesAvailable() ([]string, error) {
-	files, err := ioutil.ReadDir("website-docs")
+	files, err := os.ReadDir("website-docs")
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +117,7 @@ func loadLanguages(langs []string, fname string, referenceMD5 string) (map[strin
 	m := make(map[string]File, len(langs))
 
 	for _, lang := range langs {
-		data, err := ioutil.ReadFile("website-docs/" + lang + "/" + fname)
+		data, err := os.ReadFile("website-docs/" + lang + "/" + fname)
 		if err != nil {
 			if os.IsNotExist(err) {
 				continue
