@@ -179,19 +179,18 @@ func generateEngine() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	// Instantiate a new engine
 	r := gin.New()
-	// Use our custom logger
-	r.Use(middleware.DefaultStructuredLogger())
-	// Still use the built-in recovery middleware that is called with default
-	r.Use(gin.Recovery())
 
 	r.Use(
+		// Use our custom logger
+		middleware.StructuredLogger(),
+		// Still use the built-in recovery middleware that is called with default
+		gin.Recovery(),
 		gzip.Gzip(gzip.DefaultCompression),
 		pagemappings.CheckRedirect,
 		sessions.Sessions("session", store),
 		sessionsmanager.SessionInitializer(),
 		middleware.RateLimiter(false),
-		gintrace.Middleware("hanayo"),
-	)
+		gintrace.Middleware("hanayo"))
 
 	r.Static("/static", "web/static")
 	r.StaticFile("/favicon.ico", "web/static/favicon.ico")
