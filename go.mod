@@ -60,6 +60,7 @@ require (
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mileusna/useragent v1.3.3 // indirect
 	github.com/pegasus-kv/thrift v0.13.0 // indirect
@@ -108,11 +109,12 @@ require (
 	github.com/gorilla/sessions v1.1.3 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/klauspost/compress v1.15.0 // indirect
-	github.com/mattn/go-isatty v0.0.14 // indirect
+	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/osuAkatsuki/akatsuki-api v0.0.0-20220818215820-00d613f34df5
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/rs/zerolog v1.31.0
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.34.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
