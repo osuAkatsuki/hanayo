@@ -8,9 +8,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// DefaultStructuredLogger logs a gin HTTP request in JSON format. Uses the
-// default logger from rs/zerolog.
-
 // StructuredLogger logs a gin HTTP request in JSON format. Allows to set the
 // logger for testing purposes.
 func StructuredLogger() gin.HandlerFunc {
