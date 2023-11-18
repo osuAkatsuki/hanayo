@@ -113,7 +113,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                 <input
                   type="hidden"
                   name="custom"
-                  value="username={{ $global.User.Username }}" />
+                  value="userid={{ $global.User.Username }}" />
                 <input
                   type="hidden"
                   name="option_amount{{ . }}"
@@ -136,7 +136,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                   name="os1"
                   type="text"
                   placeholder="{{ $.T "User" }}"
-                  value="{{ $global.User.Username }}" />
+                  value="{{ $global.User.ID }}" />
                 <button type="submit" class="ui blue button">
                   {{ $.T "Submit" }}
                 </button>
