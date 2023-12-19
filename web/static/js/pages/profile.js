@@ -734,7 +734,7 @@ function loadScoresPage(type, mode) {
       r.scores.forEach(function (v, idx) {
         scoreStore[v.id] = v;
 
-        if (v.completed < 2) {
+        if (v.completed >= 2) {
           var scoreRank = getRank(
             mode,
             v.mods,
@@ -830,7 +830,7 @@ function refreshTable(type) {
 
 function do_pin(table, score, mode) {
   scoreStore[score.id] = score;
-  if (score.completed < 2) {
+  if (score.completed >= 2) {
     var scoreRank = getRank(
       mode,
       score.mods,
