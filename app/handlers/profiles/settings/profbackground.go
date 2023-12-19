@@ -132,6 +132,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
 			c.Error(err)
+			slog.ErrorContext(c, err.Error())
 			return
 		}
 		defer os.Remove(f.Name())
