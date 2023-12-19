@@ -57,7 +57,14 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			return
 		}
 		//img = resize.Resize(1127, 250, img, resize.Bilinear)
-		f, err := os.Create(fmt.Sprintf("web/static/images/profbackgrounds/%d.jpg", ctx.User.ID))
+		f, err := os.CreateTemp("", fmt.Sprintf("%d.jpg", ctx.User.ID))
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
+			c.Error(err)
+			return
+		}
+		defer os.Remove(f.Name())
+
 		defer f.Close()
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
@@ -74,7 +81,29 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			slog.ErrorContext(c, err.Error())
 			return
 		}
-		saveProfileBackground(ctx, 1, fmt.Sprintf("%d.jpg?%d", ctx.User.ID, time.Now().Unix()))
+		// seek file to beginning
+		f.Seek(0, io.SeekStart)
+
+		sess := session.Must(session.NewSession(&aws.Config{
+			Region:   aws.String(settings.AWS_REGION),
+			Endpoint: aws.String(settings.AWS_ENDPOINT_URL),
+		}))
+		uploader := s3manager.NewUploader(sess)
+		_, err = uploader.Upload(&s3manager.UploadInput{
+			Bucket:      aws.String(settings.AWS_BUCKET_NAME),
+			Key:         aws.String(fmt.Sprintf("profile-backgrounds/%d.jpg", ctx.User.ID)),
+			Body:        f,
+			ContentType: aws.String("image/jpg"),
+			// TODO: CacheControl?
+		})
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
+			c.Error(err)
+			slog.ErrorContext(c, err.Error())
+			return
+		}
+
+		saveProfileBackground(ctx, 1, fmt.Sprintf("%d.jpg", ctx.User.ID))
 	case "2":
 		// solid colour
 		col := strings.ToLower(c.PostForm("value"))
@@ -99,14 +128,14 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		// TODO: implement resizing for gifs
 		// TODO: implement gif compression
 
-		f, err := os.Create(fmt.Sprintf("web/static/images/profbackgrounds/%d.gif", ctx.User.ID))
-		defer f.Close()
+		f, err := os.CreateTemp("", fmt.Sprintf("%d.gif", ctx.User.ID))
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
 			c.Error(err)
-			slog.ErrorContext(c, err.Error())
 			return
 		}
+		defer os.Remove(f.Name())
+
 		err = gif.EncodeAll(f, gifImage)
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
@@ -114,7 +143,29 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			slog.ErrorContext(c, err.Error())
 			return
 		}
-		saveProfileBackground(ctx, 3, fmt.Sprintf("%d.gif?%d", ctx.User.ID, time.Now().Unix()))
+		// seek file to beginning
+		f.Seek(0, io.SeekStart)
+
+		sess := session.Must(session.NewSession(&aws.Config{
+			Region:   aws.String(settings.AWS_REGION),
+			Endpoint: aws.String(settings.AWS_ENDPOINT_URL),
+		}))
+		uploader := s3manager.NewUploader(sess)
+		_, err = uploader.Upload(&s3manager.UploadInput{
+			Bucket:      aws.String(settings.AWS_BUCKET_NAME),
+			Key:         aws.String(fmt.Sprintf("profile-backgrounds/%d.gif", ctx.User.ID)),
+			Body:        f,
+			ContentType: aws.String("image/gif"),
+			// TODO: CacheControl?
+		})
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
+			c.Error(err)
+			slog.ErrorContext(c, err.Error())
+			return
+		}
+
+		saveProfileBackground(ctx, 3, fmt.Sprintf("%d.gif", ctx.User.ID))
 	}
 
 }
