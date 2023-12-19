@@ -67,7 +67,7 @@ func UserProfilePageHandler(c *gin.Context) {
 		services.DB.Get(&profileBackground, "SELECT type, value FROM profile_backgrounds WHERE uid = ?", data.UserID)
 		switch profileBackground.Type {
 		case 1, 3:
-			data.BannerContent = "/static/images/profbackgrounds/" + profileBackground.Value
+			data.BannerContent = "https://a.akatsuki.gg/profile-backgrounds/" + profileBackground.Value
 			data.BannerAbsolute = true
 			data.BannerType = profileBackground.Type
 		case 2:
