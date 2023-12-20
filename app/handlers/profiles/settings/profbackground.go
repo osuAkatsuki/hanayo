@@ -9,14 +9,19 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"io"
 
 	"golang.org/x/exp/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/hanayo/app/models"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 )
@@ -24,6 +29,7 @@ import (
 var hexColourRegex = regexp.MustCompile("^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$")
 
 func ProfileBackgroundSubmitHandler(c *gin.Context) {
+	settings := settingsState.GetSettings()
 	ctx := sessions.GetContext(c)
 	if ctx.User.ID == 0 {
 		tu.Resp403(c)
@@ -57,7 +63,14 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			return
 		}
 		//img = resize.Resize(1127, 250, img, resize.Bilinear)
-		f, err := os.Create(fmt.Sprintf("web/static/images/profbackgrounds/%d.jpg", ctx.User.ID))
+		f, err := os.CreateTemp("", fmt.Sprintf("%d.jpg", ctx.User.ID))
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
+			c.Error(err)
+			return
+		}
+		defer os.Remove(f.Name())
+
 		defer f.Close()
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
@@ -74,7 +87,29 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			slog.ErrorContext(c, err.Error())
 			return
 		}
-		saveProfileBackground(ctx, 1, fmt.Sprintf("%d.jpg?%d", ctx.User.ID, time.Now().Unix()))
+		// seek file to beginning
+		f.Seek(0, io.SeekStart)
+
+		sess := session.Must(session.NewSession(&aws.Config{
+			Region:   aws.String(settings.AWS_REGION),
+			Endpoint: aws.String(settings.AWS_ENDPOINT_URL),
+		}))
+		uploader := s3manager.NewUploader(sess)
+		_, err = uploader.Upload(&s3manager.UploadInput{
+			Bucket:      aws.String(settings.AWS_BUCKET_NAME),
+			Key:         aws.String(fmt.Sprintf("profile-backgrounds/%d.jpg", ctx.User.ID)),
+			Body:        f,
+			ContentType: aws.String("image/jpg"),
+			// TODO: CacheControl?
+		})
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
+			c.Error(err)
+			slog.ErrorContext(c, err.Error())
+			return
+		}
+
+		saveProfileBackground(ctx, 1, fmt.Sprintf("%d.jpg", ctx.User.ID))
 	case "2":
 		// solid colour
 		col := strings.ToLower(c.PostForm("value"))
@@ -99,14 +134,15 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		// TODO: implement resizing for gifs
 		// TODO: implement gif compression
 
-		f, err := os.Create(fmt.Sprintf("web/static/images/profbackgrounds/%d.gif", ctx.User.ID))
-		defer f.Close()
+		f, err := os.CreateTemp("", fmt.Sprintf("%d.gif", ctx.User.ID))
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
 			c.Error(err)
 			slog.ErrorContext(c, err.Error())
 			return
 		}
+		defer os.Remove(f.Name())
+
 		err = gif.EncodeAll(f, gifImage)
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
@@ -114,7 +150,29 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			slog.ErrorContext(c, err.Error())
 			return
 		}
-		saveProfileBackground(ctx, 3, fmt.Sprintf("%d.gif?%d", ctx.User.ID, time.Now().Unix()))
+		// seek file to beginning
+		f.Seek(0, io.SeekStart)
+
+		sess := session.Must(session.NewSession(&aws.Config{
+			Region:   aws.String(settings.AWS_REGION),
+			Endpoint: aws.String(settings.AWS_ENDPOINT_URL),
+		}))
+		uploader := s3manager.NewUploader(sess)
+		_, err = uploader.Upload(&s3manager.UploadInput{
+			Bucket:      aws.String(settings.AWS_BUCKET_NAME),
+			Key:         aws.String(fmt.Sprintf("profile-backgrounds/%d.gif", ctx.User.ID)),
+			Body:        f,
+			ContentType: aws.String("image/gif"),
+			// TODO: CacheControl?
+		})
+		if err != nil {
+			m = msg.ErrorMessage{lu.T(c, "We were not able to save your profile background.")}
+			c.Error(err)
+			slog.ErrorContext(c, err.Error())
+			return
+		}
+
+		saveProfileBackground(ctx, 3, fmt.Sprintf("%d.gif", ctx.User.ID))
 	}
 
 }
