@@ -17,6 +17,7 @@ import (
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 )
@@ -24,6 +25,7 @@ import (
 var hexColourRegex = regexp.MustCompile("^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$")
 
 func ProfileBackgroundSubmitHandler(c *gin.Context) {
+	settings := settingsState.GetSettings()
 	ctx := sessions.GetContext(c)
 	if ctx.User.ID == 0 {
 		tu.Resp403(c)
