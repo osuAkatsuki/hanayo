@@ -2,6 +2,7 @@ package profiles
 
 import (
 	"database/sql"
+	"fmt"
 	"strconv"
 
 	"golang.org/x/exp/slog"
@@ -12,6 +13,7 @@ import (
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 )
@@ -23,6 +25,7 @@ func UserProfilePageHandler(c *gin.Context) {
 		privileges uint64
 	)
 
+	settings := settingsState.GetSettings()
 	ctx := sessions.GetContext(c)
 
 	u := c.Param("user")
@@ -67,7 +70,7 @@ func UserProfilePageHandler(c *gin.Context) {
 		services.DB.Get(&profileBackground, "SELECT type, value FROM profile_backgrounds WHERE uid = ?", data.UserID)
 		switch profileBackground.Type {
 		case 1, 3:
-			data.BannerContent = "https://a.akatsuki.gg/profile-backgrounds/" + profileBackground.Value
+			data.BannerContent = fmt.Sprintf("%s/profile-backgrounds/%s", settings.APP_AVATAR_URL, profileBackground.Value)
 			data.BannerAbsolute = true
 			data.BannerType = profileBackground.Type
 		case 2:
