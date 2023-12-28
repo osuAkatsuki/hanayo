@@ -157,7 +157,7 @@
                           {{ range .badges }}
                             <div class="badge" data-tooltip="{{ .name }}">
                               <a>
-                                <i class="{{ .icon }} small icon m-less"></i>
+                                <i class="{{ .icon }} small icon m-less" {{ if .colour }}style="color: {{ .colour }} !important;"{{ end }}></i>
                               </a>
                             </div>
                           {{ end }}
