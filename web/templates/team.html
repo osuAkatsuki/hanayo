@@ -56,6 +56,13 @@ BannerType=1
         {{ template "users" (.Get "badges/members?id=%d" 99) }}
       </div>
       <div class="ui center aligned segment">
+        <h1 class="ui heading">{{ .T "Nomination Quality Assurance Team" }}</h1>
+        <p>
+          {{ .T "They insure that the Beatmap Nomination team is running at its best performance and promote changes to the Ranking Criteria when deemed necessary." }}
+        </p>
+        {{ template "users" (.Get "badges/members?id=%d" 100) }}
+      </div>
+      <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Beatmap Nomination Team" }}</h1>
         <p>
           {{ .T "Responsible for handling all beatmap related inquiries; such as beatmaps status requests." }}
