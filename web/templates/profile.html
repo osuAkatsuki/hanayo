@@ -63,19 +63,24 @@
             <div class="profile-info">
               {{ $user := . }}
 
-              {{ $supporter := has .privileges 7 }}
+              {{ $donor := has .privileges 7 }}
               {{ $premium := has .privileges 8388615 }}
 
-              {{ $community := has .privileges 1036539 }}
-              {{ $accounts := has .privileges 4283 }}
-              {{ $product := has .privileges 7340027 }}
-              {{ $dev := has .privileges 2354715 }}
-              {{ $event := has .privileges 2097155 }}
-              {{ $nominator := has .privileges 259 }}
+              {{ $product := has .privileges 9435391 }}
+              {{ $community := has .privileges 9425151 }}
+              {{ $accounts := has .privileges 8392895 }}
+              {{ $support := has .privileges 9175111 }}
+              {{ $dev := has .privileges 10743327 }}
+              {{ $nqa := false }}
+              {{ $nominator := has .privileges 8388871 }}
+              {{ $event := has .privileges 10485767 }}
               {{ $scorewatcher := false }}
               {{ range .badges }}
                 {{ if eq .id (float 86) }}
                   {{ $scorewatcher = true }}
+                {{ end }}
+                {{ if eq .id (float 100) }}
+                  {{ $nqa = true }}
                 {{ end }}
               {{ end }}
 
@@ -106,21 +111,27 @@
                       {{ else if $accounts }}
                         <div class="profile-label label-accounts label-full">ACCOUNTS MANAGER</div>
                         <div class="profile-label label-accounts label-mobile">AMT</div>
+                      {{ else if $support }}
+                        <div class="profile-label label-support label-full">COMMUNITY SUPPORT</div>
+                        <div class="profile-label label-support label-mobile">CS</div>
                       {{ else if $event }}
                         <div class="profile-label label-event label-full">EVENT MANAGER</div>
                         <div class="profile-label label-event label-mobile">EMT</div>
                       {{ else if $nominator }}
                         <div class="profile-label label-nominator label-full">BEATMAP NOMINATOR</div>
                         <div class="profile-label label-nominator label-mobile">BN</div>
+                      {{ else if $nqa }}
+                        <div class="profile-label label-nqa label-full">NOMINATION QUALITY ASSURANCE</div>
+                        <div class="profile-label label-nqa label-mobile">NQA</div>
                       {{ else if $scorewatcher }}
                         <div class="profile-label label-scorewatcher label-full">SOCIAL MEDIA MANAGER</div>
                         <div class="profile-label label-scorewatcher label-mobile">SW</div>
                       {{ else if $premium }}
-                        <div class="profile-label label-premium label-full"><span>PREMIUM <i class="fa-solid fa-heart label-icon"></i></span></div>
+                        <div class="profile-label label-premium label-full">PREMIUM</div>
                         <div class="profile-label label-premium label-mobile"><span><i class="fa-solid fa-heart label-icon"></i></span></div>
-                      {{ else if $supporter }}
-                        <div class="profile-label label-supporter label-full"><span>SUPPORTER <i class="fa-solid fa-heart label-icon"></i></span></span></div>
-                        <div class="profile-label label-supporter label-mobile"><span><i class="fa-solid fa-heart label-icon"></i></span></div>
+                      {{ else if $donor }}
+                        <div class="profile-label label-donor label-full">SUPPORTER</div>
+                        <div class="profile-label label-donor label-mobile"><span><i class="fa-solid fa-heart label-icon"></i></span></div>
                       {{ end }}
 
                     </div>

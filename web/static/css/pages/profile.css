@@ -1,12 +1,14 @@
 :root {
-  --colour-community: #ff695e;
-  --colour-accounts: #ff4404;
-  --colour-product: #b02025;
+  --colour-community: #ee4343;
+  --colour-accounts: #ff7746;
+  --colour-product: #1d7cd5;
+  --colour-support: #ffb523;
   --colour-dev: #66a9f7;
-  --colour-event: #ffd50a;
+  --colour-event: #d6ca63;
+  --colour-nqa: #a291fb;
   --colour-nominator: #a333c8;
   --colour-scorewatcher:#e07fc4;
-  --colour-supporter: #5fd5eb;
+  --colour-donor: #5fd5eb;
   --colour-premium: #fff176;
 }
 
@@ -230,12 +232,20 @@
   color: var(--colour-product);
 }
 
+.label-support {
+  color: var(--colour-support);
+}
+
 .label-dev {
   color: var(--colour-dev);
 }
 
 .label-event {
   color: var(--colour-event);
+}
+
+.label-nqa {
+  color: var(--colour-nqa);
 }
 
 .label-nominator {
@@ -246,8 +256,8 @@
   color: var(--colour-scorewatcher);
 }
 
-.label-supporter {
-  color: var(--colour-supporter);
+.label-donor {
+  color: var(--colour-donor);
 }
 
 .label-premium {
