@@ -165,16 +165,16 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
         </h4>
         <center>
           <p>
-            {{ $.T "We are now processing payments automatically & your perks should be distributed as soon as possible. If you do run into any trouble, please open a ticket in our <a href='/discord'>Discord server</a>!" | html }}
+            {{ $.T "We are now processing payments automatically & your perks should be distributed as soon as possible. If you do run into any trouble, please <b>open a ticket</b> in our <a href='/discord'>Discord server</a>!" | html }}
             <br />
             <br />
-            {{ $.T "Disclaimer: Donations are <b>non-refundable</b>, and do not exempt you from Akatsuki's Rules." | html }}
+            {{ $.T "Disclaimer: Donations are <b>non-refundable</b>, and do not exempt you from <a href='/doc/tos'>Akatsuki's Rules</a>." | html }}
           </p>
         </center>
       {{ else }}
         <div class="ui divider"></div>
         <h1 class="ui center aligned header">
-          {{ $.T "Please log in before purchasing premium." }}
+          {{ $.T "Please log in before purchasing Premium." }}
         </h1>
       {{ end }}
     </div>
