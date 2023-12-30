@@ -8,6 +8,7 @@
   --colour-nqa: #a291fb;
   --colour-nominator: #a333c8;
   --colour-scorewatcher:#e07fc4;
+  --colour-champion: #41f8d5;
   --colour-donor: #5fd5eb;
   --colour-premium: #fff176;
 }
@@ -254,6 +255,10 @@
 
 .label-scorewatcher {
   color: var(--colour-scorewatcher);
+}
+
+.label-champion {
+  color: var(--colour-champion);
 }
 
 .label-donor {
