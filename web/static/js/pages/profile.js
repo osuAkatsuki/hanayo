@@ -20,13 +20,13 @@ $(document).ready(function () {
     window.history.replaceState(
       "",
       document.title,
-      newPathName + newSearch + wl.hash
+      newPathName + newSearch + wl.hash,
     );
   else if (wl.pathname != newPathName)
     window.history.replaceState(
       "",
       document.title,
-      newPathName + wl.search + wl.hash
+      newPathName + wl.search + wl.hash,
     );
 
   setDefaultScoreTable();
@@ -41,29 +41,29 @@ $(document).ready(function () {
     toggleModeAvailability(favouriteMode, preferRelax);
     $("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr(
       "hidden",
-      ""
+      "",
     );
     $(
       "[data-mode=" +
-      favouriteMode +
-      "][data-rx=" +
-      preferRelax +
-      "]:not(.simple-banner-swtich)"
+        favouriteMode +
+        "][data-rx=" +
+        preferRelax +
+        "]:not(.simple-banner-swtich)",
     ).removeAttr("hidden");
     $("#rx-menu>.active.simple-banner-swtich").removeClass("active");
     var needsLoad = $(
       "#scores-zone>[data-mode=" +
-      favouriteMode +
-      "][data-loaded=0][data-rx=" +
-      preferRelax +
-      "]"
+        favouriteMode +
+        "][data-loaded=0][data-rx=" +
+        preferRelax +
+        "]",
     );
     if (needsLoad.length > 0) initialiseScores(needsLoad, favouriteMode);
     $(this).addClass("active");
     window.history.replaceState(
       "",
       document.title,
-      `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`
+      `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`,
     );
     initialiseChartGraph(graphType, true);
     applyPeakRankLabel();
@@ -78,29 +78,29 @@ $(document).ready(function () {
     toggleModeAvailability(m, preferRelax);
     $("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr(
       "hidden",
-      ""
+      "",
     );
     $(
       "[data-mode=" +
-      m +
-      "][data-rx=" +
-      preferRelax +
-      "]:not(.simple-banner-swtich)"
+        m +
+        "][data-rx=" +
+        preferRelax +
+        "]:not(.simple-banner-swtich)",
     ).removeAttr("hidden");
     $("#mode-menu>.active.simple-banner-swtich").removeClass("active");
     var needsLoad = $(
       "#scores-zone>[data-mode=" +
-      m +
-      "][data-loaded=0][data-rx=" +
-      preferRelax +
-      "]"
+        m +
+        "][data-loaded=0][data-rx=" +
+        preferRelax +
+        "]",
     );
     if (needsLoad.length > 0) initialiseScores(needsLoad, m);
     $(this).addClass("active");
     window.history.replaceState(
       "",
       document.title,
-      `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`
+      `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`,
     );
     initialiseChartGraph(graphType, true);
   });
@@ -114,12 +114,12 @@ $(document).ready(function () {
     initialiseScores(
       $(
         "#scores-zone>div[data-mode=" +
-        favouriteMode +
-        "][data-rx=" +
-        preferRelax +
-        "]"
+          favouriteMode +
+          "][data-rx=" +
+          preferRelax +
+          "]",
       ),
-      favouriteMode
+      favouriteMode,
     );
   };
   if (i18nLoaded) i();
@@ -129,17 +129,16 @@ $(document).ready(function () {
     });
 });
 
-
 function createLabels(dataLength) {
-  var labels = ["Today"]
+  var labels = ["Today"];
   for (var i = 1; i < dataLength; i++) {
     if (i == 1) {
-      labels.push(`1 day ago`)
+      labels.push(`1 day ago`);
     } else {
-      labels.push(`${i} days ago`)
+      labels.push(`${i} days ago`);
     }
   }
-  return labels.reverse()
+  return labels.reverse();
 }
 
 function applyPeakRankLabel() {
@@ -150,27 +149,34 @@ function applyPeakRankLabel() {
     modeVal += 7;
   }
 
-  var rankLabel = $(`#global-rank-${preferRelax}-${favouriteMode}`)
-  var rankRowText = $(`#global-row-rank-${preferRelax}-${favouriteMode}`)
-  var rankRow = $(`#global-row-${preferRelax}-${favouriteMode}`)
-  if (!rankLabel) return
+  var rankLabel = $(`#global-rank-${preferRelax}-${favouriteMode}`);
+  var rankRowText = $(`#global-row-rank-${preferRelax}-${favouriteMode}`);
+  var rankRow = $(`#global-row-${preferRelax}-${favouriteMode}`);
+  if (!rankLabel) return;
 
-  api("profile-history/peak-rank", { user_id: userID, mode: modeVal }, (resp) => {
-    if (!resp.data.rank) {
-      return
-    }
+  api(
+    "profile-history/peak-rank",
+    { user_id: userID, mode: modeVal },
+    (resp) => {
+      if (!resp.data.rank) {
+        return;
+      }
 
-    var rank = addCommas(resp.data.rank)
-    var date = Date.parse(resp.data.captured_at)
+      var rank = addCommas(resp.data.rank);
+      var date = Date.parse(resp.data.captured_at);
 
-    // using en-gb because we want `09 Mar 2022` syntax.
-    var formatter = new Intl.DateTimeFormat('en-gb', {day: 'numeric', month: 'short', year: 'numeric'})
-    var formattedDate = formatter.format(date)
-    rankLabel.attr("data-tooltip", `Peak rank: #${rank} on ${formattedDate}`)
-    rankRow.removeAttr("hidden")
-    rankRowText.text(`#${rank} on ${formattedDate}`)
-  });
-
+      // using en-gb because we want `09 Mar 2022` syntax.
+      var formatter = new Intl.DateTimeFormat("en-gb", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+      var formattedDate = formatter.format(date);
+      rankLabel.attr("data-tooltip", `Peak rank: #${rank} on ${formattedDate}`);
+      rankRow.removeAttr("hidden");
+      rankRowText.text(`#${rank} on ${formattedDate}`);
+    },
+  );
 }
 
 function changeChart(type) {
@@ -186,16 +192,16 @@ function changeChart(type) {
 function getCountryRank(idx) {
   // country ranks are inconsistient because for now they are missing 1 day off
 
-  var rank = window.countryRankPoints[idx]
+  var rank = window.countryRankPoints[idx];
   if (rank == undefined || rank == null) {
-    return "N/A"
+    return "N/A";
   }
 
-  return addCommas(rank)
+  return addCommas(rank);
 }
 
 function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
-  var prefix = graphType == "rank" ? "#" : ""
+  var prefix = graphType == "rank" ? "#" : "";
   return ` 
       <div 
       class="apexcharts-tooltip-title" 
@@ -206,12 +212,20 @@ function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
         <div class="apexcharts-tooltip-text" style="font-family: Rubik, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px;">
           <div class="apexcharts-tooltip-y-group">
             <span class="apexcharts-tooltip-text-y-label">${graphName}: </span>
-            <span class="apexcharts-tooltip-text-y-value">${prefix}${addCommas(series[seriesIndex][dataPointIndex])}</span>
+            <span class="apexcharts-tooltip-text-y-value">${prefix}${addCommas(
+              series[seriesIndex][dataPointIndex],
+            )}</span>
           </div>
-          ${graphType == 'rank' ? `<div class="apexcharts-tooltip-y-group">
+          ${
+            graphType == "rank"
+              ? `<div class="apexcharts-tooltip-y-group">
             <span class="apexcharts-tooltip-text-y-label">Country Rank: </span>
-            <span class="apexcharts-tooltip-text-y-value">#${getCountryRank(dataPointIndex)}</span>
-          </div>` : ''}
+            <span class="apexcharts-tooltip-text-y-value">#${getCountryRank(
+              dataPointIndex,
+            )}</span>
+          </div>`
+              : ""
+          }
           <div class="apexcharts-tooltip-goals-group">
             <span class="apexcharts-tooltip-text-goals-label"></span>
             <span class="apexcharts-tooltip-text-goals-value"></span>
@@ -222,7 +236,7 @@ function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
           </div>
         </div>
       </div>
-    `
+    `;
 }
 
 function initialiseChartGraph(graphType, udpate) {
@@ -233,120 +247,125 @@ function initialiseChartGraph(graphType, udpate) {
     modeVal += 7;
   }
 
-  window.graphPoints = []
-  window.countryRankPoints = []
-  window.graphName = graphType == "pp" ? "Performance Points" : "Global Rank"
-  window.graphColor = graphType == "pp" ? '#e03997' : '#2185d0'
-  var yaxisReverse = graphType == "pp" ? false : true
+  window.graphPoints = [];
+  window.countryRankPoints = [];
+  window.graphName = graphType == "pp" ? "Performance Points" : "Global Rank";
+  window.graphColor = graphType == "pp" ? "#e03997" : "#2185d0";
+  var yaxisReverse = graphType == "pp" ? false : true;
 
-  api(`profile-history/${graphType}`, { user_id: userID, mode: modeVal }, (resp) => {
-    var chartCanvas = document.querySelector("#profile-history-graph");
-    var chartNotFound = document.querySelector("#profile-history-not-found");
+  api(
+    `profile-history/${graphType}`,
+    { user_id: userID, mode: modeVal },
+    (resp) => {
+      var chartCanvas = document.querySelector("#profile-history-graph");
+      var chartNotFound = document.querySelector("#profile-history-not-found");
 
-    if (resp.status == "error") {
-      chartNotFound.style.display = "block";
-      chartCanvas.style.display = "none";
-      return;
-    }
+      if (resp.status == "error") {
+        chartNotFound.style.display = "block";
+        chartCanvas.style.display = "none";
+        return;
+      }
 
-    chartNotFound.style.display = "none";
-    chartCanvas.style.display = "block";
-    if (graphType === "rank") {
-      window.graphPoints = resp.data.captures.map((x) => x.overall);
-      window.countryRankPoints = resp.data.captures.map((x) => x.country);
-    } else {
-      window.graphPoints = resp.data.captures.map((x) => x.pp);
-    }
+      chartNotFound.style.display = "none";
+      chartCanvas.style.display = "block";
+      if (graphType === "rank") {
+        window.graphPoints = resp.data.captures.map((x) => x.overall);
+        window.countryRankPoints = resp.data.captures.map((x) => x.country);
+      } else {
+        window.graphPoints = resp.data.captures.map((x) => x.pp);
+      }
 
-    var minGraphOffset = Math.min(...window.graphPoints)
-    var maxGraphOffset = Math.max(...window.graphPoints)
-    var minMaxGraphOffset = minGraphOffset == maxGraphOffset ? 10 : 1
+      var minGraphOffset = Math.min(...window.graphPoints);
+      var maxGraphOffset = Math.max(...window.graphPoints);
+      var minMaxGraphOffset = minGraphOffset == maxGraphOffset ? 10 : 1;
 
-    window.graphLabels = createLabels(window.graphPoints.length)
-    var options = {
-      series: [
-        {
-          name: graphName,
-          data: window.graphPoints
+      window.graphLabels = createLabels(window.graphPoints.length);
+      var options = {
+        series: [
+          {
+            name: graphName,
+            data: window.graphPoints,
+          },
+        ],
+        grid: {
+          show: true,
+          borderColor: "#383838",
+          position: "back",
+          xaxis: {
+            lines: {
+              show: false,
+            },
+          },
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
         },
-      ],
-      grid: {
-        show: true,
-        borderColor: '#383838',
-        position: 'back',
+        chart: {
+          height: 160,
+          type: "line",
+          fontFamily:
+            '"Rubik", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+          zoom: {
+            enabled: false,
+          },
+          toolbar: {
+            show: false,
+          },
+          background: "rgba(0,0,0,0)",
+        },
+        stroke: {
+          curve: "smooth",
+          width: 4,
+        },
+        colors: [graphColor],
+        theme: {
+          mode: "dark",
+        },
         xaxis: {
-          lines: {
-            show: false
-          }
-        },
-        yaxis: {
-          lines: {
-            show: true
-          }
-        },
-      },
-      chart: {
-        height: 160,
-        type: 'line',
-        fontFamily: '"Rubik", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-        zoom: {
-          enabled: false
-        },
-        toolbar: {
-          show: false,
-        },
-        background: 'rgba(0,0,0,0)'
-      },
-      stroke: {
-        curve: 'smooth',
-        width: 4,
-      },
-      colors: [graphColor],
-      theme: {
-        mode: 'dark',
-      },
-      xaxis: {
-        labels: { show: false },
-        categories: window.graphLabels,
-        axisTicks: {
-          show: false,
-        },
-        tooltip: {
-          enabled: false,
-        }
-      },
-      yaxis: [
-        {
-          max: maxGraphOffset + minMaxGraphOffset,
-          min: minGraphOffset - minMaxGraphOffset,
-          reversed: yaxisReverse,
           labels: { show: false },
-          tickAmount: 4,
+          categories: window.graphLabels,
+          axisTicks: {
+            show: false,
+          },
+          tooltip: {
+            enabled: false,
+          },
         },
-      ],
-      tooltip: {
-        custom: getGraphTooltip,
-      },
-      markers: {
-        size: 0,
-        fillColor: graphColor,
-        strokeWidth: 0,
-        hover: { size: 7 }
-      },
-    };
+        yaxis: [
+          {
+            max: maxGraphOffset + minMaxGraphOffset,
+            min: minGraphOffset - minMaxGraphOffset,
+            reversed: yaxisReverse,
+            labels: { show: false },
+            tickAmount: 4,
+          },
+        ],
+        tooltip: {
+          custom: getGraphTooltip,
+        },
+        markers: {
+          size: 0,
+          fillColor: graphColor,
+          strokeWidth: 0,
+          hover: { size: 7 },
+        },
+      };
 
-    if (udpate) {
-      if ("chart" in window) {
-        window.chart.updateOptions(options)
+      if (udpate) {
+        if ("chart" in window) {
+          window.chart.updateOptions(options);
+        } else {
+          window.chart = new ApexCharts(chartCanvas, options);
+          window.chart.render();
+        }
       } else {
         window.chart = new ApexCharts(chartCanvas, options);
         window.chart.render();
       }
-    } else {
-      window.chart = new ApexCharts(chartCanvas, options);
-      window.chart.render();
-    }
-  });
+    },
+  );
 }
 
 function initialiseUserpage() {
@@ -357,13 +376,9 @@ function initialiseUserpage() {
     userpage.removeClass("loading");
 
     if (!resp.userpage_compiled) {
-      userpage.html(
-        `<h5>` +
-        T("Nothing here. Yet.") +
-        `</h5>`
-      )
-      return
-    };
+      userpage.html(`<h5>` + T("Nothing here. Yet.") + `</h5>`);
+      return;
+    }
 
     userpage.html(twemoji.parse(resp.userpage_compiled));
   });
@@ -379,8 +394,8 @@ function initialiseAchievements() {
       if (achievements.length === 0) {
         $("#achievements").append(
           $("<div class='ui sixteen wide column'>").text(
-            T("Nothing here. Yet.")
-          )
+            T("Nothing here. Yet."),
+          ),
         );
         $("#load-more-achievements").remove();
         return;
@@ -400,20 +415,20 @@ function initialiseAchievements() {
             $("<div class='ui two wide column'>").append(
               $(
                 "<img src='https://s.ripple.moe/images/medals-" +
-                "client/" +
-                ach.icon +
-                ".png' alt='" +
-                ach.name +
-                "' class='" +
-                (!ach.achieved ? "locked-achievement" : "achievement") +
-                "'>"
+                  "client/" +
+                  ach.icon +
+                  ".png' alt='" +
+                  ach.name +
+                  "' class='" +
+                  (!ach.achieved ? "locked-achievement" : "achievement") +
+                  "'>",
               ).popup({
                 title: ach.name,
                 content: ach.description,
                 position: "bottom center",
                 distanceAway: 10,
-              })
-            )
+              }),
+            ),
           );
         }
         // if we've shown nothing, and achievedOnly is enabled, try again
@@ -438,7 +453,7 @@ function initialiseAchievements() {
           });
       }
       displayAchievements(8, true);
-    }
+    },
   );
 }
 
@@ -484,7 +499,7 @@ function friendClick() {
     "friends/" + (t.attr("data-friends") == 1 ? "del" : "add"),
     { user: userID },
     setFriendOnResponse,
-    true
+    true,
   );
 }
 
@@ -495,9 +510,9 @@ function setDefaultScoreTable() {
     .append(
       $("<div class='extra-block' />").append(
         $("<a class='show-button'>" + T("Load more") + "</a>").click(
-          loadMoreClick
-        )
-      )
+          loadMoreClick,
+        ),
+      ),
     );
 }
 
@@ -526,35 +541,35 @@ function initialiseScores(el, mode) {
     $("<div class='ui segments' />").append(
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "Pinned scores"
+          "Pinned scores",
         )}</h2></div>`,
-        pinned
+        pinned,
       ),
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "Best scores"
+          "Best scores",
         )}</h2></div>`,
-        best
+        best,
       ),
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "Most played beatmaps"
+          "Most played beatmaps",
         )}</h2></div>`,
-        most_played
+        most_played,
       ),
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "First Place Ranks"
+          "First Place Ranks",
         )} <span id='first-${firstSuffix}' style='font-size: medium;'>(.. in total)</span></h2></div>`,
-        first
+        first,
       ),
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "Recent scores"
+          "Recent scores",
         )}</h2></div>`,
-        recent
-      )
-    )
+        recent,
+      ),
+    ),
   );
   loadScoresPage("pinned", mode);
   loadScoresPage("best", mode);
@@ -615,12 +630,12 @@ const scoreNotFoundElement = `<div class="map-single" id="not-found-container">
 function loadMostPlayedBeatmaps(type, mode) {
   var mostPlayedTable = $(
     "#scores-zone div[data-mode=" +
-    mode +
-    "][data-rx=" +
-    preferRelax +
-    "] div[data-type=" +
-    type +
-    "] .scores"
+      mode +
+      "][data-rx=" +
+      preferRelax +
+      "] div[data-type=" +
+      type +
+      "] .scores",
   );
 
   var page;
@@ -643,8 +658,9 @@ function loadMostPlayedBeatmaps(type, mode) {
 			<div class="new map-single" style="cursor: auto">
 				<div class="map-content1">
 					<div class="map-data">
-						<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${el.beatmap.beatmapset_id
-          }/covers/cover@2x.jpg); background-size: cover;">
+						<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
+              el.beatmap.beatmapset_id
+            }/covers/cover@2x.jpg); background-size: cover;">
 						</div>
 						<div class="map-title-block">
 							<div class="map-title">
@@ -673,7 +689,7 @@ function loadMostPlayedBeatmaps(type, mode) {
       if (resp.most_played_beatmaps.length != 5) enable = false;
 
       disableLoadMoreButton(type, mode, enable);
-    }
+    },
   );
 }
 
@@ -681,12 +697,12 @@ var scoreStore = {};
 function loadScoresPage(type, mode) {
   var table = $(
     "#scores-zone div[data-mode=" +
-    mode +
-    "][data-rx=" +
-    preferRelax +
-    "] div[data-type=" +
-    type +
-    "] .scores"
+      mode +
+      "][data-rx=" +
+      preferRelax +
+      "] div[data-type=" +
+      type +
+      "] .scores",
   );
 
   // redirect it to most played load.
@@ -742,20 +758,27 @@ function loadScoresPage(type, mode) {
             v.count_300,
             v.count_100,
             v.count_50,
-            v.count_miss
+            v.count_miss,
           );
         } else {
           var scoreRank = "F";
         }
-      
-        var dataPinned = type === "pinned" ? `data-pinnedscoreid="${v.id}"` : ""
+
+        var dataPinned =
+          type === "pinned" ? `data-pinnedscoreid="${v.id}"` : "";
         table.append(`
-      <div class="new map-single complete-${v.completed}" data-scoreid="${v.id}" ${dataPinned}>
+      <div class="new map-single complete-${v.completed}" data-scoreid="${
+        v.id
+      }" ${dataPinned}>
         <div class="map-content1">
           <div class="map-data">
-            <div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${v.beatmap.beatmapset_id
-          }/covers/cover@2x.jpg); background-size: cover;">
-              <div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
+            <div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
+              v.beatmap.beatmapset_id
+            }/covers/cover@2x.jpg); background-size: cover;">
+              <div class="map-grade rank-${scoreRank}">${scoreRank.replace(
+                "HD",
+                "",
+              )}</div>
             </div>
             <div class="map-title-block">
               <div class="map-title"><a class="beatmap-link">
@@ -763,9 +786,9 @@ function loadScoresPage(type, mode) {
                 </a>
               </div>
               <div class="play-stats">
-                ${addCommas(
-            v.score
-          )} / ${addCommas(v.max_combo)}x / <b>${getScoreMods(v.mods, true)}</b>
+                ${addCommas(v.score)} / ${addCommas(
+                  v.max_combo,
+                )}x / <b>${getScoreMods(v.mods, true)}</b>
               </div>
               <div class="map-date">
                 <time class="new timeago" datetime="${v.time}">
@@ -789,8 +812,16 @@ function loadScoresPage(type, mode) {
               </div>
               <div data-btns-score-id='${v.id}'>
                 ${downloadStar(v.id)}
-                ${userID == window.actualID && !v.pinned ? pinButton(v.id, preferRelax) : ""}
-                ${userID == window.actualID && v.pinned ? unpinButton(v.id, preferRelax) : ""}
+                ${
+                  userID == window.actualID && !v.pinned
+                    ? pinButton(v.id, preferRelax)
+                    : ""
+                }
+                ${
+                  userID == window.actualID && v.pinned
+                    ? unpinButton(v.id, preferRelax)
+                    : ""
+                }
               </div>
               <div class="score-details_icon-block">
                 <i class="angle right icon"></i>
@@ -821,7 +852,7 @@ function loadScoresPage(type, mode) {
       var enable = true;
       if (r.scores.length != 10) enable = false;
       disableLoadMoreButton(type, mode, enable);
-    }
+    },
   );
 }
 function refreshTable(type) {
@@ -838,18 +869,20 @@ function do_pin(table, score, mode) {
       score.count_300,
       score.count_100,
       score.count_50,
-      score.count_miss
+      score.count_miss,
     );
   } else {
     var scoreRank = "F";
   }
   table.append(`
-	<div class="new map-single complete-${score.completed}" data-pinnedscoreid="${score.id
-    }">
+	<div class="new map-single complete-${score.completed}" data-pinnedscoreid="${
+    score.id
+  }">
 		<div class="map-content1">
 			<div class="map-data">
-				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${score.beatmap.beatmapset_id
-    }/covers/cover@2x.jpg); background-size: cover;">
+				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
+          score.beatmap.beatmapset_id
+        }/covers/cover@2x.jpg); background-size: cover;">
 					<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
 				</div>
 				<div class="map-title-block">
@@ -859,9 +892,9 @@ function do_pin(table, score, mode) {
 					</div>
 					<div class="play-stats">
 						${addCommas(score.score)} / ${addCommas(score.max_combo)}x / <b>${getScoreMods(
-      score.mods,
-      true
-    )}</b>
+              score.mods,
+              true,
+            )}</b>
 					</div>
 					<div class="map-date">
 						<time class="new timeago" datetime="${score.time}">
@@ -900,10 +933,10 @@ function pinSuccess(data) {
 
   var table = $(
     "#scores-zone div[data-mode=" +
-    favouriteMode +
-    "][data-rx=" +
-    preferRelax +
-    "] div[data-type=pinned] .scores"
+      favouriteMode +
+      "][data-rx=" +
+      preferRelax +
+      "] div[data-type=pinned] .scores",
   );
   if (!table) return showMessage("error", "Tell Flame to fix this");
 
@@ -934,10 +967,10 @@ function pinSuccess(data) {
 function unpinSuccess(data) {
   var table = $(
     "#scores-zone div[data-mode=" +
-    favouriteMode +
-    "][data-rx=" +
-    preferRelax +
-    "] div[data-type=pinned] .scores"
+      favouriteMode +
+      "][data-rx=" +
+      preferRelax +
+      "] div[data-type=pinned] .scores",
   );
   var row = $(`div[data-pinnedscoreid=${data["score_id"]}]`);
   row.remove();
@@ -960,11 +993,23 @@ function unpinSuccess(data) {
 }
 
 function pinScore(id, rx) {
-  api("users/scores/pin", { id: id, rx: rx }, pinSuccess, function (data) { }, true);
+  api(
+    "users/scores/pin",
+    { id: id, rx: rx },
+    pinSuccess,
+    function (data) {},
+    true,
+  );
 }
 
 function unpinScore(id, rx) {
-  api("users/scores/unpin", { id: id, rx: rx }, unpinSuccess, function (data) { }, true);
+  api(
+    "users/scores/unpin",
+    { id: id, rx: rx },
+    unpinSuccess,
+    function (data) {},
+    true,
+  );
 }
 
 function pinButton(id, rx) {
@@ -998,12 +1043,12 @@ function weightedPP(type, page, idx, pp) {
 function disableLoadMoreButton(type, mode, enable) {
   var button = $(
     "#scores-zone div[data-mode=" +
-    mode +
-    "][data-rx=" +
-    preferRelax +
-    "] div[data-type=" +
-    type +
-    "] .show-button"
+      mode +
+      "][data-rx=" +
+      preferRelax +
+      "] div[data-type=" +
+      type +
+      "] .show-button",
   );
   if (enable) button.removeClass("disabled");
   else button.addClass("disabled");
@@ -1069,8 +1114,8 @@ function viewScoreInfo() {
     els.push(
       $("<tr />").append(
         $("<td>" + T(key) + "</td>"),
-        $("<td>" + value + "</td>")
-      )
+        $("<td>" + value + "</td>"),
+      ),
     );
   });
 

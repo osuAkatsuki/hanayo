@@ -9,7 +9,7 @@
     window.history.replaceState(
       "",
       document.title,
-      "/b/" + b + "?mode=" + m + "&rx=" + rx + wl.hash
+      "/b/" + b + "?mode=" + m + "&rx=" + rx + wl.hash,
     );
     var Score = rx ? "pp" : "score";
     api(
@@ -41,16 +41,16 @@
             score.count_300,
             score.count_100,
             score.count_50,
-            score.count_miss
+            score.count_miss,
           );
           var scoreRankIcon = `<a class="rank-${scoreRank} rank--bmap--font">${scoreRank.replace(
             "HD",
-            "+"
+            "+",
           )}</a>`;
           tb.append(
             $("<tr class='l-player' />").append(
               $("<td data-sort-value=" + ++i + " />").html(
-                `#${(page - 1) * 50 + i}`
+                `#${(page - 1) * 50 + i}`,
               ),
               $("<td />").html(
                 "<a href='/u/" +
@@ -60,32 +60,46 @@
                   ".svg' class='new-flag fixed--flag--margin'></img>" +
                   " " +
                   escapeHTML(user.username) +
-                  "</a>"
+                  "</a>",
               ),
               $("<td class='center aligned' />").html(scoreRankIcon),
-              $("<td class='center aligned' data-sort-value=" + score.score + " />").html(
-                addCommas(score.score)
-              ),
-              $("<td class='center aligned' data-sort-value=" + score.accuracy + " />").text(
-                score.accuracy.toFixed(2) + "%"
-              ),
-              $("<td class='center aligned' data-sort-value=" + score.max_combo + " />").text(
-                addCommas(score.max_combo) + "x"
-              ),
-              $("<td class='center aligned' data-sort-value=" + score.pp.toFixed(0) + " />").html(
-                score.pp.toFixed(0) + "pp"
-              ),
-              $("<td class='center aligned' />").html(getScoreMods(score.mods, true)),
-              $("<td class='center aligned' data-sort-value=" + Date.parse(score.time).valueOf() + " />").html(timeSince(Date.parse(score.time))),
+              $(
+                "<td class='center aligned' data-sort-value=" +
+                  score.score +
+                  " />",
+              ).html(addCommas(score.score)),
+              $(
+                "<td class='center aligned' data-sort-value=" +
+                  score.accuracy +
+                  " />",
+              ).text(score.accuracy.toFixed(2) + "%"),
+              $(
+                "<td class='center aligned' data-sort-value=" +
+                  score.max_combo +
+                  " />",
+              ).text(addCommas(score.max_combo) + "x"),
+              $(
+                "<td class='center aligned' data-sort-value=" +
+                  score.pp.toFixed(0) +
+                  " />",
+              ).html(score.pp.toFixed(0) + "pp"),
               $("<td class='center aligned' />").html(
-                "<a href='/web/replays/" + 
-                score.id + 
-                "' title='Download Replay' class='new downloadstar'><i class='fa-solid fa-download icon'></i>Get</a>"
-              )
-            )
+                getScoreMods(score.mods, true),
+              ),
+              $(
+                "<td class='center aligned' data-sort-value=" +
+                  Date.parse(score.time).valueOf() +
+                  " />",
+              ).html(timeSince(Date.parse(score.time))),
+              $("<td class='center aligned' />").html(
+                "<a href='/web/replays/" +
+                  score.id +
+                  "' title='Download Replay' class='new downloadstar'><i class='fa-solid fa-download icon'></i>Get</a>",
+              ),
+            ),
           );
         });
-      }
+      },
     );
   }
   function changeDifficulty(bid) {
@@ -109,22 +123,30 @@
     // hide mode for non-std maps
     if (diff.Mode != 0) {
       currentMode = diff.Mode;
-      $("#rx-column").removeClass("five wide column").addClass("sixteen wide column");
+      $("#rx-column")
+        .removeClass("five wide column")
+        .addClass("sixteen wide column");
       $("#mode-column").hide();
     } else {
       if (currentMode === null) {
         currentMode = favMode;
       }
-      $("#rx-column").removeClass("sixteen wide column").addClass("five wide column");
+      $("#rx-column")
+        .removeClass("sixteen wide column")
+        .addClass("five wide column");
       $("#mode-column").show();
     }
 
     if (diff.Mode == 3) {
       currentCmode = 0;
-      $("#mode-column").removeClass("eleven wide column").addClass("sixteen wide column");
+      $("#mode-column")
+        .removeClass("eleven wide column")
+        .addClass("sixteen wide column");
       $("#rx-column").hide();
     } else {
-      $("#mode-column").removeClass("sixteen wide column").addClass("eleven wide column");
+      $("#mode-column")
+        .removeClass("sixteen wide column")
+        .addClass("eleven wide column");
       $("#rx-column").show();
     }
 

@@ -174,7 +174,6 @@
 
       <div class="akat-box ui segment">
         <div class="ui grid stackable">
-
           <div class="five wide column" id="rx-column">
             <div class="ui three item menu" id="cmode-menu">
               {{ range $k, $v := cmodes }}
@@ -202,7 +201,6 @@
               {{ end }}
             </div>
           </div>
-
         </div>
 
         <table class="ui table sortable leaderboard-table">
@@ -213,11 +211,15 @@
               <th class="t-heading center aligned">{{ .T "Grade" }}</th>
               <th class="t-heading center aligned">{{ .T "Score" }}</th>
               <th class="t-heading center aligned">{{ .T "Accuracy" }}</th>
-              <th class="t-heading center aligned">{{ .T "Combo" }} ({{ .Beatmap.MaxCombo }})</th>
+              <th class="t-heading center aligned">
+                {{ .T "Combo" }} ({{ .Beatmap.MaxCombo }})
+              </th>
               <th class="t-heading center aligned">{{ .T "PP" }}</th>
               <th class="t-heading center aligned disabled">{{ .T "Mods" }}</th>
               <th class="t-heading center aligned">{{ .T "Time" }}</th>
-              <th class="t-heading center aligned disabled">{{ .T "Replay" }}</th>
+              <th class="t-heading center aligned disabled">
+                {{ .T "Replay" }}
+              </th>
             </tr>
           </thead>
           <tbody></tbody>

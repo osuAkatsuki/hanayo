@@ -21,7 +21,9 @@ MinPrivileges=2
             {{ $f := ieForm .Gin }}
             {{ with .Get "users/userpage?id=%d" .Context.User.ID }}
               <form class="ui form" method="post">
-                <textarea tabindex="1" class="monospace" name="data">{{ .userpage }}</textarea>
+                <textarea tabindex="1" class="monospace" name="data">
+{{ .userpage }}</textarea
+                >
                 <p>
                   <a
                     href="https://docs.ripple.moe/docs/misc/hanayo_bbcode"

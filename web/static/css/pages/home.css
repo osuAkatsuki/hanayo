@@ -10,13 +10,17 @@ button:focus {
 
 .masthead,
 .masthead:after {
-  -ms-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s,
+  -ms-transition:
+    background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s,
     opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s;
-  -moz-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s,
+  -moz-transition:
+    background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s,
     opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s;
-  -webkit-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s,
+  -webkit-transition:
+    background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s,
     opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s;
-  transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s,
+  transition:
+    background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s,
     opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s;
 }
 
@@ -142,12 +146,16 @@ button:focus {
 
 .btn-key {
   background-color: #f6a;
-  box-shadow: 0 4px rgb(134, 56, 91), 0 2px 2px rgb(0, 0, 0);
+  box-shadow:
+    0 4px rgb(134, 56, 91),
+    0 2px 2px rgb(0, 0, 0);
 }
 
 .btn-how {
   background-color: #2094ca;
-  box-shadow: 0 4px #2f537d, 0 2px 2px #000;
+  box-shadow:
+    0 4px #2f537d,
+    0 2px 2px #000;
 }
 
 .buttons {

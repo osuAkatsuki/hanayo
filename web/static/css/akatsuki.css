@@ -482,7 +482,12 @@ code {
   color: #c7254e;
   background-color: #f9f2f4;
   border-radius: 4px;
-  font-family: Menlo, Monaco, Consolas, courier new, monospace;
+  font-family:
+    Menlo,
+    Monaco,
+    Consolas,
+    courier new,
+    monospace;
 }
 
 .g-recaptcha > div {
@@ -560,7 +565,9 @@ code {
   background-color: rgba(0, 0, 0, 0.89);
   z-index: 13;
   opacity: 0;
-  transition: 200ms opacity, 200ms visibility;
+  transition:
+    200ms opacity,
+    200ms visibility;
   left: 0;
   bottom: 0;
 }

@@ -41,14 +41,14 @@ $(document).ready(function () {
       "[data-mode=" +
         favouriteMode +
         (rx != 0 ? (rx != 2 ? "r" : "a") : "") +
-        "]:not(.item)"
+        "]:not(.item)",
     ).removeAttr("hidden");
     setMode(favouriteMode, rx);
     $(this).addClass("active");
     window.history.replaceState(
       "",
       document.title,
-      wl.pathname + "?mode=" + favouriteMode + "&rx=" + nrx + wl.hash
+      wl.pathname + "?mode=" + favouriteMode + "&rx=" + nrx + wl.hash,
     );
   });
 
@@ -66,14 +66,14 @@ $(document).ready(function () {
       "[data-mode=" +
         m +
         (rx != 0 ? (rx != 2 ? "r" : "a") : "") +
-        "]:not(.item)"
+        "]:not(.item)",
     ).removeAttr("hidden");
     setMode(m, rx);
     $(this).addClass("active");
     window.history.replaceState(
       "",
       document.title,
-      wl.pathname + "?mode=" + m + "&rx=" + rx + wl.hash
+      wl.pathname + "?mode=" + m + "&rx=" + rx + wl.hash,
     );
   });
 
@@ -100,7 +100,7 @@ $(document).ready(function () {
         }
         showMessage("success", "Successfully left.");
       },
-      !0
+      !0,
     );
   });
 });
@@ -127,25 +127,24 @@ function joinClan(obj, btn) {
       btn.unbind();
       showMessage("success", "Successfully joined " + t.clan.name);
       api("users", { id: "self" }, function (r) {
-        document.getElementById(
-          "members"
-        ).innerHTML += `<div class="column"> <div class="ui left aligned fluid card"> <div class="image"> <img src="${
-          hanayoConf.avatars
-        }/${
-          r.id
-        }" alt="Avatar"> </div> <div class="content"> <a class="header" href="/u/"><i class="${r.country.toLowerCase()} flag"></i>${
-          r.username
-        }</a> </div> </div> </div>`;
+        document.getElementById("members").innerHTML +=
+          `<div class="column"> <div class="ui left aligned fluid card"> <div class="image"> <img src="${
+            hanayoConf.avatars
+          }/${
+            r.id
+          }" alt="Avatar"> </div> <div class="content"> <a class="header" href="/u/"><i class="${r.country.toLowerCase()} flag"></i>${
+            r.username
+          }</a> </div> </div> </div>`;
       });
       setMode(favouriteMode, rx);
     },
-    !0
+    !0,
   );
 }
 
 function setMode(mode, rx) {
   let eldx = document.getElementById(
-    mode + (rx != 0 ? (rx != 2 ? "r" : "a") : "")
+    mode + (rx != 0 ? (rx != 2 ? "r" : "a") : ""),
   );
   api("clans/stats", { id: clanID, m: mode, rx: rx }, function (e) {
     var data = e.clan.chosen_mode;

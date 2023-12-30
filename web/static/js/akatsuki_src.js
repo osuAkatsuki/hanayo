@@ -35,7 +35,7 @@ var singlePageSnippets = {
           !!rx +
           "&sort=" +
           sort +
-          e.hash
+          e.hash,
       );
 
       if (sort == "1s") {
@@ -64,14 +64,14 @@ var singlePageSnippets = {
                       (0 === rx ? "" : "&rx=1") +
                       "' title='View clan'>" +
                       escapeHTML(e.name) +
-                      "</a>"
+                      "</a>",
                   ),
-                  $("<td />").html(addCommas(e.count))
-                )
+                  $("<td />").html(addCommas(e.count)),
+                ),
               );
             });
             disableSimplepagButtons(e.clans.length < 50);
-          }
+          },
         );
         return;
       }
@@ -101,18 +101,18 @@ var singlePageSnippets = {
                     (0 === rx ? "" : "&rx=1") +
                     "' title='View clan'>" +
                     escapeHTML(e.name) +
-                    "</a>"
+                    "</a>",
                 ),
                 $("<td />").html(
-                  t(e.chosen_mode.ranked_score, e.chosen_mode.pp)
+                  t(e.chosen_mode.ranked_score, e.chosen_mode.pp),
                 ),
                 $("<td />").text(e.chosen_mode.accuracy.toFixed(2) + "%"),
-                $("<td />").html(addCommas(e.chosen_mode.playcount))
-              )
+                $("<td />").html(addCommas(e.chosen_mode.playcount)),
+              ),
             );
           });
           disableSimplepagButtons(e.clans.length < 50);
-        }
+        },
       );
     }
 
@@ -162,7 +162,7 @@ var singlePageSnippets = {
           "&p=" +
           page +
           (country != "" ? "&country=" + encodeURI(country) : "") +
-          wl.hash
+          wl.hash,
       );
       api(
         "leaderboard",
@@ -192,10 +192,10 @@ var singlePageSnippets = {
                     v.country.toLowerCase() +
                     " flag'></i>" +
                     escapeHTML(v.username) +
-                    "</a>"
+                    "</a>",
                 ),
                 $("<td />").html(
-                  scoreOrPP(v.chosen_mode.ranked_score, v.chosen_mode.pp)
+                  scoreOrPP(v.chosen_mode.ranked_score, v.chosen_mode.pp),
                 ),
                 $("<td />").text(v.chosen_mode.accuracy.toFixed(2) + "%"),
                 // bonus points if you get the undertale joke
@@ -205,13 +205,13 @@ var singlePageSnippets = {
                     T("Why, LOVE, of course!") +
                     "'>(lv. " +
                     v.chosen_mode.level.toFixed(0) +
-                    ")</i>"
-                )
-              )
+                    ")</i>",
+                ),
+              ),
             );
           });
           disableSimplepagButtons(data.users.length < 50);
-        }
+        },
       );
     }
     function scoreOrPP(s, pp) {
@@ -266,7 +266,7 @@ var singlePageSnippets = {
           "&p=" +
           page +
           (country != "" ? "&country=" + encodeURI(country) : "") +
-          wl.hash
+          wl.hash,
       );
       api(
         "scoreleaderboard",
@@ -295,7 +295,7 @@ var singlePageSnippets = {
                     v.country.toLowerCase() +
                     " flag'></i>" +
                     escapeHTML(v.username) +
-                    "</a>"
+                    "</a>",
                 ),
                 $("<td />").html("<b>" + addCommas(v.chosen_mode.ranked_score)),
                 $("<td />").text(v.chosen_mode.accuracy.toFixed(2) + "%"),
@@ -306,13 +306,13 @@ var singlePageSnippets = {
                     T("Why, LOVE, of course!") +
                     "'>(lv. " +
                     v.chosen_mode.level.toFixed(0) +
-                    ")</i>"
-                )
-              )
+                    ")</i>",
+                ),
+              ),
             );
           });
           disableSimplepagButtons(data.users.length < 50);
-        }
+        },
       );
     }
 
@@ -367,10 +367,10 @@ var singlePageSnippets = {
             .removeClass("minus plus heart")
             .addClass(data.friend ? (data.mutual ? "heart" : "minus") : "plus");
           t.find("span").text(
-            data.friend ? (data.mutual ? T("Mutual") : T("Remove")) : t("Add")
+            data.friend ? (data.mutual ? T("Mutual") : T("Remove")) : t("Add"),
           );
         },
-        true
+        true,
       );
     });
   },
@@ -390,7 +390,7 @@ var singlePageSnippets = {
           if (data.result >= 0) {
             window.location.href = "/register/welcome?u=" + qu;
           }
-        }
+        },
       );
     }, 5000);
   },
@@ -399,7 +399,7 @@ var singlePageSnippets = {
     $("input[name='custom_badge.icon']").on("input", function () {
       $("#badge-icon").attr(
         "class",
-        "circular big icon " + escapeHTML($(this).val())
+        "circular big icon " + escapeHTML($(this).val()),
       );
     });
     $("input[name='custom_badge.name']").on("input", function () {
@@ -417,7 +417,7 @@ var singlePageSnippets = {
       if (darkSetting != isDark) {
         var cflags = document.cookie.replace(
           /(?:(?:^|.*;\s*)cflags\s*\=\s*([^;]*).*$)|^.*$/,
-          "$1"
+          "$1",
         );
         cflags = darkSetting ? +cflags | 1 : +cflags & ~1;
         document.cookie = "cflags=" + cflags + ";path=/;max-age=31536000";
@@ -446,7 +446,7 @@ var singlePageSnippets = {
           showMessage("success", "Your new settings have been saved.");
           f.removeClass("loading");
         },
-        true
+        true,
       );
       return false;
     });
@@ -470,7 +470,7 @@ var singlePageSnippets = {
               twemoji.parse(e[0]);
             }
           },
-          "text"
+          "text",
         );
       }, 800);
     });
@@ -485,7 +485,7 @@ var singlePageSnippets = {
           showMessage("success", "Your userpage has been saved.");
           f.removeClass("loading");
         },
-        true
+        true,
       );
       return false;
     });
@@ -521,11 +521,11 @@ var singlePageSnippets = {
             T("($ {{ usd }} / BTC {{ btc }})", {
               usd: priceUSD.toFixed(2),
               btc: priceBTC.toFixed(10),
-            })
+            }),
         );
         $("input[name='os0']").attr(
           "value",
-          (+months).toFixed(0) + " month" + (months == 1 ? "" : "s")
+          (+months).toFixed(0) + " month" + (months == 1 ? "" : "s"),
         );
         $("#bitcoin-amt").text(priceBTC.toFixed(6));
         $("#paypal-amt").val(priceEUR.toFixed(2));
@@ -567,11 +567,11 @@ var singlePageSnippets = {
             T("($ {{ usd }} / BTC {{ btc }})", {
               usd: priceUSD.toFixed(2),
               btc: priceBTC.toFixed(10),
-            })
+            }),
         );
         $("input[name='os0']").attr(
           "value",
-          (+months).toFixed(0) + " month" + (months == 1 ? "" : "s")
+          (+months).toFixed(0) + " month" + (months == 1 ? "" : "s"),
         );
         $("#bitcoin-amt").text(priceBTC.toFixed(6));
         $("#paypal-amt").val(priceEUR.toFixed(2));
@@ -627,7 +627,7 @@ var singlePageSnippets = {
         showMessage(
           "error",
           "Please provide a valid link, in the form " +
-            "of either https://osu.ppy.sh/s/&lt;ID&gt; or https://osu.ppy.sh/b/&lt;ID&gt;."
+            "of either https://osu.ppy.sh/s/&lt;ID&gt; or https://osu.ppy.sh/b/&lt;ID&gt;.",
         );
         $(this).removeClass("loading");
         return false;
@@ -649,7 +649,7 @@ var singlePageSnippets = {
           if (data.code == 406)
             showMessage("warning", "That beatmap is already ranked!");
         },
-        true
+        true,
       );
       return false;
     });
@@ -710,17 +710,19 @@ $(document).ready(function () {
   }
 
   // amplitude
-  const AMPLITUDE_API_KEY = "d24b21f57762f540f5b9c9791b7e3f91"
-  amplitude.init(AMPLITUDE_API_KEY, {minIdLength: 4}).promise.then(function() {
-      const isAuthed = window.currentUserID && window.currentUserID !== '0'
-      const hasAmpUserId = !!window.amplitude.getUserId()
+  const AMPLITUDE_API_KEY = "d24b21f57762f540f5b9c9791b7e3f91";
+  amplitude
+    .init(AMPLITUDE_API_KEY, { minIdLength: 4 })
+    .promise.then(function () {
+      const isAuthed = window.currentUserID && window.currentUserID !== "0";
+      const hasAmpUserId = !!window.amplitude.getUserId();
 
       if (isAuthed && !hasAmpUserId) {
-          window.amplitude.setUserId(window.currentUserID);
+        window.amplitude.setUserId(window.currentUserID);
       } else if (!isAuthed && hasAmpUserId) {
-          window.amplitude.reset();
+        window.amplitude.reset();
       }
-  });
+    });
 
   // ripple stuff
   var f = singlePageSnippets[window.location.pathname];
@@ -793,7 +795,7 @@ function showMessage(type, message) {
       type +
       ' message hidden"><i class="close icon"></i>' +
       T(message) +
-      "</div>"
+      "</div>",
   );
   newEl.find(".close.icon").click(closeClosestMessage);
   $("#messages-container").append(newEl);

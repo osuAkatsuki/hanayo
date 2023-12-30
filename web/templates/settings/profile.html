@@ -18,7 +18,9 @@ MinPrivileges=2
             {{ $d := .Get "users/self/settings" }}
             <h3 class="ui header">{{ .T "General" }}</h3>
             <div class="field">
-              <label><a href="/settings/username">{{ .T "Username" }}</a></label>
+              <label>
+                <a href="/settings/username">{{ .T "Username" }}</a>
+              </label>
               <input
                 type="text"
                 value="{{ .Context.User.Username }}"
