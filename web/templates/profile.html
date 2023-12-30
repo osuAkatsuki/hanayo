@@ -66,21 +66,25 @@
               {{ $donor := has .privileges 7 }}
               {{ $premium := has .privileges 8388615 }}
 
-              {{ $product := has .privileges 9435391 }}
+              {{ $product := has .privileges 9437183 }}
               {{ $community := has .privileges 9425151 }}
-              {{ $accounts := has .privileges 8392895 }}
+              {{ $accounts := has .privileges 9212159 }}
               {{ $support := has .privileges 9175111 }}
               {{ $dev := has .privileges 10743327 }}
               {{ $nqa := false }}
               {{ $nominator := has .privileges 8388871 }}
               {{ $event := has .privileges 10485767 }}
               {{ $scorewatcher := false }}
+              {{ $champion := false }}
               {{ range .badges }}
+                {{ if eq .id (float 100) }}
+                  {{ $nqa = true }}
+                {{ end }}
                 {{ if eq .id (float 86) }}
                   {{ $scorewatcher = true }}
                 {{ end }}
-                {{ if eq .id (float 100) }}
-                  {{ $nqa = true }}
+                {{ if eq .id (float 67) }}
+                  {{ $champion = true }}
                 {{ end }}
               {{ end }}
 
@@ -117,15 +121,18 @@
                       {{ else if $event }}
                         <div class="profile-label label-event label-full">EVENT MANAGER</div>
                         <div class="profile-label label-event label-mobile">EMT</div>
-                      {{ else if $nominator }}
-                        <div class="profile-label label-nominator label-full">BEATMAP NOMINATOR</div>
-                        <div class="profile-label label-nominator label-mobile">BN</div>
                       {{ else if $nqa }}
                         <div class="profile-label label-nqa label-full">NOMINATION QUALITY ASSURANCE</div>
                         <div class="profile-label label-nqa label-mobile">NQA</div>
+                      {{ else if $nominator }}
+                        <div class="profile-label label-nominator label-full">BEATMAP NOMINATOR</div>
+                        <div class="profile-label label-nominator label-mobile">BN</div>
                       {{ else if $scorewatcher }}
                         <div class="profile-label label-scorewatcher label-full">SOCIAL MEDIA MANAGER</div>
                         <div class="profile-label label-scorewatcher label-mobile">SW</div>
+                      {{ else if $champion }}
+                        <div class="profile-label label-nqa label-full">AKATSUKI CHAMPION</div>
+                        <div class="profile-label label-nqa label-mobile"><span><i class="fa-fade fa-solid fa-trophy label-icon"></i></span></div>
                       {{ else if $premium }}
                         <div class="profile-label label-premium label-full">PREMIUM</div>
                         <div class="profile-label label-premium label-mobile"><span><i class="fa-solid fa-heart label-icon"></i></span></div>
