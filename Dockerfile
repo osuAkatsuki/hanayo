@@ -11,6 +11,7 @@ RUN go mod download && go mod verify
 RUN git submodule init && git submodule update --remote --recursive --merge
 
 RUN apt install -y python3-pip
+RUN pip install -i https://pypi2.akatsuki.gg/cmyui/dev --break-system-packages akatsuki-cli
 
 RUN go build
 
