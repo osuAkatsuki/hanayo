@@ -193,7 +193,7 @@ func parseEmail(text string) string {
 	text = regex.ReplaceAllString(text, "<a rel='nofollow' href='mailto:$1'>$1</a>")
 
 	regex2 := regexp.MustCompile(`\[email=(([^[]+)@([^[]+))\]`)
-	text = regex2.ReplaceAllString(text, "<a rel='nofollow' href='mailto:$1>")
+	text = regex2.ReplaceAllString(text, "<a rel='nofollow' href='mailto:$1'>")
 	text = strings.Replace(text, "[/email]", "</a>", -1)
 
 	return text
@@ -258,9 +258,12 @@ func parseList(text string) string {
 
 func parseImagemap(text string) string {
 	regex := regexp.MustCompile(`(?s)\[imagemap\]\s+(?P<image_url>.+?)(?P<lines>(?:\s+.+?)\s+)+\[\/imagemap\]\n?`)
-	matches := regex.FindStringSubmatch(text)
 
-	if matches != nil {
+	text = ReplaceAllStringSubmatchFunc(regex, text, func(matches []string, _ string) string {
+		if matches == nil {
+			return ""
+		}
+
 		pseudoHtml := fmt.Sprintf(
 			"<div class='bbcode-imagemap'><img src='%s' class='bbcode-imagemap-image' loading='lazy'>",
 			matches[regex.SubexpIndex("image_url")],
@@ -322,8 +325,8 @@ func parseImagemap(text string) string {
 		pseudoHtml += "</div>"
 		pseudoHtml = strings.Replace(pseudoHtml, "\n", "", -1)
 
-		text = regex.ReplaceAllString(text, pseudoHtml)
-	}
+		return pseudoHtml
+	})
 
 	return text
 }
@@ -464,7 +467,6 @@ func ConvertBBCodeToHTML(bbcode string) string {
 	bbcode = strings.Replace(bbcode, "\n", "<br>", -1)
 
 	bbcodeFinal := fmt.Sprintf("<div class='bbcode-container'>%s</div>", bbcode)
-
 	// Sanitize HTML
 	return policy.Sanitize(bbcodeFinal)
 }
