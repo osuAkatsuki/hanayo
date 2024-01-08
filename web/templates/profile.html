@@ -61,297 +61,304 @@
 
       <div class="ui container margin">
         <div class="profile-info-container">
-          {{ if _or (eq $global.BannerType 1) (eq $global.BannerType 3) }}
-            <div class="profile-heading-image radius-top"></div>
-          {{ else }}
-            <div class="profile-heading-solid radius-top"></div>
-          {{ end }}
-          <div class="profile-heading-customisation"></div>
-          <div class="profile-info">
-            {{ $user := . }}
+          <div
+            class="{{ if _or (eq $global.BannerType 1) (eq $global.BannerType 3) }}
+              profile-heading-image radius-top
+            {{ else }}
+              profile-heading-solid radius-top
+            {{ end }}"
+          >
+            <div class="profile-heading-customisation"></div>
+            <div class="profile-info">
+              {{ $user := . }}
 
-            {{ $donor := has .privileges 7 }}
-            {{ $premium := has .privileges 8388615 }}
+              {{ $donor := has .privileges 7 }}
+              {{ $premium := has .privileges 8388615 }}
 
-            {{ $product := has .privileges 9437183 }}
-            {{ $community := has .privileges 9425151 }}
-            {{ $accounts := has .privileges 9212159 }}
-            {{ $support := has .privileges 9175111 }}
-            {{ $dev := has .privileges 10743327 }}
-            {{ $nqa := false }}
-            {{ $nominator := has .privileges 8388871 }}
-            {{ $event := has .privileges 10485767 }}
-            {{ $scorewatcher := false }}
-            {{ $champion := false }}
-            {{ range .badges }}
-              {{ if eq .id (float 100) }}
-                {{ $nqa = true }}
+              {{ $product := has .privileges 9437183 }}
+              {{ $community := has .privileges 9425151 }}
+              {{ $accounts := has .privileges 9212159 }}
+              {{ $support := has .privileges 9175111 }}
+              {{ $dev := has .privileges 10743327 }}
+              {{ $nqa := false }}
+              {{ $nominator := has .privileges 8388871 }}
+              {{ $event := has .privileges 10485767 }}
+              {{ $scorewatcher := false }}
+              {{ $champion := false }}
+              {{ range .badges }}
+                {{ if eq .id (float 100) }}
+                  {{ $nqa = true }}
+                {{ end }}
+                {{ if eq .id (float 86) }}
+                  {{ $scorewatcher = true }}
+                {{ end }}
+                {{ if eq .id (float 67) }}
+                  {{ $champion = true }}
+                {{ end }}
               {{ end }}
-              {{ if eq .id (float 86) }}
-                {{ $scorewatcher = true }}
-              {{ end }}
-              {{ if eq .id (float 67) }}
-                {{ $champion = true }}
-              {{ end }}
-            {{ end }}
 
 
-            <div id="profile-info" class="ui grid">
-              <div class="row">
-                <div style="width: auto" class="avatar-column column">
-                  <img
-                    src="https://a.akatsuki.gg/{{ .id }}"
-                    alt="avatar"
-                    class="profile-avatar"
-                  />
-                </div>
-                <div class="ten wide column">
-                  <div class="profile-user-info">
-                    <h1 class="profile-username">
-                      {{ if .clan.id }}
-                        <a href="/c/{{ .clan.id }}" title="{{ .clan.name }}">
-                          {{ .clan.tag }}
-                        </a>
-                      {{ end }}
-                      {{ .username }}
-                    </h1>
-                    {{ if $product }}
-                      <div class="profile-label label-product label-full">
-                        PRODUCT MANAGER
-                      </div>
-                      <div class="profile-label label-product label-mobile">
-                        PMT
-                      </div>
-                    {{ else if $dev }}
-                      <div class="profile-label label-dev label-full">
-                        PRODUCT DEVELOPER
-                      </div>
-                      <div class="profile-label label-dev label-mobile">
-                        DEV
-                      </div>
-                    {{ else if $community }}
-                      <div class="profile-label label-community label-full">
-                        COMMUNITY MANAGER
-                      </div>
-                      <div class="profile-label label-community label-mobile">
-                        CMT
-                      </div>
-                    {{ else if $accounts }}
-                      <div class="profile-label label-accounts label-full">
-                        ACCOUNTS MANAGER
-                      </div>
-                      <div class="profile-label label-accounts label-mobile">
-                        AMT
-                      </div>
-                    {{ else if $support }}
-                      <div class="profile-label label-support label-full">
-                        COMMUNITY SUPPORT
-                      </div>
-                      <div class="profile-label label-support label-mobile">
-                        CS
-                      </div>
-                    {{ else if $event }}
-                      <div class="profile-label label-event label-full">
-                        EVENT MANAGER
-                      </div>
-                      <div class="profile-label label-event label-mobile">
-                        EMT
-                      </div>
-                    {{ else if $nqa }}
-                      <div class="profile-label label-nqa label-full">
-                        NOMINATION QUALITY ASSURANCE
-                      </div>
-                      <div class="profile-label label-nqa label-mobile">
-                        NQA
-                      </div>
-                    {{ else if $nominator }}
-                      <div class="profile-label label-nominator label-full">
-                        BEATMAP NOMINATOR
-                      </div>
-                      <div class="profile-label label-nominator label-mobile">
-                        BN
-                      </div>
-                    {{ else if $scorewatcher }}
-                      <div class="profile-label label-scorewatcher label-full">
-                        SOCIAL MEDIA MANAGER
-                      </div>
-                      <div
-                        class="profile-label label-scorewatcher label-mobile"
-                      >
-                        SW
-                      </div>
-                    {{ else if $champion }}
-                      <div class="profile-label label-champion label-full">
-                        AKATSUKI CHAMPION
-                      </div>
-                      <div class="profile-label label-champion label-mobile">
-                        <span>
-                          <i class="fa-fade fa-solid fa-trophy label-icon"></i>
-                        </span>
-                      </div>
-                    {{ else if $premium }}
-                      <div class="profile-label label-premium label-full">
-                        PREMIUM
-                      </div>
-                      <div class="profile-label label-premium label-mobile">
-                        <span>
-                          <i class="fa-solid fa-heart label-icon"></i>
-                        </span>
-                      </div>
-                    {{ else if $donor }}
-                      <div class="profile-label label-donor label-full">
-                        SUPPORTER
-                      </div>
-                      <div class="profile-label label-donor label-mobile">
-                        <span>
-                          <i class="fa-solid fa-heart label-icon"></i>
-                        </span>
-                      </div>
-                    {{ end }}
-
+              <div id="profile-info" class="ui grid">
+                <div class="row">
+                  <div style="width: auto" class="avatar-column column">
+                    <img
+                      src="https://a.akatsuki.gg/{{ .id }}"
+                      alt="avatar"
+                      class="profile-avatar"
+                    />
                   </div>
-                  <div class="profile-smaller-section">
-                    <div class="profile-country">
-                      <img
-                        src="/static/images/flags/{{ countryCodepoints .country }}.svg"
-                        class="pflag"
-                      />
-                      <div class="profile-country-name">
-                        {{ countryReadable .country }}
-                      </div>
-                    </div>
-                    <div class="profile-online-status">
-                      {{ with bget "isOnline?id=%.0f" .id }}
-                        <div class="online-status">
-                          <i
-                            class="{{ if .result }}
-                              green
-                            {{ else }}
-                              red
-                            {{ end }} circle icon"
-                          ></i>
-                          {{ if .result }}
-                            {{ $global.T "Online" }}
-                          {{ else }}
-                            {{ $global.T "Offline" }}
-                          {{ end }}
+                  <div class="ten wide column">
+                    <div class="profile-user-info">
+                      <h1 class="profile-username">
+                        {{ if .clan.id }}
+                          <a href="/c/{{ .clan.id }}" title="{{ .clan.name }}">
+                            {{ .clan.tag }}
+                          </a>
+                        {{ end }}
+                        {{ .username }}
+                      </h1>
+                      {{ if $product }}
+                        <div class="profile-label label-product label-full">
+                          PRODUCT MANAGER
                         </div>
-                      {{ end }}
-                    </div>
-                  </div>
-                  <div class="column bottom-column">
-                    <div class="profile-badges">
-                      {{ if and (not .badges) (not .custom_badge) }}
-                        {{ $global.T "This user hasn't got any badges!" }}
-                      {{ else }}
-                        {{ range .badges }}
-                          <div class="badge" data-tooltip="{{ .name }}">
-                            <a>
-                              <i
-                                class="{{ .icon }} small icon m-less"
-                                {{ if .colour }}
-                                  style="color: {{ .colour }} !important;"
-                                {{ end }}
-                              ></i>
-                            </a>
-                          </div>
-                        {{ end }}
-                        {{ with .custom_badge }}
-                          <div class="badge" data-tooltip="{{ .name }}">
-                            <a>
-                              <i class="{{ .icon }} small icon m-less"></i>
-                            </a>
-                          </div>
-                        {{ end }}
-                      {{ end }}
-                    </div>
-                    <div class="bottom-side psmaller-text">
-                      Player Since:
-                      <b>
-                        {{ $global.T "%s" (time $user.registered_on) | html }}
-                      </b>
-                    </div>
-                    <div class="bottom-side psmaller-text">
-                      Last Seen:
-                      <b>
-                        {{ $global.T "%s" (time $user.latest_activity) | html }}
-                      </b>
-                    </div>
-                    <div class="bottom-side">
-                      {{ if and (ne $global.Context.User.ID $global.UserID) (ne $global.Context.User.ID 0) }}
-                        <a
-                          class="ui button loading action-button"
-                          id="add-friend-button"
-                        ></a>
-                      {{ end }}
-                      {{ if eq $global.Context.User.ID $global.UserID }}
-                        <a
-                          href="/settings"
-                          class="ui teal button action-button"
-                          title="Go to settings"
-                        >
-                          <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                      {{ end }}
-                      {{ if has $global.Context.User.Privileges 16 }}
-                        {{/* AdminManageUsers */}}
-                        <a
-                          href="http://old.akatsuki.gg/index.php?p=103&id={{ $global.UserID }}"
-                          target="_blank"
-                          title="Edit user"
-                          class="ui purple button action-button"
-                        >
-                          <i class="fa-solid fa-folder-open"></i>
-                        </a>
-                        <a
-                          href="http://old.akatsuki.gg/index.php?p=104&id={{ $global.UserID }}"
-                          target="_blank"
-                          title="Edit username"
-                          class="ui red button action-button"
-                        >
-                          <i class="fa-solid fa-book"></i>
-                        </a>
-                      {{ end }}
-                    </div>
-                  </div>
-                </div>
-                <div class="ranks-column column label-full">
-                  {{ range $rx, $_ := .stats }}
-                    {{ range $k, $v := (slice .std .taiko .ctb .mania) }}
-                      <div
-                        id="profile-ranks"
-                        class="profile-rank-container label-full"
-                        data-rx="{{ $rx }}"
-                        data-mode="{{ $k }}"
-                        {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }}
-                          hidden
-                        {{ end }}
-                      >
+                        <div class="profile-label label-product label-mobile">
+                          PMT
+                        </div>
+                      {{ else if $dev }}
+                        <div class="profile-label label-dev label-full">
+                          PRODUCT DEVELOPER
+                        </div>
+                        <div class="profile-label label-dev label-mobile">
+                          DEV
+                        </div>
+                      {{ else if $community }}
+                        <div class="profile-label label-community label-full">
+                          COMMUNITY MANAGER
+                        </div>
+                        <div class="profile-label label-community label-mobile">
+                          CMT
+                        </div>
+                      {{ else if $accounts }}
+                        <div class="profile-label label-accounts label-full">
+                          ACCOUNTS MANAGER
+                        </div>
+                        <div class="profile-label label-accounts label-mobile">
+                          AMT
+                        </div>
+                      {{ else if $support }}
+                        <div class="profile-label label-support label-full">
+                          COMMUNITY SUPPORT
+                        </div>
+                        <div class="profile-label label-support label-mobile">
+                          CS
+                        </div>
+                      {{ else if $event }}
+                        <div class="profile-label label-event label-full">
+                          EVENT MANAGER
+                        </div>
+                        <div class="profile-label label-event label-mobile">
+                          EMT
+                        </div>
+                      {{ else if $nqa }}
+                        <div class="profile-label label-nqa label-full">
+                          NOMINATION QUALITY ASSURANCE
+                        </div>
+                        <div class="profile-label label-nqa label-mobile">
+                          NQA
+                        </div>
+                      {{ else if $nominator }}
+                        <div class="profile-label label-nominator label-full">
+                          BEATMAP NOMINATOR
+                        </div>
+                        <div class="profile-label label-nominator label-mobile">
+                          BN
+                        </div>
+                      {{ else if $scorewatcher }}
                         <div
-                          id="global-rank-{{ $rx }}-{{ $k }}"
-                          class="profile-rank"
+                          class="profile-label label-scorewatcher label-full"
                         >
-                          <i class="fa fa-globe" aria-hidden="true"></i>
-                          #{{ with .global_leaderboard_rank }}
-                            {{ humanize . }}
-                          {{ else }}
-                            {{ $global.T "N/A" }}
-                          {{ end }}
+                          SOCIAL MEDIA MANAGER
                         </div>
-                        <div class="profile-rank">
-                          <img
-                            src="/static/images/flags/{{ countryCodepoints $user.country }}.svg"
-                            class="profile-rank-flag"
-                          />
-                          #{{ with .country_leaderboard_rank }}
-                            {{ humanize . }}
-                          {{ else }}
-                            {{ $global.T "N/A" }}
-                          {{ end }}
+                        <div
+                          class="profile-label label-scorewatcher label-mobile"
+                        >
+                          SW
+                        </div>
+                      {{ else if $champion }}
+                        <div class="profile-label label-champion label-full">
+                          AKATSUKI CHAMPION
+                        </div>
+                        <div class="profile-label label-champion label-mobile">
+                          <span>
+                            <i
+                              class="fa-fade fa-solid fa-trophy label-icon"
+                            ></i>
+                          </span>
+                        </div>
+                      {{ else if $premium }}
+                        <div class="profile-label label-premium label-full">
+                          PREMIUM
+                        </div>
+                        <div class="profile-label label-premium label-mobile">
+                          <span>
+                            <i class="fa-solid fa-heart label-icon"></i>
+                          </span>
+                        </div>
+                      {{ else if $donor }}
+                        <div class="profile-label label-donor label-full">
+                          SUPPORTER
+                        </div>
+                        <div class="profile-label label-donor label-mobile">
+                          <span>
+                            <i class="fa-solid fa-heart label-icon"></i>
+                          </span>
+                        </div>
+                      {{ end }}
+
+                    </div>
+                    <div class="profile-smaller-section">
+                      <div class="profile-country">
+                        <img
+                          src="/static/images/flags/{{ countryCodepoints .country }}.svg"
+                          class="pflag"
+                        />
+                        <div class="profile-country-name">
+                          {{ countryReadable .country }}
                         </div>
                       </div>
+                      <div class="profile-online-status">
+                        {{ with bget "isOnline?id=%.0f" .id }}
+                          <div class="online-status">
+                            <i
+                              class="{{ if .result }}
+                                green
+                              {{ else }}
+                                red
+                              {{ end }} circle icon"
+                            ></i>
+                            {{ if .result }}
+                              {{ $global.T "Online" }}
+                            {{ else }}
+                              {{ $global.T "Offline" }}
+                            {{ end }}
+                          </div>
+                        {{ end }}
+                      </div>
+                    </div>
+                    <div class="column bottom-column">
+                      <div class="profile-badges">
+                        {{ if and (not .badges) (not .custom_badge) }}
+                          {{ $global.T "This user hasn't got any badges!" }}
+                        {{ else }}
+                          {{ range .badges }}
+                            <div class="badge" data-tooltip="{{ .name }}">
+                              <a>
+                                <i
+                                  class="{{ .icon }} small icon m-less"
+                                  {{ if .colour }}
+                                    style="color: {{ .colour }} !important;"
+                                  {{ end }}
+                                ></i>
+                              </a>
+                            </div>
+                          {{ end }}
+                          {{ with .custom_badge }}
+                            <div class="badge" data-tooltip="{{ .name }}">
+                              <a>
+                                <i class="{{ .icon }} small icon m-less"></i>
+                              </a>
+                            </div>
+                          {{ end }}
+                        {{ end }}
+                      </div>
+                      <div class="bottom-side psmaller-text">
+                        Player Since:
+                        <b>
+                          {{ $global.T "%s" (time $user.registered_on) | html }}
+                        </b>
+                      </div>
+                      <div class="bottom-side psmaller-text">
+                        Last Seen:
+                        <b>
+                          {{ $global.T "%s" (time $user.latest_activity) | html }}
+                        </b>
+                      </div>
+                      <div class="bottom-side">
+                        {{ if and (ne $global.Context.User.ID $global.UserID) (ne $global.Context.User.ID 0) }}
+                          <a
+                            class="ui button loading action-button"
+                            id="add-friend-button"
+                          ></a>
+                        {{ end }}
+                        {{ if eq $global.Context.User.ID $global.UserID }}
+                          <a
+                            href="/settings"
+                            class="ui teal button action-button"
+                            title="Go to settings"
+                          >
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </a>
+                        {{ end }}
+                        {{ if has $global.Context.User.Privileges 16 }}
+                          {{/* AdminManageUsers */}}
+                          <a
+                            href="http://old.akatsuki.gg/index.php?p=103&id={{ $global.UserID }}"
+                            target="_blank"
+                            title="Edit user"
+                            class="ui purple button action-button"
+                          >
+                            <i class="fa-solid fa-folder-open"></i>
+                          </a>
+                          <a
+                            href="http://old.akatsuki.gg/index.php?p=104&id={{ $global.UserID }}"
+                            target="_blank"
+                            title="Edit username"
+                            class="ui red button action-button"
+                          >
+                            <i class="fa-solid fa-book"></i>
+                          </a>
+                        {{ end }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ranks-column column label-full">
+                    {{ range $rx, $_ := .stats }}
+                      {{ range $k, $v := (slice .std .taiko .ctb .mania) }}
+                        <div
+                          id="profile-ranks"
+                          class="profile-rank-container label-full"
+                          data-rx="{{ $rx }}"
+                          data-mode="{{ $k }}"
+                          {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }}
+                            hidden
+                          {{ end }}
+                        >
+                          <div
+                            id="global-rank-{{ $rx }}-{{ $k }}"
+                            class="profile-rank"
+                          >
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            #{{ with .global_leaderboard_rank }}
+                              {{ humanize . }}
+                            {{ else }}
+                              {{ $global.T "N/A" }}
+                            {{ end }}
+                          </div>
+                          <div class="profile-rank">
+                            <img
+                              src="/static/images/flags/{{ countryCodepoints $user.country }}.svg"
+                              class="profile-rank-flag"
+                            />
+                            #{{ with .country_leaderboard_rank }}
+                              {{ humanize . }}
+                            {{ else }}
+                              {{ $global.T "N/A" }}
+                            {{ end }}
+                          </div>
+                        </div>
+                      {{ end }}
                     {{ end }}
-                  {{ end }}
+                  </div>
                 </div>
               </div>
             </div>
