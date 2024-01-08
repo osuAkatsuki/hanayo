@@ -710,17 +710,19 @@ $(document).ready(function () {
   }
 
   // amplitude
-  const AMPLITUDE_API_KEY = "d24b21f57762f540f5b9c9791b7e3f91"
-  amplitude.init(AMPLITUDE_API_KEY, {minIdLength: 4}).promise.then(function() {
-      const isAuthed = window.currentUserID && window.currentUserID !== '0'
-      const hasAmpUserId = !!window.amplitude.getUserId()
+  const AMPLITUDE_API_KEY = "d24b21f57762f540f5b9c9791b7e3f91";
+  amplitude
+    .init(AMPLITUDE_API_KEY, { minIdLength: 4 })
+    .promise.then(function () {
+      const isAuthed = window.currentUserID && window.currentUserID !== "0";
+      const hasAmpUserId = !!window.amplitude.getUserId();
 
       if (isAuthed && !hasAmpUserId) {
-          window.amplitude.setUserId(window.currentUserID);
+        window.amplitude.setUserId(window.currentUserID);
       } else if (!isAuthed && hasAmpUserId) {
-          window.amplitude.reset();
+        window.amplitude.reset();
       }
-  });
+    });
 
   // ripple stuff
   var f = singlePageSnippets[window.location.pathname];

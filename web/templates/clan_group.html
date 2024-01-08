@@ -14,7 +14,10 @@ NoCompile=true
           <div class="column">
             <div class="ui left aligned fluid card">
               <div class="image">
-                <img src="{{ config "APP_AVATAR_URL" }}/{{ .id }}" alt="Avatar" />
+                <img
+                  src="{{ config "APP_AVATAR_URL" }}/{{ .id }}"
+                  alt="Avatar"
+                />
               </div>
               <div class="content">
                 <a class="header" href="/u/{{ .id }}">
@@ -48,7 +51,8 @@ NoCompile=true
                       }}
                         <a
                           href="{{ servicePrefix $k }}{{ $v }}"
-                          title="{{ capitalise $k }}">
+                          title="{{ capitalise $k }}"
+                        >
                           <i class="{{ $k }} icon"></i>
                         </a>
                       {{ end }}

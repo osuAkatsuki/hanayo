@@ -9,7 +9,8 @@
     class="ui secondary fixed-height white background main menu no margin bottom{{ if .DisableHH }}
       dropped
     {{ end }}"
-    id="navbar">
+    id="navbar"
+  >
     <div class="ui container">
       <div class="item">
         <a class="navbar-icon" href="/" title="{{ .T "Home page" }}">
@@ -53,7 +54,8 @@
                 class="prompt"
                 type="text"
                 placeholder="{{ .T "Looking for someone?" }}"
-                id="user-search-input" />
+                id="user-search-input"
+              />
               <i class="blue search link icon"></i>
             </div>
           </div>
@@ -63,7 +65,8 @@
           <div class="ui dropdown item">
             <img
               class="ui avatar image"
-              src="{{ config "APP_AVATAR_URL" }}/{{ .Context.User.ID }}" />
+              src="{{ config "APP_AVATAR_URL" }}/{{ .Context.User.ID }}"
+            />
             <span>{{ .Context.User.Username }}</span>
             <div class="menu">
               {{ navbarItem .Path (.T "Profile") (printf "/u/%d" .Context.User.ID) }}
@@ -91,7 +94,8 @@
           <a href="/u/{{ .Context.User.ID }}" class="user">
             <img
               class="avatar"
-              src="{{ .Conf.APP_AVATAR_URL }}/{{ .Context.User.ID }}" />
+              src="{{ .Conf.APP_AVATAR_URL }}/{{ .Context.User.ID }}"
+            />
             <div class="username">
               {{ .Context.User.Username }}
             </div>
@@ -125,7 +129,8 @@
             <span
               data-menu="lb"
               data-invoked="false"
-              class="header-block--title">
+              class="header-block--title"
+            >
               Leaderboard
               <i data-dropdown-icon="lb" class="fa-solid fa-caret-down"></i>
             </span>
@@ -139,19 +144,22 @@
             <span
               data-menu="info"
               data-invoked="false"
-              class="header-block--title">
+              class="header-block--title"
+            >
               Information
               <i data-dropdown-icon="info" class="fa-solid fa-caret-down"></i>
             </span>
             <div
               data-dropdown-menu="info"
               class="m-menu"
-              style="display: none;">
+              style="display: none;"
+            >
               <a class="single" href="/doc">Documentation</a>
               <a class="single" href="/doc/tos">Rules</a>
               <a
                 class="single"
-                href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">
+                href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ"
+              >
                 Youtube
               </a>
             </div>
@@ -162,7 +170,8 @@
                 class="prompt"
                 type="text"
                 placeholder="{{ .T "Looking for someone?" }}"
-                id="user-search-input" />
+                id="user-search-input"
+              />
               <i class="blue search link icon"></i>
             </div>
           </div>
@@ -177,7 +186,8 @@
             <span
               data-menu="lb"
               data-invoked="false"
-              class="header-block--title">
+              class="header-block--title"
+            >
               Leaderboard
               <i data-dropdown-icon="lb" class="fa-solid fa-caret-down"></i>
             </span>
@@ -191,19 +201,22 @@
             <span
               data-menu="info"
               data-invoked="false"
-              class="header-block--title">
+              class="header-block--title"
+            >
               Information
               <i data-dropdown-icon="info" class="fa-solid fa-caret-down"></i>
             </span>
             <div
               data-dropdown-menu="info"
               class="m-menu"
-              style="display: none;">
+              style="display: none;"
+            >
               <a class="single" href="/doc">Documentation</a>
               <a class="single" href="/doc/tos">Rules</a>
               <a
                 class="single"
-                href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ">
+                href="https://www.youtube.com/channel/UCjf8Fx_BlUr-htEy6hficcQ"
+              >
                 Youtube
               </a>
             </div>
@@ -214,7 +227,8 @@
                 class="prompt"
                 type="text"
                 placeholder="{{ .T "Looking for someone?" }}"
-                id="user-search-input" />
+                id="user-search-input"
+              />
               <i class="blue search link icon"></i>
             </div>
           </div>

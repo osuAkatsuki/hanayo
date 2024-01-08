@@ -26,7 +26,8 @@ BannerType=1
                   name="username"
                   placeholder="{{ .T "eg. Aika" }}"
                   value="{{ .FormData.username }}"
-                  required />
+                  required
+                />
               </div>
               <div class="field">
                 <label>
@@ -39,12 +40,14 @@ BannerType=1
                   name="password"
                   placeholder="{{ .T "********" }}"
                   value="{{ .FormData.password }}"
-                  required />
+                  required
+                />
               </div>
               <input
                 type="hidden"
                 name="redir"
-                value="{{ or (.Gin.Query "redir") .FormData.redir }}" />
+                value="{{ or (.Gin.Query "redir") .FormData.redir }}"
+              />
               {{ ieForm .Gin }}
             </form>
           </div>
@@ -53,7 +56,8 @@ BannerType=1
               tabindex="3"
               class="ui primary button"
               type="submit"
-              form="login-form">
+              form="login-form"
+            >
               {{ .T "Submit" }}
             </button>
           </div>

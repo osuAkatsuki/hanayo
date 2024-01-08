@@ -35,7 +35,8 @@
                 name="username"
                 placeholder="{{ .T "Username" }}"
                 value="{{ .FormData.username }}"
-                required />
+                required
+              />
             </div>
             <div class="field">
               <label>{{ .T "Iteki Password" }}</label>
@@ -45,7 +46,8 @@
                 name="password"
                 placeholder="{{ .T "Password" }}"
                 value="{{ .FormData.password }}"
-                required />
+                required
+              />
             </div>
             {{ ieForm .Gin }}
           </form>
@@ -55,7 +57,8 @@
             tabindex="3"
             class="ui primary button"
             type="submit"
-            form="merge-form">
+            form="merge-form"
+          >
             {{ .T "Merge" }}
           </button>
         </div>

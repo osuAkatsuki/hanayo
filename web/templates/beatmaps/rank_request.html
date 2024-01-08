@@ -41,11 +41,13 @@ MinPrivileges=2
         {{ $perc := perc .submitted .queue_size }}
         <div
           class="ui container"
-          style="width: 50%; margin-top: 8px; margin-bottom: 8px;">
+          style="width: 50%; margin-top: 8px; margin-bottom: 8px;"
+        >
           <div
             class="ui green progress"
             data-percent="{{ $perc }}"
-            id="progressbar">
+            id="progressbar"
+          >
             <div class="bar">
               <div class="progress">{{ $perc }}%</div>
             </div>
@@ -62,7 +64,8 @@ MinPrivileges=2
                 tabindex="1"
                 type="text"
                 placeholder="https://osu.ppy.sh/s/xxxx"
-                id="beatmap" />
+                id="beatmap"
+              />
               {{ $f }}
               <button tabindex="2" class="ui right labeled icon green button">
                 <i class="right arrow icon"></i>
