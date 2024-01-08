@@ -55,12 +55,14 @@ Include=clan_member.html
           <div class="eleven wide column">
             <div
               class="ui four item bottom attached menu no-border"
-              id="mode-menu">
+              id="mode-menu"
+            >
               {{ range $k, $v := modes }}
                 <a
                   class="{{ favMode $favMode $k }}item"
                   data-mode="{{ $k }}"
-                  href="/c/{{ $clan.id }}?mode={{ $k }}">
+                  href="/c/{{ $clan.id }}?mode={{ $k }}"
+                >
                   {{ $v }}
                 </a>
               {{ end }}
@@ -69,23 +71,27 @@ Include=clan_member.html
           <div class="five wide column">
             <div
               class="ui three item bottom attached menu no-border"
-              id="rx-menu">
+              id="rx-menu"
+            >
               <a
                 class="{{ favMode $rx 0 }}item"
                 data-rx="0"
-                href="/c/{{ .id }}?rx=0">
+                href="/c/{{ .id }}?rx=0"
+              >
                 Vanilla
               </a>
               <a
                 class="{{ favMode $rx 1 }}item"
                 data-rx="1"
-                href="/c/{{ .id }}?rx=1">
+                href="/c/{{ .id }}?rx=1"
+              >
                 Relax
               </a>
               <a
                 class="{{ favMode $rx 2 }}item"
                 data-rx="2"
-                href="/c/{{ .id }}?rx=2">
+                href="/c/{{ .id }}?rx=2"
+              >
                 Autopilot
               </a>
             </div>
@@ -101,7 +107,8 @@ Include=clan_member.html
                 {{ range $k, $v := modes }}
                   <div
                     data-mode="{{ $k }}"
-                    {{ if or (ne $k (int $favMode)) ($rx) }}hidden{{ end }}>
+                    {{ if or (ne $k (int $favMode)) ($rx) }}hidden{{ end }}
+                  >
                     <table class="ui very basic two column compact table nopad">
                       <tbody id="{{ $k }}"></tbody>
                     </table>
@@ -110,7 +117,8 @@ Include=clan_member.html
                 {{ range $k, $v := modes }}
                   <div
                     data-mode="{{ $k }}r"
-                    {{ if or (ne $k (int $favMode)) (not $rx) }}hidden{{ end }}>
+                    {{ if or (ne $k (int $favMode)) (not $rx) }}hidden{{ end }}
+                  >
                     <table class="ui very basic two column compact table nopad">
                       <tbody id="{{ $k }}r"></tbody>
                     </table>
@@ -119,7 +127,8 @@ Include=clan_member.html
                 {{ range $k, $v := modes }}
                   <div
                     data-mode="{{ $k }}a"
-                    {{ if or (ne $k (int $favMode)) (not $rx) }}hidden{{ end }}>
+                    {{ if or (ne $k (int $favMode)) (not $rx) }}hidden{{ end }}
+                  >
                     <table class="ui very basic two column compact table nopad">
                       <tbody id="{{ $k }}a"></tbody>
                     </table>
@@ -138,7 +147,8 @@ Include=clan_member.html
                         <div class="ui one item menu" id="leave-btn">
                           <a
                             class="item"
-                            style="background-color:rgba(255,0,0,.5)">
+                            style="background-color:rgba(255,0,0,.5)"
+                          >
                             Disband
                           </a>
                         </div>
@@ -147,7 +157,8 @@ Include=clan_member.html
                         <div class="ui one item menu" id="leave-btn">
                           <a
                             class="item"
-                            style="background-color:rgba(255,0,0,.3)">
+                            style="background-color:rgba(255,0,0,.3)"
+                          >
                             Leave
                           </a>
                         </div>
@@ -157,7 +168,8 @@ Include=clan_member.html
                       <div class="ui one item menu">
                         <a
                           class="item"
-                          style="background-color:rgba(255,0,0,.3)">
+                          style="background-color:rgba(255,0,0,.3)"
+                        >
                           Already in another Clan
                         </a>
                       </div>
@@ -168,7 +180,8 @@ Include=clan_member.html
                       <div class="ui one item menu">
                         <a
                           class="item"
-                          style="background-color:rgba(255,0,64,.3)">
+                          style="background-color:rgba(255,0,64,.3)"
+                        >
                           Closed.
                         </a>
                       </div>
@@ -176,7 +189,8 @@ Include=clan_member.html
                       <div class="ui one item menu" id="join-btn">
                         <a
                           class="item"
-                          style="background-color:rgba(0,255,128,.3)">
+                          style="background-color:rgba(0,255,128,.3)"
+                        >
                           Join
                         </a>
                       </div>
@@ -184,7 +198,8 @@ Include=clan_member.html
                       <div class="ui one item menu" id="inv-btn">
                         <a
                           class="item"
-                          style="background-color:rgba(255,64,64,.3)">
+                          style="background-color:rgba(255,64,64,.3)"
+                        >
                           Ask for Invite
                         </a>
                       </div>
@@ -208,7 +223,8 @@ Include=clan_member.html
                     <a
                       class="item"
                       href="/login"
-                      style="background-color:rgba(0,128,255,.3)">
+                      style="background-color:rgba(0,128,255,.3)"
+                    >
                       Please login to join a clan
                     </a>
                   </div>

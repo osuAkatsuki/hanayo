@@ -23,7 +23,8 @@ AdditionalJS=https://www.google.com/recaptcha/api.js
               id="pw-reset-form"
               class="ui form"
               method="post"
-              action="/pwreset">
+              action="/pwreset"
+            >
               {{ ieForm .Gin }}
               <div class="field">
                 <label>{{ .T "Username or Email Address" }}</label>
@@ -33,7 +34,8 @@ AdditionalJS=https://www.google.com/recaptcha/api.js
                   name="username"
                   placeholder="{{ .T "e.g. Aika" }}"
                   value="{{ .FormData.username }}"
-                  required />
+                  required
+                />
               </div>
               {{ with config "RECAPTCHA_SITE_KEY" }}
                 <div class="field">
@@ -47,7 +49,8 @@ AdditionalJS=https://www.google.com/recaptcha/api.js
               tabindex="2"
               class="ui primary button"
               type="submit"
-              form="pw-reset-form">
+              form="pw-reset-form"
+            >
               {{ .T "Submit" }}
             </button>
           </div>

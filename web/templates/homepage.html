@@ -9,7 +9,8 @@
     <meta property="og:site_name" content="Akatsuki" />
     <meta
       property="og:description"
-      content="Akatsuki is an osu! private server mainly based around the relax mod - featuring score submission, leaderboards & rankings, custom pp, and much more for relax, autopilot and vanilla osu!" />
+      content="Akatsuki is an osu! private server mainly based around the relax mod - featuring score submission, leaderboards & rankings, custom pp, and much more for relax, autopilot and vanilla osu!"
+    />
 
     {{/* Twitter-specific stuff */}}
     <meta name="twitter:title" content="home | Akatsuki" />
@@ -43,7 +44,8 @@
               {{ else }}
                 /u/{{ .Context.User.ID }}
               {{ end }}"
-              class="ui small pink button">
+              class="ui small pink button"
+            >
               {{ if not .Context.User.ID }}
                 Register
               {{ else }}
@@ -56,7 +58,8 @@
               {{ else }}
                 /leaderboard
               {{ end }}"
-              class="ui small blue button right--margin">
+              class="ui small blue button right--margin"
+            >
               {{ if not .Context.User.ID }}
                 How to connect
               {{ else }}

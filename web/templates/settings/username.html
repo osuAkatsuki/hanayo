@@ -22,7 +22,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
             id="username-form"
             class="ui form"
             method="post"
-            action="/settings/username">
+            action="/settings/username"
+          >
             <div class="field">
               <label>
                 {{ .T "Username (2 to 15 characters, alphanumeric, spaces, <code>_[]-</code>)" | html }}
@@ -34,7 +35,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
                 placeholder="{{ .T " Username" }}"
                 value="{{ .FormData.username }}"
                 required
-                pattern="^[A-Za-z0-9 _\[\]-]{2,15}$" />
+                pattern="^[A-Za-z0-9 _\[\]-]{2,15}$"
+              />
             </div>
             {{ ieForm .Gin }}
             <div class="ui divider"></div>
@@ -43,7 +45,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
                 tabindex="2"
                 class="ui primary button"
                 type="submit"
-                form="username-form">
+                form="username-form"
+              >
                 {{ .T "Save" }}
               </button>
             </div>
@@ -55,5 +58,6 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
   <link
     rel="stylesheet"
     type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jquery.minicolors.min.css" />
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jquery.minicolors.min.css"
+  />
 {{ end }}

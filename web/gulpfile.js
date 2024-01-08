@@ -30,7 +30,7 @@ gulp.task("minify-js", async function () {
           comments: saveLicense,
         },
         mangle: true,
-      }),
+      })
     )
     .pipe(gulp.dest("./static/js"));
 });
@@ -47,6 +47,6 @@ gulp.task("build-semantic", function () {
   gulp.src("./semantic/gulpfile.js").pipe(
     chug({
       tasks: ["build"],
-    }),
+    })
   );
 });

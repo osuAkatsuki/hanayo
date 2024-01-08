@@ -13,7 +13,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.min.css"
     rel="stylesheet"
-    type="text/css" />
+    type="text/css"
+  />
   <div class="ui container">
     {{ $ief := ieForm .Gin }}
     {{ with .Get "users/self/donor_info" }}
@@ -21,7 +22,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
         <div class="ui segment">
           <h1
             class="ui center aligned header no bottom margin"
-            style="margin: 0 auto; display: table;">
+            style="margin: 0 auto; display: table;"
+          >
             <i class="red heart icon" style="font-size: 90%;"></i>
             <div class="content">
               {{ $.T "You are a premium member!" }}
@@ -92,7 +94,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
         <div id="cost" class="centered"><b>{{ $.T "Loading..." }}</b></div>
         <br />
         <div
-          class="ui internally celled two column center aligned stackable grid">
+          class="ui internally celled two column center aligned stackable grid"
+        >
           <div class="column">
             <h2 class="ui header">
               <i class="fa-brands fa-paypal"></i>
@@ -101,7 +104,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
             <form
               action="https://www.paypal.com/cgi-bin/webscr"
               method="post"
-              target="_self">
+              target="_self"
+            >
               <input type="hidden" name="on0" value="Period" />
               <input type="hidden" name="os0" value="1 month" />
               {{ range _range 24 }}
@@ -109,25 +113,30 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                 <input
                   type="hidden"
                   name="option_select{{ . }}"
-                  value="{{ $months }} month{{ if . }}s{{ end }}" />
+                  value="{{ $months }} month{{ if . }}s{{ end }}"
+                />
                 <input
                   type="hidden"
                   name="custom"
-                  value="userid={{ $global.User.ID }}" />
+                  value="userid={{ $global.User.ID }}"
+                />
                 <input
                   type="hidden"
                   name="option_amount{{ . }}"
-                  value="{{ calculatePremiumPrice $months }}" />
+                  value="{{ calculatePremiumPrice $months }}"
+                />
               {{ end }}
               <input
                 type="hidden"
                 name="on1"
-                value="Akatsuki user to give premium:" />
+                value="Akatsuki user to give premium:"
+              />
               <input
                 type="hidden"
                 name="amount"
                 value="{{ calculatePremiumPrice 1 }}"
-                id="paypal-amt" />
+                id="paypal-amt"
+              />
               <div class="ui fluid labeled action input">
                 <div class="ui label">
                   {{ $.T "User:" }}
@@ -136,7 +145,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                   name="os1"
                   type="text"
                   placeholder="{{ $.T "User" }}"
-                  value="{{ $global.User.Username }}" />
+                  value="{{ $global.User.Username }}"
+                />
                 <button type="submit" class="ui blue button">
                   {{ $.T "Submit" }}
                 </button>
@@ -145,7 +155,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
               <input
                 type="hidden"
                 name="business"
-                value="{{ config "PAYPAL_EMAIL_ADDRESS" }}" />
+                value="{{ config "PAYPAL_EMAIL_ADDRESS" }}"
+              />
               <input type="hidden" name="cmd" value="_xclick" />
               <input type="hidden" name="lc" value="GB" />
               <input type="hidden" name="no_note" value="0" />
@@ -155,7 +166,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                 border="0"
                 src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif"
                 width="1"
-                height="1" />
+                height="1"
+              />
             </form>
           </div>
         </div>

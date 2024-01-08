@@ -22,7 +22,8 @@
               id="register-form"
               class="ui form"
               method="post"
-              action="/register">
+              action="/register"
+            >
               <div class="field">
                 <label>
                   {{ .T "Username (2 to 15 characters, alphanumeric, spaces, <code>_[]-</code>)" | html }}
@@ -34,7 +35,8 @@
                   placeholder="{{ .T "eg. Aika" }}"
                   value="{{ .FormData.username }}"
                   required
-                  pattern="^[A-Za-z0-9 _\[\]-]{2,15}$" />
+                  pattern="^[A-Za-z0-9 _\[\]-]{2,15}$"
+                />
               </div>
               <div class="field">
                 <label>{{ .T "Email" }}</label>
@@ -44,7 +46,8 @@
                   name="email"
                   placeholder="{{ .T "eg. aika@akatsuki.gg" }}"
                   value="{{ .FormData.email }}"
-                  required />
+                  required
+                />
               </div>
               <div class="field">
                 <label>{{ .T "Password (at least 8 characters)" }}</label>
@@ -56,7 +59,8 @@
                   placeholder="{{ .T "********" }}"
                   value="{{ .FormData.password }}"
                   required
-                  pattern="^.{8,}$" />
+                  pattern="^.{8,}$"
+                />
               </div>
               <div class="field">
                 <label>{{ .T "Confirm Password" }}</label>
@@ -68,7 +72,8 @@
                   value="{{ .FormData.password2 }}"
                   required
                   pattern="^.{8,}$"
-                  oninput="matchPasswords(this)" />
+                  oninput="matchPasswords(this)"
+                />
               </div>
               {{ with config "RECAPTCHA_SITE_KEY" }}
                 <div class="field">
@@ -84,7 +89,8 @@
               class="ui primary button"
               id="submit-btn"
               type="submit"
-              form="register-form">
+              form="register-form"
+            >
               {{ .T "Submit" }}
             </button>
           </div>
@@ -104,7 +110,7 @@
           showIdMessage(
             "warning",
             "The passwords don't match!",
-            "passwd-warning",
+            "passwd-warning"
           );
           submitBtn.disabled = true;
           return;

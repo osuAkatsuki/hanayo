@@ -20,6 +20,6 @@ fs.readFile("data/js-locales/templates.pot", "utf-8", (err, data) => {
     "var keyPlurals = " + JSON.stringify(plurals) + ";",
     (err) => {
       if (err) throw err;
-    },
+    }
   );
 });

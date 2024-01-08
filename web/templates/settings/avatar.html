@@ -19,26 +19,30 @@ MinPrivileges=2
               src="{{ config "APP_AVATAR_URL" }}/{{ .Context.User.ID }}"
               alt="Avatar"
               id="avatar-img"
-              style="max-width: 400px;" />
+              style="max-width: 400px;"
+            />
           </div>
           <form
             action="/settings/avatar"
             method="post"
             enctype="multipart/form-data"
-            class="little top margin">
+            class="little top margin"
+          >
             {{ ieForm .Gin }}
             <div class="ui buttons">
               <label
                 tabindex="1"
                 for="file"
-                class="ui green labeled icon button">
+                class="ui green labeled icon button"
+              >
                 <i class="file icon"></i>
                 {{ .T "Open File" }}
               </label>
               <button
                 tabindex="2"
                 type="submit"
-                class="ui right labeled blue icon button">
+                class="ui right labeled blue icon button"
+              >
                 <i class="save icon"></i>
                 {{ .T "Save" }}
               </button>
@@ -49,7 +53,8 @@ MinPrivileges=2
               style="display:none"
               required
               accept="image/*"
-              name="avatar" />
+              name="avatar"
+            />
           </form>
         </div>
       </div>

@@ -67,7 +67,7 @@
       setTimeout(
         function () {
           self.$sortCells.removeClass(
-            self.settings.asc + " " + self.settings.desc,
+            self.settings.asc + " " + self.settings.desc
           );
           for (var i = 0, length = unsortedValues.length; i < length; i++) {
             sortedMap.push({
@@ -91,13 +91,13 @@
           self.log(
             "Sort finished in " +
               (new Date().getTime() - start.getTime()) +
-              "ms",
+              "ms"
           );
           self.$table.trigger("tablesort:complete", [self]);
           //Try to force a browser redraw
           self.$table.css("display");
         },
-        unsortedValues.length > 2000 ? 200 : 10,
+        unsortedValues.length > 2000 ? 200 : 10
       );
     },
 

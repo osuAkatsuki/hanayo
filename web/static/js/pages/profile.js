@@ -20,13 +20,13 @@ $(document).ready(function () {
     window.history.replaceState(
       "",
       document.title,
-      newPathName + newSearch + wl.hash,
+      newPathName + newSearch + wl.hash
     );
   else if (wl.pathname != newPathName)
     window.history.replaceState(
       "",
       document.title,
-      newPathName + wl.search + wl.hash,
+      newPathName + wl.search + wl.hash
     );
 
   setDefaultScoreTable();
@@ -41,14 +41,14 @@ $(document).ready(function () {
     toggleModeAvailability(favouriteMode, preferRelax);
     $("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr(
       "hidden",
-      "",
+      ""
     );
     $(
       "[data-mode=" +
         favouriteMode +
         "][data-rx=" +
         preferRelax +
-        "]:not(.simple-banner-swtich)",
+        "]:not(.simple-banner-swtich)"
     ).removeAttr("hidden");
     $("#rx-menu>.active.simple-banner-swtich").removeClass("active");
     var needsLoad = $(
@@ -56,14 +56,14 @@ $(document).ready(function () {
         favouriteMode +
         "][data-loaded=0][data-rx=" +
         preferRelax +
-        "]",
+        "]"
     );
     if (needsLoad.length > 0) initialiseScores(needsLoad, favouriteMode);
     $(this).addClass("active");
     window.history.replaceState(
       "",
       document.title,
-      `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`,
+      `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`
     );
     initialiseChartGraph(graphType, true);
     applyPeakRankLabel();
@@ -78,14 +78,14 @@ $(document).ready(function () {
     toggleModeAvailability(m, preferRelax);
     $("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr(
       "hidden",
-      "",
+      ""
     );
     $(
       "[data-mode=" +
         m +
         "][data-rx=" +
         preferRelax +
-        "]:not(.simple-banner-swtich)",
+        "]:not(.simple-banner-swtich)"
     ).removeAttr("hidden");
     $("#mode-menu>.active.simple-banner-swtich").removeClass("active");
     var needsLoad = $(
@@ -93,14 +93,14 @@ $(document).ready(function () {
         m +
         "][data-loaded=0][data-rx=" +
         preferRelax +
-        "]",
+        "]"
     );
     if (needsLoad.length > 0) initialiseScores(needsLoad, m);
     $(this).addClass("active");
     window.history.replaceState(
       "",
       document.title,
-      `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`,
+      `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`
     );
     initialiseChartGraph(graphType, true);
   });
@@ -117,9 +117,9 @@ $(document).ready(function () {
           favouriteMode +
           "][data-rx=" +
           preferRelax +
-          "]",
+          "]"
       ),
-      favouriteMode,
+      favouriteMode
     );
   };
   if (i18nLoaded) i();
@@ -175,7 +175,7 @@ function applyPeakRankLabel() {
       rankLabel.attr("data-tooltip", `Peak rank: #${rank} on ${formattedDate}`);
       rankRow.removeAttr("hidden");
       rankRowText.text(`#${rank} on ${formattedDate}`);
-    },
+    }
   );
 }
 
@@ -213,15 +213,15 @@ function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
           <div class="apexcharts-tooltip-y-group">
             <span class="apexcharts-tooltip-text-y-label">${graphName}: </span>
             <span class="apexcharts-tooltip-text-y-value">${prefix}${addCommas(
-              series[seriesIndex][dataPointIndex],
-            )}</span>
+    series[seriesIndex][dataPointIndex]
+  )}</span>
           </div>
           ${
             graphType == "rank"
               ? `<div class="apexcharts-tooltip-y-group">
             <span class="apexcharts-tooltip-text-y-label">Country Rank: </span>
             <span class="apexcharts-tooltip-text-y-value">#${getCountryRank(
-              dataPointIndex,
+              dataPointIndex
             )}</span>
           </div>`
               : ""
@@ -364,7 +364,7 @@ function initialiseChartGraph(graphType, udpate) {
         window.chart = new ApexCharts(chartCanvas, options);
         window.chart.render();
       }
-    },
+    }
   );
 }
 
@@ -394,8 +394,8 @@ function initialiseAchievements() {
       if (achievements.length === 0) {
         $("#achievements").append(
           $("<div class='ui sixteen wide column'>").text(
-            T("Nothing here. Yet."),
-          ),
+            T("Nothing here. Yet.")
+          )
         );
         $("#load-more-achievements").remove();
         return;
@@ -421,14 +421,14 @@ function initialiseAchievements() {
                   ach.name +
                   "' class='" +
                   (!ach.achieved ? "locked-achievement" : "achievement") +
-                  "'>",
+                  "'>"
               ).popup({
                 title: ach.name,
                 content: ach.description,
                 position: "bottom center",
                 distanceAway: 10,
-              }),
-            ),
+              })
+            )
           );
         }
         // if we've shown nothing, and achievedOnly is enabled, try again
@@ -453,7 +453,7 @@ function initialiseAchievements() {
           });
       }
       displayAchievements(8, true);
-    },
+    }
   );
 }
 
@@ -499,7 +499,7 @@ function friendClick() {
     "friends/" + (t.attr("data-friends") == 1 ? "del" : "add"),
     { user: userID },
     setFriendOnResponse,
-    true,
+    true
   );
 }
 
@@ -510,9 +510,9 @@ function setDefaultScoreTable() {
     .append(
       $("<div class='extra-block' />").append(
         $("<a class='show-button'>" + T("Load more") + "</a>").click(
-          loadMoreClick,
-        ),
-      ),
+          loadMoreClick
+        )
+      )
     );
 }
 
@@ -541,35 +541,35 @@ function initialiseScores(el, mode) {
     $("<div class='ui segments' />").append(
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "Pinned scores",
+          "Pinned scores"
         )}</h2></div>`,
-        pinned,
+        pinned
       ),
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "Best scores",
+          "Best scores"
         )}</h2></div>`,
-        best,
+        best
       ),
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "Most played beatmaps",
+          "Most played beatmaps"
         )}</h2></div>`,
-        most_played,
+        most_played
       ),
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "First Place Ranks",
+          "First Place Ranks"
         )} <span id='first-${firstSuffix}' style='font-size: medium;'>(.. in total)</span></h2></div>`,
-        first,
+        first
       ),
       $("<div class='ui segment margin sui' />").append(
         `<div class='header-top'><h2 class='ui header'>${T(
-          "Recent scores",
+          "Recent scores"
         )}</h2></div>`,
-        recent,
-      ),
-    ),
+        recent
+      )
+    )
   );
   loadScoresPage("pinned", mode);
   loadScoresPage("best", mode);
@@ -635,7 +635,7 @@ function loadMostPlayedBeatmaps(type, mode) {
       preferRelax +
       "] div[data-type=" +
       type +
-      "] .scores",
+      "] .scores"
   );
 
   var page;
@@ -689,7 +689,7 @@ function loadMostPlayedBeatmaps(type, mode) {
       if (resp.most_played_beatmaps.length != 5) enable = false;
 
       disableLoadMoreButton(type, mode, enable);
-    },
+    }
   );
 }
 
@@ -702,7 +702,7 @@ function loadScoresPage(type, mode) {
       preferRelax +
       "] div[data-type=" +
       type +
-      "] .scores",
+      "] .scores"
   );
 
   // redirect it to most played load.
@@ -758,7 +758,7 @@ function loadScoresPage(type, mode) {
             v.count_300,
             v.count_100,
             v.count_50,
-            v.count_miss,
+            v.count_miss
           );
         } else {
           var scoreRank = "F";
@@ -767,18 +767,15 @@ function loadScoresPage(type, mode) {
         var dataPinned =
           type === "pinned" ? `data-pinnedscoreid="${v.id}"` : "";
         table.append(`
-      <div class="new map-single complete-${v.completed}" data-scoreid="${
-        v.id
-      }" ${dataPinned}>
+      <div class="new map-single complete-${
+        v.completed
+      }" data-scoreid="${v.id}" ${dataPinned}>
         <div class="map-content1">
           <div class="map-data">
             <div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
               v.beatmap.beatmapset_id
             }/covers/cover@2x.jpg); background-size: cover;">
-              <div class="map-grade rank-${scoreRank}">${scoreRank.replace(
-                "HD",
-                "",
-              )}</div>
+              <div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
             </div>
             <div class="map-title-block">
               <div class="map-title"><a class="beatmap-link">
@@ -786,9 +783,9 @@ function loadScoresPage(type, mode) {
                 </a>
               </div>
               <div class="play-stats">
-                ${addCommas(v.score)} / ${addCommas(
-                  v.max_combo,
-                )}x / <b>${getScoreMods(v.mods, true)}</b>
+                ${addCommas(
+                  v.score
+                )} / ${addCommas(v.max_combo)}x / <b>${getScoreMods(v.mods, true)}</b>
               </div>
               <div class="map-date">
                 <time class="new timeago" datetime="${v.time}">
@@ -852,7 +849,7 @@ function loadScoresPage(type, mode) {
       var enable = true;
       if (r.scores.length != 10) enable = false;
       disableLoadMoreButton(type, mode, enable);
-    },
+    }
   );
 }
 function refreshTable(type) {
@@ -869,7 +866,7 @@ function do_pin(table, score, mode) {
       score.count_300,
       score.count_100,
       score.count_50,
-      score.count_miss,
+      score.count_miss
     );
   } else {
     var scoreRank = "F";
@@ -892,9 +889,9 @@ function do_pin(table, score, mode) {
 					</div>
 					<div class="play-stats">
 						${addCommas(score.score)} / ${addCommas(score.max_combo)}x / <b>${getScoreMods(
-              score.mods,
-              true,
-            )}</b>
+    score.mods,
+    true
+  )}</b>
 					</div>
 					<div class="map-date">
 						<time class="new timeago" datetime="${score.time}">
@@ -936,7 +933,7 @@ function pinSuccess(data) {
       favouriteMode +
       "][data-rx=" +
       preferRelax +
-      "] div[data-type=pinned] .scores",
+      "] div[data-type=pinned] .scores"
   );
   if (!table) return showMessage("error", "Tell Flame to fix this");
 
@@ -970,7 +967,7 @@ function unpinSuccess(data) {
       favouriteMode +
       "][data-rx=" +
       preferRelax +
-      "] div[data-type=pinned] .scores",
+      "] div[data-type=pinned] .scores"
   );
   var row = $(`div[data-pinnedscoreid=${data["score_id"]}]`);
   row.remove();
@@ -998,7 +995,7 @@ function pinScore(id, rx) {
     { id: id, rx: rx },
     pinSuccess,
     function (data) {},
-    true,
+    true
   );
 }
 
@@ -1008,7 +1005,7 @@ function unpinScore(id, rx) {
     { id: id, rx: rx },
     unpinSuccess,
     function (data) {},
-    true,
+    true
   );
 }
 
@@ -1048,7 +1045,7 @@ function disableLoadMoreButton(type, mode, enable) {
       preferRelax +
       "] div[data-type=" +
       type +
-      "] .show-button",
+      "] .show-button"
   );
   if (enable) button.removeClass("disabled");
   else button.addClass("disabled");
@@ -1114,8 +1111,8 @@ function viewScoreInfo() {
     els.push(
       $("<tr />").append(
         $("<td>" + T(key) + "</td>"),
-        $("<td>" + value + "</td>"),
-      ),
+        $("<td>" + value + "</td>")
+      )
     );
   });
 

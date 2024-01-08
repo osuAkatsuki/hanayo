@@ -31,19 +31,22 @@ BannerType=1
           <a
             class="{{ favMode $relax 0 }}item"
             data-rx="0"
-            href="/leaderboard?rx=0">
+            href="/leaderboard?rx=0"
+          >
             Vanilla
           </a>
           <a
             class="{{ favMode $relax 1 }}item"
             data-rx="1"
-            href="/leaderboard?rx=1">
+            href="/leaderboard?rx=1"
+          >
             Relax
           </a>
           <a
             class="{{ favMode $relax 2 }}item"
             data-rx="2"
-            href="/leaderboard?rx=2">
+            href="/leaderboard?rx=2"
+          >
             Autopilot
           </a>
         </div>
@@ -54,7 +57,8 @@ BannerType=1
             <a
               class="{{ favMode $favMode $k }}item"
               data-mode="{{ $k }}"
-              href="/leaderboard?mode={{ $k }}">
+              href="/leaderboard?mode={{ $k }}"
+            >
               {{ $v }}
             </a>
           {{ end }}
@@ -101,7 +105,8 @@ BannerType=1
             <div class="ui clickable column lb-country" data-country="{{ . }}">
               <img
                 src="/static/images/flags/{{ countryCodepoints . }}.svg"
-                class="new-flag fixed--flag--margin" />
+                class="new-flag fixed--flag--margin"
+              />
               {{ countryReadable . }}
             </div>
           {{ end }}

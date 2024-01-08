@@ -8,7 +8,8 @@
         <span class="text">
           <img
             src="/static/images/modes/{{ .Beatmap.Mode }}.png"
-            class="modes-icons" />
+            class="modes-icons"
+          />
           {{ .Beatmap.DiffName }} (
           <i class="fa-solid fa-star" style="margin-right: 0"></i>
           {{ printf "%.2f" .Beatmap.DifficultyRating }})
@@ -18,10 +19,12 @@
             <a
               href="/b/{{ .ID }}"
               class="item {{ if eq .ID $.Beatmap.ID }}active{{ end }}"
-              data-bid="{{ .ID }}">
+              data-bid="{{ .ID }}"
+            >
               <img
                 src="/static/images/modes/{{ .Mode }}.png"
-                class="modes-icons" />
+                class="modes-icons"
+              />
               {{ .DiffName }} (
               <i class="fa-solid fa-star icon" style="margin-right: 0"></i>
               {{ printf "%.2f" .DifficultyRating }})
@@ -33,7 +36,8 @@
       <audio
         id="beatmap-preview"
         src="https://b.ppy.sh/preview/{{ .Beatmapset.ID }}.mp3"
-        preload="auto"></audio>
+        preload="auto"
+      ></audio>
 
       <div class="ui segments">
         <div class="ui segment">
@@ -89,33 +93,38 @@
                 <div class="ui vertical buttons">
                   <a
                     href="osu://dl/{{ .Beatmapset.ID }}"
-                    class="ui pink labeled icon button">
+                    class="ui pink labeled icon button"
+                  >
                     <i class="fa-solid fa-download icon"></i>
                     {{ $.T "osu!direct" }}
                   </a>
                   <a
                     href="http://akatsuki.gg/d/{{ .Beatmapset.ID }}"
-                    class="ui green labeled icon button">
+                    class="ui green labeled icon button"
+                  >
                     <i class="fa-solid fa-download icon"></i>
                     {{ $.T "Download" }}
                   </a>
                   <a
                     href="{{ .Conf.BEATMAP_DOWNLOAD_MIRROR_URL }}/{{ .Beatmapset.ID }}"
-                    class="ui red labeled icon button">
+                    class="ui red labeled icon button"
+                  >
                     <i class="fa-solid fa-download icon"></i>
                     {{ $.T "Mirror" }}
                   </a>
                   {{ if ne .Beatmapset.HasVideo 0 }}
                     <a
                       href="http://akatsuki.gg/d/{{ .Beatmapset.ID }}?novideo"
-                      class="ui gray labeled icon button">
+                      class="ui gray labeled icon button"
+                    >
                       <i class="fa-solid fa-download icon"></i>
                       {{ $.T "Download (no video)" }}
                     </a>
                   {{ end }}
                   <a
                     class="ui purple labeled icon button"
-                    onclick="playPreview()">
+                    onclick="playPreview()"
+                  >
                     <i class="fa-solid fa-play icon" id="preview-icon"></i>
                     <span id="preview-text">{{ $.T "Play" }}</span>
                   </a>
@@ -181,7 +190,8 @@
                   class="item"
                   id="cmode-{{ $k }}"
                   data-cmode="{{ $k }}"
-                  href="/b/{{ $.Beatmap.ID }}?mode={{ $curMode }}&rx={{ $k }}">
+                  href="/b/{{ $.Beatmap.ID }}?mode={{ $curMode }}&rx={{ $k }}"
+                >
                   {{ $v }}
                 </a>
               {{ end }}
@@ -195,7 +205,8 @@
                   class="item"
                   id="mode-{{ $k }}"
                   data-mode="{{ $k }}"
-                  href="/b/{{ $.Beatmap.ID }}?mode={{ $k }}&rx={{ $relax }}">
+                  href="/b/{{ $.Beatmap.ID }}?mode={{ $k }}&rx={{ $relax }}"
+                >
                   {{ $v }}
                 </a>
               {{ end }}

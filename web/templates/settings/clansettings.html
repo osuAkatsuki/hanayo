@@ -31,7 +31,8 @@ Include=menu.html
                     tabindex="1"
                     type="text"
                     name="tag"
-                    value="{{ $tag }}" />
+                    value="{{ $tag }}"
+                  />
                 </div>
                 <div class="field">
                   <label class="left aligned">Description (optional)</label>
@@ -40,7 +41,8 @@ Include=menu.html
                     type="text"
                     name="desc"
                     placeholder="Description"
-                    value="{{ $desc }}" />
+                    value="{{ $desc }}"
+                  />
                 </div>
                 <div class="field">
                   <label class="left aligned">
@@ -51,7 +53,8 @@ Include=menu.html
                     type="url"
                     name="icon"
                     placeholder="Icon"
-                    value="{{ $icon }}" />
+                    value="{{ $icon }}"
+                  />
                 </div>
                 <div class="field">
                   <label class="left aligned">Clan Status</label>
@@ -59,7 +62,8 @@ Include=menu.html
                     class="ui dropdown"
                     tabindex="4"
                     name="status"
-                    data-cast="int">
+                    data-cast="int"
+                  >
                     <option value="0" {{ if eq $status 0 }}selected{{ end }}>
                       Closed
                     </option>
@@ -81,7 +85,8 @@ Include=menu.html
                       type="url"
                       name="bg"
                       placeholder="Background URL"
-                      value="{{ $bg }}" />
+                      value="{{ $bg }}"
+                    />
                   </div>
                 {{ end }}
                 {{ ieForm .Gin }}
@@ -91,7 +96,8 @@ Include=menu.html
                 tabindex="6"
                 class="ui primary button"
                 type="submit"
-                form="register-form">
+                form="register-form"
+              >
                 {{ .T "Save" }}
               </button>
             </div>
@@ -108,7 +114,8 @@ Include=menu.html
                   type="text"
                   value="{{ $inv }}"
                   style="background-color:rgba(0,0,0,.6)"
-                  disabled />
+                  disabled
+                />
               </div>
               <button id="ginvite" class="ui right green button">
                 {{ .T "Generate a new invite!" }}
@@ -134,7 +141,8 @@ Include=menu.html
                               name="member"
                               value="{{ .id }}"
                               class="ui right green button"
-                              style="float:right; display:block; margin-right:0px; clear:left; width: 40%;">
+                              style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"
+                            >
                               Kick
                             </button>
                           </a>
@@ -153,7 +161,7 @@ Include=menu.html
                     function (t) {
                       window.location.reload();
                     },
-                    !0,
+                    !0
                   );
                 });
               </script>
