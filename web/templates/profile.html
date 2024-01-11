@@ -75,6 +75,7 @@
               {{ $donor := has .privileges 7 }}
               {{ $premium := has .privileges 8388615 }}
 
+              {{ $bot := false }}
               {{ $product := has .privileges 9437183 }}
               {{ $community := has .privileges 9425151 }}
               {{ $accounts := has .privileges 9212159 }}
@@ -86,6 +87,9 @@
               {{ $scorewatcher := false }}
               {{ $champion := false }}
               {{ range .badges }}
+                {{ if eq .id (float 34) }}
+                  {{ $bot = true }}
+                {{ end }}
                 {{ if eq .id (float 100) }}
                   {{ $nqa = true }}
                 {{ end }}
@@ -117,7 +121,14 @@
                         {{ end }}
                         {{ .username }}
                       </h1>
-                      {{ if $product }}
+                      {{ if $bot }}
+                        <div class="profile-label label-bot label-full">
+                          CHAT BOT
+                        </div>
+                        <div class="profile-label label-bot label-mobile">
+                          BOT
+                        </div>
+                      {{ else if $product }}
                         <div class="profile-label label-product label-full">
                           PRODUCT MANAGER
                         </div>
