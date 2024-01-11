@@ -1,7 +1,8 @@
 :root {
+  --colour-bot: #ccccff;
+  --colour-product: #1d7cd5;
   --colour-community: #ee4343;
   --colour-accounts: #ff7746;
-  --colour-product: #1d7cd5;
   --colour-support: #ffb523;
   --colour-dev: #66a9f7;
   --colour-event: #d6ca63;
@@ -221,16 +222,20 @@
   box-shadow: 0 1px 5px #000;
 }
 
+.label-bot {
+  color: var(--colour-bot);
+}
+
+.label-product {
+  color: var(--colour-product);
+}
+
 .label-community {
   color: var(--colour-community);
 }
 
 .label-accounts {
   color: var(--colour-accounts);
-}
-
-.label-product {
-  color: var(--colour-product);
 }
 
 .label-support {
