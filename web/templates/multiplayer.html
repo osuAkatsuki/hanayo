@@ -1,16 +1,18 @@
 {{ define "tpl" }}
- {{ if .MatchID }}
+  {{ if .MatchID }}
     <head>
-      <link rel="stylesheet" type="text/css" href="/static/css/pages/multiplayer.css">
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="/static/css/pages/multiplayer.css"
+      />
     </head>
     <script>
       const matchID = "{{ .MatchID }}";
     </script>
     <div class="ui container">
       <div class="ui segment">
-        <h4 class="ui horizontal divider header" id="match-name">
-
-        </h4>
+        <h4 class="ui horizontal divider header" id="match-name"></h4>
 
         <div class="ui stackable one grid center aligned" id="match-container">
           <div id="loading-match">
