@@ -267,6 +267,11 @@ function buildScore(game, score) {
             </div>
             <div class="score-box-details-right">
                 <div class="score-box-right-top">
+                    ${
+                      !score.passed
+                        ? "<div class='score-box-failed'>FAILED</div>"
+                        : ""
+                    }
                     <div class="score-box-right-mods">${getScoreMods(
                       score.mods,
                       false
@@ -414,7 +419,9 @@ async function loadMatchData(loadOld = false, loadNew = false) {
     additionalParams = `&after=${lastCurrentEventId}`;
   }
 
-  var req = await fetch(`/api/v1/match?id=${matchID}&limit=100${additionalParams}`);
+  var req = await fetch(
+    `/api/v1/match?id=${matchID}&limit=100${additionalParams}`
+  );
   var data = await req.json();
 
   // cache match container locally

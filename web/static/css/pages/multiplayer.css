@@ -313,6 +313,12 @@
   margin: 0 !important;
 }
 
+.score-box-failed {
+  display: flex;
+  padding-right: 20px;
+  color: #ff6666 !important;
+}
+
 @media only screen and (max-width: 990px) {
   .game-header-map-title {
     word-wrap: normal !important;
