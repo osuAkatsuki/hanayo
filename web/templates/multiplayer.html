@@ -1,0 +1,26 @@
+{{ define "tpl" }}
+ {{ if .MatchID }}
+    <head>
+      <link rel="stylesheet" type="text/css" href="/static/css/pages/multiplayer.css">
+    </head>
+    <script>
+      const matchID = "{{ .MatchID }}";
+    </script>
+    <div class="ui container">
+      <div class="ui segment">
+        <h4 class="ui horizontal divider header" id="match-name">
+
+        </h4>
+
+        <div class="ui stackable one grid center aligned" id="match-container">
+          <div id="loading-match">
+            <div class="ui active centered inline loader"></div>
+            <div class="loading-circle-text">Loading match data...</div>
+          </div>
+        </div>
+      </div>
+
+      <script src="/static/multiplayer.js" type="text/javascript"></script>
+    </div>
+  {{ end }}
+{{ end }}

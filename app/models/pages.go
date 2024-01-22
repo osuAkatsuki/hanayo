@@ -100,6 +100,12 @@ type BeatmapPageData struct {
 	SetJSON    string
 }
 
+type MatchData struct {
+	BaseTemplateData
+	MatchID   int
+	MatchName string
+}
+
 type ClanData struct {
 	BaseTemplateData
 	ClanID int
