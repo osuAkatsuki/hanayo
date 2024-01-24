@@ -536,13 +536,14 @@ var singlePageSnippets = {
     });
     // hook submit button
     $("#paypal-form").on("submit", function (e) {
+      const le = $(this);
       e.preventDefault();
       api(
         "users/whatid",
         { name: $("#username-input").val() },
         function (data) {
           $("form>input[name='custom']").attr("value", data.id);
-          $(this).off("submit").trigger("submit");
+          le.off('submit').trigger('submit')
         },
         function (data) {
           showMessage(
