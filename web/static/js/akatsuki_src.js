@@ -787,7 +787,7 @@ $(document).ready(function () {
       "users/whatid",
       { name: $("#username-input").val() },
       function (data) {
-        $("form>input[name='custom']").attr("value", data.id);
+        $("form>input[name='custom']").attr("value", `userid=${data.id}`);
         le.off("submit").trigger("submit");
       },
       function (data) {
