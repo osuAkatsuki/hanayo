@@ -543,7 +543,7 @@ var singlePageSnippets = {
         { name: $("#username-input").val() },
         function (data) {
           $("form>input[name='custom']").attr("value", data.id);
-          le.off('submit').trigger('submit')
+          le.off("submit").trigger("submit");
         },
         function (data) {
           showMessage(
