@@ -537,11 +537,10 @@ var singlePageSnippets = {
     // hook submit button
     $("paypal-form").on("submit", function (e) {
       api(
-        "/users/lookup",
+        "users/whatid",
         { name: $("#username-input").val() },
         function (data) {
-          console.log("le data", data);
-          $("form>input[name='custom']").attr("value", "test");
+          $("form>input[name='custom']").attr("value", data.id);
         },
         function (data) {
           showMessage(
