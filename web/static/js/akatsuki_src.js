@@ -539,10 +539,10 @@ var singlePageSnippets = {
       api(
         "users/whatid",
         { name: $("#username-input").val() },
-        function (data) {
+        (data) => {
           $("form>input[name='custom']").attr("value", data.id);
         },
-        function (data) {
+        (data) => {
           showMessage(
             "error",
             "The username you inputted does not seem to exist in our systems. " +
