@@ -531,10 +531,7 @@ var singlePageSnippets = {
         $("#paypal-amt").val(priceEUR.toFixed(2));
       });
     });
-    $("#username-input").on("input", function () {
-      $("#ipn-username").attr("value", "username=" + $(this).val());
-    });
-    // hook submit button
+    // hook submit button to handle validation of username input
     $("#paypal-form").on("submit", function (e) {
       const le = $(this);
       e.preventDefault();
