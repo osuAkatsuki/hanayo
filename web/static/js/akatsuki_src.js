@@ -792,7 +792,7 @@ $(document).ready(function () {
       function (data) {
         showMessage(
           "error",
-          "The username you inputted does not seem to exist in our systems. " +
+          "The username you input does not seem to exist in our systems. " +
             "Please check their username and ensure that it is correct."
         );
       },
