@@ -546,7 +546,6 @@ var singlePageSnippets = {
     });
     var rates = {};
     var us = sl.noUiSlider;
-    var doneOne = false;
     $.getJSON("/donate/rates", function (data) {
       rates = data;
       us.on("update", function () {
