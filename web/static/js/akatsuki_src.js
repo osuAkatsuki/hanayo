@@ -534,6 +534,23 @@ var singlePageSnippets = {
     $("#username-input").on("input", function () {
       $("#ipn-username").attr("value", "username=" + $(this).val());
     });
+    // hook submit button
+    $("paypal-form").on("submit", function (e) {
+      api(
+        "/users/lookup",
+        { name: $("#username-input").val() },
+        null,
+        function () {
+          showMessage(
+            "error",
+            "The username you inputted does not seem to exist in our systems. " +
+              "Please check their username and ensure that it is correct."
+          );
+          e.preventDefault();
+        },
+        false
+      );
+    });
   },
 
   "/premium": function () {
