@@ -535,7 +535,7 @@ var singlePageSnippets = {
       $("#ipn-username").attr("value", "username=" + $(this).val());
     });
     // hook submit button
-    $("paypal-form").on("submit", function (e) {
+    $("#paypal-form").on("submit", function (e) {
       api(
         "users/whatid",
         { name: $("#username-input").val() },
