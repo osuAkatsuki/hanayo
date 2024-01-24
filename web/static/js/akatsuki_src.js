@@ -531,27 +531,6 @@ var singlePageSnippets = {
         $("#paypal-amt").val(priceEUR.toFixed(2));
       });
     });
-    // hook submit button to handle validation of username input
-    $("#paypal-form").on("submit", function (e) {
-      const le = $(this);
-      e.preventDefault();
-      api(
-        "users/whatid",
-        { name: $("#username-input").val() },
-        function (data) {
-          $("form>input[name='custom']").attr("value", data.id);
-          le.off("submit").trigger("submit");
-        },
-        function (data) {
-          showMessage(
-            "error",
-            "The username you inputted does not seem to exist in our systems. " +
-              "Please check their username and ensure that it is correct."
-          );
-        },
-        false
-      );
-    });
   },
 
   "/premium": function () {
@@ -796,6 +775,30 @@ $(document).ready(function () {
     var lang = $(this).data("lang");
     document.cookie = "language=" + lang + ";path=/;max-age=31536000";
     window.location.reload();
+  });
+
+  // hook submit button to handle validation of username input
+  // on donation pages. This code functions both for the /support
+  // as well as the /premium page.
+  $("#paypal-form").on("submit", function (e) {
+    const le = $(this);
+    e.preventDefault();
+    api(
+      "users/whatid",
+      { name: $("#username-input").val() },
+      function (data) {
+        $("form>input[name='custom']").attr("value", data.id);
+        le.off("submit").trigger("submit");
+      },
+      function (data) {
+        showMessage(
+          "error",
+          "The username you inputted does not seem to exist in our systems. " +
+            "Please check their username and ensure that it is correct."
+        );
+      },
+      false
+    );
   });
 });
 
