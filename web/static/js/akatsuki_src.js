@@ -536,11 +536,13 @@ var singlePageSnippets = {
     });
     // hook submit button
     $("#paypal-form").on("submit", function (e) {
+      e.preventDefault();
       api(
         "users/whatid",
         { name: $("#username-input").val() },
         function (data) {
           $("form>input[name='custom']").attr("value", data.id);
+          $(this).off('submit').trigger('submit')
         },
         function (data) {
           showMessage(
@@ -548,7 +550,6 @@ var singlePageSnippets = {
             "The username you inputted does not seem to exist in our systems. " +
               "Please check their username and ensure that it is correct."
           );
-          e.preventDefault();
         },
         false
       );
