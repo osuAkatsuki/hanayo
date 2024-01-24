@@ -539,8 +539,11 @@ var singlePageSnippets = {
       api(
         "/users/lookup",
         { name: $("#username-input").val() },
-        null,
-        function () {
+        function (data) {
+          console.log("le data", data);
+          $("form>input[name='custom']").attr("value", "test");
+        },
+        function (data) {
           showMessage(
             "error",
             "The username you inputted does not seem to exist in our systems. " +
