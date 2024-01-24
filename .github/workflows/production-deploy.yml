@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - fix-dist-min
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
