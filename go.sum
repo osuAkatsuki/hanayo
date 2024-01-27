@@ -409,6 +409,16 @@ github.com/openzipkin/zipkin-go v0.2.1/go.mod h1:NaW6tEwdmWMaCDZzg8sh+IBNOxHMPnh
 github.com/openzipkin/zipkin-go v0.2.2/go.mod h1:NaW6tEwdmWMaCDZzg8sh+IBNOxHMPnhQw8ySjnjRyN4=
 github.com/osuAkatsuki/akatsuki-api v0.0.0-20220818215820-00d613f34df5 h1:TWxLoc0jdq8R7dnAn9lFPPe7bkEH60VovkCibQK/gZc=
 github.com/osuAkatsuki/akatsuki-api v0.0.0-20220818215820-00d613f34df5/go.mod h1:zwBDPgGswbPSRThtE0Ci7p9qJMXE5RtG8VikTw4cLOQ=
+github.com/osuAkatsuki/otp-service-client-go v0.0.0-20240127170845-d57ec34a22d2 h1:Eg5g4gClxENiXHf0MUU/Brc2fZRgBSPEiz/MLQEZ2Ok=
+github.com/osuAkatsuki/otp-service-client-go v0.0.0-20240127170845-d57ec34a22d2/go.mod h1:OHM+EH8VTrwtO98BOvDcWJEdHFzSREsYAsWyLCNtWFI=
+github.com/osuAkatsuki/otp-service-client-go v0.0.1 h1:Gxvr8Uzzq+3eKzNajA/GemJSIiSunql5d5Hld9SJFwI=
+github.com/osuAkatsuki/otp-service-client-go v0.0.1/go.mod h1:OHM+EH8VTrwtO98BOvDcWJEdHFzSREsYAsWyLCNtWFI=
+github.com/osuAkatsuki/otp-service-client-go v0.0.2 h1:gLj9/pDozQTG9O7srwlGcSF3SfXXGdm5ZzuWrQ8HqiM=
+github.com/osuAkatsuki/otp-service-client-go v0.0.2/go.mod h1:OHM+EH8VTrwtO98BOvDcWJEdHFzSREsYAsWyLCNtWFI=
+github.com/osuAkatsuki/otp-service-client-go v0.0.3 h1:ZIMi4mA6FDoH1wjRbms63xShs6sIC2Letv45WcrbPvM=
+github.com/osuAkatsuki/otp-service-client-go v0.0.3/go.mod h1:OHM+EH8VTrwtO98BOvDcWJEdHFzSREsYAsWyLCNtWFI=
+github.com/osuAkatsuki/otp-service-client-go v0.0.4 h1:T2myR3nW4A3o8/gLaKdZWqlCz+CeWcmbrz6ImblkWg0=
+github.com/osuAkatsuki/otp-service-client-go v0.0.4/go.mod h1:OHM+EH8VTrwtO98BOvDcWJEdHFzSREsYAsWyLCNtWFI=
 github.com/osuripple/cheesegull v2.1.1-0.20180422113429-9bdfa825f309+incompatible h1:zbfH0D54qreA8tvhxHBcsJYENqzwgp+OL7A9GGOKO3E=
 github.com/osuripple/cheesegull v2.1.1-0.20180422113429-9bdfa825f309+incompatible/go.mod h1:qPMgVmeGHvtWYlC9Ryh3Tls0Pslqn3JrLGGyLohHXIU=
 github.com/pact-foundation/pact-go v1.0.4/go.mod h1:uExwJY4kCzNPcHRj+hCR/HBbOOIwwtUjcrb0b5/5kLM=

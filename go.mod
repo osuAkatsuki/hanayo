@@ -63,6 +63,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mileusna/useragent v1.3.3 // indirect
+	github.com/osuAkatsuki/otp-service-client-go v0.0.4 // indirect
 	github.com/pegasus-kv/thrift v0.13.0 // indirect
 	github.com/philhofer/fwd v1.1.1 // indirect
 	github.com/prometheus/client_golang v1.10.0 // indirect
