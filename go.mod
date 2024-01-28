@@ -2,8 +2,6 @@ module github.com/osuAkatsuki/hanayo
 
 go 1.21
 
-toolchain go1.21.6
-
 require (
 	github.com/amplitude/analytics-go v1.0.1
 	github.com/aws/aws-sdk-go v1.47.3
