@@ -1,34 +1,39 @@
 {{ define "tpl" }}
-    <div class="ui tiny container">
-        <div class="ui warning message">
-            {{ .T "You have 2FA enabled and we do not recognise this device. Please enter a OTP below to complete the login." }}
-        </div>
-        <div>
-            <div class="ui raised segments">
-                <div class="ui segment">
-                    <form id="otp-form" class="ui form" method="post" action="/login/otp">
-                        <div class="field">
-                            <label>{{ .T "2FA code" }}</label>
-                            <input tabindex="1" type="text" name="token" required />
-                        </div>
-                        <div class="ui toggle checkbox">
-                            <input tabindex="2" type="checkbox" name="remember_device" />
-                            <label>{{ .T "Remember this device for 30 days" }}</label>
-                        </div>
-                        <input
-                            type="hidden"
-                            name="redir"
-                            value="{{ or (.Gin.Query "redir") .FormData.redir }}"
-                        />
-                        {{ ieForm .Gin }}
-                    </form>
-                </div>
-                <div class="ui right aligned segment">
-                    <button tabindex="3" class="ui primary button" type="submit" form="otp-form">
-                        {{ .T "Submit" }}
-                    </button>
-                </div>
-            </div>
-        </div>
+  <div class="ui tiny container">
+    <div class="ui warning message">
+      {{ .T "You have 2FA enabled and we do not recognise this device. Please enter a OTP below to complete the login." }}
     </div>
+    <div>
+      <div class="ui raised segments">
+        <div class="ui segment">
+          <form id="otp-form" class="ui form" method="post" action="/login/otp">
+            <div class="field">
+              <label>{{ .T "2FA code" }}</label>
+              <input tabindex="1" type="text" name="token" required />
+            </div>
+            <div class="ui toggle checkbox">
+              <input tabindex="2" type="checkbox" name="remember_device" />
+              <label>{{ .T "Remember this device for 30 days" }}</label>
+            </div>
+            <input
+              type="hidden"
+              name="redir"
+              value="{{ or (.Gin.Query "redir") .FormData.redir }}"
+            />
+            {{ ieForm .Gin }}
+          </form>
+        </div>
+        <div class="ui right aligned segment">
+          <button
+            tabindex="3"
+            class="ui primary button"
+            type="submit"
+            form="otp-form"
+          >
+            {{ .T "Submit" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 {{ end }}
