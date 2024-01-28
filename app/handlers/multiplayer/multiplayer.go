@@ -84,7 +84,7 @@ func MultiplayerHistoryHandler(c *gin.Context) {
 		}
 	}
 
-	data.BannerContent = "/static/images/headers/2fa.jpg"
+	data.BannerContent = "2fa.jpg"
 	data.BannerType = 1
 
 	if data.MatchID == 0 {
