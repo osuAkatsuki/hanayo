@@ -102,6 +102,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
               {{ $.T "PayPal" }}
             </h2>
             <form
+              id="paypal-form"
               action="https://www.paypal.com/cgi-bin/webscr"
               method="post"
               target="_self"
@@ -142,6 +143,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                   {{ $.T "User:" }}
                 </div>
                 <input
+                  id="username-input"
                   name="os1"
                   type="text"
                   placeholder="{{ $.T "User" }}"
