@@ -1,18 +1,21 @@
 module github.com/osuAkatsuki/hanayo
 
-go 1.20
+go 1.21
 
 require (
+	github.com/amplitude/analytics-go v1.0.1
+	github.com/aws/aws-sdk-go v1.47.3
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/structs v1.1.0
 	github.com/gin-gonic/contrib v0.0.0-20181101072842-54170a7b0b4b
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-email-validator/go-email-validator v0.0.0-20220810051442-a2133f859f98
-	github.com/go-sql-driver/mysql v1.6.0
-	github.com/jmoiron/sqlx v1.3.4
+	github.com/go-sql-driver/mysql v1.7.1
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/johnniedoe/contrib v0.0.0-20150821124612-d553224621be
-	github.com/joho/godotenv v1.4.0
-	github.com/microcosm-cc/bluemonday v1.0.24
+	github.com/joho/godotenv v1.5.1
+	github.com/microcosm-cc/bluemonday v1.0.26
+	github.com/mileusna/useragent v1.3.3
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/pariz/gountries v0.1.6
 	github.com/rjeczalik/notify v0.9.3-0.20181126183243-629144ba06a1
@@ -20,7 +23,8 @@ require (
 	github.com/thehowl/cieca v0.0.0-20161122163418-3d95e04c9b12
 	github.com/thehowl/conf v0.1.1-0.20161010150023-bdfc17531a74
 	github.com/thehowl/qsql v0.0.0-20160712153739-9b9405451f47
-	golang.org/x/crypto v0.14.0
+	golang.org/x/crypto v0.18.0
+	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a
 	gopkg.in/DataDog/dd-trace-go.v1 v1.43.1
 	gopkg.in/mailgun/mailgun-go.v1 v1.1.1
 	gopkg.in/redis.v5 v5.2.9
@@ -35,9 +39,7 @@ require (
 	github.com/FGRibreau/mailchecker/v4 v4.1.19 // indirect
 	github.com/Microsoft/go-winio v0.5.1 // indirect
 	github.com/XiaoMi/pegasus-go-client v0.0.0-20210427083443-f3b6b08bc4c2 // indirect
-	github.com/amplitude/analytics-go v1.0.1 // indirect
-	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/aws/aws-sdk-go v1.47.3 // indirect
+	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d // indirect
@@ -55,14 +57,13 @@ require (
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/gorilla/css v1.0.0 // indirect
+	github.com/gorilla/css v1.0.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
-	github.com/mileusna/useragent v1.3.3 // indirect
 	github.com/pegasus-kv/thrift v0.13.0 // indirect
 	github.com/philhofer/fwd v1.1.1 // indirect
 	github.com/prometheus/client_golang v1.10.0 // indirect
@@ -84,7 +85,6 @@ require (
 	go.uber.org/zap v1.21.0 // indirect
 	go4.org/intern v0.0.0-20211027215823-ae77deb06f29 // indirect
 	go4.org/unsafe/assume-no-moving-gc v0.0.0-20220617031537-928513b29760 // indirect
-	golang.org/x/exp v0.0.0-20231108232855-2478ac86f678 // indirect
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
@@ -108,17 +108,17 @@ require (
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/gorilla/sessions v1.1.3 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
-	github.com/klauspost/compress v1.15.0 // indirect
+	github.com/klauspost/compress v1.17.5 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/osuAkatsuki/akatsuki-api v0.0.0-20220818215820-00d613f34df5
+	github.com/osuAkatsuki/akatsuki-api v0.0.0-20240128010655-62449c1fcc60
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rs/zerolog v1.31.0
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.34.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
-	golang.org/x/sys v0.14.0 // indirect
+	github.com/valyala/fasthttp v1.51.0 // indirect
+	golang.org/x/net v0.20.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
