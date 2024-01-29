@@ -27,6 +27,7 @@ import (
 	errorHandlers "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	ircHandlers "github.com/osuAkatsuki/hanayo/app/handlers/irc"
 	miscHandlers "github.com/osuAkatsuki/hanayo/app/handlers/misc"
+	multiplayerHandlers "github.com/osuAkatsuki/hanayo/app/handlers/multiplayer"
 	profilesHandlers "github.com/osuAkatsuki/hanayo/app/handlers/profiles"
 	profileEditHandlers "github.com/osuAkatsuki/hanayo/app/handlers/profiles/settings"
 	accountRecoveryHandlers "github.com/osuAkatsuki/hanayo/app/handlers/recovery"
@@ -230,6 +231,8 @@ func generateEngine() *gin.Engine {
 
 	r.GET("/c/:cid", clansHandlers.ClanPageHandler)
 	r.GET("/b/:bid", beatmapsHandlers.BeatmapPageHandler)
+
+	r.GET("/matches/:mid", multiplayerHandlers.MultiplayerHistoryHandler)
 
 	// TODO: maybe change this long names?
 	r.POST(
