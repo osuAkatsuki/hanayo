@@ -81,6 +81,7 @@
               {{ $accounts := has .privileges 9212159 }}
               {{ $support := has .privileges 9175111 }}
               {{ $dev := has .privileges 10743327 }}
+              {{ $design := false }}
               {{ $nqa := false }}
               {{ $nominator := has .privileges 8388871 }}
               {{ $event := has .privileges 10485767 }}
@@ -89,6 +90,9 @@
               {{ range .badges }}
                 {{ if eq .id (float 34) }}
                   {{ $bot = true }}
+                {{ end }}
+                {{ if eq .id (float 101) }}
+                  {{ $design = true }}
                 {{ end }}
                 {{ if eq .id (float 100) }}
                   {{ $nqa = true }}
@@ -141,6 +145,13 @@
                         </div>
                         <div class="profile-label label-dev label-mobile">
                           DEV
+                        </div>
+                      {{ else if $design }}
+                        <div class="profile-label label-design label-full">
+                          PRODUCT DESIGNER
+                        </div>
+                        <div class="profile-label label-design label-mobile">
+                          PD
                         </div>
                       {{ else if $community }}
                         <div class="profile-label label-community label-full">

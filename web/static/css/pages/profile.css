@@ -5,9 +5,10 @@
   --colour-accounts: #ff7746;
   --colour-support: #ffb523;
   --colour-dev: #66a9f7;
+  --colour-design: #e93944;
   --colour-event: #d6ca63;
-  --colour-nqa: #a291fb;
-  --colour-nominator: #a333c8;
+  --colour-nqa: #ad55ff;
+  --colour-nominator: #b476fc;
   --colour-scorewatcher: #e07fc4;
   --colour-champion: #41f8d5;
   --colour-donor: #5fd5eb;
@@ -244,6 +245,10 @@
 
 .label-dev {
   color: var(--colour-dev);
+}
+
+.label-design {
+  color: var(--colour-design);
 }
 
 .label-event {
