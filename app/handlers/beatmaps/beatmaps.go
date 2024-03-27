@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
-	"strings"
 
 	"golang.org/x/exp/slog"
 
@@ -13,7 +12,6 @@ import (
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
-	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	bu "github.com/osuAkatsuki/hanayo/app/usecases/beatmaps"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
@@ -28,37 +26,19 @@ func BeatmapPageHandler(c *gin.Context) {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
 	} else {
-
-		settings := settingsState.GetSettings()
-		if strings.Contains(settings.BEATMAP_MIRROR_API_URL, "https://osu.direct/api") {
-			data.Beatmapset, err = bu.GetBeatmapSetDataFromDirectAPI(b)
-			if err != nil {
-				c.Error(err)
-				slog.ErrorContext(c, err.Error())
-				return
-			}
-
-			bmapID, _ := strconv.Atoi(b)
-			for i := range data.Beatmapset.ChildrenBeatmaps {
-				if data.Beatmapset.ChildrenBeatmaps[i].ID == bmapID {
-					data.Beatmap = data.Beatmapset.ChildrenBeatmaps[i]
-					break
-				}
-			}
-		} else {
-			data.Beatmap, err = bu.GetBeatmapData(b)
-			if err != nil {
-				c.Error(err)
-				slog.ErrorContext(c, err.Error())
-				return
-			}
-			data.Beatmapset, err = bu.GetBeatmapSetData(data.Beatmap)
-			if err != nil {
-				c.Error(err)
-				slog.ErrorContext(c, err.Error())
-				return
-			}
+		data.Beatmap, err = bu.GetBeatmapData(b)
+		if err != nil {
+			c.Error(err)
+			slog.ErrorContext(c, err.Error())
+			return
 		}
+		data.Beatmapset, err = bu.GetBeatmapSetData(data.Beatmap)
+		if err != nil {
+			c.Error(err)
+			slog.ErrorContext(c, err.Error())
+			return
+		}
+
 		sort.Slice(data.Beatmapset.ChildrenBeatmaps, func(i, j int) bool {
 			if data.Beatmapset.ChildrenBeatmaps[i].Mode != data.Beatmapset.ChildrenBeatmaps[j].Mode {
 				return data.Beatmapset.ChildrenBeatmaps[i].Mode < data.Beatmapset.ChildrenBeatmaps[j].Mode
