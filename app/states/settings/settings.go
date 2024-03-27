@@ -77,6 +77,9 @@ type Settings struct {
 	PAYPAL_EMAIL_ADDRESS string
 
 	AMPLITUDE_API_KEY string
+
+	OTP_SERVICE_BASE_URL   string
+	OTP_SERVICE_SECRET_KEY string
 }
 
 var settings = Settings{}
@@ -133,6 +136,9 @@ func LoadSettings() Settings {
 	settings.PAYPAL_EMAIL_ADDRESS = getEnv("PAYPAL_EMAIL_ADDRESS")
 
 	settings.AMPLITUDE_API_KEY = getEnv("AMPLITUDE_API_KEY")
+
+	settings.OTP_SERVICE_BASE_URL = getEnv("OTP_SERVICE_BASE_URL")
+	settings.OTP_SERVICE_SECRET_KEY = getEnv("OTP_SERVICE_SECRET_KEY")
 
 	return settings
 }

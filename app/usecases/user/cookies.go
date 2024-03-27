@@ -43,3 +43,21 @@ func AddY(c *gin.Context, y string) {
 		Expires: time.Now().Add(time.Hour * 24 * 30 * 6),
 	})
 }
+
+func SetRememberedDeviceCookie(userId int, c *gin.Context) error {
+	resp, err := services.OTP.CreateRememberedDevice(userId)
+	if err != nil {
+		return err
+	}
+
+	AddRememberedDevice(c, resp.Id)
+	return nil
+}
+
+func AddRememberedDevice(c *gin.Context, id string) {
+	http.SetCookie(c.Writer, &http.Cookie{
+		Name:    "rd",
+		Value:   id,
+		Expires: time.Now().Add(time.Hour * 24 * 30),
+	})
+}

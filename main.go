@@ -44,6 +44,7 @@ import (
 	"github.com/osuAkatsuki/hanayo/app/version"
 	"github.com/osuAkatsuki/hanayo/internal/btcconversions"
 	"github.com/osuAkatsuki/hanayo/internal/csrf/cieca"
+	"github.com/osuAkatsuki/otp-service-client-go/client"
 	"github.com/thehowl/qsql"
 	gintrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
 	"gopkg.in/mailgun/mailgun-go.v1"
@@ -129,6 +130,8 @@ func main() {
 	amplitudeConfig.MinIDLength = 4 // our user ids start from 1000
 	services.Amplitude = amplitude.NewClient(amplitudeConfig)
 
+	services.OTP = client.NewOtpClient(settings.OTP_SERVICE_BASE_URL, settings.OTP_SERVICE_SECRET_KEY)
+
 	// even if it's not release, we say that it's release
 	// so that gin doesn't spam
 	gin.SetMode(gin.ReleaseMode)
@@ -207,6 +210,9 @@ func generateEngine() *gin.Engine {
 
 	r.POST("/login", loginHandlers.LoginSubmitHandler)
 	r.GET("/logout", logoutHandlers.LogoutSubmitHandler)
+
+	r.GET("/login/otp", loginHandlers.LoginOtpPageHandler)
+	r.POST("/login/otp", loginHandlers.LoginOtpSubmitHandler)
 
 	r.GET("/", miscHandlers.HomepagePageHandler)
 

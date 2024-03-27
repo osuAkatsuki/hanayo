@@ -2,6 +2,7 @@ package login
 
 import (
 	"database/sql"
+	"errors"
 	"html/template"
 	"strconv"
 	"strings"
@@ -10,10 +11,12 @@ import (
 	"golang.org/x/exp/slog"
 
 	"github.com/amplitude/analytics-go/amplitude"
+	s "github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/mileusna/useragent"
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
+	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
@@ -23,8 +26,20 @@ import (
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	uu "github.com/osuAkatsuki/hanayo/app/usecases/user"
+	"github.com/osuAkatsuki/otp-service-client-go/client"
 	"golang.org/x/crypto/bcrypt"
 )
+
+type SessionData struct {
+	ID              int
+	Username        string
+	Password        string
+	PasswordVersion int
+	Country         string
+	pRaw            int64
+	Privileges      common.UserPrivileges
+	Flags           uint
+}
 
 func LoginSubmitHandler(c *gin.Context) {
 	if sessions.GetContext(c).User.ID != 0 {
@@ -45,16 +60,7 @@ func LoginSubmitHandler(c *gin.Context) {
 		u = uu.SafeUsername(u)
 	}
 
-	var data struct {
-		ID              int
-		Username        string
-		Password        string
-		PasswordVersion int
-		Country         string
-		pRaw            int64
-		Privileges      common.UserPrivileges
-		Flags           uint
-	}
+	var data SessionData
 	err := services.DB.QueryRow(`
 	SELECT
 		u.id, u.password_md5,
@@ -125,6 +131,131 @@ func LoginSubmitHandler(c *gin.Context) {
 		return
 	}
 
+	userOtp, otpErr := services.OTP.GetUserOtp(data.ID)
+	var notFoundErr *client.NotFoundError
+	if otpErr != nil && !errors.As(otpErr, &notFoundErr) {
+		slog.Error("Error checking user's OTP", "error", otpErr.Error())
+		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Something went wrong. Please try again.")})
+		return
+	}
+
+	rememberedDeviceId, err := c.Cookie("rd")
+	rememberedDevice := err == nil && rememberedDeviceId != ""
+
+	if rememberedDevice {
+		_, rdErr := services.OTP.GetRememberedDevice(rememberedDeviceId)
+		if rdErr != nil && !errors.As(otpErr, &notFoundErr) {
+			slog.Error("Error checking user's remembered device", "error", rdErr.Error())
+			tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Something went wrong. Please try again.")})
+			return
+		}
+
+		rememberedDevice = rdErr == nil
+	}
+
+	// if we managed to fetch an OTP, it's verified, enabled and not a remembered then we must use it
+	if otpErr == nil && userOtp.Verified && userOtp.Enabled && !rememberedDevice {
+		sess.Set("mustotp", true)
+		sess.Set("user_id", data.ID)
+		sess.Save()
+		c.Redirect(302, "/login/otp")
+		return
+	}
+
+	handleSession(c, sess, data)
+}
+
+func AfterLogin(c *gin.Context, id int, country string, flags uint) {
+	s, err := su.GenerateToken(id, c)
+	if err != nil {
+		eh.Resp500(c)
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		return
+	}
+	sessions.GetSession(c).Set("token", s)
+	if country == "XX" {
+		uu.SetCountry(c, id)
+	}
+
+	err = uu.LogIP(c, id)
+	if err != nil {
+		slog.Error("Error logging IP", "error", err.Error())
+	}
+}
+
+func LoginOtpPageHandler(c *gin.Context) {
+	sess := sessions.GetSession(c)
+
+	if sess.Get("user_id") == nil || !sess.Get("mustotp").(bool) {
+		tu.Resp403(c)
+		return
+	}
+
+	otpResponse(c)
+}
+
+const InvalidToken = "invalid_token"
+
+func LoginOtpSubmitHandler(c *gin.Context) {
+	sess := sessions.GetSession(c)
+
+	if sess.Get("user_id") == nil || !sess.Get("mustotp").(bool) {
+		tu.Resp403(c)
+		return
+	}
+
+	token := c.PostForm("token")
+	if token == "" {
+		otpResponse(c, msg.ErrorMessage{lu.T(c, "You must enter a 2FA code.")})
+		return
+	}
+
+	rememberDevice := c.PostForm("remember_device") == "on"
+	userId := sess.Get("user_id").(int)
+
+	err := services.OTP.ValidateOtp(userId, token)
+
+	var badRequestErr *client.BadRequestError
+	if err != nil && errors.As(err, &badRequestErr) && err.(*client.BadRequestError).Problem == InvalidToken {
+		otpResponse(c, msg.ErrorMessage{lu.T(c, "Incorrect code.")})
+		return
+	} else if err != nil {
+		otpResponse(c, msg.ErrorMessage{lu.T(c, "Something went wrong. Please try again.")})
+		return
+	}
+
+	sess.Delete("user_id")
+	sess.Delete("mustotp")
+
+	var data SessionData
+	err = services.DB.QueryRow(`
+	SELECT
+		u.id, u.username, u.password_md5,
+		s.country, u.privileges, u.flags
+	FROM users u
+	LEFT JOIN users_stats s ON s.id = u.id
+	WHERE u.id = ? LIMIT 1`, userId).Scan(
+		&data.ID, &data.Username, &data.Password,
+		&data.Country, &data.pRaw, &data.Flags,
+	)
+	data.Privileges = common.UserPrivileges(data.pRaw)
+	slog.Info("got user", "user", data)
+
+	if err != nil {
+		slog.Error("Error fetching user for 2FA", "error", err.Error())
+		otpResponse(c, msg.ErrorMessage{lu.T(c, "Something went wrong. Please try again.")})
+		return
+	}
+
+	if rememberDevice {
+		uu.SetRememberedDeviceCookie(data.ID, c)
+	}
+
+	handleSession(c, sess, data)
+}
+
+func handleSession(c *gin.Context, sess s.Session, data SessionData) {
 	latitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLatitude"), 64)
 	if err != nil {
 		slog.Error("Error parsing latitude", "error", err.Error())
@@ -194,21 +325,18 @@ func LoginSubmitHandler(c *gin.Context) {
 	return
 }
 
-func AfterLogin(c *gin.Context, id int, country string, flags uint) {
-	s, err := su.GenerateToken(id, c)
-	if err != nil {
-		eh.Resp500(c)
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
+func otpResponse(c *gin.Context, messages ...msg.Message) {
+	sess := sessions.GetSession(c)
+
+	if sess.Get("user_id") == nil || !sess.Get("mustotp").(bool) {
+		tu.Resp403(c)
 		return
 	}
-	sessions.GetSession(c).Set("token", s)
-	if country == "XX" {
-		uu.SetCountry(c, id)
-	}
 
-	err = uu.LogIP(c, id)
-	if err != nil {
-		slog.Error("Error logging IP", "error", err.Error())
-	}
+	tu.Resp(c, 200, "2fa_login.html", &models.BaseTemplateData{
+		TitleBar:      lu.T(c, "2FA required for login"),
+		BannerContent: "login2.jpg",
+		BannerType:    1,
+		Messages:      messages,
+	})
 }
