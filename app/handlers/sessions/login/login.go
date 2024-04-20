@@ -46,25 +46,24 @@ func LoginSubmitHandler(c *gin.Context) {
 	}
 
 	var data struct {
-		ID              int
-		Username        string
-		Password        string
-		PasswordVersion int
-		Country         string
-		pRaw            int64
-		Privileges      common.UserPrivileges
-		Flags           uint
+		ID         int
+		Username   string
+		Password   string
+		Country    string
+		pRaw       int64
+		Privileges common.UserPrivileges
+		Flags      uint
 	}
 	err := services.DB.QueryRow(`
 	SELECT
 		u.id, u.password_md5,
-		u.username, u.password_version,
-		s.country, u.privileges, u.flags
+		u.username, s.country, u.privileges,
+		u.flags
 	FROM users u
 	LEFT JOIN users_stats s ON s.id = u.id
 	WHERE u.`+param+` = ? LIMIT 1`, strings.TrimSpace(u)).Scan(
 		&data.ID, &data.Password,
-		&data.Username, &data.PasswordVersion,
+		&data.Username,
 		&data.Country, &data.pRaw, &data.Flags,
 	)
 	data.Privileges = common.UserPrivileges(data.pRaw)
@@ -80,12 +79,6 @@ func LoginSubmitHandler(c *gin.Context) {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
-		return
-	}
-
-	if data.PasswordVersion == 1 {
-		sessions.AddMessage(c, msg.WarningMessage{lu.T(c, "Your password is sooooooo old, that we don't even know how to deal with it anymore. Could you please change it?")})
-		c.Redirect(302, "/pwreset")
 		return
 	}
 

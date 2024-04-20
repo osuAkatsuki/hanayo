@@ -169,7 +169,7 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	_, err = services.DB.Exec("UPDATE users SET password_md5 = ?, salt = '', password_version = '2' WHERE username = ?",
+	_, err = services.DB.Exec("UPDATE users SET password_md5 = ? WHERE username = ?",
 		pass, username)
 	if err != nil {
 		c.Error(err)
