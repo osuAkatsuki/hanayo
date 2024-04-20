@@ -115,7 +115,5 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 		slog.ErrorContext(c, err.Error())
 	}
 
-	services.DB.Exec("UPDATE users SET flags = flags & ~3 WHERE id = ? LIMIT 1", ctx.User.ID)
-
 	messages = append(messages, msg.SuccessMessage{lu.T(c, "Your settings have been saved.")})
 }

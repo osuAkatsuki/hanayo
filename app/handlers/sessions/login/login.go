@@ -52,19 +52,17 @@ func LoginSubmitHandler(c *gin.Context) {
 		Country    string
 		pRaw       int64
 		Privileges common.UserPrivileges
-		Flags      uint
 	}
 	err := services.DB.QueryRow(`
 	SELECT
 		u.id, u.password_md5,
-		u.username, s.country, u.privileges,
-		u.flags
+		u.username, s.country, u.privileges
 	FROM users u
 	LEFT JOIN users_stats s ON s.id = u.id
 	WHERE u.`+param+` = ? LIMIT 1`, strings.TrimSpace(u)).Scan(
 		&data.ID, &data.Password,
 		&data.Username,
-		&data.Country, &data.pRaw, &data.Flags,
+		&data.Country, &data.pRaw,
 	)
 	data.Privileges = common.UserPrivileges(data.pRaw)
 
@@ -171,7 +169,7 @@ func LoginSubmitHandler(c *gin.Context) {
 	sess.Set("pw", cryptography.MakeMD5(data.Password))
 	sess.Set("logout", common.RandomString(15))
 
-	AfterLogin(c, data.ID, data.Country, data.Flags)
+	AfterLogin(c, data.ID, data.Country)
 
 	redir := c.PostForm("redir")
 	if len(redir) > 0 && redir[0] != '/' {
@@ -187,7 +185,7 @@ func LoginSubmitHandler(c *gin.Context) {
 	return
 }
 
-func AfterLogin(c *gin.Context, id int, country string, flags uint) {
+func AfterLogin(c *gin.Context, id int, country string) {
 	s, err := su.GenerateToken(id, c)
 	if err != nil {
 		eh.Resp500(c)

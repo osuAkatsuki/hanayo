@@ -16,7 +16,6 @@ type SessionUser struct {
 	ID         int
 	Username   string
 	Privileges common.UserPrivileges
-	Flags      uint64
 }
 
 // OnlyUserPublic returns a string containing "(user.privileges & 1 = 1 OR users.id = <userID>)"

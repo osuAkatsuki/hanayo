@@ -32,8 +32,8 @@ func SessionInitializer() func(c *gin.Context) {
 				pRaw     int64
 				password string
 			)
-			err := services.DB.QueryRow("SELECT username, privileges, flags, password_md5 FROM users WHERE id = ?", userid).
-				Scan(&ctx.User.Username, &pRaw, &ctx.User.Flags, &password)
+			err := services.DB.QueryRow("SELECT username, privileges, password_md5 FROM users WHERE id = ?", userid).
+				Scan(&ctx.User.Username, &pRaw, &password)
 
 			if err != nil {
 				c.Error(err)
