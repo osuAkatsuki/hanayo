@@ -150,6 +150,12 @@ func RegisterSubmitHandler(c *gin.Context) {
 	}
 
 	tx, err := services.DB.Begin()
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
 
 	res, err := tx.Exec(`INSERT INTO users(username, username_safe, password_md5, email, register_datetime, privileges, latest_activity) VALUES (?, ?, ?, ?, ?, ?, ?);`,
 		username, uu.SafeUsername(username), pass, email, time.Now().Unix(), common.UserPrivilegePendingVerification, time.Now().Unix())
