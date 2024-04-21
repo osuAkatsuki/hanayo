@@ -191,7 +191,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	for _, mode := range []int{1, 2, 3, 4, 5, 6, 8} {
+	for _, mode := range []int{0, 1, 2, 3, 4, 5, 6, 8} {
 		_, err = tx.Exec("INSERT INTO `user_stats` (user_id, mode) VALUES (?, ?);", userId, mode)
 		if err != nil {
 			tx.Rollback()
