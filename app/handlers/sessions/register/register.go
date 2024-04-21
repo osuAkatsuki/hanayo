@@ -164,33 +164,6 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 	userId, _ := res.LastInsertId()
 
-	_, err = tx.Exec("INSERT INTO `users_stats`(id, username, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", userId, username, c.Request.Header.Get("CF-IPCountry"))
-	if err != nil {
-		tx.Rollback()
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
-		eh.Resp500(c)
-		return
-	}
-
-	_, err = tx.Exec("INSERT INTO `rx_stats`(id, username, ranked_score_std, playcount_std, total_score_std, ranked_score_taiko, playcount_taiko, total_score_taiko, ranked_score_ctb, playcount_ctb, total_score_ctb, ranked_score_mania, playcount_mania, total_score_mania, country) VALUES (?, ?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ?);", userId, username, c.Request.Header.Get("CF-IPCountry"))
-	if err != nil {
-		tx.Rollback()
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
-		eh.Resp500(c)
-		return
-	}
-
-	_, err = tx.Exec("INSERT INTO `ap_stats`(id, username, ranked_score_std, playcount_std, total_score_std, country) VALUES (?, ?, 0, 0, 0, ?);", userId, username, c.Request.Header.Get("CF-IPCountry"))
-	if err != nil {
-		tx.Rollback()
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
-		eh.Resp500(c)
-		return
-	}
-
 	for _, mode := range []int{0, 1, 2, 3, 4, 5, 6, 8} {
 		_, err = tx.Exec("INSERT INTO `user_stats` (user_id, mode) VALUES (?, ?);", userId, mode)
 		if err != nil {
