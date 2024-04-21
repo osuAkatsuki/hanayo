@@ -98,7 +98,6 @@ func SetCountry(c *gin.Context, userID int) error {
 	if country == "" || len(country) != 2 {
 		return nil
 	}
-	services.DB.Exec("UPDATE users_stats SET country = ? WHERE id = ?", country, userID)
 	services.DB.Exec("UPDATE users SET country = ? WHERE id = ?", country, userID)
 	return nil
 }

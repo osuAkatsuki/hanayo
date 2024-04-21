@@ -52,8 +52,6 @@ func NameChangeSubmitHandler(c *gin.Context) {
 		}
 
 		// update username
-		services.DB.Exec("UPDATE users_stats SET username = ? WHERE id = ?", username, sessions.GetContext(c).User.ID)
-		services.DB.Exec("UPDATE rx_stats SET username = ? WHERE id = ?", username, sessions.GetContext(c).User.ID)
 		services.DB.Exec("UPDATE users SET username = ?, username_safe = ? WHERE id = ?", username, uu.SafeUsername(username), sessions.GetContext(c).User.ID)
 
 		logErr := uu.AddToUserNotes(fmt.Sprintf("Username change (self): %s -> %s", sessions.GetContext(c).User.Username, username), sessions.GetContext(c).User.ID)
