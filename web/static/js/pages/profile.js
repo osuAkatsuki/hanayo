@@ -146,7 +146,7 @@ function applyPeakRankLabel() {
   if (preferRelax == 1) {
     modeVal += 4;
   } else if (preferRelax == 2) {
-    modeVal += 7;
+    modeVal += 8;
   }
 
   var rankLabel = $(`#global-rank-${preferRelax}-${favouriteMode}`);
@@ -202,9 +202,9 @@ function getCountryRank(idx) {
 
 function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
   var prefix = graphType == "rank" ? "#" : "";
-  return ` 
-      <div 
-      class="apexcharts-tooltip-title" 
+  return `
+      <div
+      class="apexcharts-tooltip-title"
       style="font-family: &quot;Rubik&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px;"
       >${window.graphLabels[dataPointIndex]}</div>
       <div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">
@@ -244,7 +244,7 @@ function initialiseChartGraph(graphType, udpate) {
   if (preferRelax == 1) {
     modeVal += 4;
   } else if (preferRelax == 2) {
-    modeVal += 7;
+    modeVal += 8;
   }
 
   window.graphPoints = [];
