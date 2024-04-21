@@ -81,7 +81,7 @@ func LogIP(c *gin.Context, user int) error {
 	return err
 }
 
-func SetCountry(c *gin.Context, user int) error {
+func SetCountry(c *gin.Context, userID int) error {
 	settings := settingsState.GetSettings()
 	raw, err := http.Get(settings.IP_LOOKUP_URL + "/" + su.ClientIP(c) + "/country")
 	if err != nil {
@@ -98,7 +98,8 @@ func SetCountry(c *gin.Context, user int) error {
 	if country == "" || len(country) != 2 {
 		return nil
 	}
-	services.DB.Exec("UPDATE users_stats SET country = ? WHERE id = ?", country, user)
+	services.DB.Exec("UPDATE users_stats SET country = ? WHERE id = ?", country, userID)
+	services.DB.Exec("UPDATE users SET country = ? WHERE id = ?", country, userID)
 	return nil
 }
 

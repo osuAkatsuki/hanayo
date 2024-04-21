@@ -191,6 +191,17 @@ func RegisterSubmitHandler(c *gin.Context) {
 		return
 	}
 
+	for _, mode := range []int{1, 2, 3, 4, 5, 6, 8} {
+		_, err = tx.Exec("INSERT INTO `user_stats` (id, mode) VALUES (?, ?);", userId, mode)
+		if err != nil {
+			tx.Rollback()
+			c.Error(err)
+			slog.ErrorContext(c, err.Error())
+			eh.Resp500(c)
+			return
+		}
+	}
+
 	tx.Commit()
 
 	/* Beta Keys
