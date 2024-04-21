@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./built",
+    "allowJs": true,
+    "target": "es6",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+  },
+  "include": [
+    "./web/static/js/**/*",
+    "web/static/js/dist.min.js",
+    "web/static/js/semantic.min.js"
+  ]
+}

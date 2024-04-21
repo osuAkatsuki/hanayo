@@ -1,20 +1,24 @@
+import ApexCharts from 'apexcharts'
+import i18next from 'i18next'
+import twemoji from 'twemoji';
+
 // code that is executed on every user profile
 $(document).ready(function () {
   var wl = window.location;
   var newPathName = wl.pathname;
   // userID is defined in profile.html
-  if (newPathName.split("/")[2] != userID) {
-    newPathName = "/u/" + userID;
+  if (newPathName.split("/")[2] != window.userID) {
+    newPathName = "/u/" + window.userID;
   }
 
   let newSearch = wl.search;
 
   if (wl.search.indexOf("mode=") === -1) {
-    newSearch = "?mode=" + favouriteMode;
+    newSearch = "?mode=" + window.favouriteMode;
   }
 
   if (wl.search.indexOf("rx=") === -1 || wl.search.indexOf("?rx=") != -1)
-    newSearch += "&rx=" + preferRelax;
+    newSearch += "&rx=" + window.preferRelax;
 
   if (wl.search != newSearch)
     window.history.replaceState(
@@ -30,42 +34,42 @@ $(document).ready(function () {
     );
 
   setDefaultScoreTable();
-  toggleModeAvailability(favouriteMode, preferRelax);
+  toggleModeAvailability(window.favouriteMode, window.preferRelax);
   applyPeakRankLabel();
 
   $("#rx-menu>.simple-banner-swtich").on("click", function (e) {
     e.preventDefault();
     if ($(this).hasClass("active")) return;
 
-    preferRelax = $(this).data("rx");
-    toggleModeAvailability(favouriteMode, preferRelax);
+    window.preferRelax = $(this).data("rx");
+    toggleModeAvailability(window.favouriteMode, window.preferRelax);
     $("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr(
       "hidden",
       ""
     );
     $(
       "[data-mode=" +
-        favouriteMode +
+        window.favouriteMode +
         "][data-rx=" +
-        preferRelax +
+        window.preferRelax +
         "]:not(.simple-banner-swtich)"
     ).removeAttr("hidden");
     $("#rx-menu>.active.simple-banner-swtich").removeClass("active");
     var needsLoad = $(
       "#scores-zone>[data-mode=" +
-        favouriteMode +
+        window.favouriteMode +
         "][data-loaded=0][data-rx=" +
-        preferRelax +
+        window.preferRelax +
         "]"
     );
-    if (needsLoad.length > 0) initialiseScores(needsLoad, favouriteMode);
+    if (needsLoad.length > 0) initialiseScores(needsLoad, window.favouriteMode);
     $(this).addClass("active");
     window.history.replaceState(
       "",
       document.title,
-      `${wl.pathname}?mode=${favouriteMode}&rx=${preferRelax}${wl.hash}`
+      `${wl.pathname}?mode=${window.favouriteMode}&rx=${window.preferRelax}${wl.hash}`
     );
-    initialiseChartGraph(graphType, true);
+    initialiseChartGraph(window.graphType, true);
     applyPeakRankLabel();
   });
 
@@ -74,8 +78,8 @@ $(document).ready(function () {
     e.preventDefault();
     if ($(this).hasClass("active")) return;
     var m = $(this).data("mode");
-    favouriteMode = m;
-    toggleModeAvailability(m, preferRelax);
+    window.favouriteMode = m;
+    toggleModeAvailability(m, window.preferRelax);
     $("[data-mode]:not(.simple-banner-swtich):not([hidden])").attr(
       "hidden",
       ""
@@ -84,7 +88,7 @@ $(document).ready(function () {
       "[data-mode=" +
         m +
         "][data-rx=" +
-        preferRelax +
+        window.preferRelax +
         "]:not(.simple-banner-swtich)"
     ).removeAttr("hidden");
     $("#mode-menu>.active.simple-banner-swtich").removeClass("active");
@@ -92,7 +96,7 @@ $(document).ready(function () {
       "#scores-zone>[data-mode=" +
         m +
         "][data-loaded=0][data-rx=" +
-        preferRelax +
+        window.preferRelax +
         "]"
     );
     if (needsLoad.length > 0) initialiseScores(needsLoad, m);
@@ -100,26 +104,26 @@ $(document).ready(function () {
     window.history.replaceState(
       "",
       document.title,
-      `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`
+      `${wl.pathname}?mode=${m}&rx=${window.preferRelax}${wl.hash}`
     );
-    initialiseChartGraph(graphType, true);
+    initialiseChartGraph(window.graphType, true);
   });
   initialiseAchievements();
   initialiseUserpage();
   initialiseFriends();
-  initialiseChartGraph(graphType, false);
+  initialiseChartGraph(window.graphType, false);
   applyPeakRankLabel();
   // load scores page for the current favourite mode
   var i = function () {
     initialiseScores(
       $(
         "#scores-zone>div[data-mode=" +
-          favouriteMode +
+          window.favouriteMode +
           "][data-rx=" +
-          preferRelax +
+          window.preferRelax +
           "]"
       ),
-      favouriteMode
+      window.favouriteMode
     );
   };
   if (i18nLoaded) i();
@@ -129,7 +133,7 @@ $(document).ready(function () {
     });
 });
 
-function createLabels(dataLength) {
+function createLabels(dataLength: number) {
   var labels = ["Today"];
   for (var i = 1; i < dataLength; i++) {
     if (i == 1) {
@@ -142,22 +146,22 @@ function createLabels(dataLength) {
 }
 
 function applyPeakRankLabel() {
-  var modeVal = favouriteMode;
-  if (preferRelax == 1) {
+  let modeVal = window.favouriteMode;
+  if (window.preferRelax == 1) {
     modeVal += 4;
-  } else if (preferRelax == 2) {
+  } else if (window.preferRelax == 2) {
     modeVal += 8;
   }
 
-  var rankLabel = $(`#global-rank-${preferRelax}-${favouriteMode}`);
-  var rankRowText = $(`#global-row-rank-${preferRelax}-${favouriteMode}`);
-  var rankRow = $(`#global-row-${preferRelax}-${favouriteMode}`);
+  let rankLabel = $(`#global-rank-${window.preferRelax}-${window.favouriteMode}`);
+  let rankRowText = $(`#global-row-rank-${window.preferRelax}-${window.favouriteMode}`);
+  let rankRow = $(`#global-row-${window.preferRelax}-${window.favouriteMode}`);
   if (!rankLabel) return;
 
   api(
     "profile-history/peak-rank",
-    { user_id: userID, mode: modeVal },
-    (resp) => {
+    { user_id: window.userID, mode: modeVal },
+    (resp: { data: { rank: any; captured_at: string; }; }) => {
       if (!resp.data.rank) {
         return;
       }
@@ -179,17 +183,17 @@ function applyPeakRankLabel() {
   );
 }
 
-function changeChart(type) {
-  if (graphType == type) return;
+function changeChart(type: any) {
+  if (window.graphType == type) return;
 
-  $(`#chart-btn-${graphType}`).removeClass("active");
+  $(`#chart-btn-${window.graphType}`).removeClass("active");
   $(`#chart-btn-${type}`).addClass("active");
 
-  graphType = type;
+  window.graphType = type;
   initialiseChartGraph(type, true);
 }
 
-function getCountryRank(idx) {
+function getCountryRank(idx: string | number) {
   // country ranks are inconsistient because for now they are missing 1 day off
 
   var rank = window.countryRankPoints[idx];
@@ -201,23 +205,23 @@ function getCountryRank(idx) {
 }
 
 function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
-  var prefix = graphType == "rank" ? "#" : "";
+  var prefix = window.graphType == "rank" ? "#" : "";
   return `
       <div
       class="apexcharts-tooltip-title"
       style="font-family: &quot;Rubik&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px;"
       >${window.graphLabels[dataPointIndex]}</div>
       <div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">
-        <span class="apexcharts-tooltip-marker" style="background-color: ${graphColor};"></span>
+        <span class="apexcharts-tooltip-marker" style="background-color: ${window.graphColor};"></span>
         <div class="apexcharts-tooltip-text" style="font-family: Rubik, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px;">
           <div class="apexcharts-tooltip-y-group">
-            <span class="apexcharts-tooltip-text-y-label">${graphName}: </span>
+            <span class="apexcharts-tooltip-text-y-label">${window.graphName}: </span>
             <span class="apexcharts-tooltip-text-y-value">${prefix}${addCommas(
     series[seriesIndex][dataPointIndex]
   )}</span>
           </div>
           ${
-            graphType == "rank"
+            window.graphType == "rank"
               ? `<div class="apexcharts-tooltip-y-group">
             <span class="apexcharts-tooltip-text-y-label">Country Rank: </span>
             <span class="apexcharts-tooltip-text-y-value">#${getCountryRank(
@@ -239,11 +243,11 @@ function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
     `;
 }
 
-function initialiseChartGraph(graphType, udpate) {
-  var modeVal = favouriteMode;
-  if (preferRelax == 1) {
+function initialiseChartGraph(graphType: string, udpate: boolean) {
+  var modeVal = window.favouriteMode;
+  if (window.preferRelax == 1) {
     modeVal += 4;
-  } else if (preferRelax == 2) {
+  } else if (window.preferRelax == 2) {
     modeVal += 8;
   }
 
@@ -251,14 +255,17 @@ function initialiseChartGraph(graphType, udpate) {
   window.countryRankPoints = [];
   window.graphName = graphType == "pp" ? "Performance Points" : "Global Rank";
   window.graphColor = graphType == "pp" ? "#e03997" : "#2185d0";
-  var yaxisReverse = graphType == "pp" ? false : true;
+  let yaxisReverse = graphType == "pp" ? false : true;
 
   api(
     `profile-history/${graphType}`,
-    { user_id: userID, mode: modeVal },
-    (resp) => {
-      var chartCanvas = document.querySelector("#profile-history-graph");
-      var chartNotFound = document.querySelector("#profile-history-not-found");
+    { user_id: window.userID, mode: modeVal },
+    (resp: { status: string; data: { captures: any[]; }; }) => {
+      let chartCanvas: Element & {style: any} = document.querySelector("#profile-history-graph");
+      let chartNotFound: Element & {style: any} = document.querySelector("#profile-history-not-found");
+
+      // assert `style` attr is on the objects
+
 
       if (resp.status == "error") {
         chartNotFound.style.display = "block";
@@ -269,10 +276,10 @@ function initialiseChartGraph(graphType, udpate) {
       chartNotFound.style.display = "none";
       chartCanvas.style.display = "block";
       if (graphType === "rank") {
-        window.graphPoints = resp.data.captures.map((x) => x.overall);
-        window.countryRankPoints = resp.data.captures.map((x) => x.country);
+        window.graphPoints = resp.data.captures.map((x: { overall: any; }) => x.overall);
+        window.countryRankPoints = resp.data.captures.map((x: { country: any; }) => x.country);
       } else {
-        window.graphPoints = resp.data.captures.map((x) => x.pp);
+        window.graphPoints = resp.data.captures.map((x: { pp: any; }) => x.pp);
       }
 
       var minGraphOffset = Math.min(...window.graphPoints);
@@ -283,7 +290,7 @@ function initialiseChartGraph(graphType, udpate) {
       var options = {
         series: [
           {
-            name: graphName,
+            name: window.graphName,
             data: window.graphPoints,
           },
         ],
@@ -319,7 +326,7 @@ function initialiseChartGraph(graphType, udpate) {
           curve: "smooth",
           width: 4,
         },
-        colors: [graphColor],
+        colors: [window.graphColor],
         theme: {
           mode: "dark",
         },
@@ -347,7 +354,7 @@ function initialiseChartGraph(graphType, udpate) {
         },
         markers: {
           size: 0,
-          fillColor: graphColor,
+          fillColor: window.graphColor,
           strokeWidth: 0,
           hover: { size: 7 },
         },
@@ -369,7 +376,7 @@ function initialiseChartGraph(graphType, udpate) {
 }
 
 function initialiseUserpage() {
-  api("users/userpage", { id: userID }, (resp) => {
+  api("users/userpage", { id: window.userID }, (resp: { userpage_compiled: any; }) => {
     var userpage = $("#userpage-content");
 
     userpage.css("display", "");
@@ -386,9 +393,9 @@ function initialiseUserpage() {
 
 function initialiseAchievements() {
   api(
-    "users/achievements" + (currentUserID == userID ? "?all" : ""),
-    { id: userID },
-    function (resp) {
+    "users/achievements" + (window.currentUserID == window.userID ? "?all" : ""),
+    { id: window.userID },
+    function (resp: { achievements: any; }) {
       var achievements = resp.achievements;
       // no achievements -- show default message
       if (achievements.length === 0) {
@@ -401,7 +408,7 @@ function initialiseAchievements() {
         return;
       }
 
-      var displayAchievements = function (limit, achievedOnly) {
+      var displayAchievements = function (limit: number, achievedOnly: boolean) {
         var $ach = $("#achievements").empty();
         limit = limit < 0 ? achievements.length : limit;
         var shown = 0;
@@ -460,16 +467,16 @@ function initialiseAchievements() {
 function initialiseFriends() {
   var b = $("#add-friend-button");
   if (b.length == 0) return;
-  api("friends/with", { id: userID }, setFriendOnResponse);
+  api("friends/with", { id: window.userID }, setFriendOnResponse);
   b.click(friendClick);
 }
-function setFriendOnResponse(r) {
+function setFriendOnResponse(r: { friend: any; mutual: any; }) {
   var x = 0;
   if (r.friend) x++;
   if (r.mutual) x++;
   setFriend(x);
 }
-function setFriend(i) {
+function setFriend(i: number) {
   var b = $("#add-friend-button");
   b.removeClass("loading green blue red");
   switch (i) {
@@ -496,14 +503,14 @@ function friendClick() {
   if (t.hasClass("loading")) return;
   t.addClass("loading");
   api(
-    "friends/" + (t.attr("data-friends") == 1 ? "del" : "add"),
-    { user: userID },
+    "friends/" + (t.attr("data-friends") == '1' ? "del" : "add"),
+    { user: window.userID },
     setFriendOnResponse,
     true
   );
 }
 
-var defaultScoreTable;
+var defaultScoreTable: JQuery<HTMLElement>;
 function setDefaultScoreTable() {
   defaultScoreTable = $("<div class='score-data' />")
     .append($("<div class='scores' />"))
@@ -516,10 +523,10 @@ function setDefaultScoreTable() {
     );
 }
 
-i18next.on("loaded", function (loaded) {
+i18next.on("loaded", function (loaded: any) {
   setDefaultScoreTable();
 });
-function initialiseScores(el, mode) {
+function initialiseScores(el: JQuery<HTMLElement>, mode: any) {
   el.attr("data-loaded", "1");
   var pinned = defaultScoreTable.clone(true);
   var best = defaultScoreTable.clone(true);
@@ -529,7 +536,7 @@ function initialiseScores(el, mode) {
   var first = defaultScoreTable.clone(true);
   var recent = defaultScoreTable.clone(true);
 
-  let rxAsString = preferRelax != 0 ? (preferRelax == 1 ? "r" : "a") : "v";
+  let rxAsString = window.preferRelax != 0 ? (window.preferRelax == 1 ? "r" : "a") : "v";
   let firstSuffix = `${rxAsString}${mode}`;
 
   pinned.attr("data-type", "pinned");
@@ -627,33 +634,33 @@ const scoreNotFoundElement = `<div class="map-single" id="not-found-container">
 </div>
 </div>`;
 
-function loadMostPlayedBeatmaps(type, mode) {
+function loadMostPlayedBeatmaps(type: string, mode: string) {
   var mostPlayedTable = $(
     "#scores-zone div[data-mode=" +
       mode +
       "][data-rx=" +
-      preferRelax +
+      window.preferRelax +
       "] div[data-type=" +
       type +
       "] .scores"
   );
 
-  var page;
-  if (preferRelax == 1) page = ++rPage[mode][type];
-  else if (preferRelax == 2) page = ++aPage[mode][type];
+  var page: number;
+  if (window.preferRelax == 1) page = ++rPage[mode][type];
+  else if (window.preferRelax == 2) page = ++aPage[mode][type];
   else page = ++currentPage[mode][type];
 
   api(
     "users/most_played",
-    { id: userID, mode: mode, p: page, l: 5, rx: preferRelax },
-    function (resp) {
+    { id: window.userID, mode: mode, p: page, l: 5, rx: window.preferRelax },
+    function (resp: { most_played_beatmaps: any[]; }) {
       if (resp.most_played_beatmaps == null) {
         mostPlayedTable.html(scoreNotFoundElement);
-        disableLoadMoreButton(type, mode);
+        disableLoadMoreButton(type, mode, undefined);
         return;
       }
 
-      resp.most_played_beatmaps.forEach(function (el, idx) {
+      resp.most_played_beatmaps.forEach(function (el: { beatmap: { beatmapset_id: any; beatmap_id: any; song_name: any; }; playcount: any; }, idx: any) {
         mostPlayedTable.append(`
 			<div class="new map-single" style="cursor: auto">
 				<div class="map-content1">
@@ -694,12 +701,12 @@ function loadMostPlayedBeatmaps(type, mode) {
 }
 
 var scoreStore = {};
-function loadScoresPage(type, mode) {
+function loadScoresPage(type: string, mode: string) {
   var table = $(
     "#scores-zone div[data-mode=" +
       mode +
       "][data-rx=" +
-      preferRelax +
+      window.preferRelax +
       "] div[data-type=" +
       type +
       "] .scores"
@@ -710,9 +717,9 @@ function loadScoresPage(type, mode) {
     return loadMostPlayedBeatmaps(type, mode);
   }
 
-  var page;
-  if (preferRelax == 1) page = ++rPage[mode][type];
-  else if (preferRelax == 2) page = ++aPage[mode][type];
+  var page: number;
+  if (window.preferRelax == 1) page = ++rPage[mode][type];
+  else if (window.preferRelax == 2) page = ++aPage[mode][type];
   else page = ++currentPage[mode][type];
 
   api(
@@ -721,33 +728,33 @@ function loadScoresPage(type, mode) {
       mode: mode,
       p: page,
       l: 10,
-      rx: preferRelax,
-      id: userID,
-      uid: userID,
+      rx: window.preferRelax,
+      id: window.userID,
+      uid: window.userID,
       actual_id: window.actualID,
     },
-    function (r) {
+    function (r: { total: any; scores: any[]; }) {
       if (type === "first") {
         let rxAsString =
-          preferRelax != 0 ? (preferRelax == 1 ? "r" : "a") : "v";
+          window.preferRelax != 0 ? (window.preferRelax == 1 ? "r" : "a") : "v";
         let firstSuffix = `${rxAsString}${mode}`;
         $(`#first-${firstSuffix}`).text(`(${r.total} in total)`);
       }
 
       console.log(r, type);
       if (r.scores == null) {
-        disableLoadMoreButton(type, mode);
+        disableLoadMoreButton(type, mode, undefined);
         table.html(scoreNotFoundElement);
         return;
       } else {
         if (r.scores.length === 0) {
-          disableLoadMoreButton(type, mode);
+          disableLoadMoreButton(type, mode, undefined);
           table.html(scoreNotFoundElement);
           return;
         }
       }
 
-      r.scores.forEach(function (v, idx) {
+      r.scores.forEach(function (v: { id: number; completed: number; mods: any; accuracy: number; count_300: any; count_100: any; count_50: any; count_miss: any; beatmap: { beatmapset_id: any; song_name: any; }; score: any; max_combo: any; time: any; pp: number; pinned: any; }, idx: any) {
         scoreStore[v.id] = v;
 
         if (v.completed >= 2) {
@@ -810,13 +817,13 @@ function loadScoresPage(type, mode) {
               <div data-btns-score-id='${v.id}'>
                 ${downloadStar(v.id)}
                 ${
-                  userID == window.actualID && !v.pinned
-                    ? pinButton(v.id, preferRelax)
+                  window.userID == window.actualID && !v.pinned
+                    ? pinButton(v.id, window.preferRelax)
                     : ""
                 }
                 ${
-                  userID == window.actualID && v.pinned
-                    ? unpinButton(v.id, preferRelax)
+                  window.userID == window.actualID && v.pinned
+                    ? unpinButton(v.id, window.preferRelax)
                     : ""
                 }
               </div>
@@ -852,11 +859,8 @@ function loadScoresPage(type, mode) {
     }
   );
 }
-function refreshTable(type) {
-  loadScoresPage(type, mode);
-}
 
-function do_pin(table, score, mode) {
+function do_pin(table: JQuery<HTMLElement>, score: { id: number; completed: number; mods: any; accuracy: number; count_300: any; count_100: any; count_50: any; count_miss: any; beatmap: { beatmapset_id: any; song_name: any; }; score: any; max_combo: any; time: any; pp: number; }, mode: any) {
   scoreStore[score.id] = score;
   if (score.completed >= 2) {
     var scoreRank = getRank(
@@ -914,7 +918,7 @@ function do_pin(table, score, mode) {
 						</div>
 					</div>
 					${downloadStar(score.id)}
-					${userID == window.actualID ? unpinButton(score.id, preferRelax) : ""}
+					${window.userID == window.actualID ? unpinButton(score.id, window.preferRelax) : ""}
 					<div class="score-details_icon-block">
 						<i class="angle right icon"></i>
 					</div>
@@ -925,24 +929,24 @@ function do_pin(table, score, mode) {
 	`);
 }
 
-function pinSuccess(data) {
-  score = scoreStore[data["score_id"]];
+function pinSuccess(data: { [x: string]: any; }) {
+  let score = scoreStore[data["score_id"]];
 
   var table = $(
     "#scores-zone div[data-mode=" +
-      favouriteMode +
+      window.favouriteMode +
       "][data-rx=" +
-      preferRelax +
+      window.preferRelax +
       "] div[data-type=pinned] .scores"
   );
   if (!table) return showMessage("error", "Tell Flame to fix this");
 
-  notFoundElement = table.find("#not-found-container");
+  let notFoundElement = table.find("#not-found-container");
   if (table[0].childElementCount === 1 && notFoundElement) {
     notFoundElement.remove();
   }
 
-  do_pin(table, score, favouriteMode);
+  do_pin(table, score, window.favouriteMode);
   $(".new.timeago").timeago().removeClass("new");
   $(".new.downloadstar")
     .on("click", function (e) {
@@ -961,12 +965,12 @@ function pinSuccess(data) {
   showMessage("success", "Score pinned.");
 }
 
-function unpinSuccess(data) {
+function unpinSuccess(data: { [x: string]: any; }) {
   var table = $(
     "#scores-zone div[data-mode=" +
-      favouriteMode +
+      window.favouriteMode +
       "][data-rx=" +
-      preferRelax +
+      window.preferRelax +
       "] div[data-type=pinned] .scores"
   );
   var row = $(`div[data-pinnedscoreid=${data["score_id"]}]`);
@@ -978,7 +982,7 @@ function unpinSuccess(data) {
 
   var otherScores = $(`[data-btns-score-id="${data["score_id"]}"]`);
   otherScores.find(".unpinbutton").remove();
-  otherScores.append(pinButton(data["score_id"], preferRelax));
+  otherScores.append(pinButton(data["score_id"], window.preferRelax));
 
   $(".new.pinbutton")
     .on("click", function (e) {
@@ -989,35 +993,35 @@ function unpinSuccess(data) {
   showMessage("success", "Score unpinned.");
 }
 
-function pinScore(id, rx) {
+function pinScore(id: any, rx: any) {
   api(
     "users/scores/pin",
     { id: id, rx: rx },
     pinSuccess,
-    function (data) {},
+    function (data: any) {},
     true
   );
 }
 
-function unpinScore(id, rx) {
+function unpinScore(id: any, rx: any) {
   api(
     "users/scores/unpin",
     { id: id, rx: rx },
     unpinSuccess,
-    function (data) {},
+    function (data: any) {},
     true
   );
 }
 
-function pinButton(id, rx) {
+function pinButton(id: any, rx: any) {
   return `<a href="#" class="new pinbutton" title="Pin Score" onclick='pinScore("${id}", ${rx})'><i class='pin icon'></i></a>`;
 }
 
-function unpinButton(id, rx) {
+function unpinButton(id: any, rx: any) {
   return `<a href="#" class="new unpinbutton" title="Unpin Score" onclick='unpinScore("${id}", ${rx})'><i class='pin icon'></i></a>`;
 }
 
-function downloadStar(id) {
+function downloadStar(id: number) {
   return (
     "<a href='/web/replays/" +
     id +
@@ -1025,7 +1029,7 @@ function downloadStar(id) {
   );
 }
 
-function weightedPP(type, page, idx, pp) {
+function weightedPP(type: string, page: number, idx: number, pp: number) {
   if (type != "best" || pp == 0) return "";
   var perc = Math.pow(0.95, (page - 1) * 10 + idx);
   var wpp = pp * perc;
@@ -1037,12 +1041,12 @@ function weightedPP(type, page, idx, pp) {
     "pp)</i>"
   );
 }
-function disableLoadMoreButton(type, mode, enable) {
+function disableLoadMoreButton(type: string, mode: string, enable: boolean) {
   var button = $(
     "#scores-zone div[data-mode=" +
       mode +
       "][data-rx=" +
-      preferRelax +
+      window.preferRelax +
       "] div[data-type=" +
       type +
       "] .show-button"
@@ -1135,7 +1139,7 @@ var modeTranslations = [
   ["300s", "200s", "50s", "Max 300s", "100s", "Misses"],
 ];
 
-function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
+function getRank(gameMode: any, mods: number, acc: number, c300: number, c100: any, c50: number, cmiss: number) {
   var total = c300 + c100 + c50 + cmiss;
 
   // Hidden | Flashlight | FadeIn
@@ -1190,22 +1194,22 @@ function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
   }
 }
 
-function ppOrScore(pp, score) {
+function ppOrScore(pp: number, score: any) {
   if (pp != 0) return addCommas(Math.round(pp)) + "pp";
   return addCommas(score);
 }
 
-function beatmapLink(type, id) {
+function beatmapLink(type: string, id: string) {
   if (type == "s") return "<a href='/s/" + id + "'>" + id + "</a>";
   return "<a href='/b/" + id + "'>" + id + "</a>";
 }
 
-function toggleModeAvailability(mode, rx) {
-  for (i = 0; i <= 3; i++) {
+function toggleModeAvailability(mode: number, rx: number) {
+  for (let i = 0; i <= 3; i++) {
     $(`[data-mode='${i}']`).removeClass("disabled");
   }
 
-  for (i = 0; i <= 2; i++) {
+  for (let i = 0; i <= 2; i++) {
     $(`[data-rx='${i}']`).removeClass("disabled");
   }
 
