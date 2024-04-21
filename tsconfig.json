@@ -4,7 +4,7 @@
     "allowJs": true,
     "target": "es6",
     "moduleResolution": "nodenext",
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "include": [
     "./web/static/js/**/*",

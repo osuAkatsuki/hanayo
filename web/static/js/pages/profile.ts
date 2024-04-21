@@ -1,6 +1,6 @@
-import ApexCharts from 'apexcharts'
-import i18next from 'i18next'
-import twemoji from 'twemoji';
+import ApexCharts from "apexcharts";
+import i18next from "i18next";
+import twemoji from "twemoji";
 
 // code that is executed on every user profile
 $(document).ready(function () {
@@ -153,15 +153,19 @@ function applyPeakRankLabel() {
     modeVal += 8;
   }
 
-  let rankLabel = $(`#global-rank-${window.preferRelax}-${window.favouriteMode}`);
-  let rankRowText = $(`#global-row-rank-${window.preferRelax}-${window.favouriteMode}`);
+  let rankLabel = $(
+    `#global-rank-${window.preferRelax}-${window.favouriteMode}`
+  );
+  let rankRowText = $(
+    `#global-row-rank-${window.preferRelax}-${window.favouriteMode}`
+  );
   let rankRow = $(`#global-row-${window.preferRelax}-${window.favouriteMode}`);
   if (!rankLabel) return;
 
   api(
     "profile-history/peak-rank",
     { user_id: window.userID, mode: modeVal },
-    (resp: { data: { rank: any; captured_at: string; }; }) => {
+    (resp: { data: { rank: any; captured_at: string } }) => {
       if (!resp.data.rank) {
         return;
       }
@@ -212,10 +216,14 @@ function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
       style="font-family: &quot;Rubik&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px;"
       >${window.graphLabels[dataPointIndex]}</div>
       <div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">
-        <span class="apexcharts-tooltip-marker" style="background-color: ${window.graphColor};"></span>
+        <span class="apexcharts-tooltip-marker" style="background-color: ${
+          window.graphColor
+        };"></span>
         <div class="apexcharts-tooltip-text" style="font-family: Rubik, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px;">
           <div class="apexcharts-tooltip-y-group">
-            <span class="apexcharts-tooltip-text-y-label">${window.graphName}: </span>
+            <span class="apexcharts-tooltip-text-y-label">${
+              window.graphName
+            }: </span>
             <span class="apexcharts-tooltip-text-y-value">${prefix}${addCommas(
     series[seriesIndex][dataPointIndex]
   )}</span>
@@ -260,12 +268,15 @@ function initialiseChartGraph(graphType: string, udpate: boolean) {
   api(
     `profile-history/${graphType}`,
     { user_id: window.userID, mode: modeVal },
-    (resp: { status: string; data: { captures: any[]; }; }) => {
-      let chartCanvas: Element & {style: any} = document.querySelector("#profile-history-graph");
-      let chartNotFound: Element & {style: any} = document.querySelector("#profile-history-not-found");
+    (resp: { status: string; data: { captures: any[] } }) => {
+      let chartCanvas: Element & { style: any } = document.querySelector(
+        "#profile-history-graph"
+      );
+      let chartNotFound: Element & { style: any } = document.querySelector(
+        "#profile-history-not-found"
+      );
 
       // assert `style` attr is on the objects
-
 
       if (resp.status == "error") {
         chartNotFound.style.display = "block";
@@ -276,10 +287,14 @@ function initialiseChartGraph(graphType: string, udpate: boolean) {
       chartNotFound.style.display = "none";
       chartCanvas.style.display = "block";
       if (graphType === "rank") {
-        window.graphPoints = resp.data.captures.map((x: { overall: any; }) => x.overall);
-        window.countryRankPoints = resp.data.captures.map((x: { country: any; }) => x.country);
+        window.graphPoints = resp.data.captures.map(
+          (x: { overall: any }) => x.overall
+        );
+        window.countryRankPoints = resp.data.captures.map(
+          (x: { country: any }) => x.country
+        );
       } else {
-        window.graphPoints = resp.data.captures.map((x: { pp: any; }) => x.pp);
+        window.graphPoints = resp.data.captures.map((x: { pp: any }) => x.pp);
       }
 
       var minGraphOffset = Math.min(...window.graphPoints);
@@ -376,26 +391,31 @@ function initialiseChartGraph(graphType: string, udpate: boolean) {
 }
 
 function initialiseUserpage() {
-  api("users/userpage", { id: window.userID }, (resp: { userpage_compiled: any; }) => {
-    var userpage = $("#userpage-content");
+  api(
+    "users/userpage",
+    { id: window.userID },
+    (resp: { userpage_compiled: any }) => {
+      var userpage = $("#userpage-content");
 
-    userpage.css("display", "");
-    userpage.removeClass("loading");
+      userpage.css("display", "");
+      userpage.removeClass("loading");
 
-    if (!resp.userpage_compiled) {
-      userpage.html(`<h5>` + T("Nothing here. Yet.") + `</h5>`);
-      return;
+      if (!resp.userpage_compiled) {
+        userpage.html(`<h5>` + T("Nothing here. Yet.") + `</h5>`);
+        return;
+      }
+
+      userpage.html(twemoji.parse(resp.userpage_compiled));
     }
-
-    userpage.html(twemoji.parse(resp.userpage_compiled));
-  });
+  );
 }
 
 function initialiseAchievements() {
   api(
-    "users/achievements" + (window.currentUserID == window.userID ? "?all" : ""),
+    "users/achievements" +
+      (window.currentUserID == window.userID ? "?all" : ""),
     { id: window.userID },
-    function (resp: { achievements: any; }) {
+    function (resp: { achievements: any }) {
       var achievements = resp.achievements;
       // no achievements -- show default message
       if (achievements.length === 0) {
@@ -408,7 +428,10 @@ function initialiseAchievements() {
         return;
       }
 
-      var displayAchievements = function (limit: number, achievedOnly: boolean) {
+      var displayAchievements = function (
+        limit: number,
+        achievedOnly: boolean
+      ) {
         var $ach = $("#achievements").empty();
         limit = limit < 0 ? achievements.length : limit;
         var shown = 0;
@@ -470,7 +493,7 @@ function initialiseFriends() {
   api("friends/with", { id: window.userID }, setFriendOnResponse);
   b.click(friendClick);
 }
-function setFriendOnResponse(r: { friend: any; mutual: any; }) {
+function setFriendOnResponse(r: { friend: any; mutual: any }) {
   var x = 0;
   if (r.friend) x++;
   if (r.mutual) x++;
@@ -503,7 +526,7 @@ function friendClick() {
   if (t.hasClass("loading")) return;
   t.addClass("loading");
   api(
-    "friends/" + (t.attr("data-friends") == '1' ? "del" : "add"),
+    "friends/" + (t.attr("data-friends") == "1" ? "del" : "add"),
     { user: window.userID },
     setFriendOnResponse,
     true
@@ -536,7 +559,8 @@ function initialiseScores(el: JQuery<HTMLElement>, mode: any) {
   var first = defaultScoreTable.clone(true);
   var recent = defaultScoreTable.clone(true);
 
-  let rxAsString = window.preferRelax != 0 ? (window.preferRelax == 1 ? "r" : "a") : "v";
+  let rxAsString =
+    window.preferRelax != 0 ? (window.preferRelax == 1 ? "r" : "a") : "v";
   let firstSuffix = `${rxAsString}${mode}`;
 
   pinned.attr("data-type", "pinned");
@@ -653,14 +677,20 @@ function loadMostPlayedBeatmaps(type: string, mode: string) {
   api(
     "users/most_played",
     { id: window.userID, mode: mode, p: page, l: 5, rx: window.preferRelax },
-    function (resp: { most_played_beatmaps: any[]; }) {
+    function (resp: { most_played_beatmaps: any[] }) {
       if (resp.most_played_beatmaps == null) {
         mostPlayedTable.html(scoreNotFoundElement);
         disableLoadMoreButton(type, mode, undefined);
         return;
       }
 
-      resp.most_played_beatmaps.forEach(function (el: { beatmap: { beatmapset_id: any; beatmap_id: any; song_name: any; }; playcount: any; }, idx: any) {
+      resp.most_played_beatmaps.forEach(function (
+        el: {
+          beatmap: { beatmapset_id: any; beatmap_id: any; song_name: any };
+          playcount: any;
+        },
+        idx: any
+      ) {
         mostPlayedTable.append(`
 			<div class="new map-single" style="cursor: auto">
 				<div class="map-content1">
@@ -733,7 +763,7 @@ function loadScoresPage(type: string, mode: string) {
       uid: window.userID,
       actual_id: window.actualID,
     },
-    function (r: { total: any; scores: any[]; }) {
+    function (r: { total: any; scores: any[] }) {
       if (type === "first") {
         let rxAsString =
           window.preferRelax != 0 ? (window.preferRelax == 1 ? "r" : "a") : "v";
@@ -754,7 +784,25 @@ function loadScoresPage(type: string, mode: string) {
         }
       }
 
-      r.scores.forEach(function (v: { id: number; completed: number; mods: any; accuracy: number; count_300: any; count_100: any; count_50: any; count_miss: any; beatmap: { beatmapset_id: any; song_name: any; }; score: any; max_combo: any; time: any; pp: number; pinned: any; }, idx: any) {
+      r.scores.forEach(function (
+        v: {
+          id: number;
+          completed: number;
+          mods: any;
+          accuracy: number;
+          count_300: any;
+          count_100: any;
+          count_50: any;
+          count_miss: any;
+          beatmap: { beatmapset_id: any; song_name: any };
+          score: any;
+          max_combo: any;
+          time: any;
+          pp: number;
+          pinned: any;
+        },
+        idx: any
+      ) {
         scoreStore[v.id] = v;
 
         if (v.completed >= 2) {
@@ -774,15 +822,18 @@ function loadScoresPage(type: string, mode: string) {
         var dataPinned =
           type === "pinned" ? `data-pinnedscoreid="${v.id}"` : "";
         table.append(`
-      <div class="new map-single complete-${
-        v.completed
-      }" data-scoreid="${v.id}" ${dataPinned}>
+      <div class="new map-single complete-${v.completed}" data-scoreid="${
+          v.id
+        }" ${dataPinned}>
         <div class="map-content1">
           <div class="map-data">
             <div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
               v.beatmap.beatmapset_id
             }/covers/cover@2x.jpg); background-size: cover;">
-              <div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
+              <div class="map-grade rank-${scoreRank}">${scoreRank.replace(
+          "HD",
+          ""
+        )}</div>
             </div>
             <div class="map-title-block">
               <div class="map-title"><a class="beatmap-link">
@@ -790,9 +841,9 @@ function loadScoresPage(type: string, mode: string) {
                 </a>
               </div>
               <div class="play-stats">
-                ${addCommas(
-                  v.score
-                )} / ${addCommas(v.max_combo)}x / <b>${getScoreMods(v.mods, true)}</b>
+                ${addCommas(v.score)} / ${addCommas(
+          v.max_combo
+        )}x / <b>${getScoreMods(v.mods, true)}</b>
               </div>
               <div class="map-date">
                 <time class="new timeago" datetime="${v.time}">
@@ -860,7 +911,25 @@ function loadScoresPage(type: string, mode: string) {
   );
 }
 
-function do_pin(table: JQuery<HTMLElement>, score: { id: number; completed: number; mods: any; accuracy: number; count_300: any; count_100: any; count_50: any; count_miss: any; beatmap: { beatmapset_id: any; song_name: any; }; score: any; max_combo: any; time: any; pp: number; }, mode: any) {
+function do_pin(
+  table: JQuery<HTMLElement>,
+  score: {
+    id: number;
+    completed: number;
+    mods: any;
+    accuracy: number;
+    count_300: any;
+    count_100: any;
+    count_50: any;
+    count_miss: any;
+    beatmap: { beatmapset_id: any; song_name: any };
+    score: any;
+    max_combo: any;
+    time: any;
+    pp: number;
+  },
+  mode: any
+) {
   scoreStore[score.id] = score;
   if (score.completed >= 2) {
     var scoreRank = getRank(
@@ -918,7 +987,11 @@ function do_pin(table: JQuery<HTMLElement>, score: { id: number; completed: numb
 						</div>
 					</div>
 					${downloadStar(score.id)}
-					${window.userID == window.actualID ? unpinButton(score.id, window.preferRelax) : ""}
+					${
+            window.userID == window.actualID
+              ? unpinButton(score.id, window.preferRelax)
+              : ""
+          }
 					<div class="score-details_icon-block">
 						<i class="angle right icon"></i>
 					</div>
@@ -929,7 +1002,7 @@ function do_pin(table: JQuery<HTMLElement>, score: { id: number; completed: numb
 	`);
 }
 
-function pinSuccess(data: { [x: string]: any; }) {
+function pinSuccess(data: { [x: string]: any }) {
   let score = scoreStore[data["score_id"]];
 
   var table = $(
@@ -965,7 +1038,7 @@ function pinSuccess(data: { [x: string]: any; }) {
   showMessage("success", "Score pinned.");
 }
 
-function unpinSuccess(data: { [x: string]: any; }) {
+function unpinSuccess(data: { [x: string]: any }) {
   var table = $(
     "#scores-zone div[data-mode=" +
       window.favouriteMode +
@@ -1139,7 +1212,15 @@ var modeTranslations = [
   ["300s", "200s", "50s", "Max 300s", "100s", "Misses"],
 ];
 
-function getRank(gameMode: any, mods: number, acc: number, c300: number, c100: any, c50: number, cmiss: number) {
+function getRank(
+  gameMode: any,
+  mods: number,
+  acc: number,
+  c300: number,
+  c100: any,
+  c50: number,
+  cmiss: number
+) {
   var total = c300 + c100 + c50 + cmiss;
 
   // Hidden | Flashlight | FadeIn
