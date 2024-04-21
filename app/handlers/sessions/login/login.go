@@ -55,11 +55,10 @@ func LoginSubmitHandler(c *gin.Context) {
 	}
 	err := services.DB.QueryRow(`
 	SELECT
-		u.id, u.password_md5,
-		u.username, s.country, u.privileges
-	FROM users u
-	LEFT JOIN users_stats s ON s.id = u.id
-	WHERE u.`+param+` = ? LIMIT 1`, strings.TrimSpace(u)).Scan(
+		id, password_md5,
+		username, country, privileges
+	FROM users
+	WHERE `+param+` = ?`, strings.TrimSpace(u)).Scan(
 		&data.ID, &data.Password,
 		&data.Username,
 		&data.Country, &data.pRaw,
