@@ -822,18 +822,15 @@ function loadScoresPage(type: string, mode: string) {
         var dataPinned =
           type === "pinned" ? `data-pinnedscoreid="${v.id}"` : "";
         table.append(`
-      <div class="new map-single complete-${v.completed}" data-scoreid="${
-          v.id
-        }" ${dataPinned}>
+      <div class="new map-single complete-${
+        v.completed
+      }" data-scoreid="${v.id}" ${dataPinned}>
         <div class="map-content1">
           <div class="map-data">
             <div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
               v.beatmap.beatmapset_id
             }/covers/cover@2x.jpg); background-size: cover;">
-              <div class="map-grade rank-${scoreRank}">${scoreRank.replace(
-          "HD",
-          ""
-        )}</div>
+              <div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
             </div>
             <div class="map-title-block">
               <div class="map-title"><a class="beatmap-link">
@@ -841,9 +838,9 @@ function loadScoresPage(type: string, mode: string) {
                 </a>
               </div>
               <div class="play-stats">
-                ${addCommas(v.score)} / ${addCommas(
-          v.max_combo
-        )}x / <b>${getScoreMods(v.mods, true)}</b>
+                ${addCommas(
+                  v.score
+                )} / ${addCommas(v.max_combo)}x / <b>${getScoreMods(v.mods, true)}</b>
               </div>
               <div class="map-date">
                 <time class="new timeago" datetime="${v.time}">
