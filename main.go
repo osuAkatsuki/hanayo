@@ -266,7 +266,3 @@ func generateEngine() *gin.Engine {
 
 	return r
 }
-
-const alwaysRespondText = `Ooops! Looks like something went really wrong while trying to process your request.
-Perhaps report this to a Akatsuki developer?
-Retrying doing again what you were trying to do might work, too.`

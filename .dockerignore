@@ -6,7 +6,6 @@ static/profbackgrounds/*
 web/static/images/profbackgrounds/*
 static/avatars/*
 !static/profbackgrounds/.keep
-semantic/gulpfile.tmp.*.js
 /_
 static/oauth-apps/*
 static/cmyui/*
