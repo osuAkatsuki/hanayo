@@ -21,6 +21,7 @@ var
   fs        = require('fs'),
   path      = require('path'),
   git       = require('gulp-git'),
+  githubAPI = require('github'),
   mkdirp    = require('mkdirp'),
 
   // admin files
@@ -52,8 +53,6 @@ module.exports = function(callback) {
     console.error('Must add oauth token for GitHub in tasks/config/admin/oauth.js');
     return;
   }
-
-  console.info('Init components');
 
   // Do Git commands synchronously per component, to avoid issues
   stepRepo = function() {
@@ -150,8 +149,7 @@ module.exports = function(callback) {
       // avoid rate throttling
       global.clearTimeout(timer);
       timer = global.setTimeout(function() {
-        console.info('Stepping to next repo');
-        stepRepo();
+        stepRepo()
       }, 0);
     }
 
@@ -167,5 +165,6 @@ module.exports = function(callback) {
   };
 
   stepRepo();
+
 
 };

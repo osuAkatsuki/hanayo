@@ -8,23 +8,18 @@
   * Commits changes from create components to GitHub and Tags
 
 */
-let
-  gulp = require('gulp'),
-  {series, parallel} = gulp,
 
-  updateComponents    = require('../admin/components/update'),
-  updateDistributions = require('../admin/distributions/update'),
-
-  publish
+var
+  runSequence = require('run-sequence')
 ;
 
 /* Release All */
-publish = series(
-  updateDistributions, // commit less/css versions to github
-  updateComponents // commit components to github
-);
+module.exports = function(callback) {
 
-/* Export with Metadata */
-publish.displayName = 'publish';
-publish.description = 'Publish new versions of SUI across all repos';
-module.exports = publish;
+  runSequence(
+    'update distributions', // commit less/css versions to github
+    'update components', // commit components to github
+    callback
+  );
+
+};

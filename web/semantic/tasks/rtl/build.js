@@ -39,15 +39,13 @@ var
   banner       = tasks.banner,
   comments     = tasks.regExp.comments,
   log          = tasks.log,
-  settings     = tasks.settings,
-
-  buildRTL
+  settings     = tasks.settings
 ;
 
 // add internal tasks (concat release)
 require('../collections/internal')(gulp);
 
-buildRTL = function(callback) {
+module.exports = function(callback) {
 
   var
     stream,
@@ -132,8 +130,3 @@ buildRTL = function(callback) {
   ;
 
 };
-
-/* Export with Metadata */
-buildRTL.displayName = 'build-rtl';
-buildRTL.description = 'Build files as RTL';
-module.exports = buildRTL;

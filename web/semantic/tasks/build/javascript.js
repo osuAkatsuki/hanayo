@@ -2,7 +2,7 @@
           Build Task
 *******************************/
 
-let
+var
   gulp         = require('gulp'),
 
   // node dependencies
@@ -33,19 +33,15 @@ let
   banner       = tasks.banner,
   comments     = tasks.regExp.comments,
   log          = tasks.log,
-  settings     = tasks.settings,
-
-  {series, parallel} = gulp,
-
-  buildJavascript
+  settings     = tasks.settings
 ;
 
 // add internal tasks (concat release)
 require('../collections/internal')(gulp);
 
-buildJavascript = function(callback) {
+module.exports = function(callback) {
 
-  let
+  var
     stream,
     compressedStream,
     uncompressedStream
@@ -59,7 +55,7 @@ buildJavascript = function(callback) {
   }
 
   // copy source javascript
-  return gulp.src(source.definitions + '/**/' + globs.components + '.js')
+  gulp.src(source.definitions + '/**/' + globs.components + '.js')
     .pipe(plumber())
     .pipe(flatten())
     .pipe(replace(comments.license.in, comments.license.out))
@@ -79,8 +75,3 @@ buildJavascript = function(callback) {
   ;
 
 };
-
-/* Export with Metadata */
-buildJavascript.displayName = 'build-javascript';
-buildJavascript.description = 'Builds all javascript from source';
-module.exports = series(buildJavascript);

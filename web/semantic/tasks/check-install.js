@@ -7,26 +7,22 @@ var
   gulp         = require('gulp'),
   fs           = require('fs'),
   console      = require('better-console'),
-  install      = require('./config/project/install'),
-
-  checkInstall
+  install      = require('./config/project/install')
 ;
 
 // export task
-checkInstall = function() {
+module.exports = function() {
 
-  if( !install.isSetup() ) {
-    console.log('Starting install...');
-    gulp.start('install');
-    return;
-  }
-  else {
-    gulp.start('watch');
-  }
+  setTimeout(function() {
+    if( !install.isSetup() ) {
+      console.log('Starting install...');
+      gulp.start('install');
+      return;
+    }
+    else {
+      gulp.start('watch');
+    }
+  }, 50); // Delay to allow console.clear to remove messages from check event
+
 
 };
-
-/* Export with Metadata */
-checkInstall.displayName = 'check-install';
-checkInstall.description = 'Checks if SUI needs to install before build/watch';
-module.exports = checkInstall;

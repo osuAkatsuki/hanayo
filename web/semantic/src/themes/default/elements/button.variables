@@ -162,7 +162,6 @@
 
 /* Icon */
 @iconButtonOpacity: 0.9;
-@loadingIconDuration: 2s;
 
 /* Labeled */
 @labeledLabelFontSize: @medium;

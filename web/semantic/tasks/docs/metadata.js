@@ -3,14 +3,14 @@
            Summarize Docs
 *******************************/
 
-let
+var
   // node dependencies
   console      = require('better-console'),
   fs           = require('fs'),
   YAML         = require('yamljs')
 ;
 
-let data = {};
+var data = {};
 
 /**
  * Test for prefix in string.
@@ -20,7 +20,7 @@ let data = {};
  */
 function startsWith(str, prefix) {
   return str.indexOf(prefix) === 0;
-}
+};
 
 function inArray(needle, haystack) {
   var length = haystack.length;
@@ -48,7 +48,7 @@ function parser(file, callback) {
 
   try {
 
-    let
+    var
       /** @type {string} */
       text     = String(file.contents.toString('utf8')),
       lines    = text.split('\n'),
@@ -67,7 +67,7 @@ function parser(file, callback) {
 
     filename = filename.substring(position + key.length + 1, filename.length);
 
-    let
+    var
       lineCount = lines.length,
       active    = false,
       yaml      = [],

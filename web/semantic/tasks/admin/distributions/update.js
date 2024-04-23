@@ -12,7 +12,7 @@
 
 */
 
-let
+var
   gulp           = require('gulp'),
 
   // node dependencies
@@ -20,6 +20,7 @@ let
   fs             = require('fs'),
   path           = require('path'),
   git            = require('gulp-git'),
+  githubAPI      = require('github'),
   requireDotFile = require('require-dot-file'),
 
   // admin files
@@ -39,7 +40,7 @@ let
 
 module.exports = function(callback) {
 
-  let
+  var
     index = -1,
     total = release.distributions.length,
     timer,
@@ -61,7 +62,7 @@ module.exports = function(callback) {
       return;
     }
 
-    let
+    var
       distribution         = release.distributions[index],
       outputDirectory      = path.resolve(path.join(release.outputRoot, distribution.toLowerCase() )),
       repoName             = release.distRepoRoot + distribution,
@@ -141,29 +142,18 @@ module.exports = function(callback) {
     function getSHA() {
       git.exec(versionOptions, function(error, version) {
         version = version.trim();
-        try {
-          createRelease(version);
-        } catch(e) {
-          console.error('Failed to create release, most likely this release already exists');
-        }
+        createRelease(version);
       });
     }
 
     // create release on GitHub.com
-    async function createRelease(version) {
+    function createRelease(version) {
       if(version) {
         releaseOptions.target_commitish = version;
       }
-      console.info('-----------------------------');
-      console.info(releaseOptions);
-      console.info('-----------------------------');
-      try {
-        await github.repos.createRelease(releaseOptions)
-      }
-      catch(e) {
-        console.error(`Release creation failed. Most likely already released "${releaseOptions.tag_name}"`);
-      };
-      nextRepo();
+      github.repos.createRelease(releaseOptions, function() {
+        nextRepo();
+      });
     }
 
     // Steps to next repository
@@ -171,10 +161,7 @@ module.exports = function(callback) {
       console.log('Sleeping for 1 second...');
       // avoid rate throttling
       global.clearTimeout(timer);
-      timer = global.setTimeout(function() {
-        console.log('Sleeping complete');
-        stepRepo();
-      }, 100);
+      timer = global.setTimeout(stepRepo, 100);
     }
 
 
