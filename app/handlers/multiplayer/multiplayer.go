@@ -103,5 +103,5 @@ func MultiplayerHistoryHandler(c *gin.Context) {
 	}
 
 	data.TitleBar = lu.T(c, "Matches")
-	data.Scripts = append(data.Scripts, "/static/js/pages/multiplayer.js")
+	data.Scripts = append(data.Scripts, "/static/js/pages/multiplayer.min.js")
 }

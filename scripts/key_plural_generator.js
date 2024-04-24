@@ -1,7 +1,7 @@
 var parser = require("gettext-parser");
 var fs = require("fs");
 
-fs.readFile("data/js-locales/templates.pot", "utf-8", (err, data) => {
+fs.readFile("locale/js-locales/templates.po.example", "utf-8", (err, data) => {
   if (err) throw err;
   var tpl = parser.po.parse(data, "utf-8");
   var plurals = {};
@@ -16,7 +16,7 @@ fs.readFile("data/js-locales/templates.pot", "utf-8", (err, data) => {
   });
 
   fs.writeFile(
-    "static/key_plural.js",
+    "web/src/js/key_plural.js",
     "var keyPlurals = " + JSON.stringify(plurals) + ";",
     (err) => {
       if (err) throw err;

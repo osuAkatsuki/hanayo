@@ -60,5 +60,5 @@ func ClanPageHandler(c *gin.Context) {
 
 	data.TitleBar = lu.T(c, "%s's Clan Page", clanName)
 	data.DisableHH = true
-	data.Scripts = append(data.Scripts, "/static/js/pages/clan.js")
+	data.Scripts = append(data.Scripts, "/static/js/pages/clan.min.js")
 }
