@@ -862,11 +862,6 @@ function api(endpoint, data, success, failure, post) {
     data: post ? JSON.stringify(data) : data,
     contentType: post ? "application/json; charset=utf-8" : "",
     success: function (data) {
-      if (data.status !== undefined && data.status == "error") {
-        console.warn(data);
-        showMessage("error", errorMessage);
-      }
-
       if (data.code !== undefined && data.code >= 500) {
         console.warn(data);
         showMessage("error", errorMessage);
