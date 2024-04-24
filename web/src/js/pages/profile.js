@@ -1199,32 +1199,3 @@ function beatmapLink(type, id) {
   if (type == "s") return "<a href='/s/" + id + "'>" + id + "</a>";
   return "<a href='/b/" + id + "'>" + id + "</a>";
 }
-
-function toggleModeAvailability(mode, rx) {
-  for (i = 0; i <= 3; i++) {
-    $(`[data-mode='${i}']`).removeClass("disabled");
-  }
-
-  for (i = 0; i <= 2; i++) {
-    $(`[data-rx='${i}']`).removeClass("disabled");
-  }
-
-  if (rx == 1) {
-    // relax does not have mania
-    $("[data-mode='3']").addClass("disabled");
-  } else if (rx == 2) {
-    // autopilot does not have taiko, catch, or mania
-    $("[data-mode='1']").addClass("disabled");
-    $("[data-mode='2']").addClass("disabled");
-    $("[data-mode='3']").addClass("disabled");
-  }
-
-  if (mode == 1 || mode == 2) {
-    // taiko or catch does not have autopilot
-    $("[data-rx='2']").addClass("disabled");
-  } else if (mode == 3) {
-    // mania does not have relax or autopilot
-    $("[data-rx='1']").addClass("disabled");
-    $("[data-rx='2']").addClass("disabled");
-  }
-}
