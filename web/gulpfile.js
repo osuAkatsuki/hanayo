@@ -20,15 +20,15 @@ var paths = {
   },
   dist: {
     src: [
-      // TODO: come back sort this out
       // TODO: add src for semantic-ui
       "node_modules/jquery/dist/jquery.min.js",
       "node_modules/timeago/jquery.timeago.js",
-      "src/js/semantic.min.js",
       "node_modules/i18next/i18next.min.js",
       "node_modules/i18next-xhr-backend/i18nextXHRBackend.min.js",
-      "src/js/akatsuki_src.js",
+      "src/js/semantic.min.js",
       "src/js/tablesort.js",
+      "src/js/key_plural.js",
+      "src/js/akatsuki_src.js",
     ],
     dest: "static/js/",
   },
