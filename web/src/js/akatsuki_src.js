@@ -23,6 +23,52 @@ var singlePageSnippets = {
   "/clans": function () {
     page = 0 === page ? 1 : page;
 
+    function buildClanPPItem(v, idx) {
+      return $("<tr class='l-clan' />").append(
+        $("<td />").text("#" + (50 * (page - 1) + idx)),
+        $("<td />").html(
+          "<a href='/c/" +
+            v.id +
+            "?mode=" +
+            favouriteMode +
+            "&rx=" +
+            rx +
+            "' title='View clan'>" +
+            // TODO: uncomment it once we have the tag in the API response
+            // escapeHTML(`[${v.tag}] ${v.name}`) +
+            escapeHTML(v.name) +
+            "</a>"
+        ),
+        $("<td class='center aligned' />").html(
+          scoreOrPP(v.chosen_mode.ranked_score, v.chosen_mode.pp)
+        ),
+        $("<td class='center aligned' />").text(
+          v.chosen_mode.accuracy.toFixed(2) + "%"
+        ),
+        $("<td class='center aligned' />").html(
+          addCommas(v.chosen_mode.playcount)
+        )
+      );
+    }
+
+    function buildClan1sItem(v, idx) {
+      return $("<tr class='l-clan' />").append(
+        $("<td />").text("#" + (50 * (page - 1) + idx)),
+        $("<td />").html(
+          "<a href='/c/" +
+            v.clan +
+            "?mode=" +
+            favouriteMode +
+            "&rx=" +
+            rx +
+            "' title='View clan'>" +
+            escapeHTML(`[${v.tag}] ${v.name}`) +
+            "</a>"
+        ),
+        $("<td class='center aligned' />").html(addCommas(v.count))
+      );
+    }
+
     function loadClanLeaderboard() {
       var wl = window.location;
       window.history.replaceState(
@@ -60,33 +106,14 @@ var singlePageSnippets = {
 
           var i = 0;
           data.clans.forEach(function (v) {
-            tb.append(
-              $("<tr class='l-clan' />").append(
-                $("<td />").text("#" + (50 * (page - 1) + ++i)),
-                $("<td />").html(
-                  "<a href='/c/" +
-                    v.clan +
-                    "?mode=" +
-                    favouriteMode +
-                    "&rx=" +
-                    rx +
-                    "' title='View clan'>" +
-                    escapeHTML(`[${v.tag}] ${v.name}`) +
-                    "</a>"
-                ),
-                sort == "1s"
-                  ? $("<td class='center aligned' />").html(addCommas(v.count))
-                  : ($("<td class='center aligned' />").html(
-                      scoreOrPP(v.chosen_mode.ranked_score, v.chosen_mode.pp)
-                    ),
-                    $("<td class='center aligned' />").text(
-                      v.chosen_mode.accuracy.toFixed(2) + "%"
-                    ),
-                    $("<td class='center aligned' />").html(
-                      addCommas(v.chosen_mode.playcount)
-                    ))
-              )
-            );
+            i++; // cursed
+            if (sort == "1s") {
+              clanItem = buildClan1sItem(v, i);
+            } else {
+              clanItem = buildClanPPItem(v, i);
+            }
+
+            tb.append(clanItem);
           });
           disableSimplepagButtons(data.clans.length < 50);
         }
