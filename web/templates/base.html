@@ -49,11 +49,6 @@
         crossorigin="anonymous"
       ></script>
       <script src="/static/js/dist.min.js"></script>
-      {{ if .Scripts }}
-        {{ range .Scripts }}
-          <script src="{{ . }}"></script>
-        {{ end }}
-      {{ end }}
 
       <style>
         body {
@@ -198,6 +193,12 @@
           window.location.reload();
         });
       </script>
+
+      {{ if .Scripts }}
+        {{ range .Scripts }}
+          <script src="{{ . }}"></script>
+        {{ end }}
+      {{ end }}
     </body>
   </html>
 {{ end }}

@@ -26,6 +26,7 @@ var paths = {
       "node_modules/i18next/i18next.min.js",
       "node_modules/i18next-xhr-backend/i18nextXHRBackend.min.js",
       "src/js/semantic.min.js",
+      "semantic/src/definitions/behaviors/api.js",
       "src/js/key_plural.js",
       "src/js/akatsuki_src.js",
     ],
