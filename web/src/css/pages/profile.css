@@ -664,11 +664,6 @@
   margin-bottom: 4px;
 }
 
-.center-side {
-  display: flex;
-  gap: 6px;
-}
-
 .m-less {
   margin: 0px !important;
 }
@@ -700,15 +695,6 @@
 
 .new-flag-margin {
   margin-bottom: -0.3em !important;
-}
-
-.modified-menu {
-  left: 1 !important; /* Just so we can disable it */
-  right: 0 !important;
-}
-
-.avatar-container {
-  margin-bottom: 1.5em !important;
 }
 
 @media only screen and (max-width: 700px) {
@@ -743,10 +729,6 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .avatar-container {
-    margin-bottom: -1.2em !important;
-  }
-
   .flex {
     justify-content: left;
     margin-left: 0.7em;

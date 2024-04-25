@@ -126,11 +126,6 @@
   }
 }
 
-.center-side {
-  display: flex;
-  gap: 6px;
-}
-
 .ui.heading {
   margin-bottom: 0.1rem;
 }
