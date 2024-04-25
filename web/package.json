@@ -2,26 +2,27 @@
   "name": "hanayo",
   "version": "1.0.0",
   "dependencies": {
-    "bootstrap": "^4.2.1",
-    "i18next": "^7.1.2",
+    "bootstrap": "^5.2.2",
+    "i18next": "^22.0.5",
     "i18next-xhr-backend": "^1.4.1",
     "popper.js": "^1.14.6",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5",
-    "semantic-ui": "2.4.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "semantic-ui": "2.5.0"
   },
   "devDependencies": {
     "babel-preset-latest": "^6.16.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
     "gulp-chug": "^0.5.1",
     "gulp-concat": "^2.6.1",
-    "gulp-flatten": "^0.3.1",
-    "gulp-plumber": "^1.1.0",
-    "gulp-uglify": "^2.0.0",
-    "jquery": "^3.1.1",
-    "timeago": "^1.5.3",
-    "vue": "^2.1.4"
+    "gulp-flatten": "^0.4.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-uglify": "^3.0.2",
+    "jquery": "^3.6.1",
+    "timeago": "^1.6.7",
+    "uglify-save-license": "^0.4.1",
+    "vue": "^3.2.45"
   },
   "overrides": {
     "graceful-fs": "^4.2.10"
