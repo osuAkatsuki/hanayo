@@ -21,128 +21,138 @@
 // their own file.
 var singlePageSnippets = {
   "/clans": function () {
-    function e() {
-      var e = window.location;
+    page = 0 === page ? 1 : page;
+
+    function buildClanPPItem(v, idx) {
+      return $("<tr class='l-clan' />").append(
+        $("<td />").text("#" + (50 * (page - 1) + idx)),
+        $("<td />").html(
+          "<a href='/c/" +
+            v.id +
+            "?mode=" +
+            favouriteMode +
+            "&rx=" +
+            rx +
+            "' title='View clan'>" +
+            // TODO: uncomment it once we have the tag in the API response
+            // escapeHTML(`[${v.tag}] ${v.name}`) +
+            escapeHTML(v.name) +
+            "</a>"
+        ),
+        $("<td class='center aligned' />").html(
+          scoreOrPP(v.chosen_mode.ranked_score, v.chosen_mode.pp)
+        ),
+        $("<td class='center aligned' />").text(
+          v.chosen_mode.accuracy.toFixed(2) + "%"
+        ),
+        $("<td class='center aligned' />").html(
+          addCommas(v.chosen_mode.playcount)
+        )
+      );
+    }
+
+    function buildClan1sItem(v, idx) {
+      return $("<tr class='l-clan' />").append(
+        $("<td />").text("#" + (50 * (page - 1) + idx)),
+        $("<td />").html(
+          "<a href='/c/" +
+            v.clan +
+            "?mode=" +
+            favouriteMode +
+            "&rx=" +
+            rx +
+            "' title='View clan'>" +
+            escapeHTML(`[${v.tag}] ${v.name}`) +
+            "</a>"
+        ),
+        $("<td class='center aligned' />").html(addCommas(v.count))
+      );
+    }
+
+    function loadClanLeaderboard() {
+      var wl = window.location;
       window.history.replaceState(
         "",
         document.title,
-        e.pathname +
+        wl.pathname +
           "?mode=" +
           favouriteMode +
           "&p=" +
           page +
           "&rx=" +
-          !!rx +
+          rx +
           "&sort=" +
           sort +
-          e.hash
+          wl.hash
       );
 
-      if (sort == "1s") {
-        api(
-          "clans/stats/first",
-          {
-            m: favouriteMode,
-            p: page,
-            l: 50,
-            rx: rx,
-          },
-          function (e) {
-            var n = $(".ui.table tbody");
-            n.find("tr").remove(),
-              null == e.clans && (disableSimplepagButtons(!0), (e.clans = []));
-            var i = 0;
-            e.clans.forEach(function (e) {
-              n.append(
-                $("<tr />").append(
-                  $("<td />").text("#" + (50 * (page - 1) + ++i)),
-                  $("<td />").html(
-                    "<a href='/c/" +
-                      e.id +
-                      "?mode=" +
-                      favouriteMode +
-                      (0 === rx ? "" : "&rx=1") +
-                      "' title='View clan'>" +
-                      escapeHTML(e.name) +
-                      "</a>"
-                  ),
-                  $("<td />").html(addCommas(e.count))
-                )
-              );
-            });
-            disableSimplepagButtons(e.clans.length < 50);
-          }
-        );
-        return;
-      }
+      apiRoute = sort == "1s" ? "first" : "all";
 
       api(
-        "clans/stats/all",
+        `clans/stats/${apiRoute}`,
         {
           m: favouriteMode,
           p: page,
           l: 50,
           rx: rx,
         },
-        function (e) {
-          var n = $(".ui.table tbody");
-          n.find("tr").remove(),
-            null == e.clans && (disableSimplepagButtons(!0), (e.clans = []));
+        function (data) {
+          var tb = $(".ui.table tbody");
+          tb.find("tr").remove();
+          if (data.clans == null) {
+            disableSimplepagButtons(true);
+            data.clans = [];
+          }
+
           var i = 0;
-          e.clans.forEach(function (e) {
-            n.append(
-              $("<tr />").append(
-                $("<td />").text("#" + (50 * (page - 1) + ++i)),
-                $("<td />").html(
-                  "<a href='/c/" +
-                    e.id +
-                    "?mode=" +
-                    favouriteMode +
-                    (0 === rx ? "" : "&rx=1") +
-                    "' title='View clan'>" +
-                    escapeHTML(e.name) +
-                    "</a>"
-                ),
-                $("<td />").html(
-                  t(e.chosen_mode.ranked_score, e.chosen_mode.pp)
-                ),
-                $("<td />").text(e.chosen_mode.accuracy.toFixed(2) + "%"),
-                $("<td />").html(addCommas(e.chosen_mode.playcount))
-              )
-            );
+          data.clans.forEach(function (v) {
+            i++; // cursed
+            if (sort == "1s") {
+              clanItem = buildClan1sItem(v, i);
+            } else {
+              clanItem = buildClanPPItem(v, i);
+            }
+
+            tb.append(clanItem);
           });
-          disableSimplepagButtons(e.clans.length < 50);
+          disableSimplepagButtons(data.clans.length < 50);
         }
       );
     }
 
-    function t(e, t) {
-      return 0 === t
-        ? "<b>" + addCommas(e) + "</b>"
-        : "<b>" + addCommas(t) + "pp</b> (" + addCommas(e) + ")";
+    function scoreOrPP(s, pp) {
+      if (pp === 0) {
+        return "<b>" + addCommas(s) + "</b>";
+      }
+
+      return "<b>" + addCommas(pp) + "pp</b> (" + addCommas(s) + ")";
     }
 
-    page = 0 === page ? 1 : page;
+    $("#rx-menu ." + rx + ".item").addClass("active");
+    $("#sort-menu ." + ("1s" === sort ? 0 : 1) + ".item").addClass("active");
+    toggleModeAvailability(favouriteMode, rx);
 
-    $("#rx-menu ." + (1 === rx ? 1 : 0) + ".item").addClass("active");
-    e();
-    setupSimplepag(e);
-    $("#mode-menu .item").on("click", function (t) {
-      t.preventDefault();
+    loadClanLeaderboard();
+    setupSimplepag(loadClanLeaderboard);
+
+    $("#mode-menu .item").on("click", function (e) {
+      e.preventDefault();
       $("#mode-menu .active.item").removeClass("active");
       $(this).addClass("active");
       favouriteMode = $(this).data("mode");
       page = 1;
-      e();
+      toggleModeAvailability(favouriteMode, rx);
+      loadClanLeaderboard();
     });
 
-    $("#rx-menu .item").on("click", function (t) {
-      t.preventDefault();
+    $("#rx-menu .item").on("click", function (e) {
+      e.preventDefault();
       $("#rx-menu .active.item").removeClass("active");
       $(this).addClass("active");
       rx = $(this).data("rx");
       page = 1;
-      e();
+      toggleModeAvailability(favouriteMode, rx);
+      loadClanLeaderboard();
     });
   },
 
@@ -161,6 +171,8 @@ var singlePageSnippets = {
           rx +
           "&p=" +
           page +
+          "&sort=" +
+          sort +
           (country != "" ? "&country=" + encodeURI(country) : "") +
           wl.hash
       );
@@ -172,6 +184,7 @@ var singlePageSnippets = {
           p: page,
           l: 50,
           country: country,
+          sort: sort,
         },
         function (data) {
           var tb = $(".ui.table tbody");
@@ -182,28 +195,42 @@ var singlePageSnippets = {
           }
           var i = 0;
           data.users.forEach(function (v) {
+            codepoints = countryToCodepoints(v.country);
             tb.append(
-              $("<tr />").append(
+              $("<tr class='l-player' />").append(
                 $("<td />").text("#" + ((page - 1) * 50 + ++i)),
                 $("<td />").html(
-                  "<a href='/u/" +
-                    v.id +
-                    "' title='View profile'><i class='" +
+                  "<div class='flag-container'><a href='/leaderboard?mode=" +
+                    favouriteMode +
+                    "&rx=" +
+                    rx +
+                    "&country=" +
                     v.country.toLowerCase() +
-                    " flag'></i>" +
+                    "'><img src='/static/images/flags/" +
+                    codepoints +
+                    ".svg' class='new-flag nopad'></img></a><a href='/u/" +
+                    v.id +
+                    "?mode=" +
+                    favouriteMode +
+                    "&rx=" +
+                    rx +
+                    "'>" +
                     escapeHTML(v.username) +
-                    "</a>"
+                    "</a></div>"
                 ),
-                $("<td />").html(
-                  scoreOrPP(v.chosen_mode.ranked_score, v.chosen_mode.pp)
+                $("<td class='center aligned' />").html(
+                  scoreOrPP(
+                    v.chosen_mode.ranked_score,
+                    v.chosen_mode.pp,
+                    sort === "score"
+                  )
                 ),
-                $("<td />").text(v.chosen_mode.accuracy.toFixed(2) + "%"),
-                // bonus points if you get the undertale joke
-                $("<td />").html(
+                $("<td class='center aligned' />").text(
+                  v.chosen_mode.accuracy.toFixed(2) + "%"
+                ),
+                $("<td class='center aligned' />").html(
                   addCommas(v.chosen_mode.playcount) +
-                    " <i title='" +
-                    T("Why, LOVE, of course!") +
-                    "'>(lv. " +
+                    " <i>(lv. " +
                     v.chosen_mode.level.toFixed(0) +
                     ")</i>"
                 )
@@ -214,150 +241,75 @@ var singlePageSnippets = {
         }
       );
     }
-    function scoreOrPP(s, pp) {
-      if (pp === 0) return "<b>" + addCommas(s) + "</b>";
+
+    function scoreOrPP(s, pp, forceScore) {
+      if (pp === 0) {
+        return "<b>" + addCommas(s) + "</b>";
+      }
+
+      if (forceScore) {
+        "<b>" + addCommas(s) + "</b> (" + addCommas(pp) + "pp)";
+      }
+
       return "<b>" + addCommas(pp) + "pp</b> (" + addCommas(s) + ")";
     }
 
-    // country stuff
-    $("#country-chooser-modal").on("click", function () {
-      $(".ui.modal").modal("show");
-    });
-    $(".lb-country").on("click", function () {
-      country = $(this).data("country");
-      page = 1;
-      $(".ui.modal").modal("hide");
-      loadLeaderboard();
-    });
-
-    loadLeaderboard();
-    setupSimplepag(loadLeaderboard);
-    $("#mode-menu .item").on("click", function (e) {
-      e.preventDefault();
-      $("#mode-menu .active.item").removeClass("active");
-      $(this).addClass("active");
-      favouriteMode = $(this).data("mode");
-      country = "";
-      page = 1;
-      loadLeaderboard();
-    });
-    $("#rx-menu .item").on("click", function (e) {
-      e.preventDefault();
-      $("#rx-menu .active.item").removeClass("active");
-      $(this).addClass("active");
-      country = "";
-      page = 1;
-      rx = $(this).data("rx");
-      loadLeaderboard();
-    });
-  },
-
-  "/scoreleaderboard": function () {
-    page = page === 0 ? 1 : page;
-
-    function loadScoreLeaderboard() {
-      var wl = window.location;
-      window.history.replaceState(
-        "",
-        document.title,
-        wl.pathname +
-          "?mode=" +
-          favouriteMode +
-          "&p=" +
-          page +
-          (country != "" ? "&country=" + encodeURI(country) : "") +
-          wl.hash
-      );
-      api(
-        "scoreleaderboard",
-        {
-          mode: favouriteMode,
-          p: page,
-          l: 50,
-          country: country,
-        },
-        function (data) {
-          var tb = $(".ui.table tbody");
-          tb.find("tr").remove();
-          if (data.users == null) {
-            disableSimplepagButtons(true);
-            data.users = [];
-          }
-          var i = 0;
-          data.users.forEach(function (v) {
-            tb.append(
-              $("<tr />").append(
-                $("<td />").text("#" + ((page - 1) * 50 + ++i)),
-                $("<td />").html(
-                  "<a href='/u/" +
-                    v.id +
-                    "' title='View profile'><i class='" +
-                    v.country.toLowerCase() +
-                    " flag'></i>" +
-                    escapeHTML(v.username) +
-                    "</a>"
-                ),
-                $("<td />").html("<b>" + addCommas(v.chosen_mode.ranked_score)),
-                $("<td />").text(v.chosen_mode.accuracy.toFixed(2) + "%"),
-                // bonus points if you get the undertale joke
-                $("<td />").html(
-                  addCommas(v.chosen_mode.playcount) +
-                    " <i title='" +
-                    T("Why, LOVE, of course!") +
-                    "'>(lv. " +
-                    v.chosen_mode.level.toFixed(0) +
-                    ")</i>"
-                )
-              )
-            );
-          });
-          disableSimplepagButtons(data.users.length < 50);
-        }
-      );
+    if (country) {
+      $(`[data-country=${country}]`).addClass("active");
     }
 
     // country stuff
     $("#country-chooser-modal").on("click", function () {
       $(".ui.modal").modal("show");
     });
+
     $(".lb-country").on("click", function () {
       country = $(this).data("country");
+      $("#country-menu .active.item").removeClass("active");
+      $(this).addClass("active");
       page = 1;
       $(".ui.modal").modal("hide");
-      loadScoreLeaderboard();
+      loadLeaderboard();
     });
 
-    loadScoreLeaderboard();
-    setupSimplepag(loadScoreLeaderboard);
+    toggleModeAvailability(favouriteMode, rx);
+    loadLeaderboard();
+    setupSimplepag(loadLeaderboard);
+
     $("#mode-menu .item").on("click", function (e) {
       e.preventDefault();
       $("#mode-menu .active.item").removeClass("active");
+      $("#country-menu .active.item").removeClass("active");
       $(this).addClass("active");
       favouriteMode = $(this).data("mode");
       country = "";
       page = 1;
-      loadScoreLeaderboard();
+      toggleModeAvailability(favouriteMode, rx);
+      loadLeaderboard();
     });
+
     $("#rx-menu .item").on("click", function (e) {
       e.preventDefault();
       $("#rx-menu .active.item").removeClass("active");
+      $("#country-menu .active.item").removeClass("active");
       $(this).addClass("active");
       country = "";
       page = 1;
       rx = $(this).data("rx");
-      loadScoreLeaderboard();
+      toggleModeAvailability(favouriteMode, rx);
+      loadLeaderboard();
     });
   },
 
   "/friends": function () {
-    $(".smalltext.button").on("click", function () {
+    $(".ui.compact.labeled.button").on("click", function () {
       var t = $(this);
       var delAdd = t.data("deleted") === "1" ? "add" : "del";
       console.log(delAdd);
       t.addClass("disabled");
       api(
         "friends/" + delAdd,
-        { user: +t.data("userid") },
+        { user: parseInt(t.data("userid")) },
         function (data) {
           t.removeClass("disabled");
           t.data("deleted", data.friend ? "0" : "1");
@@ -365,10 +317,15 @@ var singlePageSnippets = {
           t.addClass(data.friend ? (data.mutual ? "red" : "green") : "blue");
           t.find(".icon")
             .removeClass("minus plus heart")
-            .addClass(data.friend ? (data.mutual ? "heart" : "minus") : "plus");
-          t.find("span").text(
-            data.friend ? (data.mutual ? T("Mutual") : T("Remove")) : t("Add")
-          );
+            .removeClass("green red blue")
+            .addClass(
+              data.friend
+                ? data.mutual
+                  ? "red heart"
+                  : "green minus"
+                : "blue plus"
+            );
+          t.find("span").text(data.friend ? T("Unfriend") : t("Befriend"));
         },
         true
       );
@@ -491,6 +448,47 @@ var singlePageSnippets = {
     });
   },
 
+  "/settings/clansettings": function () {
+    $("#ginvite").click(function (e) {
+      e.preventDefault();
+      api(
+        "clans/invite",
+        {},
+        function (data) {
+          if (!data.invite) {
+            return;
+          }
+          console.log(data);
+          $("#invin").attr("value", data.invite);
+          $("#invin").attr("style", "background-color: rgba(0,128,0,.5)");
+          setTimeout(() => $("#invin").attr("style", null), 1100);
+        },
+        true
+      );
+    });
+
+    $("form#register-form").submit(function (e) {
+      e.preventDefault();
+      var obj = formToObject($(this));
+      var f = $(this);
+      return api(
+        "clans/settings",
+        obj,
+        function (data) {
+          if (data.message === "tag already exists") {
+            showMessage("error", "A clan with that tag already exists!");
+            f.removeClass("loading");
+            return;
+          }
+
+          showMessage("success", "Clan Settings have been saved.");
+          f.removeClass("loading");
+        },
+        true
+      );
+    });
+  },
+
   "/support": function () {
     var sl = $("#months-slider")[0];
     noUiSlider.create(sl, {
@@ -508,7 +506,7 @@ var singlePageSnippets = {
       rates = data;
       us.on("update", function () {
         var months = us.get();
-        var priceEUR = Math.pow(months * 30 * 0.2, 0.7); // 2nd arg: 20 for 66%
+        var priceEUR = Math.pow(months * 30 * 0.2, 0.72); // 2nd arg: 20 for 66%
         var priceBTC = priceEUR / rates.EUR;
         var priceUSD = priceBTC * rates.USD;
         $("#cost").html(
@@ -629,8 +627,8 @@ var singlePageSnippets = {
         return false;
       }
       var postData = {};
-      if (reData[1] == "s") postData.set_id = +reData[2];
-      else postData.id = +reData[2];
+      if (reData[1] == "s") postData.set_id = parseInt(reData[2]);
+      else postData.id = parseInt(reData[2]);
       var t = $(this);
       api(
         "beatmaps/rank_requests",
@@ -726,7 +724,7 @@ $(document).ready(function () {
   if (typeof deferredToPageLoad === "function") deferredToPageLoad();
 
   // setup user search
-  $("#user-search").search({
+  $("[id=user-search]").search({
     onSelect: function (val) {
       window.location.href = val.url;
       return false;
@@ -748,7 +746,7 @@ $(document).ready(function () {
       },
     },
   });
-  $("#user-search-input").keypress(function (e) {
+  $("[id=user-search-input]").keypress(function (e) {
     if (e.which == 13) {
       window.location.pathname = "/u/" + $(this).val();
     }
@@ -758,7 +756,7 @@ $(document).ready(function () {
     var activeElement = $(document.activeElement);
     var isInput = activeElement.is(":input,[contenteditable]");
     if ((e.which === 83 || e.which === 115) && !isInput) {
-      $("#user-search-input").focus();
+      $("[id=user-search-input]").focus();
       e.preventDefault();
     }
     if (e.which === 27 && isInput) {
@@ -822,6 +820,21 @@ function showMessage(type, message) {
   newEl.slideDown(300);
 }
 
+function showIdMessage(type, message, id) {
+  var newEl = $(
+    '<div id="' +
+      id +
+      '" class="ui ' +
+      type +
+      ' message hidden"><i class="close icon"></i>' +
+      T(message) +
+      "</div>"
+  );
+  newEl.find(".close.icon").click(closeClosestMessage);
+  $("#messages-container").append(newEl);
+  newEl.slideDown(300);
+}
+
 // function for all api calls
 function api(endpoint, data, success, failure, post) {
   if (typeof data == "function") {
@@ -831,6 +844,12 @@ function api(endpoint, data, success, failure, post) {
   if (typeof failure == "boolean") {
     post = failure;
     failure = undefined;
+  }
+
+  if (endpoint == "leaderboard") {
+    $("#main").addClass("loading");
+  } else if (endpoint == "users/achievements") {
+    $("#achievements").addClass("loading");
   }
 
   var errorMessage =
@@ -843,10 +862,17 @@ function api(endpoint, data, success, failure, post) {
     data: post ? JSON.stringify(data) : data,
     contentType: post ? "application/json; charset=utf-8" : "",
     success: function (data) {
-      if (data.code >= 500) {
+      if (data.code !== undefined && data.code >= 500) {
         console.warn(data);
         showMessage("error", errorMessage);
       }
+
+      if (endpoint == "leaderboard") {
+        $("#main").removeClass("loading");
+      } else if (endpoint == "users/achievements") {
+        $("#achievements").removeClass("loading");
+      }
+
       success(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -1123,4 +1149,66 @@ function privilegesToString(privs) {
     if ((privs & (1 << (index + 1))) != 0) privList.push(value);
   });
   return privList.join(", ");
+}
+
+function toggleNavbar() {
+  $(".mobile-header").toggleClass("active");
+}
+
+function countryToCodepoints(country) {
+  chars = [];
+  country = country.toUpperCase();
+
+  for (let i = 0; i < country.length; i++) {
+    chars.push((country.codePointAt(i) + 127397).toString(16));
+  }
+
+  return chars.join("-");
+}
+
+function toggleModeAvailability(mode, rx) {
+  for (i = 0; i <= 3; i++) {
+    $(`[data-mode='${i}']`).removeClass("disabled");
+  }
+
+  for (i = 0; i <= 2; i++) {
+    $(`[data-rx='${i}']`).removeClass("disabled");
+  }
+
+  if (rx == 1) {
+    // relax does not have mania
+    $("[data-mode='3']").addClass("disabled");
+  } else if (rx == 2) {
+    // autopilot does not have taiko, catch, or mania
+    $("[data-mode='1']").addClass("disabled");
+    $("[data-mode='2']").addClass("disabled");
+    $("[data-mode='3']").addClass("disabled");
+  }
+
+  if (mode == 1 || mode == 2) {
+    // taiko or catch does not have autopilot
+    $("[data-rx='2']").addClass("disabled");
+  } else if (mode == 3) {
+    // mania does not have relax or autopilot
+    $("[data-rx='1']").addClass("disabled");
+    $("[data-rx='2']").addClass("disabled");
+  }
+}
+
+function toggleBBCodeBox(e) {
+  identifier = $(e).attr("id").split("-")[1];
+  contentBox = $("#content-" + identifier);
+  icon = $("#icon-" + identifier);
+
+  if (contentBox.hasClass("bbcode-hidden")) {
+    contentBox.slideDown(100, () => {
+      contentBox.removeClass("bbcode-hidden");
+      icon.removeClass("fa-angle-right").addClass("fa-angle-down");
+    });
+  } else {
+    contentBox.slideUp(100, () => {
+      contentBox.addClass("bbcode-hidden");
+      icon.removeClass("fa-angle-down").addClass("fa-angle-right");
+    });
+  }
 }

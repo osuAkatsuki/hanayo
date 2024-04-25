@@ -2,8 +2,9 @@
   "name": "hanayo-scripts",
   "version": "1.0.0",
   "author": "Morgan Bazalgette <the@howl.moe>",
+  "type": "module",
   "license": "MIT",
-  "dependencies": {
-    "gettext-parser": "^1.2.2"
+  "devDependencies": {
+    "gettext-parser": "^8.0.0"
   }
 }

@@ -8,7 +8,7 @@ BannerType=1
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
   <div class="ui container akat-box">
-    <link rel="stylesheet" href="/static/css/pages/clanboard.css" />
+    <link rel="stylesheet" href="/static/css/pages/clanboard.min.css" />
 
     {{ $favModeRaw := .Get "users/self/favourite_mode" }}
     {{ $favMode := _or (atoi

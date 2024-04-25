@@ -6,3 +6,5 @@ repos:
         additional_dependencies:
           - prettier@2.1.0
           - prettier-plugin-go-template@0.0.13
+
+exclude: ^(web/src/css/semantic\.css|web/src/js/semantic\.min\.js)

@@ -81,5 +81,5 @@ func UserProfilePageHandler(c *gin.Context) {
 
 	data.TitleBar = lu.T(c, "%s's profile", username)
 	data.DisableHH = true
-	data.Scripts = append(data.Scripts, "/static/js/pages/profile.js")
+	data.Scripts = append(data.Scripts, "/static/js/pages/profile.min.js")
 }

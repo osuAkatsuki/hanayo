@@ -246,31 +246,30 @@ function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
       return "D";
   }
 }
-function toggleModeAvailability(mode, rx) {
-  $("[data-mode='1']").removeClass("disabled");
-  $("[data-mode='2']").removeClass("disabled");
-  $("[data-mode='3']").removeClass("disabled");
 
-  $("[data-cmode='1']").removeClass("disabled");
-  $("[data-cmode='2']").removeClass("disabled");
-  $("[data-cmode='3']").removeClass("disabled");
+function timeSince(date) {
+  var seconds = Math.floor((new Date() - date) / 1000);
 
-  if (rx == 1) {
-    // relax does not have mania
-    $("[data-mode='3']").addClass("disabled");
-  } else if (rx == 2) {
-    // autopilot does not have taiko, catch, or mania
-    $("[data-mode='1']").addClass("disabled");
-    $("[data-mode='2']").addClass("disabled");
-    $("[data-mode='3']").addClass("disabled");
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + "y";
   }
-
-  if (mode == 1 || mode == 2) {
-    // taiko or catch does not have autopilot
-    $("[data-cmode='2']").addClass("disabled");
-  } else if (mode == 3) {
-    // mania does not have relax or autopilot
-    $("[data-cmode='1']").addClass("disabled");
-    $("[data-cmode='2']").addClass("disabled");
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + "m";
   }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + "d";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + "h";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + "min";
+  }
+  return "now";
 }
