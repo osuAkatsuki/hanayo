@@ -25,6 +25,7 @@ var paths = {
       "node_modules/timeago/jquery.timeago.js",
       "node_modules/i18next/i18next.min.js",
       "node_modules/i18next-xhr-backend/i18nextXHRBackend.min.js",
+      "node_modules/fomantic-ui/dist/components/api.min.js",
       "src/js/semantic.min.js",
       "src/js/key_plural.js",
       "src/js/akatsuki_src.js",
