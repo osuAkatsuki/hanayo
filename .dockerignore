@@ -4,3 +4,5 @@ hanayo.conf
 team.json
 web/static/images/profbackgrounds/*
 .env
+web/static/css
+web/static/js
