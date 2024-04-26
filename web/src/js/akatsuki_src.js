@@ -248,7 +248,7 @@ var singlePageSnippets = {
       }
 
       if (forceScore) {
-        "<b>" + addCommas(s) + "</b> (" + addCommas(pp) + "pp)";
+        return "<b>" + addCommas(s) + "</b> (" + addCommas(pp) + "pp)";
       }
 
       return "<b>" + addCommas(pp) + "pp</b> (" + addCommas(s) + ")";
