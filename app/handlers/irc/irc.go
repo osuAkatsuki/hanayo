@@ -2,6 +2,7 @@ package irc
 
 import (
 	"database/sql"
+	"log/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"
@@ -20,7 +21,20 @@ func IrcGenTokenSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	services.DB.Exec("DELETE FROM irc_tokens WHERE userid = ?", ctx.User.ID)
+	tx, err := services.DB.Begin()
+	if err != nil {
+		slog.Error(err)
+		tu.Resp403(c)
+		return
+	}
+
+	_, err = tx.Exec("DELETE FROM irc_tokens WHERE userid = ?", ctx.User.ID)
+	if err != nil {
+		tx.Rollback()
+		slog.Error(err)
+		tu.Resp403(c)
+		return
+	}
 
 	var s, m string
 	for {
@@ -32,7 +46,16 @@ func IrcGenTokenSubmitHandler(c *gin.Context) {
 		}
 	}
 
-	services.DB.Exec("INSERT INTO irc_tokens(userid, token) VALUES (?, ?)", ctx.User.ID, m)
+	_, err = tx.Exec("INSERT INTO irc_tokens(userid, token) VALUES (?, ?)", ctx.User.ID, m)
+	if err != nil {
+		tx.Rollback()
+		slog.Error(err)
+		tu.Resp403(c)
+		return
+	}
+
+	tx.Commit()
+
 	tu.Simple(c, tu.GetSimple("/irc"), []msg.Message{msg.SuccessMessage{
 		lu.T(c, "Your new IRC token is <code>%s</code>. The old IRC token is not valid anymore.<br>Keep it safe, don't show it around, and store it now! We won't show it to you again.", s),
 	}}, nil)

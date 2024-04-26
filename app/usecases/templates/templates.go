@@ -6,7 +6,6 @@ import (
 	"errors"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"net/url"
 	"os"
 	"strings"
@@ -56,7 +55,7 @@ func Reloader() error {
 }
 
 func LoadTemplates(subdir string) {
-	ts, err := ioutil.ReadDir("web/templates" + subdir)
+	ts, err := os.ReadDir("web/templates" + subdir)
 	if err != nil {
 		slog.Error("Could not load templates", "error", err.Error())
 		panic(err)
@@ -117,11 +116,11 @@ func LoadTemplates(subdir string) {
 
 func parseConfig(s string) *mt.TemplateConfig {
 	f, err := os.Open(s)
-	defer f.Close()
 	if err != nil {
 		slog.Error("Could not open template", "error", err.Error())
 		return nil
 	}
+	defer f.Close()
 	i := bufio.NewScanner(f)
 	var inConfig bool
 	var buff string

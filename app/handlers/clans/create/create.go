@@ -70,17 +70,33 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 		invite = common.RandomString(8)
 	}
 
-	res, err := services.DB.Exec(`INSERT INTO clans(name, description, icon, tag, owner, invite, status)
+	tx, err := services.DB.Begin()
+	if err != nil {
+		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "An error occurred while creating a clan.")})
+		slog.Error(err.Error())
+		return
+	}
+
+	res, err := tx.Exec(`INSERT INTO clans(name, description, icon, tag, owner, invite, status)
 							  VALUES (?, ?, ?, ?, ?, ?, 2);`,
 		username, c.PostForm("password"), c.PostForm("email"), tag, sessions.GetContext(c).User.ID, invite)
 	if err != nil {
-		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "Whoops, an error slipped in. Clan might have been created, though. I don't know.")})
+		tx.Rollback()
+		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "An error occurred while creating a clan.")})
 		slog.Error(err.Error())
 		return
 	}
 	lid, _ := res.LastInsertId()
 
-	services.DB.Exec("UPDATE users SET clan_id = ?, clan_privileges = 8 WHERE id = ?", lid, sessions.GetContext(c).User.ID)
+	_, err = tx.Exec("UPDATE users SET clan_id = ?, clan_privileges = 8 WHERE id = ?", lid, sessions.GetContext(c).User.ID)
+	if err != nil {
+		tx.Rollback()
+		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "An error occurred while creating a clan.")})
+		slog.Error(err.Error())
+		return
+	}
+
+	tx.Commit()
 
 	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Clan created.")})
 	sessions.GetSession(c).Save()

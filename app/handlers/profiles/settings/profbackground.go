@@ -72,12 +72,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		defer os.Remove(f.Name())
 
 		defer f.Close()
-		if err != nil {
-			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
-			c.Error(err)
-			slog.ErrorContext(c, err.Error())
-			return
-		}
+
 		err = jpeg.Encode(f, img, &jpeg.Options{
 			Quality: 88,
 		})
