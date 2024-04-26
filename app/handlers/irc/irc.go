@@ -23,7 +23,7 @@ func IrcGenTokenSubmitHandler(c *gin.Context) {
 
 	tx, err := services.DB.Begin()
 	if err != nil {
-		slog.Error(err)
+		slog.Error(err.Error())
 		tu.Resp403(c)
 		return
 	}
@@ -31,7 +31,7 @@ func IrcGenTokenSubmitHandler(c *gin.Context) {
 	_, err = tx.Exec("DELETE FROM irc_tokens WHERE userid = ?", ctx.User.ID)
 	if err != nil {
 		tx.Rollback()
-		slog.Error(err)
+		slog.Error(err.Error())
 		tu.Resp403(c)
 		return
 	}
@@ -49,7 +49,7 @@ func IrcGenTokenSubmitHandler(c *gin.Context) {
 	_, err = tx.Exec("INSERT INTO irc_tokens(userid, token) VALUES (?, ?)", ctx.User.ID, m)
 	if err != nil {
 		tx.Rollback()
-		slog.Error(err)
+		slog.Error(err.Error())
 		tu.Resp403(c)
 		return
 	}
