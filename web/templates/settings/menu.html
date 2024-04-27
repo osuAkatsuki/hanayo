@@ -4,14 +4,14 @@ NoCompile=true
 */}}
 {{/* prettier-ignore-end */}}
 {{ define "settingsSidebar" }}
-  {{ $d := or (qb "SELECT 1 FROM users WHERE clan_id = ? AND clan_privileges = 8" .Context.User.ID).clan_id.Int -1 }}
-  {{ $can_userpage := qb "SELECT 1 FROM users WHERE id = ? AND userpage_allowed LIMIT 1" .Context.User.ID }}
+  {{ $is_clan_owner := or (qb "SELECT 1 FROM users WHERE clan_id = ? AND clan_privileges = 8" .Context.User.ID).clan_id.Int -1 }}
+  {{ $can_edit_userpage := qb "SELECT 1 FROM users WHERE id = ? AND userpage_allowed LIMIT 1" .Context.User.ID }}
   {{ $is_in_clan := qb "SELECT 1 FROM users WHERE id = ? AND clan_id <> 0" .Context.User.ID }}
   <div class="four wide column">
     <div class="ui fluid vertical menu">
       {{ navbarItem .Path (.T "Profile") "/settings" }}
 
-      {{ if $can_userpage }}
+      {{ if $can_edit_userpage }}
         {{/* Admins can disallow users from editing their userpage */}}
         {{ navbarItem .Path (.T "Userpage") "/settings/userpage" }}
       {{ else }}
@@ -25,11 +25,9 @@ NoCompile=true
         {{ navbarItem .Path (.T "Create a clan") "/clans/create" }}
       {{ end }}
 
-      {{ if $d }}
+      {{ if $is_clan_owner }}
         {{/* Checks to see if user is an owns a clan. */}}
         {{ navbarItem .Path (.T "Clan settings") "/settings/clansettings" }}
-      {{ else }}
-        {{ navbarItem .Path (.T "<p title='Only the leader of the clan can access the settings page.' style='color:#C0C0C0;'>Clan Settings</p>") ""  | html }}
       {{ end }}
 
       {{ if has .Context.User.Privileges 4 }}
