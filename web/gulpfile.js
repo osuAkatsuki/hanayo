@@ -6,7 +6,7 @@ import uglify from "gulp-uglify";
 import rename from "gulp-rename";
 import cleanCSS from "gulp-clean-css";
 import { deleteAsync } from "del";
-import pkg from 'gulp-typescript';
+import pkg from "gulp-typescript";
 const { createProject } = pkg;
 
 const paths = {
@@ -51,8 +51,10 @@ export function styles() {
 
 export function scripts() {
   const tsProject = createProject("tsconfig.json");
-  return tsProject.src().pipe(tsProject()).js
-    .pipe(babel())
+  return tsProject
+    .src()
+    .pipe(tsProject())
+    .js.pipe(babel())
     .pipe(uglify())
     .pipe(
       rename({
@@ -64,8 +66,10 @@ export function scripts() {
 
 export function dist() {
   const tsProject = createProject("tsconfig.json");
-  return tsProject.src().pipe(tsProject()).js
-    .pipe(babel())
+  return tsProject
+    .src()
+    .pipe(tsProject())
+    .js.pipe(babel())
     .pipe(uglify())
     .pipe(concat("dist.min.js"))
     .pipe(dest(paths.dist.dest));
