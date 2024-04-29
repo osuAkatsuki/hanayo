@@ -1,0 +1,16 @@
+{
+  "files": [
+    "src/js/akatsuki_src.ts",
+    "src/js/key_plural.ts",
+    // "src/js/semantic.min.ts",
+    "src/js/pages/beatmap.ts",
+    "src/js/pages/beatmap.tablesort.ts",
+    "src/js/pages/clan.ts",
+    "src/js/pages/multiplayer.ts",
+    "src/js/pages/profile.ts"
+  ],
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "es5"
+  }
+}
