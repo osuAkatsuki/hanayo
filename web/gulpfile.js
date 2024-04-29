@@ -6,8 +6,10 @@ import uglify from "gulp-uglify";
 import rename from "gulp-rename";
 import cleanCSS from "gulp-clean-css";
 import { deleteAsync } from "del";
+import pkg from 'gulp-typescript';
+const { createProject } = pkg;
 
-var paths = {
+const paths = {
   styles: {
     // TODO: add src for semantic-ui
     //       once we move all changes to akatsuki.css
@@ -26,7 +28,7 @@ var paths = {
       "node_modules/i18next/i18next.min.js",
       "node_modules/i18next-xhr-backend/i18nextXHRBackend.min.js",
       "node_modules/fomantic-ui/dist/components/api.min.js",
-      "src/js/semantic.min.js",
+      // "src/js/semantic.min.js",
       "src/js/key_plural.js",
       "src/js/akatsuki_src.js",
     ],
@@ -48,7 +50,8 @@ export function styles() {
 }
 
 export function scripts() {
-  return src(paths.scripts.src, { sourcemaps: true })
+  const tsProject = createProject("tsconfig.json");
+  return tsProject.src().pipe(tsProject()).js
     .pipe(babel())
     .pipe(uglify())
     .pipe(
@@ -60,7 +63,8 @@ export function scripts() {
 }
 
 export function dist() {
-  return src(paths.dist.src, { sourcemaps: true })
+  const tsProject = createProject("tsconfig.json");
+  return tsProject.src().pipe(tsProject()).js
     .pipe(babel())
     .pipe(uglify())
     .pipe(concat("dist.min.js"))
