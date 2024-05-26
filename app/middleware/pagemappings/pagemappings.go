@@ -34,14 +34,13 @@ var pageMappings = map[int]interface{}{
 	},
 	20: "/", // Beta keys
 	21: "/about",
-	22: "/",          // reports
+	22: "/",      // reports
 	23: "/terms", // rules
-	24: "/",          // my report
-	25: "/",          // report
+	24: "/",      // my report
+	25: "/",      // report
 	26: "/friends",
 	27: "https://status.ripple.moe",
 	28: "/", // user lookup
-	31: "/beatmaps/rank_request",
 	32: "/dev/applications",
 	33: "/dev/applications", // Theorically, this should be something like /dev/applications/<id>, but no-one ever used that page so who gives a fuck.
 	34: "/donate",
