@@ -65,12 +65,16 @@ MinPrivileges=2
             </div>
             <div class="field">
               <div class="ui toggle checkbox">
-                  <input
-                    type="checkbox"
-                    name="vanilla_pp_leaderboards"
-                    {{ if $d.vanilla_pp_leaderboards }}checked {{ end }}
-                  />
-                  <label title="{{ .T "Enabling this will display PP leaderboards for vanilla game modes." }}">{{ .T "Vanilla PP Leaderboards" }}</label>
+                <input
+                  type="checkbox"
+                  name="vanilla_pp_leaderboards"
+                  {{ if $d.vanilla_pp_leaderboards }}checked{{ end }}
+                />
+                <label
+                  title="{{ .T "Enabling this will display PP leaderboards for vanilla game modes." }}"
+                >
+                  {{ .T "Vanilla PP Leaderboards" }}
+                </label>
               </div>
             </div>
             {{ if has .Context.User.Privileges 4 }}
