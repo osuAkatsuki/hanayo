@@ -660,7 +660,7 @@ function loadMostPlayedBeatmaps(type, mode) {
 					<div class="map-data">
 						<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
               el.beatmap.beatmapset_id
-            }/covers/cover@2x.jpg); background-size: cover;">
+            }/covers/cover.jpg); background-size: cover;">
 						</div>
 						<div class="map-title-block">
 							<div class="map-title">
@@ -774,7 +774,7 @@ function loadScoresPage(type, mode) {
           <div class="map-data">
             <div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
               v.beatmap.beatmapset_id
-            }/covers/cover@2x.jpg); background-size: cover;">
+            }/covers/cover.jpg); background-size: cover;">
               <div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
             </div>
             <div class="map-title-block">
@@ -879,7 +879,7 @@ function do_pin(table, score, mode) {
 			<div class="map-data">
 				<div class="map-image" style="background:linear-gradient( rgb(0 0 0 / 70%), rgb(0 0 0 / 70%) ), url(https://assets.ppy.sh/beatmaps/${
           score.beatmap.beatmapset_id
-        }/covers/cover@2x.jpg); background-size: cover;">
+        }/covers/cover.jpg); background-size: cover;">
 					<div class="map-grade rank-${scoreRank}">${scoreRank.replace("HD", "")}</div>
 				</div>
 				<div class="map-title-block">

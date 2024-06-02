@@ -320,7 +320,7 @@ function buildGame(game) {
         <a class="game-header" href="/b/${game.beatmap.id}">
             <div class="game-image" style="--game-image-url: url('https://assets.ppy.sh/beatmaps/${
               game.beatmap.beatmapset_id
-            }/covers/cover@2x.jpg')"></div>
+            }/covers/cover.jpg')"></div>
             <div class="game-header-top-text">
                 <div class="shadow-text">
                 <span data-tooltip="${generateFullDateFormat(gameStartTime)}">
