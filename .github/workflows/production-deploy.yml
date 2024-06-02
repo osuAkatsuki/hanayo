@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - lower-res-osu-assets
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
