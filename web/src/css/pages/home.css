@@ -100,13 +100,6 @@ button:focus {
   margin: 0;
 }
 
-.quaver {
-  background-image: url(/static/characters/quaver.png);
-  background-repeat: no-repeat;
-  height: 363px;
-  width: 1196px;
-}
-
 .content {
   display: flex;
   flex-direction: column;
@@ -162,30 +155,18 @@ button:focus {
 }
 
 @media (max-width: 1200px) {
-  .quaver {
-    width: 140%;
-    background-position-x: 20%;
-  }
   .status {
     visibility: hidden;
   }
 }
 
 @media (max-width: 992px) {
-  .quaver {
-    height: 519px;
-    width: 675px;
-    background-position-x: -190%;
-  }
   .status {
     visibility: hidden;
   }
 }
 
 @media (max-width: 768px) {
-  .quaver {
-    display: none;
-  }
   .main-block {
     padding: 34px;
     margin-top: 0px;

@@ -326,7 +326,7 @@ function buildGame(game) {
                 <span data-tooltip="${generateFullDateFormat(gameStartTime)}">
                   ${generateTimeFormat(gameStartTime)}
                 </span>
-                - 
+                -
                 ${
                   gameEndTime
                     ? `
