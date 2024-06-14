@@ -40,9 +40,9 @@ button:focus {
   margin: 0em;
   min-height: 240px;
   padding: 4em 0em;
-  background: linear-gradient(rgb(0 0 0 / 35%), rgb(0 0 0 / 35%)),
-    url(https://wallpaperaccess.com/full/2621341.jpg);
+  background: url(/static/images/headers/bg_light-1.png);
   box-shadow: none;
+  background-position: center;
 }
 
 .masthead.segment .small-lineh {
