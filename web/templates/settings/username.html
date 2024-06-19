@@ -16,8 +16,6 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
       <div class="twelve wide column">
         <div class="ui aligned segment">
           <h3 class="ui header">{{ .T "Username" }}</h3>
-          {{ $u := qb "SELECT username FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
-          {{ $n := or $u.username.String "" }}
           <form
             id="username-form"
             class="ui form"
