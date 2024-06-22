@@ -90,6 +90,8 @@ func LoadSettings() Settings {
 
 	settings.APP_ENV = getEnv("APP_ENV")
 
+	// NOTE: These are used from the *client side*, and must be
+	//       set to urls available to the public internet.
 	settings.APP_BASE_URL = getEnv("APP_BASE_URL")
 	settings.APP_AVATAR_URL = getEnv("APP_AVATAR_URL")
 	settings.APP_API_URL = getEnv("APP_API_URL")
