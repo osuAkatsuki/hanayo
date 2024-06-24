@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - fix-infamous-401
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
