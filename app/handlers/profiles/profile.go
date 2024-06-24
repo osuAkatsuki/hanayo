@@ -70,7 +70,7 @@ func UserProfilePageHandler(c *gin.Context) {
 		services.DB.Get(&profileBackground, "SELECT type, value FROM profile_backgrounds WHERE uid = ?", data.UserID)
 		switch profileBackground.Type {
 		case 1, 3:
-			data.BannerContent = fmt.Sprintf("%s/profile-backgrounds/%s", settings.APP_AVATAR_URL, profileBackground.Value)
+			data.BannerContent = fmt.Sprintf("%s/profile-backgrounds/%s", settings.PUBLIC_AVATARS_SERVICE_BASE_URL, profileBackground.Value)
 			data.BannerAbsolute = true
 			data.BannerType = profileBackground.Type
 		case 2:
