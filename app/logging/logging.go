@@ -22,7 +22,3 @@ func (l *AmplitudeLogger) Errorf(message string, args ...interface{}) {
 func (l *AmplitudeLogger) Warnf(message string, args ...interface{}) {
 	slog.Warn(message, args...)
 }
-
-func NewHanayoLogger(h slog.Handler) *AmplitudeLogger {
-	return (*AmplitudeLogger)(slog.New(h))
-}
