@@ -25,6 +25,7 @@ func BeatmapPageHandler(c *gin.Context) {
 	if _, err := strconv.Atoi(b); err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
+		return
 	} else {
 		data.Beatmap, err = bu.GetBeatmapData(b)
 		if err != nil {
@@ -56,7 +57,7 @@ func BeatmapPageHandler(c *gin.Context) {
 	for i := range data.Beatmapset.ChildrenBeatmaps {
 		err := services.DB.QueryRow("SELECT playcount, passcount FROM beatmaps WHERE beatmap_md5 = ?", data.Beatmapset.ChildrenBeatmaps[i].FileMD5).Scan(&data.Beatmapset.ChildrenBeatmaps[i].Playcount, &data.Beatmapset.ChildrenBeatmaps[i].Passcount)
 		if err != nil {
-			slog.Error("Beatmap not found", "error", err.Error())
+			slog.WarnContext(c, "Could not assign playcount and passcount for child beatmap", "error", err.Error(), "beatmap_md5", data.Beatmapset.ChildrenBeatmaps[i].FileMD5)
 			data.Beatmapset.ChildrenBeatmaps[i].Playcount = 0
 			data.Beatmapset.ChildrenBeatmaps[i].Passcount = 0
 		}

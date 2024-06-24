@@ -1,7 +1,9 @@
 {{/* prettier-ignore-start */}}
 {{/*###
 Handler=/settings/clansettings
+BannerContent=settings2.jpg
 TitleBar=Clan Settings
+BannerType=1
 Include=menu.html
 */}}
 {{/* prettier-ignore-end */}}
@@ -11,17 +13,17 @@ Include=menu.html
       {{ template "settingsSidebar" . }}
       <div class="twelve wide column">
         <div class="ui segment">
-          {{ $d := (qb "SELECT * FROM clans WHERE owner = ? LIMIT 1;" .Context.User.ID) }}
-          {{ if $d }}
+          {{ $clan := (qb "SELECT * FROM clans WHERE owner = ? LIMIT 1;" .Context.User.ID) }}
+          {{ if $clan }}
             <font size="6">Clan Settings</font>
             <br />
             <br />
             <div class="ui center aligned segment">
-              {{ $tag := or $d.tag.String "" }}
-              {{ $desc := or $d.description.String "" }}
-              {{ $icon := or $d.icon.String "" }}
-              {{ $bg := or $d.background.String "" }}
-              {{ $status := or $d.status.Int 0 }}
+              {{ $tag := or $clan.tag.String "" }}
+              {{ $desc := or $clan.description.String "" }}
+              {{ $icon := or $clan.icon.String "" }}
+              {{ $bg := or $clan.background.String "" }}
+              {{ $status := or $clan.status.Int 0 }}
               <form id="register-form" class="ui form">
                 <div class="field">
                   <label class="left aligned">
@@ -35,7 +37,7 @@ Include=menu.html
                   />
                 </div>
                 <div class="field">
-                  <label class="left aligned">Description (optional)</label>
+                  <label class="left aligned">Description</label>
                   <input
                     tabindex="2"
                     type="text"
@@ -46,7 +48,7 @@ Include=menu.html
                 </div>
                 <div class="field">
                   <label class="left aligned">
-                    {{ "Icon [URL] (optional)" }}
+                    {{ "Icon Url" }}
                   </label>
                   <input
                     tabindex="3"
@@ -57,7 +59,7 @@ Include=menu.html
                   />
                 </div>
                 <div class="field">
-                  <label class="left aligned">Clan Status</label>
+                  <label class="left aligned">Invite Policy</label>
                   <select
                     class="ui dropdown"
                     tabindex="4"
@@ -78,7 +80,7 @@ Include=menu.html
                 {{ if has .Context.User.Privileges 8388612 }}
                   <div class="field">
                     <label class="left aligned">
-                      {{ "Background [URL] (optional)" }}
+                      {{ "Background Url" }}
                     </label>
                     <input
                       tabindex="5"
@@ -107,7 +109,7 @@ Include=menu.html
             <br />
             <center>
               <div class="ui one item menu">
-                {{ $inv := or $d.invite.String "No Invite" }}
+                {{ $inv := or $clan.invite.String "No Invite" }}
                 <input
                   id="invin"
                   class="item"
@@ -123,33 +125,35 @@ Include=menu.html
               <br />
               <br />
               <br />
-              {{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $d.id.Int) }}
-              <font size="6">Members: {{ $members.c }}</font>
-              <br />
-              {{ $ := . }}
-              {{ range (.Get "clans/members?id=%d" $d.id.Int).clan.members }}
-                {{ if ne (int .id) (int $.Context.User.ID) }}
-                  <form id="kick-form" class="ui form">
-                    <div class="column">
-                      <div class="ui left aligned fluid card">
-                        <div class="content">
-                          <a href="/u/{{ .id }}">
-                            <a class="header" href="/u/{{ .id }}">
-                              {{ country .country false }}{{ .username }}
+              {{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $clan.id.Int) }}
+              {{ if ne (int $members.c) 0 }}
+                <font size="6">Members: {{ $members.c }}</font>
+                <br />
+                {{ $ := . }}
+                {{ range (.Get "clans/members?id=%d" $clan.id.Int).clan.members }}
+                  {{ if ne (int .id) (int $.Context.User.ID) }}
+                    <form id="kick-form" class="ui form">
+                      <div class="column">
+                        <div class="ui left aligned fluid card">
+                          <div class="content">
+                            <a href="/u/{{ .id }}">
+                              <a class="header" href="/u/{{ .id }}">
+                                {{ country .country false }}{{ .username }}
+                              </a>
+                              <button
+                                name="member"
+                                value="{{ .id }}"
+                                class="ui right green button"
+                                style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"
+                              >
+                                Kick
+                              </button>
                             </a>
-                            <button
-                              name="member"
-                              value="{{ .id }}"
-                              class="ui right green button"
-                              style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"
-                            >
-                              Kick
-                            </button>
-                          </a>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </form>
+                    </form>
+                  {{ end }}
                 {{ end }}
               {{ end }}
               <script>
