@@ -43,7 +43,7 @@
           avatars:   '{{ .Conf.APP_AVATAR_URL }}',
           banchoAPI: '{{ .Conf.APP_BANCHO_URL }}',
           baseAPI:   '{{ .Conf.APP_API_URL }}',
-          cheesegullAPI: '{{ .Conf.BEATMAP_MIRROR_API_URL }}',
+          cheesegullAPI: '{{ .Conf.PUBLIC_BEATMAPS_SERVICE_BASE_URL }}',
         };
         var currentUserID = '{{ .Context.User.ID }}';
       </script>
