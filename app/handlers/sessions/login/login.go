@@ -102,6 +102,7 @@ func LoginSubmitHandler(c *gin.Context) {
 			if _, err := services.DB.Exec("UPDATE users SET password_md5 = ? WHERE id = ?", string(pass), data.ID); err == nil {
 				data.Password = string(pass)
 			}
+			slog.WarnContext(c, "Password cost was too low, updated", "id", data.ID, "username", data.Username)
 		} else {
 			slog.Error("Error updating password", "error", err.Error())
 		}
