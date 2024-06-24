@@ -17,192 +17,194 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
   />
   <div class="ui container">
     {{ $ief := ieForm .Gin }}
-    {{ with .Get "users/self/donor_info" }}
-      {{ if .has_donor }}
-        <div class="ui segment">
-          <h1
-            class="ui center aligned header no bottom margin"
-            style="margin: 0 auto; display: table;"
-          >
-            <i class="red heart icon" style="font-size: 90%;"></i>
-            <div class="content">{{ $.T "You are a supporter!" }}</div>
-          </h1>
-          <div class="ui centered subtitle" style="font-size:1.2rem;">
-            {{ $.T "Your Supporter expires <b>%s</b>. No need to feel guilty for not having donated!" (time .expiration) | html }}
-            &lt;3
-          </div>
-        </div>
-      {{ end }}
-      <div class="ui segment">
-        <h1 class="ui center aligned header">
-          {{ $.T "So what can you do?" }}
-          <div class="sub header">
-            {{ if .has_donor }}
-              {{ $.T "If you're <b>really</b> looking to support us, you can also check out Akatsuki's <a href='/premium'>premium</a> tier!" | html }}
-            {{ else }}
-              {{ $.T "Well, you can give us money." }}
-            {{ end }}
-          </div>
-        </h1>
-        <h4 class="ui horizontal divider header">
-          {{ $.T "Here's what you get:" }}
-        </h4>
-        <div class="ui internally celled stackable grid">
-          <div class="row">
-            <div class="four wide column">
-              <h3 class="ui header">{{ $.T "Yellow username" }}</h3>
-              {{ $.T "Just like in osu!, you get a <b>shiny yellow username</b> in the in-game chat and on the website to show everyone you're a really cool dude who has helped us pay the server bills." | html }}
-            </div>
-            <div class="four wide column">
-              <h3 class="ui header">{{ $.T "Supporter badge" }}</h3>
-              {{ $.T "Again, just like in osu!, you will get a <b>supporter badge</b> on your profile, to show everyone you're supporting us." | html }}
-            </div>
-            <div class="four wide column">
-              <h3 class="ui header">
-                {{ $.T "Access to the supporter-only section of the discord" }}
-              </h3>
-              {{ $.T "Akatsuki Supporters gain access to a <b>full category of channels in our Discord server</b>." | html }}
-            </div>
-            <div class="four wide column">
-              <h3 class="ui header">{{ $.T "Friends ranking" }}</h3>
-              {{ $.T "<b>Competing with friends</b> is really cool, you can play on the leaderboard with someone more or less on your level, without getting crippling depression and RSI for not beating that pro!" | html }}
+    {{ if .Context.User.ID }}
+      {{ with .Get "users/self/donor_info" }}
+        {{ if .has_donor }}
+          <div class="ui segment">
+            <h1
+              class="ui center aligned header no bottom margin"
+              style="margin: 0 auto; display: table;"
+            >
+              <i class="red heart icon" style="font-size: 90%;"></i>
+              <div class="content">{{ $.T "You are a supporter!" }}</div>
+            </h1>
+            <div class="ui centered subtitle" style="font-size:1.2rem;">
+              {{ $.T "Your Supporter expires <b>%s</b>. No need to feel guilty for not having donated!" (time .expiration) | html }}
+              &lt;3
             </div>
           </div>
-          <div class="row">
-            <div class="four wide column">
-              <h3 class="ui header">{{ $.T "Profile background" }}</h3>
-              {{ $.T "Thinking of <b>spicing your profile up with some hummus</b>? Got you covered! Having supporter privileges, you get to be able to change your profile background." | html }}
-            </div>
-            <div class="four wide column">
-              <h3 class="ui header">
-                {{ $.T "Unlimited Name Changes" }}
-              </h3>
-              {{ $.T "<b>Tired of your current identity?</b> Now you can have as many as you want! Now accessible via the settings tab of the website." | html }}
-            </div>
-            <div class="four wide column">
-              <h3 class="ui header">{{ $.T "Custom badge editor" }}</h3>
-              {{ $.T "You get to be able to create your <b>own personal badge</b>, with custom text and icon, to show off on your profile! Let the world know you're an anchor. Or prank people showing a spinnin' wheel with \"Loading...\"! Up to you." | html }}
-            </div>
-            <div class="four wide column">
-              <h3 class="ui header">{{ $.T "Unlimited Stats Resets" }}</h3>
-              {{ $.T "Now you can also <b>start fresh</b> with unlimited stats resets! Ask an administrator and they shall perform the deed." | html }}
-            </div>
-          </div>
-        </div>
-        {{ if $global.User.ID }}
-          <h4 class="ui horizontal divider header">
-            {{ $.T "And this is how you pay" }}
-          </h4>
-          <center>
-            <p>
-              {{ $.T "You may donate through <b>PayPal</b> (or credit/debit card linked to PayPal). Use the slider below to choose the amount of months you'd like, and the cost will be instantly calculated. The discount will increase exponentially as the months increase." | html }}
-            </p>
-          </center>
-          <div
-            id="months-slider"
-            style="margin: 0 auto; max-width: 500px"
-          ></div>
-          <br />
-          <div id="cost" class="centered"><b>{{ $.T "Loading..." }}</b></div>
-          <br />
-          <div
-            class="ui internally celled two column center aligned stackable grid"
-          >
-            <div class="column">
-              <h2 class="ui header">
-                <i class="fa-brands fa-paypal"></i>
-                {{ $.T "PayPal" }}
-              </h2>
-              <form
-                id="paypal-form"
-                action="https://www.paypal.com/cgi-bin/webscr"
-                method="post"
-                target="_self"
-              >
-                <input type="hidden" name="on0" value="Period" />
-                <input type="hidden" name="os0" value="1 month" />
-                {{ range _range 24 }}
-                  {{ $months := plus (float .) 1 }}
-                  <input
-                    type="hidden"
-                    name="option_select{{ . }}"
-                    value="{{ $months }} month{{ if . }}s{{ end }}"
-                  />
-                  <input
-                    type="hidden"
-                    name="custom"
-                    value="userid={{ $global.User.ID }}"
-                  />
-                  <input
-                    type="hidden"
-                    name="option_amount{{ . }}"
-                    value="{{ calculateDonorPrice $months }}"
-                  />
-                {{ end }}
-                <input
-                  type="hidden"
-                  name="on1"
-                  value="Akatsuki user to give supporter"
-                />
-                <input
-                  type="hidden"
-                  name="amount"
-                  value="{{ calculateDonorPrice 1 }}"
-                  id="paypal-amt"
-                />
-                <div class="ui fluid labeled action input">
-                  <div class="ui label">
-                    {{ $.T "User:" }}
-                  </div>
-                  <input
-                    id="username-input"
-                    name="os1"
-                    type="text"
-                    placeholder="{{ $.T "User" }}"
-                    value="{{ $global.User.Username }}"
-                  />
-                  <button type="submit" class="ui blue button">
-                    {{ $.T "Submit" }}
-                  </button>
-                </div>
-                {{ $ief }}
-                <input
-                  type="hidden"
-                  name="business"
-                  value="{{ config "PAYPAL_EMAIL_ADDRESS" }}"
-                />
-                <input type="hidden" name="cmd" value="_xclick" />
-                <input type="hidden" name="lc" value="GB" />
-                <input type="hidden" name="no_note" value="0" />
-                <input type="hidden" name="currency_code" value="EUR" />
-                <img
-                  alt=""
-                  border="0"
-                  src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif"
-                  width="1"
-                  height="1"
-                />
-              </form>
-            </div>
-          </div>
-          <h4 class="ui horizontal divider header">
-            {{ $.T "I've donated, now what?" }}
-          </h4>
-          <center>
-            <p>
-              {{ $.T "We are now processing payments automatically & your perks should be distributed as soon as possible. If you do run into any trouble, please <b>open a ticket</b> in our <a href='/discord'>Discord server</a>!" | html }}
-              <br />
-              <br />
-              {{ $.T "Disclaimer: Donations are <b>non-refundable</b>, and do not exempt you from <a href='/doc/tos'>Akatsuki's Rules</a>." | html }}
-            </p>
-          </center>
-        {{ else }}
-          <div class="ui divider"></div>
-          <h1 class="ui center aligned header">
-            {{ $.T "Please log in before purchasing supporter." }}
-          </h1>
         {{ end }}
-      </div>
+      {{ end }}
     {{ end }}
+    <div class="ui segment">
+      <h1 class="ui center aligned header">
+        {{ $.T "So what can you do?" }}
+        <div class="sub header">
+          {{ if .has_donor }}
+            {{ $.T "If you're <b>really</b> looking to support us, you can also check out Akatsuki's <a href='/premium'>premium</a> tier!" | html }}
+          {{ else }}
+            {{ $.T "Well, you can give us money." }}
+          {{ end }}
+        </div>
+      </h1>
+      <h4 class="ui horizontal divider header">
+        {{ $.T "Here's what you get:" }}
+      </h4>
+      <div class="ui internally celled stackable grid">
+        <div class="row">
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Yellow username" }}</h3>
+            {{ $.T "Just like in osu!, you get a <b>shiny yellow username</b> in the in-game chat and on the website to show everyone you're a really cool dude who has helped us pay the server bills." | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Supporter badge" }}</h3>
+            {{ $.T "Again, just like in osu!, you will get a <b>supporter badge</b> on your profile, to show everyone you're supporting us." | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">
+              {{ $.T "Access to the supporter-only section of the discord" }}
+            </h3>
+            {{ $.T "Akatsuki Supporters gain access to a <b>full category of channels in our Discord server</b>." | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Friends ranking" }}</h3>
+            {{ $.T "<b>Competing with friends</b> is really cool, you can play on the leaderboard with someone more or less on your level, without getting crippling depression and RSI for not beating that pro!" | html }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Profile background" }}</h3>
+            {{ $.T "Thinking of <b>spicing your profile up with some hummus</b>? Got you covered! Having supporter privileges, you get to be able to change your profile background." | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">
+              {{ $.T "Unlimited Name Changes" }}
+            </h3>
+            {{ $.T "<b>Tired of your current identity?</b> Now you can have as many as you want! Now accessible via the settings tab of the website." | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Custom badge editor" }}</h3>
+            {{ $.T "You get to be able to create your <b>own personal badge</b>, with custom text and icon, to show off on your profile! Let the world know you're an anchor. Or prank people showing a spinnin' wheel with \"Loading...\"! Up to you." | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Unlimited Stats Resets" }}</h3>
+            {{ $.T "Now you can also <b>start fresh</b> with unlimited stats resets! Ask an administrator and they shall perform the deed." | html }}
+          </div>
+        </div>
+      </div>
+      {{ if $global.User.ID }}
+        <h4 class="ui horizontal divider header">
+          {{ $.T "And this is how you pay" }}
+        </h4>
+        <center>
+          <p>
+            {{ $.T "You may donate through <b>PayPal</b> (or credit/debit card linked to PayPal). Use the slider below to choose the amount of months you'd like, and the cost will be instantly calculated. The discount will increase exponentially as the months increase." | html }}
+          </p>
+        </center>
+        <div
+          id="months-slider"
+          style="margin: 0 auto; max-width: 500px"
+        ></div>
+        <br />
+        <div id="cost" class="centered"><b>{{ $.T "Loading..." }}</b></div>
+        <br />
+        <div
+          class="ui internally celled two column center aligned stackable grid"
+        >
+          <div class="column">
+            <h2 class="ui header">
+              <i class="fa-brands fa-paypal"></i>
+              {{ $.T "PayPal" }}
+            </h2>
+            <form
+              id="paypal-form"
+              action="https://www.paypal.com/cgi-bin/webscr"
+              method="post"
+              target="_self"
+            >
+              <input type="hidden" name="on0" value="Period" />
+              <input type="hidden" name="os0" value="1 month" />
+              {{ range _range 24 }}
+                {{ $months := plus (float .) 1 }}
+                <input
+                  type="hidden"
+                  name="option_select{{ . }}"
+                  value="{{ $months }} month{{ if . }}s{{ end }}"
+                />
+                <input
+                  type="hidden"
+                  name="custom"
+                  value="userid={{ $global.User.ID }}"
+                />
+                <input
+                  type="hidden"
+                  name="option_amount{{ . }}"
+                  value="{{ calculateDonorPrice $months }}"
+                />
+              {{ end }}
+              <input
+                type="hidden"
+                name="on1"
+                value="Akatsuki user to give supporter"
+              />
+              <input
+                type="hidden"
+                name="amount"
+                value="{{ calculateDonorPrice 1 }}"
+                id="paypal-amt"
+              />
+              <div class="ui fluid labeled action input">
+                <div class="ui label">
+                  {{ $.T "User:" }}
+                </div>
+                <input
+                  id="username-input"
+                  name="os1"
+                  type="text"
+                  placeholder="{{ $.T "User" }}"
+                  value="{{ $global.User.Username }}"
+                />
+                <button type="submit" class="ui blue button">
+                  {{ $.T "Submit" }}
+                </button>
+              </div>
+              {{ $ief }}
+              <input
+                type="hidden"
+                name="business"
+                value="{{ config "PAYPAL_EMAIL_ADDRESS" }}"
+              />
+              <input type="hidden" name="cmd" value="_xclick" />
+              <input type="hidden" name="lc" value="GB" />
+              <input type="hidden" name="no_note" value="0" />
+              <input type="hidden" name="currency_code" value="EUR" />
+              <img
+                alt=""
+                border="0"
+                src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif"
+                width="1"
+                height="1"
+              />
+            </form>
+          </div>
+        </div>
+        <h4 class="ui horizontal divider header">
+          {{ $.T "I've donated, now what?" }}
+        </h4>
+        <center>
+          <p>
+            {{ $.T "We are now processing payments automatically & your perks should be distributed as soon as possible. If you do run into any trouble, please <b>open a ticket</b> in our <a href='/discord'>Discord server</a>!" | html }}
+            <br />
+            <br />
+            {{ $.T "Disclaimer: Donations are <b>non-refundable</b>, and do not exempt you from <a href='/doc/tos'>Akatsuki's Rules</a>." | html }}
+          </p>
+        </center>
+      {{ else }}
+        <div class="ui divider"></div>
+        <h1 class="ui center aligned header">
+          {{ $.T "Please log in before purchasing supporter." }}
+        </h1>
+      {{ end }}
+    </div>
   </div>
 {{ end }}
