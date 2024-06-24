@@ -10,7 +10,6 @@ BannerType=1
   <link rel="stylesheet" href="/static/css/pages/leaderboard.min.css" />
 
   <div class="ui container akat-box">
-
     {{ if .Context.User.ID }}
       {{ $favModeRaw := .Get "users/self/favourite_mode" }}
     {{ else }}
