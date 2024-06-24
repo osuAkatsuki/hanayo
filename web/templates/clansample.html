@@ -8,7 +8,7 @@ Include=clan_member.html
   {{ if .ClanID }}
     {{ $global := . }}
 
-    {{ $favMode := 0 }}
+    {{ $favMode := 0.0 }}
     {{ if .Context.User.ID }}
       {{ $favModeRaw := .Get "users/self/favourite_mode" }}
       {{ $favMode = _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
