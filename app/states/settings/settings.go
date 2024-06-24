@@ -32,10 +32,11 @@ type Settings struct {
 
 	APP_ENV string
 
-	APP_BASE_URL   string
-	APP_AVATAR_URL string
-	APP_API_URL    string
-	APP_BANCHO_URL string
+	APP_BASE_URL                    string
+	PUBLIC_AVATARS_SERVICE_BASE_URL string
+	INTERNAL_AKATSUKI_API_BASE_URL  string
+	PUBLIC_AKATSUKI_API_BASE_URL    string
+	PUBLIC_BANCHO_SERVICE_BASE_URL  string
 
 	INTERNAL_BEATMAPS_SERVICE_BASE_URL string
 	PUBLIC_BEATMAPS_SERVICE_BASE_URL   string
@@ -94,9 +95,10 @@ func LoadSettings() Settings {
 	// NOTE: These are used from the *client side*, and must be
 	//       set to urls available to the public internet.
 	settings.APP_BASE_URL = getEnv("APP_BASE_URL")
-	settings.APP_AVATAR_URL = getEnv("APP_AVATAR_URL")
-	settings.APP_API_URL = getEnv("APP_API_URL")
-	settings.APP_BANCHO_URL = getEnv("APP_BANCHO_URL")
+	settings.PUBLIC_AVATARS_SERVICE_BASE_URL = getEnv("PUBLIC_AVATARS_SERVICE_BASE_URL")
+	settings.INTERNAL_AKATSUKI_API_BASE_URL = getEnv("INTERNAL_AKATSUKI_API_BASE_URL")
+	settings.PUBLIC_AKATSUKI_API_BASE_URL = getEnv("PUBLIC_AKATSUKI_API_BASE_URL")
+	settings.PUBLIC_BANCHO_SERVICE_BASE_URL = getEnv("PUBLIC_BANCHO_SERVICE_BASE_URL")
 
 	settings.INTERNAL_BEATMAPS_SERVICE_BASE_URL = getEnv("INTERNAL_BEATMAPS_SERVICE_BASE_URL")
 	settings.PUBLIC_BEATMAPS_SERVICE_BASE_URL = getEnv("PUBLIC_BEATMAPS_SERVICE_BASE_URL")
