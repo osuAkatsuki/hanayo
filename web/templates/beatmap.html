@@ -132,10 +132,9 @@
         {{ $p := .Gin.Query "p" }}
         {{ $curMode := atoi (.Gin.Query "mode") }}
         {{ $relax := atoi (.Gin.Query "rx") }}
+        {{ $favModeRaw := 0 }}
         {{ if .Context.User.ID }}
-          {{ $favModeRaw := .Get "users/self/favourite_mode" }}
-        {{ else }}
-          {{ $favModeRaw := 0 }}
+          {{ $favModeRaw = .Get "users/self/favourite_mode" }}
         {{ end }}
         var beatmapID = {{ .Beatmap.ID }};
         var setData = JSON.parse({{ .SetJSON }});
