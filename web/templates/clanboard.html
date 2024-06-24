@@ -10,7 +10,7 @@ BannerType=1
   <div class="ui container akat-box">
     <link rel="stylesheet" href="/static/css/pages/clanboard.min.css" />
 
-    {{ $favMode := 0 }}
+    {{ $favMode := 0.0 }}
     {{ if .Context.User.ID }}
       {{ $favModeRaw := .Get "users/self/favourite_mode" }}
       {{ $favMode = _or (atoi
