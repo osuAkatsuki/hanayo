@@ -10,8 +10,11 @@ BannerType=1
   <link rel="stylesheet" href="/static/css/pages/leaderboard.min.css" />
 
   <div class="ui container akat-box">
-    {{ $favModeRaw := .Get "users/self/favourite_mode" }}
-    {{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
+    {{ $favMode := 0.0 }}
+    {{ if .Context.User.ID }}
+      {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+      {{ $favMode = _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
+    {{ end }}
     {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
     {{ $sort := or (.Gin.Query "sort") "pp" }}
 

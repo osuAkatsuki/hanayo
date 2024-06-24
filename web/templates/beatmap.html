@@ -132,7 +132,11 @@
         {{ $p := .Gin.Query "p" }}
         {{ $curMode := atoi (.Gin.Query "mode") }}
         {{ $relax := atoi (.Gin.Query "rx") }}
-        {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+        var favMode = 0;
+        {{ if .Context.User.ID }}
+          {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+          favMode = parseInt({{ $favModeRaw.favourite_mode }}) || 0;
+        {{ end }}
         var beatmapID = {{ .Beatmap.ID }};
         var setData = JSON.parse({{ .SetJSON }});
         var page = {{ $p | atoint | atLeastOne }};
@@ -141,7 +145,6 @@
         var currentCmode = parseInt({{ $relax }}) || 0;
         var currentModeChanged = false;
         var currentCmodeChanged = false;
-        var favMode = parseInt({{ $favModeRaw.favourite_mode }}) || 0;
 
         var previewAudio = document.querySelector("#beatmap-preview")
         var previewText = document.querySelector("#preview-text")
