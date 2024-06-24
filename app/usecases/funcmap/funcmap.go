@@ -418,7 +418,7 @@ var FuncMap = template.FuncMap{
 	// https://docs.ripple.moe/docs/banchoapi/v1
 	"bget": func(ept string, qs ...interface{}) map[string]interface{} {
 		settings := settingsState.GetSettings()
-		d, err := http.Get(fmt.Sprintf(settings.APP_BANCHO_URL+"/api/v1/"+ept, qs...))
+		d, err := http.Get(fmt.Sprintf(settings.PUBLIC_BANCHO_SERVICE_BASE_URL+"/api/v1/"+ept, qs...))
 		if err != nil {
 			slog.Error("Error in bget", "error", err.Error())
 			return nil
