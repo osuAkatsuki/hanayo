@@ -83,7 +83,14 @@ func LoginSubmitHandler(c *gin.Context) {
 		data.Password,
 		c.PostForm("password"),
 	); err != nil {
-		slog.Error("Error comparing passwords", "error", err.Error())
+		slog.WarnContext(
+			c,
+			"User login failed due to incorrect credentials",
+			"error",
+			err.Error(),
+			"input_username",
+			data.Username,
+		)
 		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Wrong password.")})
 		return
 	}
