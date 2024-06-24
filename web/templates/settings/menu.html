@@ -27,8 +27,6 @@ NoCompile=true
 
       {{ if $is_clan_owner }}
         {{ navbarItem .Path (.T "Clan settings") "/settings/clansettings" }}
-      {{ else }}
-        {{ navbarItem .Path (.T "<p title='Only the leader of the clan can access the settings page.' style='color:#C0C0C0;'>Clan Settings</p>") ""  | html }}
       {{ end }}
 
       {{ if has .Context.User.Privileges 4 }}
