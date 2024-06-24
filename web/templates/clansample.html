@@ -8,11 +8,11 @@ Include=clan_member.html
   {{ if .ClanID }}
     {{ $global := . }}
 
-    {{ $favModeRaw := 0 }}
+    {{ $favMode := 0 }}
     {{ if .Context.User.ID }}
-      {{ $favModeRaw = .Get "users/self/favourite_mode" }}
+      {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+      {{ $favMode = _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
     {{ end }}
-    {{ $favMode := _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
     {{ $rx := _or (atoi (.Gin.Query "rx")) (float 0) }}
     <!-- idk (it works) -->
     {{ with (.Get "clans?id=%d" .ClanID).clan }}
