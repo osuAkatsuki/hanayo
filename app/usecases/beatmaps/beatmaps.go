@@ -68,7 +68,7 @@ func GetBeatmapData(b string) (beatmap Beatmap, err error) {
 
 func GetBeatmapSetData(beatmap Beatmap) (bset BeatmapSet, err error) {
 	settings := settingsState.GetSettings()
-	resp, err := http.Get(settings.INTERNAL_BEATMAPS_SERVICE_BASE_URL + "/s/" + strconv.Itoa(beatmap.ParentSetID))
+	resp, err := http.Get(settings.INTERNAL_BEATMAPS_SERVICE_BASE_URL + "/api/s/" + strconv.Itoa(beatmap.ParentSetID))
 	if err != nil {
 		return bset, err
 	}
