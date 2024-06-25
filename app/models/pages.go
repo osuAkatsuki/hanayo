@@ -52,7 +52,7 @@ func (b *BaseTemplateData) SetSession(sess sessions.Session) {
 func (b BaseTemplateData) Get(s string, params ...interface{}) map[string]interface{} {
 	s = fmt.Sprintf(s, params...)
 	settings := settingsState.GetSettings()
-	req, err := http.NewRequest("GET", settings.APP_API_URL+"/"+s, nil)
+	req, err := http.NewRequest("GET", settings.INTERNAL_AKATSUKI_API_BASE_URL+"/"+s, nil)
 	if err != nil {
 		b.Gin.Error(err)
 		return nil
