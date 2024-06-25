@@ -88,7 +88,7 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 	}
 	lid, _ := res.LastInsertId()
 
-	_, err = tx.Exec("UPDATE users SET clan_id = ?, clan_privileges = 8 WHERE id = ?", lid, sessions.GetContext(c).User.ID)
+	_, err = tx.Exec("UPDATE users SET clan_id = ? WHERE id = ?", lid, sessions.GetContext(c).User.ID)
 	if err != nil {
 		tx.Rollback()
 		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "An error occurred while creating a clan.")})
