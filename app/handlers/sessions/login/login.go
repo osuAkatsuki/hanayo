@@ -83,7 +83,14 @@ func LoginSubmitHandler(c *gin.Context) {
 		data.Password,
 		c.PostForm("password"),
 	); err != nil {
-		slog.Error("Error comparing passwords", "error", err.Error())
+		slog.WarnContext(
+			c,
+			"User login failed due to incorrect credentials",
+			"error",
+			err.Error(),
+			"input_username",
+			data.Username,
+		)
 		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Wrong password.")})
 		return
 	}
@@ -95,6 +102,7 @@ func LoginSubmitHandler(c *gin.Context) {
 			if _, err := services.DB.Exec("UPDATE users SET password_md5 = ? WHERE id = ?", string(pass), data.ID); err == nil {
 				data.Password = string(pass)
 			}
+			slog.WarnContext(c, "Password cost was too low, updated", "id", data.ID, "username", data.Username)
 		} else {
 			slog.Error("Error updating password", "error", err.Error())
 		}
