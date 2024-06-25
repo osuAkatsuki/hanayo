@@ -11,7 +11,7 @@ NoCompile=true
     <div class="ui fluid vertical menu">
       {{ navbarItem .Path (.T "Profile") "/settings" }}
 
-      {{ if $userpageAllowed }}
+      {{ if $can_userpage }}
         {{/* Admins can disallow users from editing their userpage */}}
         {{ navbarItem .Path (.T "Userpage") "/settings/userpage" }}
       {{ else }}
