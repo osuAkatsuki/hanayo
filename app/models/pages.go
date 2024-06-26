@@ -3,7 +3,7 @@ package models
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/gin-gonic/contrib/sessions"
@@ -65,7 +65,7 @@ func (b BaseTemplateData) Get(s string, params ...interface{}) map[string]interf
 		b.Gin.Error(err)
 		return nil
 	}
-	data, err := ioutil.ReadAll(resp.Body)
+	data, err := io.ReadAll(resp.Body)
 	defer resp.Body.Close()
 	if err != nil {
 		b.Gin.Error(err)

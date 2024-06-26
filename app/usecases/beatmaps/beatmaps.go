@@ -2,7 +2,7 @@ package beatmaps
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -53,7 +53,7 @@ func GetBeatmapData(b string) (beatmap Beatmap, err error) {
 		return beatmap, err
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return beatmap, err
 	}
@@ -73,7 +73,7 @@ func GetBeatmapSetData(beatmap Beatmap) (bset BeatmapSet, err error) {
 		return bset, err
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return bset, err
 	}

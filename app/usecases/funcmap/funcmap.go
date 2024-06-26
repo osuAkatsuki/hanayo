@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"math"
 	"math/rand"
@@ -424,7 +425,7 @@ var FuncMap = template.FuncMap{
 			return nil
 		}
 		x := make(map[string]interface{})
-		data, _ := ioutil.ReadAll(d.Body)
+		data, _ := io.ReadAll(d.Body)
 		json.Unmarshal(data, &x)
 		return x
 	},

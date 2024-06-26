@@ -7,13 +7,11 @@ import (
 	_ "image/jpeg"
 	"image/png"
 	"io"
+	"net/http"
 	"os"
 
 	"golang.org/x/exp/slog"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/gin-gonic/gin"
 	"github.com/nfnt/resize"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
@@ -63,19 +61,13 @@ func AvatarSubmitHandler(c *gin.Context) {
 	// seek file to beginning
 	f.Seek(0, io.SeekStart)
 
-	sess := session.Must(session.NewSession(&aws.Config{
-		Region:   aws.String(settings.AWS_REGION),
-		Endpoint: aws.String(settings.AWS_ENDPOINT_URL),
-	}))
-	uploader := s3manager.NewUploader(sess)
-	_, err = uploader.Upload(&s3manager.UploadInput{
-		Bucket:      aws.String(settings.AWS_BUCKET_NAME),
-		Key:         aws.String(fmt.Sprintf("avatars/%d.png", ctx.User.ID)),
-		Body:        f,
-		ContentType: aws.String("image/png"),
-		// TODO: CacheControl?
-	})
-	if err != nil {
+	req, err := http.Post(
+		settings.INTERNAL_AVATARS_SERVICE_BASE_URL+"/users/"+fmt.Sprint(ctx.User.ID)+"/avatar",
+		"image/png",
+		f,
+	)
+
+	if err != nil || req.StatusCode != 201 {
 		m = msg.ErrorMessage{lu.T(c, "We were not able to save your avatar.")}
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())

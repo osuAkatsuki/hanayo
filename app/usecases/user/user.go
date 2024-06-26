@@ -88,7 +88,7 @@ func SetCountry(c *gin.Context, userID int) error {
 		slog.Error("error", "Could not resolve country from ip!", err.Error())
 		return err
 	}
-	// Changed to io.ReadAll from ioutil.ReadAll as it is deprecated.
+	// Changed to io.ReadAll from io.ReadAll as it is deprecated.
 	data, err := io.ReadAll(raw.Body)
 	if err != nil {
 		slog.Error("Could not read country", "error", err.Error())
