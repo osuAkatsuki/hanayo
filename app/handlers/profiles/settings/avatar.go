@@ -87,7 +87,6 @@ func AvatarSubmitHandler(c *gin.Context) {
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		m = msg.ErrorMessage{lu.T(c, "We were not able to save your avatar.")}
-		c.Error(err)
 		slog.ErrorContext(c, "Avatar service returned non-2xx status", "status_code", resp.StatusCode)
 		return
 	}
