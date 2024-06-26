@@ -62,8 +62,8 @@ func AvatarSubmitHandler(c *gin.Context) {
 	f.Seek(0, io.SeekStart)
 
 	req, err := http.NewRequest(
+		"POST",
 		settings.INTERNAL_AVATARS_SERVICE_BASE_URL+"/users/"+fmt.Sprint(ctx.User.ID)+"/avatar",
-		"image/png",
 		f,
 	)
 
