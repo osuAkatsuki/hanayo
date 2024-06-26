@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - avatars-service-uploads
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
