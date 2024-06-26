@@ -74,7 +74,7 @@ func AvatarSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	req.Header.Add("Authorization", "Bearer "+settings.RESTRICTED_AVATARS_SERVICE_API_KEY)
+	req.Header.Add("X-Api-Key", settings.RESTRICTED_AVATARS_SERVICE_API_KEY)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
