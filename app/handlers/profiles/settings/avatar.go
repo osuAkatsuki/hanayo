@@ -61,16 +61,32 @@ func AvatarSubmitHandler(c *gin.Context) {
 	// seek file to beginning
 	f.Seek(0, io.SeekStart)
 
-	req, err := http.Post(
+	req, err := http.NewRequest(
 		settings.INTERNAL_AVATARS_SERVICE_BASE_URL+"/users/"+fmt.Sprint(ctx.User.ID)+"/avatar",
 		"image/png",
 		f,
 	)
 
-	if err != nil || req.StatusCode != 201 {
+	if err != nil {
 		m = msg.ErrorMessage{lu.T(c, "We were not able to save your avatar.")}
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
+		return
+	}
+
+	req.Header.Add("Authorization", "Bearer "+settings.RESTRICTED_AVATARS_SERVICE_API_KEY)
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		m = msg.ErrorMessage{lu.T(c, "We were not able to save your avatar.")}
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 && resp.StatusCode != 201 {
+		m = msg.ErrorMessage{lu.T(c, "We were not able to save your avatar.")}
 		return
 	}
 
