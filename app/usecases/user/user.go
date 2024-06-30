@@ -102,13 +102,13 @@ func SetCountry(c *gin.Context, userID int) error {
 	settings := settingsState.GetSettings()
 	resp, err := http.Get(settings.IP_LOOKUP_URL + "/json/" + su.ClientIP(c))
 	if err != nil {
-		slog.Error("error", "Could not resolve country from ip!", err.Error())
+		slog.ErrorContext(c, "error", "Could not resolve country from ip!", err.Error())
 		return err
 	}
 	geolocation := Geolocation{}
 	json.NewDecoder(resp.Body).Decode(&geolocation)
 	if geolocation.CountryCode == "" || len(geolocation.CountryCode) != 2 {
-		slog.Error("Unknown countryCode format from ip-api.com", "code", geolocation.CountryCode)
+		slog.ErrorContext(c, "Unknown countryCode format from ip-api.com", "code", geolocation.CountryCode)
 		return nil
 	}
 	services.DB.Exec("UPDATE users SET country = ? WHERE id = ?", geolocation.CountryCode, userID)
