@@ -1,7 +1,7 @@
 package user
 
 import (
-	"io"
+	"encoding/json"
 	"net/http"
 	"regexp"
 	"strings"
@@ -81,20 +81,33 @@ func LogIP(c *gin.Context, user int) error {
 	return err
 }
 
+// Expects structure from http://ip-api.com/json/{ip}
+type Geolocation struct {
+	Country     string `json:"country"`
+	CountryCode string `json:"countryCode"`
+	Region      string `json:"region"`
+	RegionName  string `json:"regionName"`
+	City        string `json:"city"`
+	Zip         string `json:"zip"`
+	Lat         string `json:"lat"`
+	Lon         string `json:"lon"`
+	Timezone    string `json:"timezone"`
+	Isp         string `json:"isp"`
+	Org         string `json:"org"`
+	As          string `json:"as"`
+	Query       string `json:"query"`
+}
+
 func SetCountry(c *gin.Context, userID int) error {
 	settings := settingsState.GetSettings()
-	raw, err := http.Get(settings.IP_LOOKUP_URL + "/" + su.ClientIP(c) + "/country")
+	resp, err := http.Get(settings.IP_LOOKUP_URL + "/json/" + su.ClientIP(c))
 	if err != nil {
 		slog.Error("error", "Could not resolve country from ip!", err.Error())
 		return err
 	}
-	// Changed to io.ReadAll from ioutil.ReadAll as it is deprecated.
-	data, err := io.ReadAll(raw.Body)
-	if err != nil {
-		slog.Error("Could not read country", "error", err.Error())
-		return err
-	}
-	country := strings.TrimSpace(string(data))
+	geolocation := Geolocation{}
+	json.NewDecoder(resp.Body).Decode(&geolocation)
+	country := strings.TrimSpace(geolocation.CountryCode)
 	if country == "" || len(country) != 2 {
 		return nil
 	}
