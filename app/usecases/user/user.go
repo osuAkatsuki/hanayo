@@ -108,6 +108,7 @@ func SetCountry(c *gin.Context, userID int) error {
 	geolocation := Geolocation{}
 	json.NewDecoder(resp.Body).Decode(&geolocation)
 	if geolocation.CountryCode == "" || len(geolocation.CountryCode) != 2 {
+		slog.Error("Unknown countryCode format from ip-api.com", "code", geolocation.CountryCode)
 		return nil
 	}
 	services.DB.Exec("UPDATE users SET country = ? WHERE id = ?", geolocation.CountryCode, userID)
