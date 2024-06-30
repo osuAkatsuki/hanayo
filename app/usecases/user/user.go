@@ -107,11 +107,10 @@ func SetCountry(c *gin.Context, userID int) error {
 	}
 	geolocation := Geolocation{}
 	json.NewDecoder(resp.Body).Decode(&geolocation)
-	country := strings.TrimSpace(geolocation.CountryCode)
-	if country == "" || len(country) != 2 {
+	if geolocation.CountryCode == "" || len(geolocation.CountryCode) != 2 {
 		return nil
 	}
-	services.DB.Exec("UPDATE users SET country = ? WHERE id = ?", country, userID)
+	services.DB.Exec("UPDATE users SET country = ? WHERE id = ?", geolocation.CountryCode, userID)
 	return nil
 }
 
