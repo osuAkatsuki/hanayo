@@ -2,7 +2,7 @@ package misc
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -33,7 +33,7 @@ func RecaptchaCheck(c *gin.Context) bool {
 		return false
 	}
 
-	data, err := ioutil.ReadAll(req.Body)
+	data, err := io.ReadAll(req.Body)
 	if err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
