@@ -126,7 +126,7 @@ Include=menu.html
               <br />
               <br />
               {{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $clan.id.Int) }}
-              {{ if ne (int $members.c) 0 }}
+              {{ if ne $members.c.Int 0 }}
                 <font size="6">Members: {{ $members.c }}</font>
                 <br />
                 {{ $ := . }}
