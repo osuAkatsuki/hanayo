@@ -140,14 +140,15 @@ Include=menu.html
                               <a class="header" href="/u/{{ .id }}">
                                 {{ country .country false }}{{ .username }}
                               </a>
-                              <button
-                                name="member"
-                                value="{{ .id }}"
-                                class="ui right green button"
-                                style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"
-                              >
-                                Kick
-                              </button>
+                              <div style="margin-right: 0px; float: right; display: flex; flex-direction: column;">                                
+                                <button
+                                  name="kick-member"
+                                  value="{{ .id }}"
+                                  class="ui right green button"
+                                >
+                                  Kick
+                                </button>
+                              </div>
                             </a>
                           </div>
                         </div>
@@ -157,7 +158,7 @@ Include=menu.html
                 {{ end }}
               {{ end }}
               <script>
-                $("button[name = 'member']").on("click", function (e) {
+                $("button[name = 'kick-member']").on("click", function (e) {
                   e.preventDefault();
                   api(
                     "clans/kick",
