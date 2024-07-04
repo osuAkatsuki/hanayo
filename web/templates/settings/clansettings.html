@@ -126,7 +126,7 @@ Include=menu.html
               <br />
               <br />
               {{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $clan.id.Int) }}
-              {{ if ne (int $members.c) 0 }}
+              {{ if ne $members.c.Int 0 }}
                 <font size="6">Members: {{ $members.c }}</font>
                 <br />
                 {{ $ := . }}
@@ -140,14 +140,23 @@ Include=menu.html
                               <a class="header" href="/u/{{ .id }}">
                                 {{ country .country false }}{{ .username }}
                               </a>
-                              <button
-                                name="member"
-                                value="{{ .id }}"
-                                class="ui right green button"
-                                style="float:right; display:block; margin-right:0px; clear:left; width: 40%;"
-                              >
-                                Kick
-                              </button>
+                              <div style="margin-right: 0px; float: right; display: flex; flex-direction: column;">
+                                <button
+                                  name="transfer-ownership"
+                                  value="{{ .id }}"
+                                  class="ui right green button"
+                                >
+                                  Transfer Ownership
+                                </button>
+                                <button
+                                  name="kick-member"
+                                  value="{{ .id }}"
+                                  class="ui right green button"
+                                  style="margin-top: 5px;"
+                                >
+                                  Kick
+                                </button>
+                              </div>
                             </a>
                           </div>
                         </div>
@@ -157,7 +166,19 @@ Include=menu.html
                 {{ end }}
               {{ end }}
               <script>
-                $("button[name = 'member']").on("click", function (e) {
+                $("button[name = 'transfer-ownership']").on("click", function (e) {
+                  e.preventDefault();
+                  api(
+                    "clans/transfer-ownership",
+                    { new_owner_user_id: parseInt($(this).val()) },
+                    function (t) {
+                      window.location.reload();
+                    },
+                    !0
+                  );
+                });
+                
+                $("button[name = 'kick-member']").on("click", function (e) {
                   e.preventDefault();
                   api(
                     "clans/kick",
