@@ -269,9 +269,7 @@
                     </div>
                     <div class="column bottom-column">
                       <div class="profile-badges">
-                        {{ if and (not .badges) (not .custom_badge) }}
-                          {{ $global.T "This user hasn't got any badges!" }}
-                        {{ else }}
+                        {{ if .badges }}
                           {{ range .badges }}
                             <div class="badge" data-tooltip="{{ .name }}">
                               <a>
@@ -284,6 +282,8 @@
                               </a>
                             </div>
                           {{ end }}
+                        {{ end }}
+                        {{ if .custom_badge }}
                           {{ with .custom_badge }}
                             <div class="badge" data-tooltip="{{ .name }}">
                               <a>
