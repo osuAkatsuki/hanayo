@@ -82,7 +82,7 @@
               {{ $support := has .privileges 9175111 }}
               {{ $dev := has .privileges 10743327 }}
               {{ $design := false }}
-              {{ $nqa := false }}
+              {{ $nqa := has .privileges 33554432 }}
               {{ $nominator := has .privileges 8388871 }}
               {{ $event := has .privileges 10485767 }}
               {{ $scorewatcher := false }}
@@ -93,9 +93,6 @@
                 {{ end }}
                 {{ if eq .id (float 101) }}
                   {{ $design = true }}
-                {{ end }}
-                {{ if eq .id (float 100) }}
-                  {{ $nqa = true }}
                 {{ end }}
                 {{ if eq .id (float 86) }}
                   {{ $scorewatcher = true }}
