@@ -43,7 +43,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
             {{ if ne $type 1 }}hidden{{ end }}>
             {{ if and (eq $type 1) $value }}
               <img
-                src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/{{ $value }}" />
+                src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/profile-backgrounds/{{ $value }}" />
             {{ else }}
               No image selected
             {{ end }}
@@ -56,7 +56,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
             {{ if ne $type 3 }}hidden{{ end }}>
             {{ if and (eq $type 3) $value }}
               <img
-                src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/{{ $value }}" />
+                src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/profile-backgrounds/{{ $value }}" />
             {{ else }}
               No image selected
             {{ end }}
