@@ -1,6 +1,6 @@
 {{ define "base" }}
   {{ $ := . }}
-  <!DOCTYPE html>
+  <!doctype html>
   <html>
     <head>
       <meta charset="utf-8" />
@@ -13,24 +13,20 @@
       <link
         rel="stylesheet"
         type="text/css"
-        href="/static/css/semantic.min.css"
-      />
+        href="/static/css/semantic.min.css" />
       <link
         rel="stylesheet"
         type="text/css"
-        href="/static/css/akatsuki.min.css"
-      />
+        href="/static/css/akatsuki.min.css" />
       <link
         rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-      />
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
       <link
         rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css"
-      />
+        href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css" />
 
       <!-- Amplitude Browser SDK 2.0 -->
       <script type="text/javascript">
@@ -50,8 +46,7 @@
 
       <script
         src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"
-        crossorigin="anonymous"
-      ></script>
+        crossorigin="anonymous"></script>
       <script src="/static/js/dist.min.js"></script>
 
       <style>
@@ -73,8 +68,7 @@
           {{ end }});"
         {{ else if eq .BannerType 2 }}
           style="--user-bg: {{ .BannerContent }}"
-        {{ end }}
-      >
+        {{ end }}>
         {{ template "navbar" . }}
 
 
@@ -122,8 +116,7 @@
               '{{ .BannerContent }}'
             {{ else }}
               '/static/images/headers/{{ or .BannerContent "default.jpg" }}'
-            {{ end }}); background-size: cover"
-          >
+            {{ end }}); background-size: cover">
             <div class="ui container">
               <h1>
                 {{ if .HeadingTitle }}
@@ -155,8 +148,7 @@
           <div
             class="ui scrolling dropdown"
             style="margin-left: 5px;"
-            id="language-selector"
-          >
+            id="language-selector">
             {{ $lang := .Context.Language }}
             {{ with $lang }}
               {{ $info := languageInformationByNameShort . }}
@@ -164,8 +156,7 @@
                 <img
                   class="new-flag fixed--flag--margin"
                   style="margin-bottom: 0.2em !important;"
-                  src="/static/images/flags/{{ countryCodepoints $info.CountryShort }}.svg"
-                />
+                  src="/static/images/flags/{{ countryCodepoints $info.CountryShort }}.svg" />
                 {{ countryReadable $info.CountryShort }}
               </span>
             {{ else }}
@@ -178,8 +169,7 @@
                   class="language-select {{ if eq .NameShort $lang }}
                     selected
                   {{ end }}item"
-                  data-lang="{{ .NameShort }}"
-                >
+                  data-lang="{{ .NameShort }}">
                   {{ country .CountryShort false }}{{ .Name }}
                 </div>
               {{ end }}

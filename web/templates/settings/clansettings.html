@@ -33,8 +33,7 @@ Include=menu.html
                     tabindex="1"
                     type="text"
                     name="tag"
-                    value="{{ $tag }}"
-                  />
+                    value="{{ $tag }}" />
                 </div>
                 <div class="field">
                   <label class="left aligned">Description</label>
@@ -43,8 +42,7 @@ Include=menu.html
                     type="text"
                     name="desc"
                     placeholder="Description"
-                    value="{{ $desc }}"
-                  />
+                    value="{{ $desc }}" />
                 </div>
                 <div class="field">
                   <label class="left aligned">
@@ -55,8 +53,7 @@ Include=menu.html
                     type="url"
                     name="icon"
                     placeholder="Icon"
-                    value="{{ $icon }}"
-                  />
+                    value="{{ $icon }}" />
                 </div>
                 <div class="field">
                   <label class="left aligned">Invite Policy</label>
@@ -64,8 +61,7 @@ Include=menu.html
                     class="ui dropdown"
                     tabindex="4"
                     name="status"
-                    data-cast="int"
-                  >
+                    data-cast="int">
                     <option value="0" {{ if eq $status 0 }}selected{{ end }}>
                       Closed
                     </option>
@@ -87,8 +83,7 @@ Include=menu.html
                       type="url"
                       name="bg"
                       placeholder="Background URL"
-                      value="{{ $bg }}"
-                    />
+                      value="{{ $bg }}" />
                   </div>
                 {{ end }}
                 {{ ieForm .Gin }}
@@ -98,8 +93,7 @@ Include=menu.html
                 tabindex="6"
                 class="ui primary button"
                 type="submit"
-                form="register-form"
-              >
+                form="register-form">
                 {{ .T "Save" }}
               </button>
             </div>
@@ -116,8 +110,7 @@ Include=menu.html
                   type="text"
                   value="{{ $inv }}"
                   style="background-color:rgba(0,0,0,.6)"
-                  disabled
-                />
+                  disabled />
               </div>
               <button id="ginvite" class="ui right green button">
                 {{ .T "Generate a new invite!" }}
@@ -140,20 +133,19 @@ Include=menu.html
                               <a class="header" href="/u/{{ .id }}">
                                 {{ country .country false }}{{ .username }}
                               </a>
-                              <div style="margin-right: 0px; float: right; display: flex; flex-direction: column;">
+                              <div
+                                style="margin-right: 0px; float: right; display: flex; flex-direction: column;">
                                 <button
                                   name="transfer-ownership"
                                   value="{{ .id }}"
-                                  class="ui right green button"
-                                >
+                                  class="ui right green button">
                                   Transfer Ownership
                                 </button>
                                 <button
                                   name="kick-member"
                                   value="{{ .id }}"
                                   class="ui right green button"
-                                  style="margin-top: 5px;"
-                                >
+                                  style="margin-top: 5px;">
                                   Kick
                                 </button>
                               </div>
@@ -166,18 +158,21 @@ Include=menu.html
                 {{ end }}
               {{ end }}
               <script>
-                $("button[name = 'transfer-ownership']").on("click", function (e) {
-                  e.preventDefault();
-                  api(
-                    "clans/transfer-ownership",
-                    { new_owner_user_id: parseInt($(this).val()) },
-                    function (t) {
-                      window.location.reload();
-                    },
-                    !0
-                  );
-                });
-                
+                $("button[name = 'transfer-ownership']").on(
+                  "click",
+                  function (e) {
+                    e.preventDefault();
+                    api(
+                      "clans/transfer-ownership",
+                      { new_owner_user_id: parseInt($(this).val()) },
+                      function (t) {
+                        window.location.reload();
+                      },
+                      !0,
+                    );
+                  },
+                );
+
                 $("button[name = 'kick-member']").on("click", function (e) {
                   e.preventDefault();
                   api(
@@ -186,7 +181,7 @@ Include=menu.html
                     function (t) {
                       window.location.reload();
                     },
-                    !0
+                    !0,
                   );
                 });
               </script>

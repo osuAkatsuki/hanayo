@@ -8,8 +8,8 @@ BannerType=1
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
   {{ $downEnabled := qb "SELECT value_int FROM system_settings WHERE name = 'patcher_download'" }}
-  <!-- 
-    RealistikDash was here. 
+  <!--
+    RealistikDash was here.
     I suck at design....
     After 9 months its finally time to rearrange this template ~lenforiee
   -->
@@ -54,8 +54,7 @@ BannerType=1
           {{ else }}
             <a
               class="ui green button"
-              href="https://air_conditioning.akatsuki.gg/loader"
-            >
+              href="https://air_conditioning.akatsuki.gg/loader">
               <i class="angle double down icon"></i>
               Download Patcher
             </a>

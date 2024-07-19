@@ -15,36 +15,29 @@
         {{/* Meta tags */}}
         <meta
           property="og:title"
-          content="{{ .username }}'s profile | Akatsuki"
-        />
+          content="{{ .username }}'s profile | Akatsuki" />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content="https://akatsuki.gg/u/{{ $global.UserID }}?mode=0&rx=1"
-        />
+          content="https://akatsuki.gg/u/{{ $global.UserID }}?mode=0&rx=1" />
         <meta
           property="og:image"
-          content="https://a.akatsuki.gg/{{ $global.UserID }}"
-        />
+          content="https://a.akatsuki.gg/{{ $global.UserID }}" />
         <meta
           property="og:description"
-          content="{{ .username }} is a player from {{ country .country true }}."
-        />
+          content="{{ .username }} is a player from {{ country .country true }}." />
         <meta name="theme-color" content="#AC88D8" />
 
         {{/* Twitter-specific stuff */}}
         <meta
           name="twitter:title"
-          content="{{ .username }}'s profile | Akatsuki"
-        />
+          content="{{ .username }}'s profile | Akatsuki" />
         <meta
           name="twitter:image"
-          content="https://a.akatsuki.gg/{{ $global.UserID }}?mode=0&rx=1"
-        />
+          content="https://a.akatsuki.gg/{{ $global.UserID }}?mode=0&rx=1" />
         <meta
           name="twitter:url"
-          content="https://akatsuki.gg/u/{{ $global.UserID }}"
-        />
+          content="https://akatsuki.gg/u/{{ $global.UserID }}" />
         <meta name="twitter:card" content="" />
       </head>
 
@@ -66,8 +59,7 @@
               profile-heading-image radius-top
             {{ else }}
               profile-heading-solid radius-top
-            {{ end }}"
-          >
+            {{ end }}">
             <div class="profile-heading-customisation"></div>
             <div class="profile-info">
               {{ $user := . }}
@@ -109,8 +101,7 @@
                     <img
                       src="https://a.akatsuki.gg/{{ .id }}"
                       alt="avatar"
-                      class="profile-avatar"
-                    />
+                      class="profile-avatar" />
                   </div>
                   <div class="ten wide column">
                     <div class="profile-user-info">
@@ -194,13 +185,11 @@
                         </div>
                       {{ else if $scorewatcher }}
                         <div
-                          class="profile-label label-scorewatcher label-full"
-                        >
+                          class="profile-label label-scorewatcher label-full">
                           SOCIAL MEDIA MANAGER
                         </div>
                         <div
-                          class="profile-label label-scorewatcher label-mobile"
-                        >
+                          class="profile-label label-scorewatcher label-mobile">
                           SW
                         </div>
                       {{ else if $champion }}
@@ -210,8 +199,7 @@
                         <div class="profile-label label-champion label-mobile">
                           <span>
                             <i
-                              class="fa-fade fa-solid fa-trophy label-icon"
-                            ></i>
+                              class="fa-fade fa-solid fa-trophy label-icon"></i>
                           </span>
                         </div>
                       {{ else if $premium }}
@@ -239,8 +227,7 @@
                       <div class="profile-country">
                         <img
                           src="/static/images/flags/{{ countryCodepoints .country }}.svg"
-                          class="pflag"
-                        />
+                          class="pflag" />
                         <div class="profile-country-name">
                           {{ countryReadable .country }}
                         </div>
@@ -253,8 +240,7 @@
                                 green
                               {{ else }}
                                 red
-                              {{ end }} circle icon"
-                            ></i>
+                              {{ end }} circle icon"></i>
                             {{ if .result }}
                               {{ $global.T "Online" }}
                             {{ else }}
@@ -276,8 +262,7 @@
                                   class="{{ .icon }} small icon m-less"
                                   {{ if .colour }}
                                     style="color: {{ .colour }} !important;"
-                                  {{ end }}
-                                ></i>
+                                  {{ end }}></i>
                               </a>
                             </div>
                           {{ end }}
@@ -306,15 +291,13 @@
                         {{ if and (ne $global.Context.User.ID $global.UserID) (ne $global.Context.User.ID 0) }}
                           <a
                             class="ui button loading action-button"
-                            id="add-friend-button"
-                          ></a>
+                            id="add-friend-button"></a>
                         {{ end }}
                         {{ if eq $global.Context.User.ID $global.UserID }}
                           <a
                             href="/settings"
                             class="ui teal button action-button"
-                            title="Go to settings"
-                          >
+                            title="Go to settings">
                             <i class="fa-solid fa-pen-to-square"></i>
                           </a>
                         {{ end }}
@@ -324,16 +307,14 @@
                             href="http://old.akatsuki.gg/index.php?p=103&id={{ $global.UserID }}"
                             target="_blank"
                             title="Edit user"
-                            class="ui purple button action-button"
-                          >
+                            class="ui purple button action-button">
                             <i class="fa-solid fa-folder-open"></i>
                           </a>
                           <a
                             href="http://old.akatsuki.gg/index.php?p=104&id={{ $global.UserID }}"
                             target="_blank"
                             title="Edit username"
-                            class="ui red button action-button"
-                          >
+                            class="ui red button action-button">
                             <i class="fa-solid fa-book"></i>
                           </a>
                         {{ end }}
@@ -350,12 +331,10 @@
                           data-mode="{{ $k }}"
                           {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }}
                             hidden
-                          {{ end }}
-                        >
+                          {{ end }}>
                           <div
                             id="global-rank-{{ $rx }}-{{ $k }}"
-                            class="profile-rank"
-                          >
+                            class="profile-rank">
                             <i class="fa fa-globe" aria-hidden="true"></i>
                             #{{ with .global_leaderboard_rank }}
                               {{ humanize . }}
@@ -366,8 +345,7 @@
                           <div class="profile-rank">
                             <img
                               src="/static/images/flags/{{ countryCodepoints $user.country }}.svg"
-                              class="profile-rank-flag"
-                            />
+                              class="profile-rank-flag" />
                             #{{ with .country_leaderboard_rank }}
                               {{ humanize . }}
                             {{ else }}
@@ -393,8 +371,7 @@
                 <a
                   class="simple-banner-swtich {{ favMode $favouritemode $k }}"
                   data-mode="{{ $k }}"
-                  href="/u/{{ $user.id }}?mode={{ $k }}"
-                >
+                  href="/u/{{ $user.id }}?mode={{ $k }}">
                   {{ $v }}
                 </a>
               {{ end }}
@@ -405,8 +382,7 @@
                   active
                 {{ end }}"
                 data-rx="0"
-                href="/u/{{ $user.id }}?rx=0"
-              >
+                href="/u/{{ $user.id }}?rx=0">
                 Vanilla
               </a>
               <a
@@ -414,8 +390,7 @@
                   active
                 {{ end }}"
                 data-rx="1"
-                href="/u/{{ $user.id }}?rx=1"
-              >
+                href="/u/{{ $user.id }}?rx=1">
                 Relax
               </a>
               <a
@@ -423,8 +398,7 @@
                   active
                 {{ end }}"
                 data-rx="2"
-                href="/u/{{ $user.id }}?rx=2"
-              >
+                href="/u/{{ $user.id }}?rx=2">
                 Autopilot
               </a>
             </div>
@@ -476,8 +450,7 @@
                       <img
                         class="badge-image"
                         src="{{ .icon }}"
-                        title="{{ .name }}"
-                      />
+                        title="{{ .name }}" />
                       <br />
                     </div>
                   {{ end }}
@@ -490,11 +463,9 @@
                       data-mode="{{ $k }}"
                       {{ if or (ne $rx (int $preferRelax)) (ne $k (int $favouritemode)) }}
                         hidden
-                      {{ end }}
-                    >
+                      {{ end }}>
                       <table
-                        class="ui very basic two column compact table nopad"
-                      >
+                        class="ui very basic two column compact table nopad">
                         <tbody>
                           {{ with .global_leaderboard_rank }}
                             <tr>
@@ -506,8 +477,7 @@
                             <td><b>{{ $global.T "Peak global rank" }}</b></td>
                             <td
                               class="right aligned"
-                              id="global-row-rank-{{ $rx }}-{{ $k }}"
-                            ></td>
+                              id="global-row-rank-{{ $rx }}-{{ $k }}"></td>
                           </tr>
                           {{ with .country_leaderboard_rank }}
                             <tr>
@@ -515,12 +485,10 @@
                                 <b>
                                   {{ $global.T "Country rank" }} &nbsp;
                                   <a
-                                    href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}"
-                                  >
+                                    href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}">
                                     <img
                                       src="/static/images/flags/{{ countryCodepoints $user.country }}.svg"
-                                      class="new-flag new-flag-margin"
-                                    />
+                                      class="new-flag new-flag-margin" />
                                   </a>
                                 </b>
                               </td>
@@ -597,8 +565,7 @@
                       </table>
                       <div
                         class="ui blue progress little margin top"
-                        data-percent="{{ levelPercent .level }}"
-                      >
+                        data-percent="{{ levelPercent .level }}">
                         <div class="bar">
                           <div class="progress">{{ levelPercent .level }}%</div>
                         </div>
@@ -618,15 +585,13 @@
                 <button
                   class="ui button active"
                   id="chart-btn-rank"
-                  onclick="changeChart('rank')"
-                >
+                  onclick="changeChart('rank')">
                   {{ $global.T "Rank" }}
                 </button>
                 <button
                   class="ui button"
                   id="chart-btn-pp"
-                  onclick="changeChart('pp')"
-                >
+                  onclick="changeChart('pp')">
                   {{ $global.T "PP" }}
                 </button>
               </div>
@@ -634,8 +599,7 @@
               <div id="profile-history-not-found" style="display: none">
                 <div
                   class="ui icon message"
-                  style="background: rgb(34, 33, 33)"
-                >
+                  style="background: rgb(34, 33, 33)">
                   <div class="content">
                     <div class="header">
                       {{ $global.T "No graph data found" }}
@@ -665,8 +629,7 @@
                       hidden
                     {{ end }}
                     data-loaded="0"
-                    data-rx="{{ $rx }}"
-                  ></div>
+                    data-rx="{{ $rx }}"></div>
                 {{ end }}
               {{ end }}
             </div>

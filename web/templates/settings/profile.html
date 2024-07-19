@@ -24,8 +24,7 @@ MinPrivileges=2
               <input
                 type="text"
                 value="{{ .Context.User.Username }}"
-                disabled
-              />
+                disabled />
             </div>
             <div class="field">
               <label>
@@ -36,8 +35,7 @@ MinPrivileges=2
                 value="{{ $d.email }}"
                 placeholder="{{ .T "Email address" }}"
                 required
-                disabled
-              />
+                disabled />
             </div>
             <div class="field">
               <label>
@@ -47,8 +45,7 @@ MinPrivileges=2
                 type="text"
                 name="username_aka"
                 value="{{ $d.username_aka }}"
-                placeholder="{{ .T "Also known as..." }}"
-              />
+                placeholder="{{ .T "Also known as..." }}" />
             </div>
             <div class="field">
               <label>{{ .T "Favourite mode" }}</label>
@@ -56,8 +53,7 @@ MinPrivileges=2
                 {{ range $k, $v := modes }}
                   <option
                     value="{{ $k }}"
-                    {{ if eq (int $d.favourite_mode) $k }}selected{{ end }}
-                  >
+                    {{ if eq (int $d.favourite_mode) $k }}selected{{ end }}>
                     {{ $v }}
                   </option>
                 {{ end }}
@@ -68,11 +64,9 @@ MinPrivileges=2
                 <input
                   type="checkbox"
                   name="vanilla_pp_leaderboards"
-                  {{ if $d.vanilla_pp_leaderboards }}checked{{ end }}
-                />
+                  {{ if $d.vanilla_pp_leaderboards }}checked{{ end }} />
                 <label
-                  title="{{ .T "Enabling this will display PP leaderboards for vanilla game modes." }}"
-                >
+                  title="{{ .T "Enabling this will display PP leaderboards for vanilla game modes." }}">
                   {{ .T "Vanilla PP Leaderboards" }}
                 </label>
               </div>
@@ -86,15 +80,13 @@ MinPrivileges=2
                 <input
                   type="checkbox"
                   name="custom_badge.show"
-                  {{ if $d.custom_badge.show }}checked{{ end }}
-                />
+                  {{ if $d.custom_badge.show }}checked{{ end }} />
                 <label>{{ .T "Enable" }}</label>
               </div>
               <div
                 id="custom-badge-fields"
                 {{ if not $d.custom_badge.show }}style="display: none"{{ end }}
-                class="little top margin"
-              >
+                class="little top margin">
                 <p>
                   <a href="http://semantic-ui.com/elements/icon.html">
                     {{ .T "Icon reference" }}
@@ -102,14 +94,12 @@ MinPrivileges=2
                 </p>
                 <div
                   class="ui two column center aligned grid"
-                  style="margin-top: 0"
-                >
+                  style="margin-top: 0">
                   <div class="column">
                     <i
                       class="circular {{ $d.custom_badge.icon }} big icon"
                       id="badge-icon"
-                      style="justify-content: center;display: inline-flex;"
-                    ></i>
+                      style="justify-content: center;display: inline-flex;"></i>
                     <br />
                     <b id="badge-name">{{ $d.custom_badge.name }}</b>
                   </div>
@@ -119,16 +109,14 @@ MinPrivileges=2
                         type="text"
                         name="custom_badge.icon"
                         placeholder="plane, left chevron, hand spock..."
-                        value="{{ $d.custom_badge.icon }}"
-                      />
+                        value="{{ $d.custom_badge.icon }}" />
                     </p>
                     <p>
                       <input
                         type="text"
                         name="custom_badge.name"
                         placeholder="{{ .T "Dinosaur, oompa-loompa, cool guy..." }}"
-                        value="{{ $d.custom_badge.name }}"
-                      />
+                        value="{{ $d.custom_badge.name }}" />
                     </p>
                   </div>
                 </div>
@@ -144,8 +132,7 @@ MinPrivileges=2
                     <input
                       type="checkbox"
                       data-sv="{{ shift 1 $k }}"
-                      {{ if $checked }}checked{{ end }}
-                    />
+                      {{ if $checked }}checked{{ end }} />
                     <label>{{ $.T $v }}</label>
                   </div>
                 </div>

@@ -15,8 +15,7 @@ TitleBar=Reset password
             id="pw-reset-form"
             class="ui form"
             method="post"
-            action="/pwreset/continue"
-          >
+            action="/pwreset/continue">
             <div class="field">
               <label>{{ .T "Password" }}</label>
               <input
@@ -24,8 +23,7 @@ TitleBar=Reset password
                 name="password"
                 placeholder="{{ .T "Password" }}"
                 value="{{ .FormData.password }}"
-                required
-              />
+                required />
             </div>
             <input type="hidden" name="k" value="{{ .RequestInfo.Key }}" />
             {{ ieForm .Gin }}

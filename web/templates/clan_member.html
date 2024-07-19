@@ -11,19 +11,16 @@ NoCompile=true
           <img
             class="user-avatar"
             src="{{ config "PUBLIC_AVATARS_SERVICE_BASE_URL" }}/{{ .id }}"
-            alt="Avatar"
-          />
+            alt="Avatar" />
           <h1
             class="header"
             {{ if not (has .privileges 1) }}
               style="opacity: 0.5"
-            {{ end }}
-          >
+            {{ end }}>
             {{ if .country }}
               <img
                 class="new-flag fixed--flag--cards"
-                src="/static/images/flags/{{ countryCodepoints .country }}.svg"
-              />
+                src="/static/images/flags/{{ countryCodepoints .country }}.svg" />
             {{ end }}
             {{ .username }}
           </h1>

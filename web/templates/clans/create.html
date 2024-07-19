@@ -22,8 +22,7 @@
               id="register-form"
               class="ui form"
               method="post"
-              action="/clans/create"
-            >
+              action="/clans/create">
               <div class="field">
                 <label>
                   {{ .T "Name (2 to 15 characters, alphanumeric, spaces, <code>_[]-</code>)" | html }}
@@ -35,8 +34,7 @@
                   placeholder="{{ .T "Name" }}"
                   value="{{ .FormData.username }}"
                   required
-                  pattern="{2,15}$"
-                />
+                  pattern="{2,15}$" />
               </div>
               <div class="field">
                 <label class="left aligned">
@@ -48,8 +46,7 @@
                   name="tag"
                   placeholder="{{ "Clantag" }}"
                   value="{{ .FormData.tag }}"
-                  pattern="{2,6}$"
-                />
+                  pattern="{2,6}$" />
               </div>
               <div class="field">
                 <label>{{ .T "Description (optional)" }}</label>
@@ -58,8 +55,7 @@
                   type="text"
                   name="password"
                   placeholder="{{ .T "Description" }}"
-                  value="{{ .FormData.password }}"
-                />
+                  value="{{ .FormData.password }}" />
               </div>
               <div class="field">
                 <label>{{ .T "Icon [URL] (optional)" }}</label>
@@ -68,8 +64,7 @@
                   type="url"
                   name="email"
                   placeholder="{{ .T "Icon URL" }}"
-                  value="{{ .FormData.email }}"
-                />
+                  value="{{ .FormData.email }}" />
               </div>
               {{ ieForm .Gin }}
             </form>
@@ -79,8 +74,7 @@
               tabindex="5"
               class="ui primary button"
               type="submit"
-              form="register-form"
-            >
+              form="register-form">
               {{ .T "Submit" }}
             </button>
           </div>

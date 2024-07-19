@@ -30,20 +30,17 @@ BannerType=1
                       alt="Avatar"
                       {{ if not (has .privileges 1) }}
                         style="opacity: 0.5"
-                      {{ end }}
-                    />
+                      {{ end }} />
                     <a href="/u/{{ .id }}">
                       <h1
                         class="header"
                         {{ if not (has .privileges 1) }}
                           style="opacity: 0.5"
-                        {{ end }}
-                      >
+                        {{ end }}>
                         {{ if .country }}
                           <img
                             class="new-flag fixed--flag--cards"
-                            src="/static/images/flags/{{ countryCodepoints .country }}.svg"
-                          />
+                            src="/static/images/flags/{{ countryCodepoints .country }}.svg" />
                         {{ end }}
                         <span>
                           {{ .username }}
@@ -57,19 +54,16 @@ BannerType=1
                       {{ $.T "Mutual" }}
                     {{ else }}
                       {{ $.T "Friend" }}
-                    {{ end }}"
-                  >
+                    {{ end }}">
                     <div
                       class="ui compact labeled button small-text-btn"
-                      data-userid="{{ .id }}"
-                    >
+                      data-userid="{{ .id }}">
                       <i
                         class="{{ if .is_mutual }}
                           red heart
                         {{ else }}
                           green minus
-                        {{ end }} icon"
-                      ></i>
+                        {{ end }} icon"></i>
                       <span>
                         {{ if .is_mutual }}
                           {{ $.T "Unmutual" }}
@@ -93,8 +87,7 @@ BannerType=1
             {{ if $left }}
               <a
                 class="icon item"
-                href="/friends?p={{ minus (float $page) 1 }}"
-              >
+                href="/friends?p={{ minus (float $page) 1 }}">
                 <i class="left chevron icon"></i>
               </a>
             {{ end }}
