@@ -19,12 +19,23 @@ Include=menu.html
             <br />
             <br />
             <div class="ui center aligned segment">
+              {{ $name := $clan.name.String }}
               {{ $tag := or $clan.tag.String "" }}
               {{ $desc := or $clan.description.String "" }}
               {{ $icon := or $clan.icon.String "" }}
               {{ $bg := or $clan.background.String "" }}
               {{ $status := or $clan.status.Int 0 }}
               <form id="register-form" class="ui form">
+                <div class="field">
+                  <label class="left aligned">
+                    Clan Name (2 to 15 characters)
+                  </label>
+                  <input
+                    tabindex="1"
+                    type="text"
+                    name="name"
+                    value="{{ $name }}" />
+                </div>
                 <div class="field">
                   <label class="left aligned">
                     Clan Tag (2 to 6 characters)
