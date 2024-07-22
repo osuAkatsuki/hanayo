@@ -19,6 +19,7 @@ Include=menu.html
             <br />
             <br />
             <div class="ui center aligned segment">
+              {{ $name := $clan.name.String }}
               {{ $tag := or $clan.tag.String "" }}
               {{ $desc := or $clan.description.String "" }}
               {{ $icon := or $clan.icon.String "" }}
@@ -27,10 +28,20 @@ Include=menu.html
               <form id="register-form" class="ui form">
                 <div class="field">
                   <label class="left aligned">
-                    Clan Tag (2 to 6 characters)
+                    Clan Name (2 to 15 characters)
                   </label>
                   <input
                     tabindex="1"
+                    type="text"
+                    name="name"
+                    value="{{ $name }}" />
+                </div>
+                <div class="field">
+                  <label class="left aligned">
+                    Clan Tag (2 to 6 characters)
+                  </label>
+                  <input
+                    tabindex="2"
                     type="text"
                     name="tag"
                     value="{{ $tag }}" />
@@ -38,7 +49,7 @@ Include=menu.html
                 <div class="field">
                   <label class="left aligned">Description</label>
                   <input
-                    tabindex="2"
+                    tabindex="3"
                     type="text"
                     name="desc"
                     placeholder="Description"
@@ -49,7 +60,7 @@ Include=menu.html
                     {{ "Icon Url" }}
                   </label>
                   <input
-                    tabindex="3"
+                    tabindex="4"
                     type="url"
                     name="icon"
                     placeholder="Icon"
@@ -59,7 +70,7 @@ Include=menu.html
                   <label class="left aligned">Invite Policy</label>
                   <select
                     class="ui dropdown"
-                    tabindex="4"
+                    tabindex="5"
                     name="status"
                     data-cast="int">
                     <option value="0" {{ if eq $status 0 }}selected{{ end }}>
@@ -79,7 +90,7 @@ Include=menu.html
                       {{ "Background Url" }}
                     </label>
                     <input
-                      tabindex="5"
+                      tabindex="6"
                       type="url"
                       name="bg"
                       placeholder="Background URL"
@@ -90,7 +101,7 @@ Include=menu.html
               </form>
               <br />
               <button
-                tabindex="6"
+                tabindex="7"
                 class="ui primary button"
                 type="submit"
                 form="register-form">
