@@ -168,24 +168,8 @@ func main() {
 func generateEngine() *gin.Engine {
 	slog.Info("Starting session system")
 	settings := settingsState.GetSettings()
-	var store sessions.Store
-	var err error
-	if settings.REDIS_MAX_CONNECTIONS != 0 {
-		store, err = sessions.NewRedisStore(
-			settings.REDIS_MAX_CONNECTIONS,
-			settings.REDIS_NETWORK_TYPE,
-			fmt.Sprintf("%s:%d", settings.REDIS_HOST, settings.REDIS_PORT),
-			settings.REDIS_PASS,
-			[]byte(settings.APP_COOKIE_SECRET),
-		)
-	} else {
-		store = sessions.NewCookieStore([]byte(settings.APP_COOKIE_SECRET))
-	}
 
-	if err != nil {
-		slog.Error("Failed to crreate redis store", "error", err.Error())
-		panic(err)
-	}
+	store := sessions.NewCookieStore([]byte(settings.APP_COOKIE_SECRET))
 
 	// Initalize Gin
 	gin.SetMode(gin.ReleaseMode)

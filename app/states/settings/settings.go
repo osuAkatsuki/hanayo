@@ -52,13 +52,12 @@ type Settings struct {
 	DB_PASS   string
 	DB_NAME   string
 
-	REDIS_MAX_CONNECTIONS int
-	REDIS_NETWORK_TYPE    string
-	REDIS_HOST            string
-	REDIS_PORT            int
-	REDIS_PASS            string
-	REDIS_DB              int
-	REDIS_USE_SSL         bool
+	REDIS_NETWORK_TYPE string
+	REDIS_HOST         string
+	REDIS_PORT         int
+	REDIS_PASS         string
+	REDIS_DB           int
+	REDIS_USE_SSL      bool
 
 	AWS_REGION            string
 	AWS_ACCESS_KEY_ID     string
@@ -112,7 +111,6 @@ func LoadSettings() Settings {
 	settings.DB_PASS = getEnv("DB_PASS")
 	settings.DB_NAME = getEnv("DB_NAME")
 
-	settings.REDIS_MAX_CONNECTIONS = strToInt(getEnv("REDIS_MAX_CONNECTIONS"))
 	settings.REDIS_NETWORK_TYPE = getEnv("REDIS_NETWORK_TYPE")
 	settings.REDIS_HOST = getEnv("REDIS_HOST")
 	settings.REDIS_PORT = strToInt(getEnv("REDIS_PORT"))
