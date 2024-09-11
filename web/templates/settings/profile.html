@@ -37,7 +37,7 @@ MinPrivileges=2
                 required
                 disabled />
             </div>
-            {{ if has .Context.User.Privileges 4 }}
+            {{ if has .Context.User.Privileges 8388608 }}
               <div class="field">
                 <label>
                   {{ .T "Leaderboard size (In-Game)" }}
