@@ -30,6 +30,8 @@ type Settings struct {
 	APP_COOKIE_SECRET string
 	APP_HANAYO_KEY    string
 
+	APP_DEFAULT_LEADERBOARD_SIZE_SETTING int
+
 	APP_ENV string
 
 	APP_BASE_URL                    string
@@ -88,6 +90,8 @@ func LoadSettings() Settings {
 	settings.APP_PORT = strToInt(getEnv("APP_PORT"))
 	settings.APP_COOKIE_SECRET = getEnv("APP_COOKIE_SECRET")
 	settings.APP_HANAYO_KEY = getEnv("APP_HANAYO_KEY")
+
+	settings.APP_DEFAULT_LEADERBOARD_SIZE_SETTING = strToInt(getEnv("APP_DEFAULT_LEADERBOARD_SIZE_SETTING"))
 
 	settings.APP_ENV = getEnv("APP_ENV")
 
