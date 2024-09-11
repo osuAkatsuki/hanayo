@@ -189,13 +189,6 @@ MinPrivileges=2
       if (leaderboardInputEl.valueAsNumber < 1) {
         leaderboardInputEl.value = "1";
       }
-
-      const btn = document.getElementById("submitSettingsButton")
-      if (leaderboardInputEl.value === "") {
-        btn.disabled = true
-      } else {
-        btn.disabled = false
-      }
     }
 
     $(document).ready(function () {
