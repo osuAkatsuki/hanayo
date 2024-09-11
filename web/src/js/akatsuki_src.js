@@ -390,6 +390,7 @@ var singlePageSnippets = {
             ps |= el.data("sv");
           }
         });
+      obj.leaderboard_size = obj.leaderboard_size !== "" ? parseInt(obj.leaderboard_size) : hanayoConf.defaultLeaderboardSize
       obj.play_style = ps;
       var f = $(this);
       api(
