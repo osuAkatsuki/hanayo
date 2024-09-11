@@ -37,16 +37,20 @@ MinPrivileges=2
                 required
                 disabled />
             </div>
-            <div class="field">
-              <label>
-                {{ .T "Alternative username (cannot be used for login)" }}
-              </label>
-              <input
-                type="text"
-                name="username_aka"
-                value="{{ $d.username_aka }}"
-                placeholder="{{ .T "Also known as..." }}" />
-            </div>
+            {{ if has .Context.User.Privileges 4 }}
+              <div class="field">
+                <label>
+                  {{ .T "Leaderboard size (In-Game)" }}
+                </label>
+                <input
+                  type="number"
+                  name="leaderboard_size"
+                  id="lbSizeInput"
+                  value="{{ $d.leaderboard_size }}"
+                  oninput="validateLeaderboardSizeInput()"
+                  placeholder="1000" />
+              </div>
+            {{ end }}
             <div class="field">
               <label>{{ .T "Favourite mode" }}</label>
               <select class="ui dropdown" name="favourite_mode" data-cast="int">
@@ -164,4 +168,20 @@ MinPrivileges=2
       </div>
     </div>
   </div>
+  <script>
+    function validateLeaderboardSizeInput() {
+      const leaderboardInputEl = document.getElementById("lbSizeInput");
+      if (isNaN(leaderboardInputEl.valueAsNumber)) {
+        leaderboardInputEl.value = "";
+      }
+
+      if (leaderboardInputEl.valueAsNumber > 1000) {
+        leaderboardInputEl.value = "1000";
+      }
+
+      if (leaderboardInputEl.valueAsNumber < 1) {
+        leaderboardInputEl.value = "1";
+      }
+    }
+  </script>
 {{ end }}
