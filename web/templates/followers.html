@@ -1,8 +1,8 @@
 {{/* prettier-ignore-start */}}
 {{/*###
-Handler=/friends
-TitleBar=Friends
-MinPrivileges=2
+Handler=/followers
+TitleBar=Followers
+MinPrivileges=8388610
 BannerContent=friends.jpg
 BannerType=1
 */}}
@@ -14,34 +14,26 @@ BannerType=1
       <div class="ui segment">
         <div class="ui small buttons">
           <a href="/friends">
-            <button class="ui button active">
+            <button class="ui button">
               {{ .T "Friends" }}
             </button>
           </a>
-          {{ if has .Context.User.Privileges 8388608 }}
-            <a href="/followers">
-              <button class="ui button">
-                {{ .T "Followers" }}
-              </button>
-            </a>
-          {{ else }}
-            <span data-position="bottom left" data-tooltip='{{ .T "Premium-only feature!" }}'>
-              <div class="ui button btn-disabled">
-                {{ .T "Followers" }}
-              </div>
-            </span>
-          {{ end }}
+          <a href="/followers">
+            <button class="ui button active">
+              {{ .T "Followers" }}
+            </button>
+          </a>
         </div>
         <br><br>
-        {{ .T "On this page you can see all of your friends, and unfriend them as you see fit." }}
+        {{ .T "On this page you can see all of your followers, and mutual them as you see fit." }}
       </div>
       <div class="ui segment">
         {{ $ := . }}
         {{ $page := or (atoint (.Gin.Query "p")) 1 }}
-        {{ $friends := .Get "friends?p=%d&l=18&sort=username,asc" $page }}
-        {{ with $friends }}
+        {{ $followers := .Get "followers?p=%d&l=18&sort=username,asc" $page }}
+        {{ with $followers }}
           <div class="ui three column stackable grid">
-            {{ range .friends }}
+            {{ range .followers }}
               <div class="column">
                 <div class="player">
                   <div class="front">
@@ -71,27 +63,14 @@ BannerType=1
                   </div>
                   <div
                     class="sub-header"
-                    title="{{ if .is_mutual }}
-                      {{ $.T "Mutual" }}
-                    {{ else }}
-                      {{ $.T "Friend" }}
-                    {{ end }}">
+                    title="Mutual">
                     <div
                       class="ui compact labeled button small-text-btn"
-                      data-userid="{{ .id }}">
+                      data-userid="{{ .id }}"
+                      data-deleted="1">
                       <i
-                        class="{{ if .is_mutual }}
-                          red heart
-                        {{ else }}
-                          green minus
-                        {{ end }} icon"></i>
-                      <span>
-                        {{ if .is_mutual }}
-                          {{ $.T "Unmutual" }}
-                        {{ else }}
-                          {{ $.T "Remove" }}
-                        {{ end }}
-                      </span>
+                        class="green plus icon"></i>
+                      <span>Mutual</span>
                     </div>
                   </div>
                 </div>
@@ -101,19 +80,19 @@ BannerType=1
         {{ end }}
       </div>
       {{ $left := gt $page 1 }}
-      {{ $right := eq (len (rsin $friends.friends)) 18 }}
+      {{ $right := eq (len (rsin $followers.followers)) 18 }}
       {{ if or $left $right }}
         <div class="ui right aligned segment">
           <div class="ui pagination menu">
             {{ if $left }}
               <a
                 class="icon item"
-                href="/friends?p={{ minus (float $page) 1 }}">
+                href="/followers?p={{ minus (float $page) 1 }}">
                 <i class="left chevron icon"></i>
               </a>
             {{ end }}
             {{ if $right }}
-              <a class="icon item" href="/friends?p={{ plus (float $page) 1 }}">
+              <a class="icon item" href="/followers?p={{ plus (float $page) 1 }}">
                 <i class="right chevron icon"></i>
               </a>
             {{ end }}
