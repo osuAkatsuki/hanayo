@@ -304,7 +304,7 @@ var singlePageSnippets = {
   "/friends": function () {
     $(".ui.compact.labeled.button").on("click", function () {
       var t = $(this);
-      var delAdd = t.data("deleted") === 1 ? "add" : "del";
+      var delAdd = t.data("deleted") == 1 ? "add" : "del";
       t.addClass("disabled");
       api(
         "friends/" + delAdd,
