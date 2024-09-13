@@ -304,8 +304,7 @@ var singlePageSnippets = {
   "/friends": function () {
     $(".ui.compact.labeled.button").on("click", function () {
       var t = $(this);
-      var delAdd = t.data("deleted") === "1" ? "add" : "del";
-      console.log(delAdd);
+      var delAdd = t.data("deleted") == 1 ? "add" : "del";
       t.addClass("disabled");
       api(
         "friends/" + delAdd,
@@ -325,7 +324,35 @@ var singlePageSnippets = {
                   : "green minus"
                 : "blue plus"
             );
-          t.find("span").text(data.friend ? T("Unfriend") : t("Befriend"));
+          t.find("span").text(data.friend ? T("Unfriend") : T("Befriend"));
+        },
+        true
+      );
+    });
+  },
+
+  "/followers": function () {
+    $(".ui.compact.labeled.button").on("click", function () {
+      var t = $(this);
+      var delAdd = t.data("deleted") == 1 ? "add" : "del";
+      t.addClass("disabled");
+      api(
+        "friends/" + delAdd,
+        { user: parseInt(t.data("userid")) },
+        function (data) {
+          t.removeClass("disabled");
+          t.data("deleted", data.friend ? "0" : "1");
+          t.removeClass("green red");
+          t.addClass(data.friend && data.mutual ? "red" : "green");
+          t.find(".icon")
+            .removeClass("plus heart")
+            .removeClass("green red")
+            .addClass(
+              data.friend && data.mutual
+                  ? "red heart"
+                  : "green plus"
+            );
+          t.find("span").text(data.friend && data.mutual ? T("Unmutual") : T("Mutual"));
         },
         true
       );

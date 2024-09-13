@@ -985,3 +985,14 @@ body::-webkit-scrollbar-thumb {
 .width-30 {
   width: 30%;
 }
+
+.btn-disabled {
+  cursor: default !important;
+  opacity: .45 !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.btn-disabled:hover {
+  background: hsl(var(--base),0%,15%) !important;
+}
