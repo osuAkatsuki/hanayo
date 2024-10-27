@@ -36,7 +36,6 @@ import (
 	registerHandlers "github.com/osuAkatsuki/hanayo/app/handlers/sessions/register"
 	logging "github.com/osuAkatsuki/hanayo/app/logging"
 	middleware "github.com/osuAkatsuki/hanayo/app/middleware"
-	"github.com/osuAkatsuki/hanayo/app/middleware/pagemappings"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	sessionsmanager "github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
@@ -182,7 +181,6 @@ func generateEngine() *gin.Engine {
 		// Still use the built-in recovery middleware that is called with default
 		gin.Recovery(),
 		gzip.Gzip(gzip.DefaultCompression),
-		pagemappings.CheckRedirect,
 		sessions.Sessions("session", store),
 		sessionsmanager.SessionInitializer(),
 		middleware.RateLimiter(false),
