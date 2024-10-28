@@ -528,7 +528,7 @@ var singlePageSnippets = {
       connect: [true, false],
       range: {
         min: [1],
-        max: [50],
+        max: [36],
       },
     });
     var us = sl.noUiSlider;
