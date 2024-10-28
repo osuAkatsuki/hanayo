@@ -15,6 +15,9 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
     rel="stylesheet"
     type="text/css" />
   <div class="ui container">
+    <div class="ui warning message">
+      {{ $.T "Akatsuki+ is a combination of the old supporter & premium tiers, to unify & create a more affordable subscription" }}
+    </div>
     {{ $ief := ieForm .Gin }}
     {{ if .Context.User.ID }}
       {{ with .Get "users/self/donor_info" }}
