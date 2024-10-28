@@ -12,7 +12,8 @@
   --colour-scorewatcher: #e07fc4;
   --colour-champion: #41f8d5;
   --colour-donor: #5fd5eb;
-  --colour-premium: #fff176;
+  /* TODO: get an *official* color for premium */
+  --colour-premium: #6146ff;
 }
 
 [hidden] {
