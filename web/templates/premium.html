@@ -16,7 +16,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
     type="text/css" />
   <div class="ui container">
     <div class="ui warning message">
-      {{ $.T "Akatsuki+ is a combination of the old supporter & premium tiers, to unify & create a more affordable subscription" }}
+      {{ $.T "Akatsuki<sup>+</sup> is a combination of the old supporter & premium tiers, to unify & create a more affordable subscription" | html }}
     </div>
     {{ $ief := ieForm .Gin }}
     {{ if .Context.User.ID }}
@@ -28,11 +28,11 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
               style="margin: 0 auto; display: table;">
               <i class="red heart icon" style="font-size: 90%;"></i>
               <div class="content">
-                {{ $.T "You are an Akatsuki+ member!" }}
+                {{ $.T "You are an Akatsuki<sup>+</sup> member!" | html }}
               </div>
             </h1>
             <div class="ui centered subtitle" style="font-size:1.2rem;">
-              {{ $.T "Your Akatsuki+ expires <b>%s</b>. No need to feel guilty for not having donated!" (time .expiration) | html }}
+              {{ $.T "Your Akatsuki<sup>+</sup> expires <b>%s</b>. No need to feel guilty for not having donated!" (time .expiration) | html }}
               &lt;3
             </div>
           </div>
@@ -40,14 +40,14 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
       {{ end }}
     {{ end }}
     <div class="ui segment">
-      <h1 class="ui center aligned header">
-        {{ $.T "So, what makes Akatsuki+ so <i>Premium</i>?" | html }}
+      <h2 class="ui center aligned header">
+        {{ $.T "Akatsuki is (unfortunately) not cheap to run" | html }}
         <div class="sub header">
-          {{ $.T "Well, it comes with several additional perks," }}
+          {{ $.T "Our platform is free-to-win, and relies on donations from users, in the form of subscriptions." | html }}
         </div>
-      </h1>
+      </h2>
       <h4 class="ui horizontal divider header">
-        {{ $.T "Here's what you get:" }}
+        {{ $.T "Here's what we have to offer" }}
       </h4>
       <div class="ui internally celled stackable grid">
         <div class="row">
@@ -62,60 +62,60 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
             {{ $.T "Looking to go SS-only? Switching to mouse or tablet? Or just want a clean slate? <b>Start fresh</b> with a selective wipe of your stats at any time via a support ticket or email!" | html }}
           </div>
           <div class="four wide column">
-            <h3 class="ui header">
-              {{ $.T "Friends-only leaderboards" }}
-            </h3>
-            {{ $.T "<b>Compete with friends, form rivalships and play on the leaderboards with similarly skilled players</b>, without the crippling depression of not beating that pro!" | html }}
+            <h3 class="ui header">{{ $.T "Akatsuki<sup>+</sup> membership flair" | html }}</h3>
+            {{ $.T "You will get a special <b>Akatsuki<sup>+</sup> badge</b>, a <b>colored username in-game</b>, and <b>an Akatsuki<sup>+</sup> role in our Discord</b> to show everyone you've decided to support us!" | html }}
           </div>
           <div class="four wide column">
             <h3 class="ui header">{{ $.T "Customize your profile" }}</h3>
-            {{ $.T "Thinking of <b>spicing your profile up with some hummus</b>? Want access to our custom badge editor? With Akatsuki+, we've got you covered!" | html }}
+            {{ $.T "Thinking of <b>spicing your profile up with some hummus</b>? Want access to our custom badge editor? With Akatsuki<sup>+</sup>, we've got you covered!" | html }}
           </div>
         </div>
         <div class="row">
           <div class="four wide column">
-            <h3 class="ui header">{{ $.T "Akatsuki+ membership flair" }}</h3>
-            {{ $.T "You will get a special <b>Akatsuki+ badge</b> to flair up your profile, as well as a <b>colored username in-game</b> to show everyone you've decided to support us!" | html }}
+            <h3 class="ui header">
+              {{ $.T "Force score overwrites" }}
+            </h3>
+            {{ $.T "Get a super cool new score, but it didn't overwrite? Use the Akatsuki<sup>+</sup> <code>!overwrite</code> command to force your new score to overwrite your best!" | html }}
           </div>
           <div class="four wide column">
-            <h3 class="ui header">{{ $.T "Leaderboard preferences" }}</h3>
+            <h3 class="ui header">
+              {{ $.T "Leaderboard preferences" }}
+            </h3>
             {{ $.T "<b>Customize ui preferences for in-game leaderboards!</b> Change between score & pp for Vanilla leaderboards, and customize the number of records in each leaderboard." | html }}
           </div>
           <div class="four wide column">
             <h3 class="ui header">
-              {{ $.T "Force score overwrites" }}
+              {{ $.T "View your followers" }}
             </h3>
-            {{ $.T "Get a super cool new score, but it didn't overwrite? Use the Akatsuki+ <code>!overwrite</code> command to force your new score to overwrite your best!" | html }}
+            {{ $.T "<b>View who follows you</b>, along with your mutual friends. Eventually, we intend to create a more advanced display of gameplay and social stats for Akatsuki<sup>+</sup> members." | html }}
           </div>
           <div class="four wide column">
             <h3 class="ui header">
               {{ $.T "DM-only commands in public channels" }}
             </h3>
-            {{ $.T "Akatsuki+ members can use dm-only commands like <code>!last</code>, <code>!request</code>, etc. in public chat channels in-game." | html }}
+            {{ $.T "Akatsuki<sup>+</sup> members can use dm-only commands like <code>!last</code>, <code>!request</code>, etc. in public chat channels in-game." | html }}
           </div>
         </div>
       </div>
-      {{ if $global.User.ID }}
+      {{ if not $global.User.ID }}
         <h4 class="ui horizontal divider header">
-          {{ $.T "Live the premium life!" }}
+          {{ $.T "Here's what we ask for in return" }}
         </h4>
         <center>
           <p>
-            {{ $.T "We process payments through <b>PayPal</b> (or credit/debit card linked to PayPal).<br />Select your desired number of months using the slider below." | html }}
+            {{ $.T "<b>The cost of Akatsuki<sup>+</sup> is a fixed USD $5 / month.</b>" | html }}
+            <br /><br />
+            {{ $.T "Select your desired number of months using the slider below." | html }}
           </p>
         </center>
         <br />
         <div id="months-slider" style="margin: 0 auto; max-width: 500px"></div>
         <br />
+        <!-- NOTE: akatsuki.js modifies `#cost` based on the months selector -->
         <div id="cost" class="centered"><b>{{ $.T "Loading..." }}</b></div>
-        <br />
         <div
           class="ui internally celled two column center aligned stackable grid">
           <div class="column">
-            <h2 class="ui header">
-              <i class="fa-brands fa-paypal"></i>
-              {{ $.T "PayPal" }}
-            </h2>
             <form
               id="paypal-form"
               action="https://www.paypal.com/cgi-bin/webscr"
@@ -155,10 +155,13 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                   id="username-input"
                   name="os1"
                   type="text"
-                  placeholder="{{ $.T "Shigetora" }}"
+                  placeholder="{{ $.T "Example Username" }}"
                   value="{{ $global.User.Username }}" />
                 <button type="submit" class="ui blue button">
-                  {{ $.T "Submit" }}
+                  <h4 class="ui header">
+                    <i class="fa-brands fa-paypal"></i>
+                    {{ $.T "PayPal" }}
+                  </h4>
                 </button>
               </div>
               {{ $ief }}
@@ -177,6 +180,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
                 width="1"
                 height="1" />
             </form>
+            <br />
+            {{ $.T "(If the cost of Akatsuki<sup>+</sup> is outside of your price range, please feel free to apply for a personalized quote at our email <code>support@akatsuki.gg</code>)" | html }}
           </div>
         </div>
         <h4 class="ui horizontal divider header">
@@ -193,7 +198,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
       {{ else }}
         <div class="ui divider"></div>
         <h2 class="ui center aligned header">
-          <em>{{ $.T "Please sign into your account to purchase Akatsuki+" }}</em>
+          <em>{{ $.T "Please sign into your account to purchase Akatsuki<sup>+</sup>" | html }}</em>
         </h1>
       {{ end }}
       <h4 class="ui horizontal divider header">
@@ -203,7 +208,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
         <p>
           {{ $.T "All money received from donations go towards server, development, maintenance and other costs associated with running Akatsuki." }}
           <br /><br />
-          {{ $.T "<b>Akatsuki+ purchases are non-refundable, and do not exempt you from <a href='/doc/tos'>Akatsuki's Terms of Service</a>.</b>" | html }}
+          {{ $.T "<b>Akatsuki<sup>+</sup> purchases are non-refundable, and do not exempt you from <a href='/doc/tos'>Akatsuki's Terms of Service</a>.</b>" | html }}
         </p>
       </center>
     </div>
