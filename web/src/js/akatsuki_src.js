@@ -536,7 +536,7 @@ var singlePageSnippets = {
       var months = us.get();
       var priceUSD = months * PREMIUM_PRICE_PER_MONTH;
       $("#cost").html(
-        T("<b>{{ months }}</b> {{ monthSpelling }} costs <b>${{ amount }} USD</b>", {
+        T("The cost of <b>{{ months }}</b> {{ monthSpelling }} of Akatsuki<sup>+</sup> is <b>${{ amount }} USD</b>", {
           monthSpelling: months == 1 ? T("month") : T("months"),
           months: (+months).toFixed(0),
           amount: priceUSD.toFixed(2),
