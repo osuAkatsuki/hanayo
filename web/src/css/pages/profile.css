@@ -277,7 +277,16 @@
 }
 
 .label-premium {
-  color: var(--colour-premium);
+  background-image: linear-gradient(
+    to right,
+    #dd51f6,
+    #9828ee,
+    #4f95f4,
+    #2652be,
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .action-button {
