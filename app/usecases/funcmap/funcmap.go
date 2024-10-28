@@ -34,6 +34,8 @@ import (
 	"zxq.co/ripple/playstyle"
 )
 
+const PREMIUM_PRICE_PER_MONTH = 5.0
+
 // funcMap contains useful functions for the various templates.
 var FuncMap = template.FuncMap{
 	"print": fmt.Println,
@@ -438,7 +440,7 @@ var FuncMap = template.FuncMap{
 	},
 	// calculatePremiumPrice calculates the price of x premium months in euros.
 	"calculatePremiumPrice": func(months float64) string {
-		return fmt.Sprintf("%.2f", months * 5.0)
+		return fmt.Sprintf("%.2f", months * PREMIUM_PRICE_PER_MONTH)
 	},
 	// csrfGenerate creates a csrf token input
 	"csrfGenerate": func(u int) template.HTML {
