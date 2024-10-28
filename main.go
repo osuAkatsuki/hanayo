@@ -42,7 +42,6 @@ import (
 	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	"github.com/osuAkatsuki/hanayo/app/version"
-	"github.com/osuAkatsuki/hanayo/internal/btcconversions"
 	"github.com/osuAkatsuki/hanayo/internal/csrf/cieca"
 	"github.com/thehowl/qsql"
 	gintrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
@@ -239,8 +238,6 @@ func generateEngine() *gin.Engine {
 		"/settings/profbackground/:type",
 		profileEditHandlers.ProfileBackgroundSubmitHandler,
 	)
-
-	r.GET("/donate/rates", btcconversions.GetRates)
 
 	r.GET("/about", miscHandlers.AboutPageHandler)
 
