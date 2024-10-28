@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - more-aplus-rebranding
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
