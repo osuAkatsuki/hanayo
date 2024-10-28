@@ -436,13 +436,9 @@ var FuncMap = template.FuncMap{
 	"shift": func(n1, n2 int) int {
 		return n1 << uint(n2)
 	},
-	// calculateDonorPrice calculates the price of x donor months in euros.
-	"calculateDonorPrice": func(a float64) string {
-		return fmt.Sprintf("%.2f", math.Pow(a*30*0.2, 0.72)) //20 2nd arg for 66%
-	},
 	// calculatePremiumPrice calculates the price of x premium months in euros.
 	"calculatePremiumPrice": func(a float64) string {
-		return fmt.Sprintf("%.2f", math.Pow(a*68*0.15, 0.93)) //44 2nd arg for 66%
+		return fmt.Sprintf("%.2f", a * 5.0)
 	},
 	// csrfGenerate creates a csrf token input
 	"csrfGenerate": func(u int) template.HTML {
