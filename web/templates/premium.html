@@ -71,8 +71,8 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
         </div>
         <div class="row">
           <div class="four wide column">
-            <h3 class="ui header">{{ $.T "Akatsuki+ flair" }}</h3>
-            {{ $.T "You will get a special <b>Akatsuki+ badge and flair</b> on your profile, as well as a <b>colored username in-game</b> to show everyone you've decided to support us!" | html }}
+            <h3 class="ui header">{{ $.T "Akatsuki+ membership flair" }}</h3>
+            {{ $.T "You will get a special <b>Akatsuki+ badge</b> to flair up your profile, as well as a <b>colored username in-game</b> to show everyone you've decided to support us!" | html }}
           </div>
           <div class="four wide column">
             <h3 class="ui header">{{ $.T "Leaderboard preferences" }}</h3>
@@ -82,11 +82,11 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
             <h3 class="ui header">
               {{ $.T "Force score overwrites" }}
             </h3>
-            {{ $.T "Akatsuki+ members have access to an in-game <code>!overwrite</code> command, which allows you to force your newest score to overwrite your best score on any map." | html }}
+            {{ $.T "Get a super cool new score, but it didn't overwrite? Use the Akatsuki+ <code>!overwrite</code> command to force your new score to overwrite your best!" | html }}
           </div>
           <div class="four wide column">
             <h3 class="ui header">
-              {{ $.T "Use channel-limited commands, anywhere" }}
+              {{ $.T "DM-only commands in public channels" }}
             </h3>
             {{ $.T "Akatsuki+ members can use dm-only commands like <code>!last</code>, <code>!request</code>, etc. in public chat channels in-game." | html }}
           </div>
@@ -194,10 +194,12 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
         </h1>
       {{ end }}
       <h4 class="ui horizontal divider header">
-        {{ $.T "Disclaimer" }}
+        {{ $.T "Disclaimer of Terms & Liability" }}
       </h4>
       <center>
         <p>
+          {{ $.T "All money received from donations go towards server, development, maintenance and other costs associated with running Akatsuki." }}
+          <br /><br />
           {{ $.T "<b>Akatsuki+ purchases are non-refundable, and do not exempt you from <a href='/doc/tos'>Akatsuki's Terms of Service</a>.</b>" | html }}
         </p>
       </center>
