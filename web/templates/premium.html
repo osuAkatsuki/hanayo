@@ -97,7 +97,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
           </div>
         </div>
       </div>
-      {{ if not $global.User.ID }}
+      {{ if $global.User.ID }}
         <h4 class="ui horizontal divider header">
           {{ $.T "Here's what we ask for in return" }}
         </h4>
