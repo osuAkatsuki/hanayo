@@ -1,7 +1,7 @@
 {{/* prettier-ignore-start */}}
 {{/*###
 Handler=/premium
-TitleBar=Support Akatsuki (Premium)
+TitleBar=Akatsuki Premium
 BannerContent=fundmyautism.jpg
 BannerType=1
 AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.min.js
@@ -40,7 +40,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
       <h1 class="ui center aligned header">
         {{ $.T "So, what makes it so <i>Premium</i>?" | html }}
         <div class="sub header">
-          {{ $.T "Well, it has many additional perks." }}
+          {{ $.T "Well, it comes with several additional perks," }}
         </div>
       </h1>
       <h4 class="ui horizontal divider header">
@@ -48,51 +48,59 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
       </h4>
       <div class="ui internally celled stackable grid">
         <div class="row">
-          <div class="eight wide column">
+          <div class="four wide column">
             <h3 class="ui header">
-              {{ $.T "Multi-colored username on the website" }}
+              {{ $.T "Change your identity" }}
             </h3>
-            {{ $.T "To kick it off, you get a <b>rainbow username</b> on the website to show everyone you're a really cool dude who has gone above and beyond in helping us pay the server bills." | html }}
+            {{ $.T "<b>Tired of your current username?</b> Now you can have as many as you want! Now available for self-serve in your user settings." | html }}
           </div>
-          <div class="eight wide column">
-            <h3 class="ui header">{{ $.T "Animated profile background" }}</h3>
-            {{ $.T "Take a step up from regular supporters, and <b>set your custom background to an Animated version</b>." | html }}
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Start from scratch" }}</h3>
+            {{ $.T "Looking to go SS-only? Switching to mouse or tablet? Or just want a clean slate? <b>Start fresh</b> with a selective wipe of your stats at any time!" | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">
+              {{ $.T "Compete with friends, form rivalries with similar players" }}
+            </h3>
+            {{ $.T "<b>Compete with friends, form rivalships and play on the leaderboards with similarly skilled players</b>, without the crippling depression of not beating that pro!" | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Customize your profile" }}</h3>
+            {{ $.T "Thinking of <b>spicing your profile up with some hummus</b>? Want access to our custom badge editor? Got you covered! With premium, we're always adding ways to customize your profile." | html }}
           </div>
         </div>
         <div class="row">
           <div class="four wide column">
             <h3 class="ui header">
-              {{ $.T "Being able to use channel-limited commands, anywhere" }}
+              {{ $.T "Use channel-limited commands, anywhere" }}
             </h3>
-            {{ $.T "Premium members have the ability to override channel-limited commands, such as !request, !last, and more; and <b>can use them anywhere</b>." | html }}
+            {{ $.T "Premium members have the ability to use channel-limited commands, such as <code>!request</code>, <code>!last</code>, and can use them in any channel." | html }}
           </div>
           <div class="four wide column">
-            <h3 class="ui header">{{ $.T "Premium badge" }}</h3>
-            {{ $.T "Just like Supporter, you will get a <b>premium badge</b> on your profile, to show everyone you've decided to support us!" | html }}
+            <h3 class="ui header">{{ $.T "Leaderboard preferences" }}</h3>
+            {{ $.T "<b>Customize ui preferences for in-game leaderboards!</b> Change between score & pp for Vanilla leaderboards, and customize the number of records in each leaderboard." | html }}
+          </div>
+          <div class="four wide column">
+            <h3 class="ui header">{{ $.T "Premium special indicators" }}</h3>
+            {{ $.T "You will get a special <b>Premium badge and flair</b> on your profile, as well as a <b>colored username in-game</b> to show everyone you've decided to support us!" | html }}
           </div>
           <div class="four wide column">
             <h3 class="ui header">{{ $.T "In-game #premium channel" }}</h3>
             {{ $.T "Premium members have a <b>dedicated in-game channel of their own!</b> This also comes along with the #supporter channel." | html }}
           </div>
-          <div class="four wide column">
-            <h3 class="ui header">{{ $.T "Many other features.." }}</h3>
-            {{ $.T "As Akatsuki development continues, <b>many small quality-of-life improvements are added for premium members</b> - for example, the !q, and !overwrite commands." | html }}
-          </div>
         </div>
       </div>
-      {{ if $global.User.ID }}
+      {{ if not $global.User.ID }}
         <h4 class="ui horizontal divider header">
-          {{ $.T "And of course, all regular supporter perks are included in premium as well! Live the premium life!" }}
+          {{ $.T "Live the Premium Life!" }}
         </h4>
         <center>
           <p>
-            {{ $.T "You may donate through <b>PayPal</b> (or credit/debit card linked to PayPal). Use the slider below to choose the amount of months you'd like, and the cost will be instantly calculated. The discount will increase exponentially as the months increase." | html }}
+            <b>The cost of Akatsuki Premium is US$5, charged monthly.</b>
+            <br />
+            We process payments through <b>PayPal</b> (or credit/debit card linked to PayPal).
           </p>
         </center>
-        <div id="months-slider" style="margin: 0 auto; max-width: 500px"></div>
-        <br />
-        <div id="cost" class="centered"><b>{{ $.T "Loading..." }}</b></div>
-        <br />
         <div
           class="ui internally celled two column center aligned stackable grid">
           <div class="column">
@@ -100,66 +108,26 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
               <i class="fa-brands fa-paypal"></i>
               {{ $.T "PayPal" }}
             </h2>
-            <form
-              id="paypal-form"
-              action="https://www.paypal.com/cgi-bin/webscr"
-              method="post"
-              target="_self">
-              <input type="hidden" name="on0" value="Period" />
-              <input type="hidden" name="os0" value="1 month" />
-              {{ range _range 24 }}
-                {{ $months := plus (float .) 1 }}
-                <input
-                  type="hidden"
-                  name="option_select{{ . }}"
-                  value="{{ $months }} month{{ if . }}s{{ end }}" />
-                <input
-                  type="hidden"
-                  name="custom"
-                  value="userid={{ $global.User.ID }}" />
-                <input
-                  type="hidden"
-                  name="option_amount{{ . }}"
-                  value="{{ calculatePremiumPrice $months }}" />
-              {{ end }}
-              <input
-                type="hidden"
-                name="on1"
-                value="Akatsuki user to give premium:" />
-              <input
-                type="hidden"
-                name="amount"
-                value="{{ calculatePremiumPrice 1 }}"
-                id="paypal-amt" />
-              <div class="ui fluid labeled action input">
-                <div class="ui label">
-                  {{ $.T "User:" }}
-                </div>
-                <input
-                  id="username-input"
-                  name="os1"
-                  type="text"
-                  placeholder="{{ $.T "User" }}"
-                  value="{{ $global.User.Username }}" />
-                <button type="submit" class="ui blue button">
-                  {{ $.T "Submit" }}
-                </button>
-              </div>
-              {{ $ief }}
-              <input
-                type="hidden"
-                name="business"
-                value="{{ config "PAYPAL_EMAIL_ADDRESS" }}" />
-              <input type="hidden" name="cmd" value="_xclick" />
-              <input type="hidden" name="lc" value="GB" />
-              <input type="hidden" name="no_note" value="0" />
-              <input type="hidden" name="currency_code" value="EUR" />
-              <img
-                alt=""
-                border="0"
-                src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif"
-                width="1"
-                height="1" />
+
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+              <!-- Identify the Akatsuki user purchasing the subscription. -->
+              <input type="hidden" name="custom" value="userid={{ $global.User.ID }}" />
+              <!-- Identify your business so that you can collect the payments. -->
+              <input type="hidden" name="business" value="{{ config "PAYPAL_EMAIL_ADDRESS" }}" />
+              <!-- Specify a Subscribe button. -->
+              <input type="hidden" name="cmd" value="_xclick-subscriptions" />
+              <!-- Identify the subscription. -->
+              <input type="hidden" name="item_name" value="Akatsuki Premium Subscription" />
+              <!-- Set the terms of the regular subscription. -->
+              <input type="hidden" name="currency_code" value="USD" />
+              <input type="hidden" name="a3" value="5.00" />
+              <input type="hidden" name="p3" value="1" />
+              <input type="hidden" name="t3" value="M" />
+              <!-- Set recurring payments until canceled. -->
+              <input type="hidden" name="src" value="1" />
+              <!-- Display the payment button. -->
+              <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribe_LG.gif" alt="Subscribe">
+              <img alt="" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
             </form>
           </div>
         </div>
@@ -168,18 +136,26 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
         </h4>
         <center>
           <p>
-            {{ $.T "We are now processing payments automatically & your perks should be distributed as soon as possible. If you do run into any trouble, please <b>open a ticket</b> in our <a href='/discord'>Discord server</a>!" | html }}
+            {{ $.T "Payments are processed automatically and generally apply within 5 minutes of purchase." }}
             <br />
             <br />
-            {{ $.T "Disclaimer: Donations are <b>non-refundable</b>, and do not exempt you from <a href='/doc/tos'>Akatsuki's Rules</a>." | html }}
+            {{ $.T "For any support or questions, please either open a ticket in our <a href='/discord'>Discord server</a> (fastest) or send an email to <code>support@akatsuki.gg</code>." | html }}
           </p>
         </center>
       {{ else }}
         <div class="ui divider"></div>
-        <h1 class="ui center aligned header">
-          {{ $.T "Please log in before purchasing Premium." }}
+        <h2 class="ui center aligned header">
+          <em>{{ $.T "Please sign into your account to purchase Premium" }}</em>
         </h1>
       {{ end }}
+      <h4 class="ui horizontal divider header">
+        {{ $.T "Disclaimer" }}
+      </h4>
+      <center>
+        <p>
+          {{ $.T "<b>Premium purchases are non-refundable, and do not exempt you from <a href='/doc/tos'>Akatsuki's Terms of Service</a>.</b>" | html }}
+        </p>
+      </center>
     </div>
   </div>
 {{ end }}
