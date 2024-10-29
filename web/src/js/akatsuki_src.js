@@ -19,6 +19,9 @@
 
 // this object contains tiny snippets that were deemed too small to be worth
 // their own file.
+
+const PREMIUM_PRICE_PER_MONTH = 5.0;
+
 var singlePageSnippets = {
   "/clans": function () {
     page = 0 === page ? 1 : page;
@@ -517,48 +520,6 @@ var singlePageSnippets = {
     });
   },
 
-  "/support": function () {
-    var sl = $("#months-slider")[0];
-    noUiSlider.create(sl, {
-      start: [1],
-      step: 1,
-      connect: [true, false],
-      range: {
-        min: [1],
-        max: [36],
-      },
-    });
-    var rates = {};
-    var us = sl.noUiSlider;
-    $.getJSON("/donate/rates", function (data) {
-      rates = data;
-      us.on("update", function () {
-        var months = us.get();
-        var priceEUR = Math.pow(months * 30 * 0.2, 0.72); // 2nd arg: 20 for 66%
-        var priceBTC = priceEUR / rates.EUR;
-        var priceUSD = priceBTC * rates.USD;
-        $("#cost").html(
-          T("<b>{{ months }}</b> month costs <b>€ {{ eur }}</b>", {
-            count: Math.round(+months),
-            months: (+months).toFixed(0),
-            eur: priceEUR.toFixed(2),
-          }) +
-            "<br>" +
-            T("($ {{ usd }} / BTC {{ btc }})", {
-              usd: priceUSD.toFixed(2),
-              btc: priceBTC.toFixed(10),
-            })
-        );
-        $("input[name='os0']").attr(
-          "value",
-          (+months).toFixed(0) + " month" + (months == 1 ? "" : "s")
-        );
-        $("#bitcoin-amt").text(priceBTC.toFixed(6));
-        $("#paypal-amt").val(priceEUR.toFixed(2));
-      });
-    });
-  },
-
   "/premium": function () {
     var sl = $("#months-slider")[0];
     noUiSlider.create(sl, {
@@ -570,34 +531,22 @@ var singlePageSnippets = {
         max: [36],
       },
     });
-    var rates = {};
     var us = sl.noUiSlider;
-    $.getJSON("/donate/rates", function (data) {
-      rates = data;
-      us.on("update", function () {
-        var months = us.get();
-        var priceEUR = Math.pow(months * 68 * 0.15, 0.93); // 2nd arg: 44 for 66%
-        var priceBTC = priceEUR / rates.EUR;
-        var priceUSD = priceBTC * rates.USD;
-        $("#cost").html(
-          T("<b>{{ months }}</b> month costs <b>€ {{ eur }}</b>", {
-            count: Math.round(+months),
-            months: (+months).toFixed(0),
-            eur: priceEUR.toFixed(2),
-          }) +
-            "<br>" +
-            T("($ {{ usd }} / BTC {{ btc }})", {
-              usd: priceUSD.toFixed(2),
-              btc: priceBTC.toFixed(10),
-            })
-        );
-        $("input[name='os0']").attr(
-          "value",
-          (+months).toFixed(0) + " month" + (months == 1 ? "" : "s")
-        );
-        $("#bitcoin-amt").text(priceBTC.toFixed(6));
-        $("#paypal-amt").val(priceEUR.toFixed(2));
-      });
+    us.on("update", function () {
+      var months = us.get();
+      var priceUSD = months * PREMIUM_PRICE_PER_MONTH;
+      $("#cost").html(
+        T("The cost of <b>{{ months }}</b> {{ monthSpelling }} of Akatsuki<sup>+</sup> is <b>${{ amount }} USD</b>", {
+          monthSpelling: months == 1 ? T("month") : T("months"),
+          months: (+months).toFixed(0),
+          amount: priceUSD.toFixed(2),
+        })
+      );
+      $("input[name='os0']").attr(
+        "value",
+        (+months).toFixed(0) + " month" + (months == 1 ? "" : "s")
+      );
+      $("#paypal-amt").val(priceUSD.toFixed(2));
     });
   },
 

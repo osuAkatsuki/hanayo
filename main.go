@@ -36,14 +36,12 @@ import (
 	registerHandlers "github.com/osuAkatsuki/hanayo/app/handlers/sessions/register"
 	logging "github.com/osuAkatsuki/hanayo/app/logging"
 	middleware "github.com/osuAkatsuki/hanayo/app/middleware"
-	"github.com/osuAkatsuki/hanayo/app/middleware/pagemappings"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	sessionsmanager "github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	"github.com/osuAkatsuki/hanayo/app/version"
-	"github.com/osuAkatsuki/hanayo/internal/btcconversions"
 	"github.com/osuAkatsuki/hanayo/internal/csrf/cieca"
 	"github.com/thehowl/qsql"
 	gintrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
@@ -182,7 +180,6 @@ func generateEngine() *gin.Engine {
 		// Still use the built-in recovery middleware that is called with default
 		gin.Recovery(),
 		gzip.Gzip(gzip.DefaultCompression),
-		pagemappings.CheckRedirect,
 		sessions.Sessions("session", store),
 		sessionsmanager.SessionInitializer(),
 		middleware.RateLimiter(false),
@@ -241,8 +238,6 @@ func generateEngine() *gin.Engine {
 		"/settings/profbackground/:type",
 		profileEditHandlers.ProfileBackgroundSubmitHandler,
 	)
-
-	r.GET("/donate/rates", btcconversions.GetRates)
 
 	r.GET("/about", miscHandlers.AboutPageHandler)
 
