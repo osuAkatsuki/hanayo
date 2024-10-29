@@ -35,7 +35,7 @@ BannerType=1
       <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Account Management Team" }}</h1>
         <p>
-          {{ .T "Responsible for not only the community but also the management team itself." }}
+          {{ .T "Responsible for not only accounts but also the management team itself." }}
           <br />
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 32) }}
@@ -50,10 +50,17 @@ BannerType=1
       <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Event Management Team" }}</h1>
         <p>
-          {{ .T "Responsible for community engagement including tournaments, social media, and other activites that the community take part in." }}
+          {{ .T "Responsible for community engagement through the means of events via the game and on the Discord." }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 78) }}
       </div>
+      <div class="ui center aligned segment">
+        <h1 class="ui heading">{{ .T "Social Media Management Team" }}</h1>
+        <p>
+          {{ .T "Responsible for community engagement through the means of YouTube, Twitter, and other socials." }}
+        </p>
+        {{ template "users" (.Get "badges/members?id=%d" 86) }}
+      </div>      
       <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Nomination Quality Assurance Team" }}</h1>
         <p>
@@ -70,9 +77,9 @@ BannerType=1
     </div>
     <div class="ui segments">
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Special thanks" }}</h1>
+        <h1 class="ui heading">{{ .T "The Hall of Fame" }}</h1>
         <p>
-          {{ .T "Here's an additional list of some people who helped us out along the way." }}
+          {{ .T "Here's an additional list of some people who helped us out along the way whether that be through development, management, or community contributions." }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 42) }}
       </div>
