@@ -24,6 +24,7 @@ import (
 	beatmapsHandlers "github.com/osuAkatsuki/hanayo/app/handlers/beatmaps"
 	clansHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans"
 	clanCreationHandlers "github.com/osuAkatsuki/hanayo/app/handlers/clans/create"
+	connectionHandlers "github.com/osuAkatsuki/hanayo/app/handlers/connections"
 	errorHandlers "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	ircHandlers "github.com/osuAkatsuki/hanayo/app/handlers/irc"
 	miscHandlers "github.com/osuAkatsuki/hanayo/app/handlers/misc"
@@ -238,6 +239,8 @@ func generateEngine() *gin.Engine {
 		"/settings/profbackground/:type",
 		profileEditHandlers.ProfileBackgroundSubmitHandler,
 	)
+
+	r.GET("/link-discord", connectionHandlers.LinkDiscordHandler)
 
 	r.GET("/about", miscHandlers.AboutPageHandler)
 

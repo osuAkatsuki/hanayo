@@ -1,0 +1,45 @@
+{{/* prettier-ignore-start */}}
+{{/*###
+Handler=/settings/connections
+TitleBar=Connections
+BannerContent=settings2.jpg
+BannerType=1
+Include=menu.html
+MinPrivileges=2
+*/}}
+{{/* prettier-ignore-end */}}
+{{ define "tpl" }}
+  <div class="ui container">
+    <div class="ui stackable grid">
+      {{ template "settingsSidebar" . }}
+      <div class="twelve wide column">
+        <div class="ui segment">
+          {{ $q := qb "SELECT discord_account_id FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
+          {{ if $q.discord_account_id }}
+            <p>
+              {{ .T "Your Discord account is already linked with us. If you wish to unlink your Discord, please contact support." }}
+            </p>
+          {{ else }}
+            <p>
+              <b>
+                {{ .T "Link your Discord account" }}
+              </b>
+            </p>
+            <p>
+              {{ .T "Linking your Discord account will allow you access extra features related to interacting in our Discord server. For example, linking your Discord account will allow you to automatically receive roles such as Akatsuki+ and Akatsuki Champion." }}
+            </p>
+            <p class="centered">
+              <a
+                tabindex="1"
+                class="ui red labeled icon button"
+                href="/link-discord">
+                <i class="heart icon"></i>
+                {{ .T "Link Discord" }}
+              </a>
+            </p>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

@@ -20,6 +20,7 @@ NoCompile=true
 
       {{ navbarItem .Path (.T "Avatar") "/settings/avatar" }}
       {{ navbarItem .Path (.T "Email & Password") "/settings/password" }}
+      {{ navbarItem .Path (.T "Connections") "/settings/connections" }}
 
       {{ if not $is_in_clan }}
         {{ navbarItem .Path (.T "Create a clan") "/clans/create" }}
