@@ -1,11 +1,8 @@
 package connections
 
 import (
-	"crypto/rand"
 	"database/sql"
-	"encoding/base64"
 	"fmt"
-	"log/slog"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -35,44 +32,10 @@ func LinkDiscordHandler(c *gin.Context) {
 		return
 	}
 
-	state, err := createStateString()
-
-	if err != nil {
-		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
-		sessions.GetSession(c).Save()
-
-		slog.Error("Error generating string for Discord connection", "error", err.Error())
-
-		c.Redirect(302, "/settings/connections")
-		return
-	}
-
-	_, err = services.DB.Exec("INSERT INTO discord_states (user_id, state) VALUES (?, ?)", sessions.GetContext(c).User.ID, state)
-
-	if err != nil {
-		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
-		sessions.GetSession(c).Save()
-
-		slog.Error("Error inserting to discord_states table", "error", err.Error())
-
-		c.Redirect(302, "/settings/connections")
-		return
-	}
-
 	settings := settingsState.GetSettings()
 
 	discordCallbackUrl := fmt.Sprintf("%s/discord/callback", settings.PUBLIC_AKATSUKI_API_BASE_URL)
-	rediectUrl := fmt.Sprintf("https://discord.com/oauth2/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=identify&state=%s", settings.DISCORD_CLIENT_ID, discordCallbackUrl, state)
+	redirectUrl := fmt.Sprintf("https://discord.com/oauth2/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=identify", settings.DISCORD_CLIENT_ID, discordCallbackUrl)
 
-	c.Redirect(301, rediectUrl)
-}
-
-func createStateString() (string, error) {
-	bytes := make([]byte, 16)
-	_, err := rand.Read(bytes)
-	if err != nil {
-		return "", err
-	}
-
-	return base64.URLEncoding.EncodeToString(bytes), nil
+	c.Redirect(301, redirectUrl)
 }
