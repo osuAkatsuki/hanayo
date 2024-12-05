@@ -41,13 +41,23 @@ func LinkDiscordHandler(c *gin.Context) {
 		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
 		sessions.GetSession(c).Save()
 
-		slog.Error("Error creating generating string for Discord connection", "error", err.Error())
+		slog.Error("Error generating string for Discord connection", "error", err.Error())
 
 		c.Redirect(302, "/settings/connections")
 		return
 	}
 
-	services.DB.Exec("INSERT INTO discord_states (user_id, state) VALUES (?, ?)", sessions.GetContext(c).User.ID, state)
+	_, err = services.DB.Exec("INSERT INTO discord_states (user_id, state) VALUES (?, ?)", sessions.GetContext(c).User.ID, state)
+
+	if err != nil {
+		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
+		sessions.GetSession(c).Save()
+
+		slog.Error("Error inserting to discord_states table", "error", err.Error())
+
+		c.Redirect(302, "/settings/connections")
+		return
+	}
 
 	settings := settingsState.GetSettings()
 
