@@ -52,7 +52,7 @@ func LinkDiscordHandler(c *gin.Context) {
 	settings := settingsState.GetSettings()
 
 	discordCallbackUrl := fmt.Sprintf("%s/discord/callback", settings.PUBLIC_AKATSUKI_API_BASE_URL)
-	rediectUrl := fmt.Sprintf("https://discord.com/oauth2/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=identify=state%s", settings.DISCORD_CLIENT_ID, discordCallbackUrl, state)
+	rediectUrl := fmt.Sprintf("https://discord.com/oauth2/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=identify&state=%s", settings.DISCORD_CLIENT_ID, discordCallbackUrl, state)
 
 	c.Redirect(301, rediectUrl)
 }
