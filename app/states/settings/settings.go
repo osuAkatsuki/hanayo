@@ -44,8 +44,7 @@ type Settings struct {
 	PUBLIC_BEATMAPS_SERVICE_BASE_URL   string
 
 	DISCORD_SERVER_URL string
-
-	// TODO: add S3 bucket.
+	DISCORD_CLIENT_ID  string
 
 	DB_SCHEME string
 	DB_HOST   string
@@ -107,6 +106,7 @@ func LoadSettings() Settings {
 	settings.PUBLIC_BEATMAPS_SERVICE_BASE_URL = getEnv("PUBLIC_BEATMAPS_SERVICE_BASE_URL")
 
 	settings.DISCORD_SERVER_URL = getEnv("DISCORD_SERVER_URL")
+	settings.DISCORD_CLIENT_ID = getEnv("DISCORD_CLIENT_ID")
 
 	settings.DB_SCHEME = getEnv("DB_SCHEME")
 	settings.DB_HOST = getEnv("DB_HOST")
