@@ -62,7 +62,7 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 		tag = c.PostForm("tag")
 	}
 
-	tagRunes := []rune(u.Tag)
+	tagRunes := []rune(tag)
 	if len(tagRunes) > 8 {
 		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "The provided clan tag is too long!")})
 		return
