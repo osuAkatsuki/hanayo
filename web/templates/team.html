@@ -17,7 +17,7 @@ BannerType=1
         </h3>
       </div>
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Product Management Team" }}</h1>
+        <h1 class="ui heading">{{ .T "Directors" }}</h1>
         <p>
           {{ .T "Responsible for envisioning Akatsuki's future, and creating ideas to shape the server." }}
           <br />
@@ -25,7 +25,7 @@ BannerType=1
         {{ template "users" (.Get "badges/members?id=%d" 30) }}
       </div>
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Product Development Team" }}</h1>
+        <h1 class="ui heading">{{ .T "Core Developers" }}</h1>
         <p>
           {{ .T "Responsible for implementing and maintaining Akatsuki's infrastructure - they keep the server running, and take care of its maintenance." }}
           <br />
@@ -33,12 +33,12 @@ BannerType=1
         {{ template "users" (.Get "badges/members?id=%d" 2) }}
       </div>
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Community Management Team" }}</h1>
+        <h1 class="ui heading">{{ .T "Account Management Team" }}</h1>
         <p>
-          {{ .T "Responsible for not only the community but also the management team itself." }}
+          {{ .T "Responsible for not only accounts but also the management team itself." }}
           <br />
         </p>
-        {{ template "users" (.Get "badges/members?id=%d" 97) }}
+        {{ template "users" (.Get "badges/members?id=%d" 32) }}
       </div>
       <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Community Support Team" }}</h1>
@@ -48,32 +48,38 @@ BannerType=1
         {{ template "users" (.Get "badges/members?id=%d" 99) }}
       </div>
       <div class="ui center aligned segment">
+        <h1 class="ui heading">{{ .T "Event Management Team" }}</h1>
+        <p>
+          {{ .T "Responsible for community engagement through the means of events via the game and on the Discord." }}
+        </p>
+        {{ template "users" (.Get "badges/members?id=%d" 78) }}
+      </div>
+      <div class="ui center aligned segment">
+        <h1 class="ui heading">{{ .T "Social Media Management Team" }}</h1>
+        <p>
+          {{ .T "Responsible for community engagement through the means of YouTube, Twitter, and other socials." }}
+        </p>
+        {{ template "users" (.Get "badges/members?id=%d" 86) }}
+      </div>      
+      <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Nomination Quality Assurance Team" }}</h1>
         <p>
           {{ .T "They ensure that the Beatmap Nomination team is running at its best performance and promote changes to the Ranking Criteria when deemed necessary." }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 100) }}
       </div>
-      <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Beatmap Nomination Team" }}</h1>
         <p>
           {{ .T "Responsible for handling all beatmap related inquiries; such as beatmaps status requests." }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 53) }}
       </div>
-      <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Social Media Management Team" }}</h1>
-        <p>
-          {{ .T "Responsible for managing Akatsuki's social media, such as our <a href='https://youtube.com/@akatsuki_osu'>YouTube</a> and <a href='https://twitter.com/@akatsuki_osu'>Twitter</a> accounts." | html }}
-        </p>
-        {{ template "users" (.Get "badges/members?id=%d" 86) }}
-      </div>
     </div>
     <div class="ui segments">
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Special thanks" }}</h1>
+        <h1 class="ui heading">{{ .T "The Hall of Fame" }}</h1>
         <p>
-          {{ .T "Here's an additional list of some people who helped us out along the way." }}
+          {{ .T "Here's an additional list of some people who helped us out along the way whether that be through development, management, or community contributions." }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 42) }}
       </div>
