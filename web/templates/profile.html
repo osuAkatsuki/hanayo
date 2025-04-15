@@ -467,34 +467,36 @@
                       <table
                         class="ui very basic two column compact table nopad">
                         <tbody>
-                          {{ with .global_leaderboard_rank }}
-                            <tr>
-                              <td><b>{{ $global.T "Global rank" }}</b></td>
-                              <td class="right aligned">#{{ . }}</td>
-                            </tr>
-                          {{ end }}
-                          <tr id="global-row-{{ $rx }}-{{ $k }}" hidden>
+                          <tr>
+                            <td><b>{{ $global.T "Global rank" }}</b></td>
+                            <td class="right aligned">
+                              #{{ or .global_leaderboard_rank "N/A" }}
+                            </td>
+                          </tr>
+                          <tr id="global-row-{{ $rx }}-{{ $k }}">
                             <td><b>{{ $global.T "Peak global rank" }}</b></td>
                             <td
                               class="right aligned"
-                              id="global-row-rank-{{ $rx }}-{{ $k }}"></td>
+                              id="global-row-rank-{{ $rx }}-{{ $k }}">
+                              #N/A
+                            </td>
                           </tr>
-                          {{ with .country_leaderboard_rank }}
-                            <tr>
-                              <td>
-                                <b>
-                                  {{ $global.T "Country rank" }} &nbsp;
-                                  <a
-                                    href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}">
-                                    <img
-                                      src="/static/images/flags/{{ countryCodepoints $user.country }}.svg"
-                                      class="new-flag new-flag-margin" />
-                                  </a>
-                                </b>
-                              </td>
-                              <td class="right aligned">#{{ . }}</td>
-                            </tr>
-                          {{ end }}
+                          <tr>
+                            <td>
+                              <b>
+                                {{ $global.T "Country rank" }} &nbsp;
+                                <a
+                                  href="/leaderboard?mode={{ $k }}&rx=0&country={{ $user.country }}">
+                                  <img
+                                    src="/static/images/flags/{{ countryCodepoints $user.country }}.svg"
+                                    class="new-flag new-flag-margin" />
+                                </a>
+                              </b>
+                            </td>
+                            <td class="right aligned">
+                              #{{ or .country_leaderboard_ran "N/A" }}
+                            </td>
+                          </tr>
                           <tr>
                             <td><b>{{ $global.T "PP" }}</b></td>
                             <td class="right aligned">{{ humanize .pp }}</td>
