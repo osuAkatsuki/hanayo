@@ -38,7 +38,9 @@ func NameChangeSubmitHandler(c *gin.Context) {
 	isDonor := (ctx.User.Privileges & common.UserPrivilegeDonor) != 0
 	if !isDonor {
 		if !hasFreeUsernameChange {
-			tu.Resp403(c)
+			sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "You have already used your free username change.")})
+			sessions.GetSession(c).Save()
+			c.Redirect(302, "/u/"+strconv.Itoa(int(ctx.User.ID)))
 			return
 		}
 		// if they are not a donor, consume their free username change
@@ -74,13 +76,13 @@ func NameChangeSubmitHandler(c *gin.Context) {
 	// update username
 	services.DB.Exec("UPDATE users SET username = ?, username_safe = ?, has_free_username_change = ? WHERE id = ?", username, safeUsername, hasFreeUsernameChange, ctx.User.ID)
 
-	logErr := uu.AddToUserNotes(fmt.Sprintf("Username change (self): %s -> %s", ctx.User.Username, username), ctx.User.ID)
+	userNote := "Username change (self: used free change): %s -> %s"
+	if isDonor {
+		userNote = "Username change (self: donor): %s -> %s"
+	}
+	logErr := uu.AddToUserNotes(fmt.Sprintf(userNote, ctx.User.Username, username), ctx.User.ID)
 	if logErr != nil {
-		slog.Error("Error adding to user notes", "error", logErr.Error())
-		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
-		sessions.GetSession(c).Save()
-		c.Redirect(302, "/u/"+strconv.Itoa(int(ctx.User.ID)))
-		return
+		slog.Error("Error adding to user notes during username change", "error", logErr.Error())
 	}
 
 	services.RD.Publish("api:change_username", strconv.Itoa(int(ctx.User.ID)))
