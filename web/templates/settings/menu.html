@@ -30,8 +30,9 @@ NoCompile=true
         {{ navbarItem .Path (.T "Clan settings") "/settings/clansettings" }}
       {{ end }}
 
+      {{ navbarItem .Path (.T "Edit username") "/settings/username" }}
+      
       {{ if has .Context.User.Privileges 4 }}
-        {{ navbarItem .Path (.T "Edit username") "/settings/username" }}
         {{ navbarItem .Path (.T "Edit profile background") "/settings/profbackground" }}
       {{ end }}
     </div>
