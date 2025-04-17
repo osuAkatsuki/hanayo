@@ -25,13 +25,28 @@ func NameChangeSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	if ctx.User.Privileges&common.UserPrivilegeDonor == 0 {
-		tu.Resp403(c)
+	var hasFreeUsernameChange bool
+	sql_err := services.DB.QueryRow("SELECT 1 FROM users WHERE id = ? AND has_free_username_change = 1", ctx.User.ID).Scan(&hasFreeUsernameChange)
+	if sql_err != nil && sql_err != sql.ErrNoRows {
+		slog.Error("Error querying has_free_username_change", "user", ctx.User.ID)
+		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
+		sessions.GetSession(c).Save()
+		c.Redirect(302, "/u/"+strconv.Itoa(int(ctx.User.ID)))
 		return
 	}
 
+	isDonor := (ctx.User.Privileges & common.UserPrivilegeDonor) != 0
+	if !isDonor {
+		if !hasFreeUsernameChange {
+			tu.Resp403(c)
+			return
+		}
+		// if they are not a donor, consume their free username change
+		hasFreeUsernameChange = false
+	}
+
 	if c.PostForm("name") == "" {
-		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
+		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "You have supplied an empty username.")})
 		sessions.GetSession(c).Save()
 		c.Redirect(302, "/u/"+strconv.Itoa(int(ctx.User.ID)))
 		return
@@ -57,20 +72,20 @@ func NameChangeSubmitHandler(c *gin.Context) {
 	}
 
 	// update username
-	services.DB.Exec("UPDATE users SET username = ?, username_safe = ? WHERE id = ?", username, safeUsername, ctx.User.ID)
+	services.DB.Exec("UPDATE users SET username = ?, username_safe = ?, has_free_username_change = ? WHERE id = ?", username, safeUsername, hasFreeUsernameChange, ctx.User.ID)
 
-	logErr := uu.AddToUserNotes(fmt.Sprintf("Username change (self): %s -> %s", sessions.GetContext(c).User.Username, username), sessions.GetContext(c).User.ID)
+	logErr := uu.AddToUserNotes(fmt.Sprintf("Username change (self): %s -> %s", ctx.User.Username, username), ctx.User.ID)
 	if logErr != nil {
 		slog.Error("Error adding to user notes", "error", logErr.Error())
 		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Something went wrong.")})
 		sessions.GetSession(c).Save()
-		c.Redirect(302, "/u/"+strconv.Itoa(int(sessions.GetContext(c).User.ID)))
+		c.Redirect(302, "/u/"+strconv.Itoa(int(ctx.User.ID)))
 		return
 	}
 
-	services.RD.Publish("api:change_username", strconv.Itoa(int(sessions.GetContext(c).User.ID)))
+	services.RD.Publish("api:change_username", strconv.Itoa(int(ctx.User.ID)))
 	
 	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Username changed")})
 	sessions.GetSession(c).Save()
-	c.Redirect(302, "/u/"+strconv.Itoa(int(sessions.GetContext(c).User.ID)))
+	c.Redirect(302, "/u/"+strconv.Itoa(int(ctx.User.ID)))
 }
