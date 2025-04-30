@@ -11,6 +11,15 @@ let currentGameId = null;
 
 var currentEvents = [];
 
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 // Convert enums to values
 const teamStyle = {
   0: "team-no-team",
@@ -428,8 +437,10 @@ async function loadMatchData(loadOld = false, loadNew = false) {
   var matchContainerJQ = matchContainer;
 
   matchContainerJQ.empty();
-  matchName.html(`<div class="match-name-div">${data.match.name}</div>`);
-  document.title = `${data.match.name} - Akatsuki`;
+
+  let matchNameSafe = escapeHtml(data.match.name);
+  matchName.html(`<div class="match-name-div">${matchNameSafe}</div>`);
+  document.title = `${matchNameSafe} - Akatsuki`;
 
   if (data.events !== null) {
     firstCurrentEventId =
