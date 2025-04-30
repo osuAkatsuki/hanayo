@@ -87,13 +87,13 @@ function getScoringOrder(game, score) {
 function getEventText(event) {
   switch (event.type) {
     case "MATCH_CREATION":
-      return `<a href="/u/${event.user.id}">${event.user.username}</a> created the match`;
+      return `<a href="/u/${event.user.id}">${escapeHTML(event.user.username)}</a> created the match`;
     case "MATCH_USER_JOIN":
-      return `<a href="/u/${event.user.id}">${event.user.username}</a> joined the match`;
+      return `<a href="/u/${event.user.id}">${escapeHTML(event.user.username)}</a> joined the match`;
     case "MATCH_HOST_ASSIGNMENT":
-      return `<a href="/u/${event.user.id}">${event.user.username}</a> became the host`;
+      return `<a href="/u/${event.user.id}">${escapeHTML(event.user.username)}</a> became the host`;
     case "MATCH_USER_LEFT":
-      return `<a href="/u/${event.user.id}">${event.user.username}</a> left the match`;
+      return `<a href="/u/${event.user.id}">${escapeHTML(event.user.username)}</a> left the match`;
     case "MATCH_DISBAND":
       return "the match was disbanded";
     default:
@@ -259,7 +259,7 @@ function buildScore(game, score) {
         <div class="score-box-details">
             <div class="score-box-details-left">
                 <div class="score-box-username">
-                    <a href="/u/${score.user.id}">${score.user.username}</a>
+                    <a href="/u/${score.user.id}">${escapeHTML(score.user.username)}</a>
                 </div>
                 <a class="score-flag-link" href="/leaderboard?mode=0&rx=0&country=${score.user.country.toLowerCase()}">
                     <img class="score-box-user-flag" src="/static/images/flags/${countryCodepoints}.svg" />
@@ -428,8 +428,10 @@ async function loadMatchData(loadOld = false, loadNew = false) {
   var matchContainerJQ = matchContainer;
 
   matchContainerJQ.empty();
-  matchName.html(`<div class="match-name-div">${data.match.name}</div>`);
-  document.title = `${data.match.name} - Akatsuki`;
+
+  const matchNameSafe = escapeHTML(data.match.name);
+  matchName.html(`<div class="match-name-div">${matchNameSafe}</div>`);
+  document.title = `${matchNameSafe} - Akatsuki`;
 
   if (data.events !== null) {
     firstCurrentEventId =
