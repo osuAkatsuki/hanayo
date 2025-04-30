@@ -438,7 +438,7 @@ async function loadMatchData(loadOld = false, loadNew = false) {
 
   matchContainerJQ.empty();
 
-  let matchNameSafe = escapeHtml(data.match.name);
+  const matchNameSafe = escapeHtml(data.match.name);
   matchName.html(`<div class="match-name-div">${matchNameSafe}</div>`);
   document.title = `${matchNameSafe} - Akatsuki`;
 
