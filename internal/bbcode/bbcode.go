@@ -2,6 +2,7 @@ package bbcode
 
 import (
 	"fmt"
+	"html/template"
 	"math/rand"
 	"net/url"
 	"regexp"
@@ -487,6 +488,7 @@ var policy = func() *bluemonday.Policy {
 }()
 
 func ConvertBBCodeToHTML(bbcode string) string {
+	bbcode = template.HTMLEscapeString(bbcode)
 
 	// block
 	bbcode = parseImagemap(bbcode)
