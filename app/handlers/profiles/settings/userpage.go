@@ -8,8 +8,9 @@ import (
 )
 
 func ParseBBCodeSubmitHandler(c *gin.Context) {
-	body, err := io.ReadAll(c.Request.Body)
-	if err != nil {
+	body := make([]byte, 65536)
+	n, err := c.Request.Body.Read(body)
+	if (err != nil && err != io.EOF) || n == 65536 {
 		c.Error(err)
 		c.String(200, "Error")
 		return
