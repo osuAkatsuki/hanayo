@@ -473,6 +473,10 @@ var singlePageSnippets = {
           showMessage("success", "Your userpage has been saved.");
           f.removeClass("loading");
         },
+        function (data) {
+          showMessage("error", data.message);
+          f.removeClass("loading");
+        },
         true
       );
       return false;
