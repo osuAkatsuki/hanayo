@@ -14,7 +14,7 @@ func ParseBBCodeSubmitHandler(c *gin.Context) {
 	body, err := io.ReadAll(reader)
 	if err != nil || len(body) >= maxUserpageSize {
 		// c.Error(err)
-		c.String(200, "Error: userpage too long")
+		c.String(200, "Userpage content is too long, maximum is 65535 characters")
 		return
 	}
 	d := bbcode.ConvertBBCodeToHTML(string(body))
