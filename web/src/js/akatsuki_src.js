@@ -474,7 +474,7 @@ var singlePageSnippets = {
           f.removeClass("loading");
         },
         function (data) {
-          showMessage("failure", data);
+          showMessage("error", data);
           f.removeClass("loading");
         },
         true
