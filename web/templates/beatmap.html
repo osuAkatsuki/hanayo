@@ -47,7 +47,7 @@
                 {{ .Beatmapset.Title | htmlescaper }}
                 <br />
                 <b>{{ $.T "Creator" }}:</b>
-                {{ .Beatmapset.Creator }}
+                {{ .Beatmapset.Creator | htmlescaper }}
                 <br />
                 <b>{{ $.T "Source" }}:</b>
                 {{ .Beatmapset.Source | htmlescaper }}
