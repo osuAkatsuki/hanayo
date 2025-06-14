@@ -8,13 +8,12 @@ import (
 )
 
 func ParseBBCodeSubmitHandler(c *gin.Context) {
-	body := make([]byte, 65536)
-	n, err := c.Request.Body.Read(body)
-	if (err != nil && err != io.EOF) || n == 65536 {
+	body, err := io.ReadAll(c.Request.Body)
+	if err != nil || len(body) > 65336 {
 		c.Error(err)
 		c.String(200, "Error")
 		return
 	}
-	d := bbcode.ConvertBBCodeToHTML(string(body[:n]))
+	d := bbcode.ConvertBBCodeToHTML(string(body))
 	c.String(200, d)
 }
