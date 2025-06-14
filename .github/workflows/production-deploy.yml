@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - max-bbcode-length
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
