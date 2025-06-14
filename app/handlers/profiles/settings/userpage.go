@@ -7,7 +7,7 @@ import (
 	"github.com/osuAkatsuki/hanayo/internal/bbcode"
 )
 
-const maxUserpageSize = 65336 // 64 KiB
+const maxUserpageSize = 65335+1 // 64 KiB
 
 func ParseBBCodeSubmitHandler(c *gin.Context) {
 	reader := io.LimitReader(c.Request.Body, maxUserpageSize)
