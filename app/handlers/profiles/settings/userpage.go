@@ -15,6 +15,6 @@ func ParseBBCodeSubmitHandler(c *gin.Context) {
 		c.String(200, "Error")
 		return
 	}
-	d := bbcode.ConvertBBCodeToHTML(string(body))
+	d := bbcode.ConvertBBCodeToHTML(string(body[:n]))
 	c.String(200, d)
 }
