@@ -13,7 +13,7 @@ func ParseBBCodeSubmitHandler(c *gin.Context) {
 	reader := io.LimitReader(c.Request.Body, maxUserpageSize)
 	body, err := io.ReadAll(reader)
 	if err != nil || len(body) >= maxUserpageSize {
-		c.Error(err)
+		// c.Error(err)
 		c.String(200, "Error: userpage too long")
 		return
 	}
