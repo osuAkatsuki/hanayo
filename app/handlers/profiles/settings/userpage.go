@@ -7,11 +7,14 @@ import (
 	"github.com/osuAkatsuki/hanayo/internal/bbcode"
 )
 
+const maxUserpageSize = 65336 // 64 KiB
+
 func ParseBBCodeSubmitHandler(c *gin.Context) {
-	body, err := io.ReadAll(c.Request.Body)
-	if err != nil || len(body) > 65336 {
+	reader := io.LimitReader(c.Request.Body, maxUserpageSize)
+	body, err := io.ReadAll(reader)
+	if err != nil {
 		c.Error(err)
-		c.String(200, "Error")
+		c.String(200, "Error: userpage too long")
 		return
 	}
 	d := bbcode.ConvertBBCodeToHTML(string(body))
