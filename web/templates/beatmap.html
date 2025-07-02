@@ -41,16 +41,16 @@
             <div class="row">
               <div class="column">
                 <b>{{ $.T "Artist" }}:</b>
-                {{ .Beatmapset.Artist }}
+                {{ .Beatmapset.Artist | htmlescaper }}
                 <br />
                 <b>{{ $.T "Title" }}:</b>
-                {{ .Beatmapset.Title }}
+                {{ .Beatmapset.Title | htmlescaper }}
                 <br />
                 <b>{{ $.T "Creator" }}:</b>
-                {{ .Beatmapset.Creator }}
+                {{ .Beatmapset.Creator | htmlescaper }}
                 <br />
                 <b>{{ $.T "Source" }}:</b>
-                {{ .Beatmapset.Source }}
+                {{ .Beatmapset.Source | htmlescaper }}
                 <br />
               </div>
               <div class="column">
