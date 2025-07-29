@@ -734,7 +734,6 @@ function loadScoresPage(type, mode) {
         $(`#first-${firstSuffix}`).text(`(${r.total} in total)`);
       }
 
-      console.log(r, type);
       if (r.scores == null || r.scores.length === 0) {
         disableLoadMoreButton(type, mode);
 
