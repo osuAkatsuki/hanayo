@@ -69,8 +69,8 @@ MinPrivileges=2
                 <option value="">{{ .T "No title" }}</option>
                 {{ range $d.eligible_titles }}
                   <option
-                    value="{{ .title }}"
-                    {{ if eq $d.user_title .title }}selected{{ end }}>
+                    value="{{ .id }}"
+                    {{ if eq $d.user_title.id .id }}selected{{ end }}>
                     {{ .title }}
                   </option>
                 {{ end }}

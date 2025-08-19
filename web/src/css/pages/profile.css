@@ -228,34 +228,6 @@
   color: var(--colour-bot);
 }
 
-.label-product {
-  color: var(--colour-product);
-}
-
-.label-community {
-  color: var(--colour-community);
-}
-
-.label-accounts {
-  color: var(--colour-accounts);
-}
-
-.label-support {
-  color: var(--colour-support);
-}
-
-.label-dev {
-  color: var(--colour-dev);
-}
-
-.label-design {
-  color: var(--colour-design);
-}
-
-.label-event {
-  color: var(--colour-event);
-}
-
 .label-nqa {
   color: var(--colour-nqa);
 }
@@ -287,6 +259,30 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.label-product_manager {
+  color: var(--colour-product);
+}
+
+.label-developer {
+  color: var(--colour-dev);
+}
+
+.label-designer {
+  color: var(--colour-design);
+}
+
+.label-community_manager {
+  color: var(--colour-community);
+}
+
+.label-community_support {
+  color: var(--colour-support);
+}
+
+.label-event_manager {
+  color: var(--colour-event);
 }
 
 .action-button {

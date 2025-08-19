@@ -83,8 +83,8 @@
                         {{ .username }}
                       </h1>
                       {{ if .user_title }}
-                        <div class="profile-user-title">
-                          {{ .user_title }}
+                        <div class="profile-label label-{{ .user_title.id }}">
+                          {{ .user_title.title }}
                         </div>
                       {{ end }}
 
