@@ -65,10 +65,9 @@ MinPrivileges=2
             </div>
             <div class="field">
               <label>{{ .T "User Title" }}</label>
-              {{ $eligible_titles := .Get "users/self/eligible-titles" }}
               <select class="ui dropdown" name="user_title">
                 <option value="">{{ .T "No title" }}</option>
-                {{ range $eligible_titles.titles }}
+                {{ range $d.eligible_titles }}
                   <option
                     value="{{ .title }}"
                     {{ if eq $d.user_title .title }}selected{{ end }}>
