@@ -64,37 +64,6 @@
             <div class="profile-info">
               {{ $user := . }}
 
-              {{ $donor := has .privileges 7 }}
-              {{ $premium := has .privileges 8388615 }}
-
-              {{ $bot := false }}
-              {{ $product := has .privileges 9437183 }}
-              {{ $community := has .privileges 9425151 }}
-              {{ $accounts := has .privileges 9212159 }}
-              {{ $support := has .privileges 9175111 }}
-              {{ $dev := has .privileges 10743327 }}
-              {{ $design := false }}
-              {{ $nqa := has .privileges 33554432 }}
-              {{ $nominator := has .privileges 8388871 }}
-              {{ $event := has .privileges 10485767 }}
-              {{ $scorewatcher := false }}
-              {{ $champion := false }}
-              {{ range .badges }}
-                {{ if eq .id (float 34) }}
-                  {{ $bot = true }}
-                {{ end }}
-                {{ if eq .id (float 101) }}
-                  {{ $design = true }}
-                {{ end }}
-                {{ if eq .id (float 86) }}
-                  {{ $scorewatcher = true }}
-                {{ end }}
-                {{ if eq .id (float 67) }}
-                  {{ $champion = true }}
-                {{ end }}
-              {{ end }}
-
-
               <div id="profile-info" class="ui grid">
                 <div class="row">
                   <div style="width: auto" class="avatar-column column">
@@ -113,112 +82,9 @@
                         {{ end }}
                         {{ .username }}
                       </h1>
-                      {{ if $bot }}
-                        <div class="profile-label label-bot label-full">
-                          CHAT BOT
-                        </div>
-                        <div class="profile-label label-bot label-mobile">
-                          BOT
-                        </div>
-                      {{ else if $product }}
-                        <div class="profile-label label-product label-full">
-                          PRODUCT MANAGER
-                        </div>
-                        <div class="profile-label label-product label-mobile">
-                          PMT
-                        </div>
-                      {{ else if $dev }}
-                        <div class="profile-label label-dev label-full">
-                          PRODUCT DEVELOPER
-                        </div>
-                        <div class="profile-label label-dev label-mobile">
-                          DEV
-                        </div>
-                      {{ else if $design }}
-                        <div class="profile-label label-design label-full">
-                          PRODUCT DESIGNER
-                        </div>
-                        <div class="profile-label label-design label-mobile">
-                          PD
-                        </div>
-                      {{ else if $community }}
-                        <div class="profile-label label-community label-full">
-                          COMMUNITY MANAGER
-                        </div>
-                        <div class="profile-label label-community label-mobile">
-                          CMT
-                        </div>
-                      {{ else if $accounts }}
-                        <div class="profile-label label-accounts label-full">
-                          COMMUNITY SUPPORT
-                        </div>
-                        <div class="profile-label label-accounts label-mobile">
-                          CS
-                        </div>
-                      {{ else if $support }}
-                        <div class="profile-label label-support label-full">
-                          COMMUNITY SUPPORT
-                        </div>
-                        <div class="profile-label label-support label-mobile">
-                          CS
-                        </div>
-                      {{ else if $event }}
-                        <div class="profile-label label-event label-full">
-                          EVENT MANAGER
-                        </div>
-                        <div class="profile-label label-event label-mobile">
-                          EMT
-                        </div>
-                      {{ else if $nqa }}
-                        <div class="profile-label label-nqa label-full">
-                          NOMINATION QUALITY ASSURANCE
-                        </div>
-                        <div class="profile-label label-nqa label-mobile">
-                          NQA
-                        </div>
-                      {{ else if $nominator }}
-                        <div class="profile-label label-nominator label-full">
-                          BEATMAP NOMINATOR
-                        </div>
-                        <div class="profile-label label-nominator label-mobile">
-                          BN
-                        </div>
-                      {{ else if $scorewatcher }}
-                        <div
-                          class="profile-label label-scorewatcher label-full">
-                          SOCIAL MEDIA MANAGER
-                        </div>
-                        <div
-                          class="profile-label label-scorewatcher label-mobile">
-                          SW
-                        </div>
-                      {{ else if $champion }}
-                        <div class="profile-label label-champion label-full">
-                          AKATSUKI CHAMPION
-                        </div>
-                        <div class="profile-label label-champion label-mobile">
-                          <span>
-                            <i
-                              class="fa-fade fa-solid fa-trophy label-icon"></i>
-                          </span>
-                        </div>
-                      {{ else if $premium }}
-                        <div class="profile-label label-premium label-full">
-                          AKATSUKI+
-                        </div>
-                        <div class="profile-label label-premium label-mobile">
-                          <span>
-                            <i class="fa-solid fa-heart label-icon"></i>
-                          </span>
-                        </div>
-                      {{ else if $donor }}
-                        <div class="profile-label label-donor label-full">
-                          SUPPORTER
-                        </div>
-                        <div class="profile-label label-donor label-mobile">
-                          <span>
-                            <i class="fa-solid fa-heart label-icon"></i>
-                          </span>
+                      {{ if .user_title }}
+                        <div class="profile-user-title">
+                          {{ .user_title }}
                         </div>
                       {{ end }}
 
