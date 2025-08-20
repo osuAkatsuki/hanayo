@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - view-clan-ap
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
