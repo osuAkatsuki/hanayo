@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - view-clan-ap
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -29,7 +30,7 @@ jobs:
         with:
           images: osuAkatsuki/hanayo
 
-      - name: Build and push Docker image
+      - name: Build and push Docker imagen
         uses: docker/build-push-action@v5
         with:
           context: .
