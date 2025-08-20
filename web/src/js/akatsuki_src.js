@@ -483,6 +483,21 @@ var singlePageSnippets = {
     });
   },
 
+  "/settings/connections": function () {
+    $("#unlink-discord").click(function (e) {
+      e.preventDefault();
+      api(
+        "users/self/connections/unlink-discord",
+        {},
+        function () {
+          showMessage("success", "Your discord account has been unlinked.");
+          setTimeout(() => { window.location.reload(); }, 1000);
+        },
+        true
+      );
+    });
+  },
+
   "/settings/clansettings": function () {
     $("#ginvite").click(function (e) {
       e.preventDefault();
