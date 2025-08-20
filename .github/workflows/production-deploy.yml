@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - custom-title-choice
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
