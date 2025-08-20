@@ -1,18 +1,16 @@
 :root {
   --colour-bot: #ccccff;
-  --colour-product: #1d7cd5;
-  --colour-community: #ee4343;
-  --colour-accounts: #ffb523;
-  --colour-support: #ffb523;
-  --colour-dev: #66a9f7;
-  --colour-design: #e93944;
-  --colour-event: #d6ca63;
+  --colour-product_manager: #1d7cd5;
+  --colour-developer: #66a9f7;
+  --colour-designer: #e93944;
+  --colour-community_manager: #ee4343;
+  --colour-community_support: #ffb523;
+  --colour-event_manager: #d6ca63;
   --colour-nqa: #ad55ff;
   --colour-nominator: #b476fc;
   --colour-scorewatcher: #e07fc4;
   --colour-champion: #41f8d5;
   --colour-donor: #5fd5eb;
-  /* TODO: get an *official* color for premium */
   --colour-premium: #6146ff;
 }
 
@@ -228,34 +226,6 @@
   color: var(--colour-bot);
 }
 
-.label-product {
-  color: var(--colour-product);
-}
-
-.label-community {
-  color: var(--colour-community);
-}
-
-.label-accounts {
-  color: var(--colour-accounts);
-}
-
-.label-support {
-  color: var(--colour-support);
-}
-
-.label-dev {
-  color: var(--colour-dev);
-}
-
-.label-design {
-  color: var(--colour-design);
-}
-
-.label-event {
-  color: var(--colour-event);
-}
-
 .label-nqa {
   color: var(--colour-nqa);
 }
@@ -287,6 +257,30 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.label-product_manager {
+  color: var(--colour-product_manager);
+}
+
+.label-developer {
+  color: var(--colour-developer);
+}
+
+.label-designer {
+  color: var(--colour-designer);
+}
+
+.label-community_manager {
+  color: var(--colour-community_manager);
+}
+
+.label-community_support {
+  color: var(--colour-community_support);
+}
+
+.label-event_manager {
+  color: var(--colour-event_manager);
 }
 
 .action-button {

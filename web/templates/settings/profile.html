@@ -64,6 +64,19 @@ MinPrivileges=2
               </select>
             </div>
             <div class="field">
+              <label>{{ .T "User Title" }}</label>
+              <select class="ui dropdown" name="user_title">
+                <option value="">{{ .T "No title" }}</option>
+                {{ range $d.eligible_titles }}
+                  <option
+                    value="{{ .id }}"
+                    {{ if eq $d.user_title.id .id }}selected{{ end }}>
+                    {{ .title }}
+                  </option>
+                {{ end }}
+              </select>
+            </div>
+            <div class="field">
               <div class="ui toggle checkbox">
                 <input
                   type="checkbox"
