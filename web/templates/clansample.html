@@ -218,6 +218,20 @@ Include=clan_member.html
                   </div>
                 {{ end }}
 
+                {{ if has $global.Context.User.Privileges 16 }}
+                  {{/* AdminManageUsers */}}
+                  <div class="ui one item menu">
+                    <a
+                      href="https://old.akatsuki.gg/index.php?p=141&id={{ .id }}"
+                      target="_blank"
+                      title="View clan in admin panel"
+                      class="item"
+                      style="background-color:rgba(128,0,255,.3)">
+                      <i class="fa-solid fa-folder-open"></i>
+                      &nbsp;View on Admin Panel
+                    </a>
+                  </div>
+                {{ end }}
 
                 <h1 class="ui heading">{{ $global.T "Clan Owner" }}</h1>
                 <p>
