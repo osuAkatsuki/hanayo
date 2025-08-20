@@ -17,8 +17,12 @@ MinPrivileges=2
           {{ $q := qb "SELECT discord_account_id FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
           {{ if $q.discord_account_id }}
             <p>
-              {{ .T "Your Discord account is already linked with us. If you wish to unlink your Discord, please contact support." }}
+              {{ .T "Your Discord account is already linked with us. If you wish to unlink your Discord, please use the button below." }}
             </p>
+            <button id="unlink-discord" tabindex="1" class="ui blue button">
+              <i class="fa-brands fa-discord"></i>
+              {{ .T "Unlink Discord" }}
+            </button>
           {{ else }}
             <p>
               <b>
