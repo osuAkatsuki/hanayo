@@ -119,7 +119,7 @@ msgstr "View on Admin Panel"
 
 ### Extraction Process
 
-The extraction script (`scripts/extract_templates_standard.sh`) works as follows:
+The extraction script (`scripts/update_templates.sh`) works as follows:
 
 1. **Preprocessing**: Converts Go template syntax to xgettext-compatible format
 2. **Extraction**: Uses `xgettext` to extract translatable strings
@@ -128,8 +128,8 @@ The extraction script (`scripts/extract_templates_standard.sh`) works as follows
 
 ### Scripts
 
-- `scripts/update_templates.sh` - Main script for developers
-- `scripts/extract_templates_standard.sh` - Core extraction logic
+- `scripts/update_templates.sh` - Script for developers to generate translation files
+- `scripts/check_translations.sh` - (Typically used in CI) Script for developers to check if the translation files are up to date
 
 ### File References
 
