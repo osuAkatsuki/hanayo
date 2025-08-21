@@ -17,6 +17,14 @@ jobs:
       - name: Check out latest commit
         uses: actions/checkout@v3
 
+      - name: Install gettext
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
+
+      - name: Check translations
+        run: ./scripts/check_translations.sh
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
