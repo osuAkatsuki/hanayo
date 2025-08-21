@@ -68,6 +68,12 @@ for po_file in locale/locales/templates-*.po; do
             --backup=none \
             "$po_file" \
             "locale/locales/templates.pot"
+
+        echo "Cleaning obsolete entries from $po_file..."
+        msgattrib \
+            --no-obsolete \
+            --output-file="$po_file" \
+            "$po_file"
     fi
 done
 
