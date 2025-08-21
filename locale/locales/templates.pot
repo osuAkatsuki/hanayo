@@ -1,35 +1,37 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Hanayo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Hanayo 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-21 07:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: it\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
-"X-Pootle-Path: /it/Hanayo/templates-it.po\n"
-"X-Pootle-Revision: 8354\n"
 
 #: register/welcome.html:29
 msgid " - in case you don't know where to start"
-msgstr " - se non sai da dove cominciare"
+msgstr ""
 
 #: register/welcome.html:33
 msgid " - in case you haven't already read them"
-msgstr " - in caso tu non le abbia già lette"
+msgstr ""
 
 #: register/welcome.html:43
-#, fuzzy
 msgid " - in case you want to talk with people about Akatsuki"
-msgstr " - nel caso tu volessi parlare di Ripple con dell'altra gente"
+msgstr ""
 
 #: register/welcome.html:37
 msgid " - in case, well, you need help doing stuff"
-msgstr " - nel caso, avessi bisogno di aiuto per fare qualcosa"
+msgstr ""
 
 #: clanboard.html:72
 msgid "#1 Count"
@@ -37,23 +39,17 @@ msgstr ""
 
 #: team.html:137
 msgid "(You get other cool perks too)"
-msgstr "(Otterrai altri vantaggi oltre a questo)"
+msgstr ""
 
-# pwreset/continue.html
 #: login.html:34
-#, fuzzy
 msgid "(reset password)"
-msgstr "Reimposta password"
+msgstr ""
 
-# Team page
 #: team.html:16
-#, fuzzy
 msgid ""
 "A list of wonderful people who keep Akatsuki running smoothly, and take "
 "pride in its community."
 msgstr ""
-"Questa è una lista delle magnifiche persone che sostengono Ripple e "
-"gestiscono la community."
 
 #: tos.html:17
 msgid ""
@@ -68,15 +64,15 @@ msgstr ""
 
 #: settings/discord.html:41
 msgid "Access to #donators text and voice channels"
-msgstr "Accesso ai canali vocali e testuali #donators"
+msgstr ""
 
 #: settings/discord.html:39
 msgid "Access to /nick command, to change your Discord nickname"
-msgstr "Accesso al comando /nick, per cambiare il tuo username di Discord"
+msgstr ""
 
 #: leaderboard.html:91 clanboard.html:76 beatmap.html:210
 msgid "Accuracy"
-msgstr "Accuracy"
+msgstr ""
 
 #: register/verify.html:25
 msgid "Add ` -devserver akatsuki.gg` to the Target path (the space matters)."
@@ -100,15 +96,11 @@ msgid ""
 "you are under 13, do not use our services without parental consent."
 msgstr ""
 
-# base.html
 #: base.html:102
-#, fuzzy
 msgid ""
 "Akatsuki's score submission is currently in maintenance mode. You will not "
 "be allowed to submit scores for the time being."
 msgstr ""
-"L'invio degli score su Ripple è al momento in modalità di manutenzione. Non "
-"ti è permesso inviare punteggi per il momento."
 
 #: tos.html:32
 msgid ""
@@ -129,12 +121,11 @@ msgstr ""
 
 #: beatmap.html:72
 msgid "Approach Rate"
-msgstr "Velocità di Approccio (AR)"
+msgstr ""
 
-# beatmap.html
 #: beatmap.html:43
 msgid "Artist"
-msgstr "Artista"
+msgstr ""
 
 #: clansample.html:192
 msgid "Ask for Invite"
@@ -149,22 +140,20 @@ msgid "Autopilot"
 msgstr ""
 
 #: settings/userpage.html:31
-#, fuzzy
 msgid "BBCode Syntax Reference"
-msgstr "Sintassi BBCode di riferimento"
+msgstr ""
 
 #: beatmap.html:84
 msgid "BPM"
-msgstr "BPM"
+msgstr ""
 
 #: settings/clansettings.html:90
-#, fuzzy
 msgid "Background Url"
-msgstr "Tipo di sfondo"
+msgstr ""
 
 #: settings/profbackground.html:23
 msgid "Background type"
-msgstr "Tipo di sfondo"
+msgstr ""
 
 #: team.html:58
 msgid "Beatmap Nomination Team"
@@ -176,7 +165,7 @@ msgstr ""
 
 #: register/elmo.html:44
 msgid "Bring me back to safety!"
-msgstr "Portami al sicuro!"
+msgstr ""
 
 #: premium.html:56
 msgid "Change your identity"
@@ -184,34 +173,31 @@ msgstr ""
 
 #: beatmap.html:57
 msgid "Circle Size"
-msgstr "Circle Size"
+msgstr ""
 
 #: settings/clansettings.html:31
 msgid "Clan Name (2 to 15 characters)"
 msgstr ""
 
 #: settings/clansettings.html:18
-#, fuzzy
 msgid "Clan Settings"
-msgstr "Impostazioni"
+msgstr ""
 
 #: clansample.html:103
 msgid "Clan Statistics"
 msgstr ""
 
 #: settings/clansettings.html:41
-#, fuzzy
 msgid "Clan Tag (2 to 6 characters)"
-msgstr "Password (almeno 8 caratteri)"
+msgstr ""
 
 #: navbar.html:136 navbar.html:193
 msgid "Clans"
 msgstr ""
 
 #: clans/create.html:41
-#, fuzzy
 msgid "Clantag (2 to 6 characters)"
-msgstr "Password (almeno 8 caratteri)"
+msgstr ""
 
 #: settings/clansettings.html:77
 msgid "Closed"
@@ -226,22 +212,20 @@ msgid "Combo"
 msgstr ""
 
 #: team.html:36
-#, fuzzy
 msgid "Community Management Team"
-msgstr "Community Manager"
+msgstr ""
 
 #: team.html:44
 msgid "Community Support Team"
 msgstr ""
 
 #: register/register.html:62
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Password"
+msgstr ""
 
 #: register/welcome.html:7
 msgid "Congratulations for not reading things!"
-msgstr "Congratulazioni per non aver letto gli avvisi!"
+msgstr ""
 
 #: register/verify.html:15
 msgid "Create a shortcut of osu!.exe."
@@ -249,19 +233,19 @@ msgstr ""
 
 #: beatmap.html:49
 msgid "Creator"
-msgstr "Creatore"
+msgstr ""
 
 #: settings/password.html:37
 msgid "Current password"
-msgstr "Password attuale"
+msgstr ""
 
 #: settings/profile.html:92
 msgid "Custom badge"
-msgstr "Badge personalizzato"
+msgstr ""
 
 #: settings/discord.html:42
 msgid "Custom role with custom username"
-msgstr "Role con nome e colore personalizzabili"
+msgstr ""
 
 #: premium.html:69
 msgid "Customize your profile"
@@ -285,7 +269,7 @@ msgstr ""
 
 #: homepage.html:34 register/welcome.html:41
 msgid "Discord"
-msgstr "Discord"
+msgstr ""
 
 #: tos.html:56
 msgid ""
@@ -328,15 +312,15 @@ msgstr ""
 
 #: team.html:133
 msgid "Do you want to be in this list?"
-msgstr "Vuoi essere su questa lista?"
+msgstr ""
 
 #: register/welcome.html:36
 msgid "Documentation"
-msgstr "Documentazione"
+msgstr ""
 
 #: doc_content.html:29
 msgid "Documentation file not found!"
-msgstr "File di documentazione non trovato!"
+msgstr ""
 
 #: tos.html:70
 msgid ""
@@ -359,19 +343,16 @@ msgid ""
 msgstr ""
 
 #: beatmap.html:100 patcherdl.html:40
-#, fuzzy
 msgid "Download"
-msgstr "download"
+msgstr ""
 
 #: beatmap.html:107
-#, fuzzy
 msgid "Download (no video)"
-msgstr "download (senza video)"
+msgstr ""
 
 #: patcherdl.html:55
-#, fuzzy
 msgid "Download Patcher"
-msgstr "download"
+msgstr ""
 
 #: register/verify.html:20
 msgid "Edit the shortcut's properties."
@@ -379,20 +360,19 @@ msgstr ""
 
 #: settings/password.html:18
 msgid "Email"
-msgstr "Email"
+msgstr ""
 
 #: register/register.html:40
-#, fuzzy
 msgid "Email Address"
-msgstr "Indirizzo e-mail"
+msgstr ""
 
 #: settings/profile.html:31
 msgid "Email address"
-msgstr "Indirizzo e-mail"
+msgstr ""
 
 #: settings/profile.html:101
 msgid "Enable"
-msgstr "Abilita"
+msgstr ""
 
 #: patcherdl.html:29
 msgid "Enable Relax Misses"
@@ -410,47 +390,37 @@ msgstr ""
 msgid "Force score overwrites"
 msgstr ""
 
-# pwreset.html
 #: pwreset.html:19
-#, fuzzy
 msgid ""
 "Forgot your password? Worry not! Here you can reset it. Just tell us your "
 "username or email address, and we'll take care of it. You will receive an "
 "email at the email address you used to sign up on Akatsuki. To continue the "
 "password reset procedure, click the link on that email."
 msgstr ""
-"Ti sei scordato la password? Non ti preoccupare! Qui puoi resettarla. Basta "
-"che tu ci dica il tuo username o indirizzo email, e noi ti invieremo "
-"un'email all'indirizzo di posta che hai usato per registrarti su Ripple. Per "
-"continuare la procedura di reset della password, clicca sul link su quella "
-"email."
 
 #: friends.html:77
-#, fuzzy
 msgid "Friend"
-msgstr "Amici"
+msgstr ""
 
 #: navbar.html:119 followers.html:18 friends.html:18
 msgid "Friends"
-msgstr "Amici"
+msgstr ""
 
 #: settings/profile.html:19
 msgid "General"
-msgstr "Generale"
+msgstr ""
 
 #: settings/clansettings.html:127
-#, fuzzy
 msgid "Generate a new invite!"
-msgstr "Genera un nuovo token!"
+msgstr ""
 
 #: irc.html:18
 msgid "Generate a new token!"
-msgstr "Genera un nuovo token!"
+msgstr ""
 
 #: settings/discord.html:53
-#, fuzzy
 msgid "Get Discord Supporter privileges"
-msgstr "Ottieni privilegi di Donatore su Discord"
+msgstr ""
 
 #: settings/profbackground.html:33
 msgid "Gif"
@@ -470,31 +440,28 @@ msgstr ""
 
 #: beatmap.html:60
 msgid "HP Drain"
-msgstr "Drain HP"
+msgstr ""
 
 #: register/welcome.html:25
 msgid "Here's a few things you might want to check out:"
-msgstr "Ecco un po' di cose che potresti trovare utili:"
+msgstr ""
 
 #: team.html:76
-#, fuzzy
 msgid ""
 "Here's an additional list of some people who helped us out along the way."
-msgstr "Ecco una lista di persone che ci ha aiutato con Ripple."
+msgstr ""
 
 #: premium.html:102
-#, fuzzy
 msgid "Here's what we ask for in return"
-msgstr "Ecco cosa ottieni:"
+msgstr ""
 
 #: premium.html:50
-#, fuzzy
 msgid "Here's what we have to offer"
-msgstr "Ecco cosa ottieni:"
+msgstr ""
 
 #: settings/discord.html:35
 msgid "Here's what you get if you link your Discord account:"
-msgstr "Questo è quello che ottieni se colleghi il tuo account di Discord:"
+msgstr ""
 
 #: homepage.html:61
 msgid "How to connect"
@@ -502,7 +469,7 @@ msgstr ""
 
 #: premium.html:188
 msgid "I've donated, now what?"
-msgstr "Ho donato, e ora che faccio?"
+msgstr ""
 
 #: settings/clansettings.html:60
 msgid "Icon Url"
@@ -514,7 +481,7 @@ msgstr ""
 
 #: settings/profile.html:109
 msgid "Icon reference"
-msgstr "Lista di icone"
+msgstr ""
 
 #: tos.html:20
 msgid ""
@@ -529,13 +496,10 @@ msgid ""
 "that creating a multiaccount will lead to a restriction on your main "
 "account, you can click here and you'll be brought to the sign up page."
 msgstr ""
-"Se hai davvero capito il testo soprastante e capisci che creare un secondo "
-"account risulterà nel mettere il tuo account principale in restricted, puoi "
-"cliccare qui e sarai portanto alla pagina di registrazione."
 
 #: settings/profbackground.html:26
 msgid "Image"
-msgstr "Immagine"
+msgstr ""
 
 #: navbar.html:27
 msgid "Information"
@@ -569,16 +533,15 @@ msgstr ""
 
 #: base.html:164
 msgid "Language"
-msgstr "Lingua"
+msgstr ""
 
 #: navbar.html:19
 msgid "Leaderboard"
-msgstr "Leaderboard"
+msgstr ""
 
 #: premium.html:82
-#, fuzzy
 msgid "Leaderboard preferences"
-msgstr "Leaderboard"
+msgstr ""
 
 #: settings/profile.html:43
 msgid "Leaderboard size (In-Game)"
@@ -586,17 +549,15 @@ msgstr ""
 
 #: beatmap.html:78
 msgid "Length"
-msgstr "Durata"
+msgstr ""
 
 #: settings/connections.html:41
-#, fuzzy
 msgid "Link Discord"
-msgstr "Discord"
+msgstr ""
 
 #: settings/connections.html:29
-#, fuzzy
 msgid "Link your Discord account"
-msgstr "Questo è quello che ottieni se colleghi il tuo account di Discord:"
+msgstr ""
 
 #: settings/connections.html:33
 msgid ""
@@ -607,23 +568,20 @@ msgid ""
 msgstr ""
 
 #: multiplayer.html:19
-#, fuzzy
 msgid "Loading match data..."
-msgstr "Caricamento..."
+msgstr ""
 
 #: premium.html:115
 msgid "Loading..."
-msgstr "Caricamento..."
+msgstr ""
 
 #: navbar.html:108 register/welcome.html:28
 msgid "Login"
-msgstr "Login"
+msgstr ""
 
 #: doc.html:25
-#, fuzzy
 msgid "Looks like there is no documentation on this Akatsuki instance!"
 msgstr ""
-"Sembra che non ci sia nessuna documentazione per questa istanza di Ripple!"
 
 #: settings/clansettings.html:134 clansample.html:248
 msgid "Members"
@@ -634,13 +592,12 @@ msgid "Mods"
 msgstr ""
 
 #: register/welcome.html:11
-#, fuzzy
 msgid "Multiaccounts are not allowed on Akatsuki"
-msgstr "I multiaccount non sono ammessi su Ripple"
+msgstr ""
 
 #: followers.html:73 friends.html:75
 msgid "Mutual"
-msgstr "Reciproco"
+msgstr ""
 
 #: tos.html:50
 msgid ""
@@ -648,19 +605,15 @@ msgid ""
 "Akatsuki."
 msgstr ""
 
-# doc.html
 #: doc.html:14
 msgid ""
 "Need some help getting around? Look no further! From here you will be able "
 "to view our documentation, which is basically a very simplistic wiki."
 msgstr ""
-"Hai bisogno di aiuto per orientarti? Non temere! Da qui sarai in grado di "
-"vedere la nostra documentazione, che è in parole povere una wiki molto "
-"semplice."
 
 #: settings/password.html:28
 msgid "New password (leave blank if you don't want to change it)"
-msgstr "Nuova password (lascia in bianco se non desideri cambiarla)"
+msgstr ""
 
 #: settings/profbackground.html:61
 msgid "No image selected"
@@ -671,9 +624,8 @@ msgid "No members in this clan. maybe invite someone?"
 msgstr ""
 
 #: settings/profile.html:69
-#, fuzzy
 msgid "No title"
-msgstr "Titolo"
+msgstr ""
 
 #: team.html:51
 msgid "Nomination Quality Assurance Team"
@@ -681,7 +633,7 @@ msgstr ""
 
 #: settings/profbackground.html:24
 msgid "None"
-msgstr "Nessuno"
+msgstr ""
 
 #: tos.html:74
 msgid ""
@@ -694,66 +646,53 @@ msgid ""
 "retroactive at our own discretion."
 msgstr ""
 
-# friends.html
 #: followers.html:28
-#, fuzzy
 msgid ""
 "On this page you can see all of your followers, and mutual them as you see "
 "fit."
 msgstr ""
-"Su questa pagina puoi vedere tutti i tuoi amici e toglierli se desideri "
-"farlo."
 
-# friends.html
 #: friends.html:36
 msgid ""
 "On this page you can see all of your friends, and unfriend them as you see "
 "fit."
 msgstr ""
-"Su questa pagina puoi vedere tutti i tuoi amici e toglierli se desideri "
-"farlo."
 
 #: 500.html:4
-#, fuzzy
 msgid ""
 "Ooops! Looks like something went really wrong while trying to process your "
 "request. Perhaps report this to a developer? Retrying doing what you were "
 "trying to do might work, too."
 msgstr ""
-"Ooops! Sembra che qualcosa sia andato davvero storto mentre stavamo cercando "
-"di processare la tua richiesta. Magari puoi segnalare questo problema ad uno "
-"sviluppatore di Ripple? Anche riprovare a fare quello che stavi facendo "
-"potrebbe funzionare."
 
 #: settings/clansettings.html:80
-#, fuzzy
 msgid "Open"
-msgstr "Apri file"
+msgstr ""
 
 #: settings/avatar.html:36 settings/profbackground.html:89
 #: settings/profbackground.html:138
 msgid "Open File"
-msgstr "Apri file"
+msgstr ""
 
 #: beatmap.html:63
 msgid "Overall Difficulty"
-msgstr "Difficoltà Generale (OD)"
+msgstr ""
 
 #: beatmap.html:214
 msgid "PP"
-msgstr "PP"
+msgstr ""
 
 #: beatmap.html:66
 msgid "Passes/Plays"
-msgstr "Partite"
+msgstr ""
 
 #: pwreset/continue.html:20 login.html:33
 msgid "Password"
-msgstr "Password"
+msgstr ""
 
 #: register/register.html:50
 msgid "Password (at least 8 characters)"
-msgstr "Password (almeno 8 caratteri)"
+msgstr ""
 
 #: patcherdl.html:48
 msgid "Patcher is currently unavailable"
@@ -761,7 +700,7 @@ msgstr ""
 
 #: premium.html:163
 msgid "PayPal"
-msgstr "PayPal"
+msgstr ""
 
 #: premium.html:192
 msgid ""
@@ -783,16 +722,15 @@ msgstr ""
 
 #: leaderboard.html:92 clanboard.html:79
 msgid "Playcount"
-msgstr "Numero di partite"
+msgstr ""
 
 #: homepage.html:163
-#, fuzzy
 msgid "Played by"
-msgstr "Giocatore"
+msgstr ""
 
 #: settings/profile.html:142
 msgid "Playstyle"
-msgstr "Stile di gioco"
+msgstr ""
 
 #: clansample.html:216
 msgid "Please login to join a clan"
@@ -806,7 +744,7 @@ msgstr ""
 
 #: settings/profile.html:158
 msgid "Preferences"
-msgstr "Preferenze"
+msgstr ""
 
 #: beatmap.html:114
 msgid "Preview Audio"
@@ -822,7 +760,7 @@ msgstr ""
 
 #: homepage.html:49
 msgid "Profile"
-msgstr "Profilo"
+msgstr ""
 
 #: tos.html:59
 msgid ""
@@ -830,15 +768,13 @@ msgid ""
 "rules."
 msgstr ""
 
-# leaderboard.html
 #: beatmap.html:206
 msgid "Rank"
-msgstr "Posizione"
+msgstr ""
 
-# register/register.html
 #: navbar.html:111 homepage.html:47
 msgid "Register"
-msgstr "Iscriviti"
+msgstr ""
 
 #: clanboard.html:47
 msgid "Regular"
@@ -853,12 +789,10 @@ msgid ""
 "Remember: this seems like it's your second account! Do not multiaccount, or "
 "you're likely to get restricted!"
 msgstr ""
-"Ricorda: questo sembra essere il tuo secondo account! Non creare account "
-"multipli, o altrimenti rischi di essere messo in restricted!"
 
 #: friends.html:92
 msgid "Remove"
-msgstr "Rimuovi"
+msgstr ""
 
 #: beatmap.html:218
 msgid "Replay"
@@ -890,13 +824,10 @@ msgid ""
 msgstr ""
 
 #: team.html:30
-#, fuzzy
 msgid ""
 "Responsible for implementing and maintaining Akatsuki's infrastructure - "
 "they keep the server running, and take care of its maintenance."
 msgstr ""
-"Gli sviluppatori aggiungono nuove funzionalità al server, fixano i bug, "
-"mantengono il server vivo e si occupano delle adeguate manutenzioni."
 
 #: team.html:38
 msgid ""
@@ -905,7 +836,7 @@ msgstr ""
 
 #: register/welcome.html:32
 msgid "Rules"
-msgstr "Regole"
+msgstr ""
 
 #: register/verify.html:29
 msgid ""
@@ -919,12 +850,11 @@ msgstr ""
 #: settings/profbackground.html:123 settings/profbackground.html:143
 #: settings/password.html:48
 msgid "Save"
-msgstr "Salva"
+msgstr ""
 
 #: navbar.html:135 navbar.html:192 beatmap.html:209
-#, fuzzy
 msgid "Score"
-msgstr "PP/Punteggio"
+msgstr ""
 
 #: leaderboard.html:86
 msgid "Score (Performance)"
@@ -932,7 +862,7 @@ msgstr ""
 
 #: navbar.html:122
 msgid "Settings"
-msgstr "Impostazioni"
+msgstr ""
 
 #: patcherdl.html:33
 msgid "Show Relax Ranking Panels"
@@ -950,35 +880,30 @@ msgstr ""
 
 #: settings/profbackground.html:29
 msgid "Solid colour"
-msgstr "Tinta unita"
+msgstr ""
 
 #: clans/create.html:11
-#, fuzzy
 msgid ""
 "Sorry, it's not possible to create a clan at the moment. Please try again "
 "later."
 msgstr ""
-"Siamo spiacenti, non è al momento possibile registrarsi. Per favore riprova "
-"più tardi."
 
 #: register/register.html:10
 msgid ""
 "Sorry, it's not possible to register at the moment. Please try again later."
 msgstr ""
-"Siamo spiacenti, non è al momento possibile registrarsi. Per favore riprova "
-"più tardi."
 
 #: beatmap.html:52
 msgid "Source"
-msgstr "Origine"
+msgstr ""
 
 #: team.html:74
 msgid "Special thanks"
-msgstr "Ringraziamenti speciali"
+msgstr ""
 
 #: beatmap.html:75
 msgid "Star Difficulty"
-msgstr "Difficoltà"
+msgstr ""
 
 #: premium.html:61
 msgid "Start from scratch"
@@ -987,17 +912,15 @@ msgstr ""
 #: clans/create.html:78 pwreset.html:51 pwreset/continue.html:34 login.html:57
 #: register/register.html:88
 msgid "Submit"
-msgstr "Invia"
+msgstr ""
 
 #: settings/discord.html:28
-#, fuzzy
 msgid "Supporters get special privileges on our Discord server too!"
 msgstr ""
-"I donatori ottengono privilegi speciali anche sul nostro server di Discord!"
 
 #: base.html:143
 msgid "Team"
-msgstr "Team"
+msgstr ""
 
 #: tos.html:12
 msgid ""
@@ -1006,18 +929,14 @@ msgid ""
 msgstr ""
 
 #: settings/discord.html:23
-#, fuzzy
 msgid "Thank you for supporting us and have fun on Akatsuki!"
-msgstr "Grazie per aver donato e divertiti su Ripple!"
+msgstr ""
 
 #: base.html:107
-#, fuzzy
 msgid ""
 "The Akatsuki website is currently in maintenance mode, and access has been "
 "limited for normal users."
 msgstr ""
-"Il sito di Ripple è in modalità di manutenzione. Solo certi utenti hanno "
-"accesso al sito intero."
 
 #: clansample.html:238
 msgid "The leader of the clan."
@@ -1040,15 +959,15 @@ msgstr ""
 
 #: team.html:123
 msgid "They told me these are very cool people."
-msgstr "Dicono che queste persone sono molto fighe."
+msgstr ""
 
 #: beatmap.html:216
 msgid "Time"
-msgstr "Data e ora"
+msgstr ""
 
 #: beatmap.html:46
 msgid "Title"
-msgstr "Titolo"
+msgstr ""
 
 #: register/verify.html:8
 msgid ""
@@ -1069,19 +988,16 @@ msgid "Top score (Vanilla)"
 msgstr ""
 
 #: homepage.html:125
-#, fuzzy
 msgid "Total scores (Autopilot)"
-msgstr "Punteggio totale"
+msgstr ""
 
 #: homepage.html:110
-#, fuzzy
 msgid "Total scores (Relax)"
-msgstr "Punteggio totale"
+msgstr ""
 
 #: homepage.html:95
-#, fuzzy
 msgid "Total scores (Vanilla)"
-msgstr "Punteggio totale"
+msgstr ""
 
 #: settings/clansettings.html:153
 msgid "Transfer Ownership"
@@ -1094,51 +1010,44 @@ msgid ""
 msgstr ""
 
 #: settings/connections.html:24
-#, fuzzy
 msgid "Unlink Discord"
-msgstr "Discord"
+msgstr ""
 
 #: friends.html:90
-#, fuzzy
 msgid "Unmutual"
-msgstr "Reciproco"
+msgstr ""
 
 #: premium.html:152
-#, fuzzy
 msgid "User"
-msgstr "Utente:"
+msgstr ""
 
 #: settings/profile.html:67
-#, fuzzy
 msgid "User Title"
-msgstr "Titolo"
+msgstr ""
 
 #: settings/profile.html:22 settings/username.html:17
 msgid "Username"
-msgstr "Username"
+msgstr ""
 
 #: login.html:22
 msgid "Username (or email)"
-msgstr "Username (o email)"
+msgstr ""
 
 #: pwreset.html:29
-#, fuzzy
 msgid "Username or Email Address"
-msgstr "Username (o email)"
+msgstr ""
 
 #: settings/profile.html:87
-#, fuzzy
 msgid "Vanilla PP Leaderboards"
-msgstr "Leaderboard globali."
+msgstr ""
 
 #: doc_content.html:36
 msgid "View all docs"
-msgstr "Vai alla documentazione"
+msgstr ""
 
 #: homepage.html:63
-#, fuzzy
 msgid "View leaderboards"
-msgstr "Abbiamo le leaderboard."
+msgstr ""
 
 #: clansample.html:231
 msgid "View on Admin Panel"
@@ -1160,18 +1069,14 @@ msgstr ""
 msgid ""
 "We're sorry, but we were unable to find the content you were looking for!"
 msgstr ""
-"Ci dispiace, ma non siamo stati in grado di trovare il contenuto che stavi "
-"cercando!"
 
 #: register/welcome.html:19
-#, fuzzy
 msgid "Welcome to Akatsuki"
-msgstr "Benvenuto su Ripple"
+msgstr ""
 
 #: homepage.html:32
-#, fuzzy
 msgid "Welcome to Akatsuki."
-msgstr "Benvenuto su Ripple"
+msgstr ""
 
 #: settings/clansettings.html:202
 msgid ""
@@ -1186,20 +1091,16 @@ msgid ""
 msgstr ""
 
 #: clans/create.html:7
-#, fuzzy
 msgid "You need to login!"
-msgstr "Devi effettuare l'accesso prima."
+msgstr ""
 
-# General
 #: clans/create.html:15
-#, fuzzy
 msgid "You're already in a Clan."
-msgstr "Hai già effettuato il login!"
+msgstr ""
 
-# General
 #: pwreset.html:12 login.html:14 register/register.html:6
 msgid "You're already logged in!"
-msgstr "Hai già effettuato il login!"
+msgstr ""
 
 #: settings/connections.html:20
 msgid ""
@@ -1213,7 +1114,7 @@ msgstr ""
 
 #: beatmap.html:94
 msgid "osu!direct"
-msgstr "osu!direct"
+msgstr ""
 
 #: homepage.html:35
 msgid "servers."

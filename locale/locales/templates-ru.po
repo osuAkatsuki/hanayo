@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-25 11:15+0000\n"
+"POT-Creation-Date: 2025-08-21 07:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,437 +14,410 @@ msgstr ""
 "X-Pootle-Path: /ru/Hanayo/templates-ru.po\n"
 "X-Pootle-Revision: 8343\n"
 
-# General
-msgid "You're already logged in!"
-msgstr "Вы уже вошли!"
-
-msgid "Submit"
-msgstr "Отправить"
-
-msgid "Username"
-msgstr "Имя пользователя"
-
-msgid "Password"
-msgstr "Пароль"
-
-msgid "Invalid CSRF token"
-msgstr "Неверный CSRF токен"
-
-msgid ""
-"Your session has expired. Please try redoing what you were trying to do."
-msgstr ""
-"Ваша сессия истекла. Пожалуйста, попробуйте сделать еще раз то, что вы "
-"пытались сделать."
-
-msgid "That user could not be found."
-msgstr "Не удалось найти этого пользователя."
-
-msgid "Your settings have been saved."
-msgstr "Ваши настройки были сохранены."
-
-# beatmaps/rank_requests.html
-msgid "Request beatmap ranking"
-msgstr "Запрос карт на ранк"
-
-msgid ""
-"Want to play an unranked beatmap and get pp? You can submit beatmaps rank "
-"requests here!"
-msgstr ""
-"Хотите сыграть на неранкнутой карте и получить PP? Здесь вы можете отправить "
-"карты на проверку!"
-
-msgid "Queue status"
-msgstr "Статус очереди"
-
-msgid "by you"
-msgstr "вами"
-
-msgid "Requests submitted"
-msgstr "Запросов отправлено"
-
-msgid "In the past 24 hours"
-msgstr "За последние 24 часа"
-
-msgid "Request a beatmap"
-msgstr "Предложить карту"
-
-msgid "You cannot currently request beatmaps!"
-msgstr "Вы пока не можете предлагать карты!"
-
-# After this text there is a date. The date is localised separately.
-msgid "Please try again "
-msgstr "Попробуйте еще раз "
-
-# pwreset/continue.html
-msgid "Reset password"
-msgstr "Сбросить пароль"
-
-msgid ""
-"Glad to have you back here, %s! To finish the password recovery, type in a "
-"new password:"
-msgstr ""
-"Рады что вы вернулись, %s! Чтобы завершить восстановление пароля, введите "
-"сюда новый пароль:"
-
-msgid "Nope."
-msgstr "Не-а."
-
-msgid "That key could not be found. Perhaps it expired?"
-msgstr "Мы не можем найти этот ключ. Может, он истек?"
-
-msgid ""
-"All right, we have changed your password and you should now be able to "
-"login! Have fun!"
-msgstr "Итак, мы поменяли ваш пароль и теперь вы сможете зайти! Развлекайтесь!"
-
-# register/register.html
-msgid "Register"
-msgstr "Зарегистрироваться"
-
-msgid ""
-"Sorry, it's not possible to register at the moment. Please try again later."
-msgstr "Извини, но сейчас нельзя зарегистрироваться. Попробуй позже."
-
-msgid ""
-"Remember: this seems like it's your second account! Do not multiaccount, or "
-"you're likely to get restricted!"
-msgstr ""
-"Вспомни: выглядит как твой второй аккаунт! Не создавай мультиаккаунты, или "
-"тебя заблокируют!"
-
-msgid "Username (2 to 15 characters, alphanumeric, spaces, <code>_[]-</code>)"
-msgstr ""
-"Имя пользователя (от 2 до 15 символов, буквы, цифры, пробелы, а также "
-"<code>_[]-</code>)"
-
-msgid "Password (at least 8 characters)"
-msgstr "Пароль (не менее 8 символов)"
-
-msgid "Email"
-msgstr "Электронная почта"
-
-msgid ""
-"You have been successfully registered on Ripple! You now need to verify your "
-"account."
-msgstr ""
-"Вы успешно зарегистрировались на Ripple! Теперь нужно проверить Ваш аккаунт."
-
-# Register checks
-msgid "Your password is too short! It must be at least 8 characters long."
-msgstr "Ваш пароль слишком маленький! Он должен быть не менее 8 символов."
-
-msgid ""
-"Your password is one of the most common passwords on the entire internet. No "
-"way we're letting you use that!"
-msgstr ""
-"Ваш пароль - один из самых частых паролей во всем интернете. Мы не позволим "
-"Вам использовать его!"
-
-msgid ""
-"Your username must contain alphanumerical characters, spaces, or any of "
-"<code>_[]-</code>"
-msgstr ""
-"Ваше имя пользователя должно содержать буквы, числа, пробелы или "
-"<code>_[]-</code>"
-
-msgid "You're not allowed to register with that username."
-msgstr "Вам не разрешено регистрироваться с этим именем пользователя."
-
-msgid "Please pass a valid email address."
-msgstr "Введите верный адрес электронной почты."
-
-msgid "An username can't contain both underscores and spaces."
-msgstr "В имени пользователя не может быть подчеркиваний и пробелов вместе."
-
-msgid "An user with that username already exists!"
-msgstr "Пользователь с этим именем пользователя уже существует!"
-
-msgid "An user with that email address already exists!"
-msgstr "Пользователь с этим электронным адресом уже существует!"
-
-msgid "Captcha is invalid."
-msgstr "Капча введена неверно."
-
-msgid ""
-"Whoops, an error slipped in. You might have been registered, though. I don't "
-"know."
-msgstr ""
-"У-упс, произошла ошибка. Возможно, вы были зарегистрированы. Я без понятия."
-
-# register/verify.html
-msgid "Verify account"
-msgstr "Проверить аккаунт"
-
-msgid ""
-"Your account has been created, however it still <b>needs to be verified!</b> "
-"Please log in into <b><u>osu! (the game)</u></b> using your account. <b>"
-"There is <u>no email confirmation</u> at the moment. All you need to do is "
-"connect to Ripple from the osu! client!</b> If you're having trouble, <a "
-"href='/doc/1'>follow this guide</a>."
-msgstr ""
-"Ваш аккаунт был создан, но его еще <b>нужно подтвердить!</b> Пожалуйста, "
-"войдите <b><u>osu! (в игру)</u></b> используя ваш аккаунт. <b>У нас <u>"
-"подтверждения по электронной почте</u> на данный момент. Все что вам нужно "
-"сделать, это подключиться к Ripple из клиента osu!</b> Если у вас возникли "
-"сложности, <a href='/doc/1'>используйте это руководство</a>."
-
-msgid ""
-"<b class='big text'>Do not let anyone except yourself log into your Ripple "
-"account!</b><br> Get on our <a href='%s'>Discord server's</a> #help channel "
-"instead (after following the steps on this page) so that we can help you out "
-"if you have trouble connecting."
-msgstr ""
-"<b class='big text'>Не позволяйте кому-то кроме вас входить в ваш аккаунт "
-"Ripple!</b><br> Вместо этого, заходите на канал #help на нашем <a href='%s'>"
-"сервере Discord</a> (после того, как вы пройдете шаги, описанные на этой "
-"странице) чтобы вы вам помогли если у вас есть проблемы с подключением."
-
-msgid "<a href='/doc/1'>The Guide,</a> tl;dr version"
-msgstr "<a href='/doc/1'>Руководство,</a> версия tl;dr"
-
-msgid "Download the server switcher"
-msgstr "Загрузите переключатель серверов"
-
-msgid "Extract it, disable your antivirus, execute it <b>as administrator</b>"
-msgstr ""
-"Распакуйте его, отключите ваш антивирус, запустите его <b>от "
-"администратора</b>"
-
-msgid "Click on <b>install certificate</b>, then <b>Yes</b>"
-msgstr "Нажмите на <b>установить сертификат</b>, затем на <b>Да</b>"
-
-msgid ""
-"Make sure the switcher says you're playing on <b>Ripple</b> server, if not "
-"click <b>On/Off</b>"
-msgstr ""
-"Убедитесь в том, что Switcher пишет, что вы играете на сервере <b>Ripple</b>"
-". Если это не так, то нажмите на <b>On/Off</b>"
-
-msgid ""
-"If it says something about read-only mode, go to <code>C:\\Windows\\"
-"System32\\Drivers\\etc</code>, open the hosts' file Properties and make sure "
-"it's not set to \"Read only\"."
-msgstr ""
-"Если Switcher пишет что-то про режим read-only, откройте <code>C:\\Windows\\"
-"System32\\Drivers\\etc</code>, откройте параметры файла 'hosts' и убедитесь "
-"в том, что там не стоит параметр \"Только чтение\"."
-
-msgid ""
-"If you're still having trouble, then again, get on our <a href='%s'>Discord "
-"server's</a> #help channel. To have a better chance to be answered, say \""
-"strawberry\" anywhere in your messages so that we know you have actually "
-"read this."
-msgstr ""
-"Если у вас все еще остались проблемы, то заходите на канал #help нашего <a "
-"href='%s'>сервера Discord</a>. Чтобы повысить шанс на ответ, напишите \""
-"strawberry\" где-нибудь в вашем сообщении, чтобы мы знали, что вы прочитали "
-"это."
-
-msgid "Waiting for verification"
-msgstr "Ожидание верификации"
-
-# register/welcome.html
-msgid "Welcome!"
-msgstr "Добро пожаловать!"
-
-msgid "Welcome back!"
-msgstr "С возвращением!"
-
-msgid "Congratulations for not reading things!"
-msgstr "Поздравляем с тем, что вы ничего не прочитали!"
-
-msgid "Multiaccounts are not allowed on Ripple"
-msgstr "Мультиаккаунты запрещены на Ripple"
-
-msgid ""
-"Your new account has been <b>banned</b> and your main account has been "
-"<b>restricted</b>. You can appeal in a month by sending an email to <b><a "
-"href='https://support.ripple.moe'>support.ripple.moe</a></b>. You better "
-"read the rules next time."
-msgstr ""
-"Ваш новый аккаунт был <b>заблокирован</b> и ваш основной аккаунт был "
-"<b>ограничен</b>. Вы можете подать аппеляцию в течении месяца, отправив "
-"письмо <b><a href='https://support.ripple.moe'>support.ripple.moe</a></b>. В "
-"следующий раз вам лучше прочитать правила."
-
-msgid "Welcome to Ripple"
-msgstr "Приветствуем в Ripple"
-
-msgid ""
-"We're glad to have you here. <b>Your account is now active.</b> You can now "
-"play on Ripple and <a href='/login'>log in</a> on the website!"
-msgstr ""
-"Мы рады, что вы с нами. <b>Ваш аккаунт теперь активен.</b> Вы можете играть "
-"на Ripple и <a href='/login'>входить</a> на веб-сайте!"
-
-msgid "Here's a few things you might want to check out:"
-msgstr "Пара вещей, которые могли бы вам понравиться:"
-
-msgid "Login"
-msgstr "Войти"
-
-msgid "Rules"
-msgstr "Правила"
-
-msgid "Documentation"
-msgstr "Документация"
-
-msgid "Server switcher"
-msgstr ""
-
-msgid "Status"
-msgstr "Статус"
-
-msgid "Discord"
-msgstr "Discord"
-
-msgid "Subreddit"
-msgstr "Сабреддит"
-
+#: register/welcome.html:29
 msgid " - in case you don't know where to start"
 msgstr " - в случае, если вы не знаете с чего начать"
 
+#: register/welcome.html:33
 msgid " - in case you haven't already read them"
 msgstr " - в случае, если вы еще не читали их"
 
+#: register/welcome.html:43
+#, fuzzy
+msgid " - in case you want to talk with people about Akatsuki"
+msgstr " - в случае, если вы хотите поговорить с людьми про Ripple"
+
+#: register/welcome.html:37
 msgid " - in case, well, you need help doing stuff"
 msgstr " - на случай, если вам, например, понадобится помощь с чем-нибудь"
 
-msgid " - in case you believe Ripple is down"
-msgstr " - в случае, если вы думаете что Ripple не работает"
-
-msgid " - in case you want to talk with people about Ripple"
-msgstr " - в случае, если вы хотите поговорить с людьми про Ripple"
-
-msgid " - just in case"
-msgstr " - просто на всякий случай"
-
-# 2fa_gateway_recover.html
-msgid "Recover account"
-msgstr "Восстановить аккаунт"
-
-msgid ""
-"Can't find a way to get back access to your Ripple account? Fear not! If you "
-"have your recovery codes which we recommended you to print you can type one "
-"in here and we'll magically log you in this time. After you've managed to "
-"get in, please disable and then re-enable 2FA, so you won't risk losing your "
-"account again."
+#: clanboard.html:72
+msgid "#1 Count"
 msgstr ""
-"Не знаете, как вернуть доступ к вашему аккаунту Ripple? Не бойтесь! Если у "
-"вас есть коды восстановления, которые мы рекомендуем вам распечатать, вы "
-"можете написать один из них сюда и мы магическим образом впустим вас на этот "
-"раз. После того как вы войдете, пожалуйста, отключите и затем включите 2FA, "
-"чтобы вы не потеряли свой аккаунт еще раз."
 
-msgid "Oh no you don't."
-msgstr "О нет, ты не хочешь."
+#: team.html:137
+msgid "(You get other cool perks too)"
+msgstr "(Вы получите и другие классные штуки)"
 
-msgid "Get out."
-msgstr "Убирайся."
+# pwreset/continue.html
+#: login.html:34
+#, fuzzy
+msgid "(reset password)"
+msgstr "Сбросить пароль"
 
-msgid "Recovery code is invalid."
-msgstr "Код восстановления неверный."
-
-# register/elmo.html
-msgid "Elmo! Stop!"
-msgstr "Элмо! Остановись!"
-
-msgid "Stop!"
-msgstr "Остановись!"
-
+# Team page
+#: team.html:16
+#, fuzzy
 msgid ""
-"We see that you're trying to sign up while having already signed up as %s! "
-"Please note that multiaccounting is punishable, and can lead to a one month "
-"restriction!"
+"A list of wonderful people who keep Akatsuki running smoothly, and take "
+"pride in its community."
 msgstr ""
-"Мы заметили, что ты пытаешься зарегистрироваться, когда ты уже "
-"зарегистрирован как %s! Мультиаккаунтинг наказуем, и может привести к "
-"ограничению на 1 месяц!"
+"Это список замечательных людей, которые помогают содержать Ripple и его "
+"сообщество."
 
-msgid "If you're %s, keep in mind that multiaccounting = ban."
-msgstr "Если вы - %s, то не забывайте, что мультиаккаунтинг = бан."
-
+#: tos.html:17
 msgid ""
-"If you're not %s, but you're using %s's computer, please sign up on Ripple "
-"from your own computer."
+"Absolutely no botting, cheating, or hacking. This includes any method of "
+"giving yourself an unfair advantage over other players."
 msgstr ""
-"Если вы не %s, но используете компьютер %s, пожалуйста, зарегистрируйтесь в "
-"Ripple со своего собственного компьютера"
 
+#: tos.html:41
 msgid ""
-"If you live with %s and you don't have your own computer from which to sign "
-"up on Ripple, then please contact support@ripple.moe, and we'll deal with "
-"your specific case."
+"Absolutely no racism, sexism, transphobia, whatever. This includes slurs."
 msgstr ""
-"Если вы живете с %s, и у вас нет своего компьютера,чтобы зарегистрироваться "
-"на Ripple, пожалуйста, свяжитесь с support@ripple.moe, и мы разберемся с "
-"вашей проблемой."
 
+#: settings/discord.html:41
+msgid "Access to #donators text and voice channels"
+msgstr "Доступ к текстовому и голосовому каналу #donators"
+
+#: settings/discord.html:39
+msgid "Access to /nick command, to change your Discord nickname"
+msgstr "Доступ к команде /nick, чтобы менять ваш никнейм в Discord"
+
+#: leaderboard.html:91 clanboard.html:76 beatmap.html:210
+msgid "Accuracy"
+msgstr "Точность"
+
+#: register/verify.html:25
+msgid "Add ` -devserver akatsuki.gg` to the Target path (the space matters)."
+msgstr ""
+
+#: patcherdl.html:20
 msgid ""
-"This warning may pop up also if you're using another computer on the same "
-"network of %s. As long as you're not using the same computer, you should be "
-"all good."
+"Akatsuki Patcher is a simple tool made to enhance your Akatsuki Relax "
+"experience!"
 msgstr ""
-"Также, это предупреждение может появляться если вы используете другой "
-"компьютер в той же сети, что и %s. Пока вы не используете один и тот же пк, "
-"все хорошо."
 
-msgid "Don't stop me now!"
-msgstr "Тебе меня не остановить!"
+#: patcherdl.html:43
+msgid ""
+"Akatsuki Patcher is a single executable and requires no manual client "
+"modification!"
+msgstr ""
 
+#: tos.html:62
+msgid ""
+"Akatsuki services are meant for users that are 13 years of age or older. If "
+"you are under 13, do not use our services without parental consent."
+msgstr ""
+
+# base.html
+#: base.html:102
+#, fuzzy
+msgid ""
+"Akatsuki's score submission is currently in maintenance mode. You will not "
+"be allowed to submit scores for the time being."
+msgstr ""
+"Система загрузки игр на Ripple находится на техническом обслуживании. Вам "
+"запрещено отправлять игры в это время."
+
+#: tos.html:32
+msgid ""
+"All communications on our Discord and in-game public chats must be in "
+"English. Players are allowed to use any language in other forms of "
+"communication."
+msgstr ""
+
+#: premium.html:209
+msgid ""
+"All money received from donations go towards server, development, "
+"maintenance and other costs associated with running Akatsuki."
+msgstr ""
+
+#: clansample.html:165
+msgid "Already in another Clan"
+msgstr ""
+
+#: beatmap.html:72
+#, fuzzy
+msgid "Approach Rate"
+msgstr "Принять"
+
+# beatmap.html
+#: beatmap.html:43
+msgid "Artist"
+msgstr "Исполнитель"
+
+#: clansample.html:192
+msgid "Ask for Invite"
+msgstr ""
+
+#: settings/username.html:20
+msgid "Attention! You are consuming your free username change!"
+msgstr ""
+
+#: clanboard.html:49
+msgid "Autopilot"
+msgstr ""
+
+#: settings/userpage.html:31
+#, fuzzy
+msgid "BBCode Syntax Reference"
+msgstr "Синтаксис BBCode"
+
+#: beatmap.html:84
+msgid "BPM"
+msgstr "BPM"
+
+#: settings/clansettings.html:90
+#, fuzzy
+msgid "Background Url"
+msgstr "Тип фона"
+
+#: settings/profbackground.html:23
+msgid "Background type"
+msgstr "Тип фона"
+
+#: team.html:58
+msgid "Beatmap Nomination Team"
+msgstr ""
+
+#: team.html:135
+msgid "Become an Akatsuki+ member!"
+msgstr ""
+
+#: register/elmo.html:44
 msgid "Bring me back to safety!"
 msgstr "Верни меня в безопасное место!"
 
-# login.html
-msgid "Log in"
-msgstr "Вход"
-
-msgid "Username (or email)"
-msgstr "Имя пользователя (или почта)"
-
-# in relationship to a password
-msgid "(forgot?)"
-msgstr "(забыли?)"
-
-msgid "Username or password not set."
-msgstr "Имя пользователя или пароль не указаны."
-
-msgid "No user with such %s!"
-msgstr "Нет пользователя с %s!"
-
-msgid ""
-"Your password is sooooooo old, that we don't even know how to deal with it "
-"anymore. Could you please change it?"
+#: premium.html:56
+msgid "Change your identity"
 msgstr ""
-"Ваш пароль тако-о-ой старый, что мы даже не знаем как с ним быть. Вы не "
-"могли бы его поменять?"
 
-msgid "Wrong password."
-msgstr "Неверный пароль."
+#: beatmap.html:57
+msgid "Circle Size"
+msgstr "Размер нот"
 
-msgid "You will need to verify your account first."
-msgstr "Для начала вам нужно верифицировать свой аккаунт."
-
-msgid ""
-"You are not allowed to login. This means your account is either banned or "
-"locked."
+#: settings/clansettings.html:31
+msgid "Clan Name (2 to 15 characters)"
 msgstr ""
-"Вам нельзя войти. Это значит, что ваш аккаунт или заблокирован, или закрыт."
 
-msgid "Hey %s! You are now logged in."
-msgstr "Эй, %s! Теперь вы вошли."
+#: settings/clansettings.html:18
+#, fuzzy
+msgid "Clan Settings"
+msgstr "Настройки"
 
-msgid "You're already logged out!"
-msgstr "Вы уже вышли!"
+#: clansample.html:103
+msgid "Clan Statistics"
+msgstr ""
 
-msgid "Successfully logged out."
-msgstr "Успешный выход."
+#: settings/clansettings.html:41
+#, fuzzy
+msgid "Clan Tag (2 to 6 characters)"
+msgstr "Пароль (не менее 8 символов)"
+
+#: navbar.html:136 navbar.html:193
+msgid "Clans"
+msgstr ""
+
+#: clans/create.html:41
+#, fuzzy
+msgid "Clantag (2 to 6 characters)"
+msgstr "Пароль (не менее 8 символов)"
+
+#: settings/clansettings.html:77
+msgid "Closed"
+msgstr ""
+
+#: clansample.html:176
+msgid "Closed."
+msgstr ""
+
+#: beatmap.html:212
+msgid "Combo"
+msgstr ""
+
+#: team.html:36
+#, fuzzy
+msgid "Community Management Team"
+msgstr "Менеджеры Сообщества"
+
+#: team.html:44
+msgid "Community Support Team"
+msgstr ""
+
+#: register/register.html:62
+#, fuzzy
+msgid "Confirm Password"
+msgstr "Пароль"
+
+#: register/welcome.html:7
+msgid "Congratulations for not reading things!"
+msgstr "Поздравляем с тем, что вы ничего не прочитали!"
+
+#: register/verify.html:15
+msgid "Create a shortcut of osu!.exe."
+msgstr ""
+
+#: beatmap.html:49
+msgid "Creator"
+msgstr "Автор"
+
+#: settings/password.html:37
+msgid "Current password"
+msgstr "Текущий пароль"
+
+#: settings/profile.html:92
+msgid "Custom badge"
+msgstr "Свой значок"
+
+#: settings/discord.html:42
+msgid "Custom role with custom username"
+msgstr "Ваша роль с вашим названием"
+
+#: premium.html:69
+msgid "Customize your profile"
+msgstr ""
+
+#: premium.html:94
+msgid "DM-only commands in public channels"
+msgstr ""
+
+#: settings/clansettings.html:50
+msgid "Description"
+msgstr ""
+
+#: clans/create.html:52
+msgid "Description (optional)"
+msgstr ""
+
+#: premium.html:205
+msgid "Disclaimer of Terms & Liability"
+msgstr ""
+
+#: homepage.html:34 register/welcome.html:41
+msgid "Discord"
+msgstr "Discord"
+
+#: tos.html:56
+msgid ""
+"Do not cause unneeded drama. Use the appropriate channels to report rule "
+"breaking; Hackusating in public channels is not allowed. Complaining about a "
+"user's ban in public channels is also dissalowed. Bans are to be kept "
+"between Akatsuki staff and the user only."
+msgstr ""
+
+#: tos.html:44
+msgid ""
+"Do not discuss cheating, other servers, or breaking any US or International "
+"law in any of our services. Doing so will result in an immediate ban and if "
+"neccessary reported to relevant authorities."
+msgstr ""
+
+#: tos.html:38
+msgid ""
+"Do not harass people. If a member asks you to stop harassing them, simply "
+"stop doing so. This rule is heavily enforced, so please be nice."
+msgstr ""
+
+#: tos.html:53
+msgid ""
+"Do not impersonate any user, especially staff. This is actively enforced."
+msgstr ""
+
+#: tos.html:29
+msgid ""
+"Do not try to exploit bugs found on the server, report them to a developer "
+"immediately for a fair reward."
+msgstr ""
+
+#: tos.html:26
+msgid ""
+"Do not use any other person's account. This is known as account sharing and "
+"is taken quite seriously. Sharing your login details with any other user can "
+"result in a permanent ban."
+msgstr ""
+
+#: team.html:133
+msgid "Do you want to be in this list?"
+msgstr "Хотите быть в этом списке?"
+
+#: register/welcome.html:36
+msgid "Documentation"
+msgstr "Документация"
+
+#: doc_content.html:29
+msgid "Documentation file not found!"
+msgstr "Файл документации не найден!"
+
+#: tos.html:70
+msgid ""
+"Don't abuse our patience; while we try to best satisfy our users' need, if "
+"you repeatedly infringe our rules or abuse services provided by the staff "
+"(e.g. appealing and name changing) (with particular regard to users who also "
+"disrespect our staff's efforts, passively or actively, or are otherwise "
+"toxic within the community), we will first warn you, and if it comes to it "
+"we will offer an ultimatum. If you refuse or otherwise don't change your "
+"behaviour, we'll have no choice but to ban you. If you are found damaging "
+"the server directly - attempted attacks, chargebacks, hacking users, "
+"damaging reputation etc; your entire account data will be removed with no "
+"chance of being recovered ever."
+msgstr ""
+
+#: tos.html:47
+msgid ""
+"Don't spam or flood, unless you're occasionally sending a link to e.g. "
+"Twitch when you're streaming Akatsuki when no discussion is going on."
+msgstr ""
+
+#: beatmap.html:100 patcherdl.html:40
+#, fuzzy
+msgid "Download"
+msgstr "загрузить"
+
+#: beatmap.html:107
+#, fuzzy
+msgid "Download (no video)"
+msgstr "загрузить (без видео)"
+
+#: patcherdl.html:55
+#, fuzzy
+msgid "Download Patcher"
+msgstr "загрузить"
+
+#: register/verify.html:20
+msgid "Edit the shortcut's properties."
+msgstr ""
+
+#: settings/password.html:18
+msgid "Email"
+msgstr "Электронная почта"
+
+#: register/register.html:40
+#, fuzzy
+msgid "Email Address"
+msgstr "Адрес эл. почты"
+
+#: settings/profile.html:31
+msgid "Email address"
+msgstr "Адрес эл. почты"
+
+#: settings/profile.html:101
+msgid "Enable"
+msgstr "Включить"
+
+#: patcherdl.html:29
+msgid "Enable Relax Misses"
+msgstr ""
+
+#: settings/profile.html:55
+msgid "Favourite mode"
+msgstr ""
+
+#: followers.html:23 friends.html:24 friends.html:30
+msgid "Followers"
+msgstr ""
+
+#: premium.html:76
+msgid "Force score overwrites"
+msgstr ""
 
 # pwreset.html
+#: pwreset.html:19
+#, fuzzy
 msgid ""
 "Forgot your password? Worry not! Here you can reset it. Just tell us your "
 "username or email address, and we'll take care of it. You will receive an "
-"email at the email address you used to sign up on Ripple. To continue the "
+"email at the email address you used to sign up on Akatsuki. To continue the "
 "password reset procedure, click the link on that email."
 msgstr ""
 "Забыли свой пароль? Не волнуйтесь! Здесь вы можете его сбросить. Просто "
@@ -452,1162 +425,105 @@ msgstr ""
 "получите письмо на эл. почту, которую вы использовали для регистрации на "
 "Ripple. Чтобы продолжить процедуру сброса, нажмите на ссылку в письме."
 
-msgid "You look pretty banned/locked here."
-msgstr "Нам кажется, что вы заблокированы/закрыты."
+#: friends.html:77
+#, fuzzy
+msgid "Friend"
+msgstr "Друзья"
 
-msgid ""
-"Done! You should shortly receive an email from us at the email you used to "
-"sign up on Ripple."
-msgstr ""
-"Готово! В скором времени вы получите от нас письмо на почту, которую вы "
-"использовали для регистрации на Ripple."
-
-msgid "Ripple password recovery instructions"
-msgstr "Инструкция сброса пароля на Ripple"
-
-msgid ""
-"Hey %s! Someone, which we really hope was you, requested a password reset "
-"for your account. In case it was you, please <a href='%s'>click here</a> to "
-"reset your password on Ripple. Otherwise, silently ignore this email."
-msgstr ""
-"Эй, %s! Кто-то, надеемся вы, запросил сброс пароля для вашего аккаунта. В "
-"случае, если это были вы, <a href='%s'>нажмите сюда</a>, чтобы сбросить ваш "
-"пароль на Ripple. В другом случае, проигнорируйте это письмо."
-
-# not_found.html
-msgid "Not Found"
-msgstr "Не найдено"
-
-msgid ""
-"We're sorry, but we were unable to find the content you were looking for!"
-msgstr "Нам очень жаль, но мы не смогли найти контент, который вы искали!"
-
-# navbar.html
-msgid "Home page"
-msgstr "Домашняя страница"
-
-msgid "Leaderboard"
-msgstr "Таблица лидеров"
-
-msgid "Help"
-msgstr "Справка"
-
-msgid "About"
-msgstr "О нас"
-
-msgid "Chat (Discord)"
-msgstr "Чат (Discord)"
-
-msgid "Contact support"
-msgstr "Связаться с поддержкой"
-
-msgid "Beatmaps"
-msgstr "Карты"
-
-msgid "Donate"
-msgstr "Пожертвовать"
-
-msgid "RAP"
-msgstr "RAP"
-
-msgid "Profile"
-msgstr "Профиль"
-
+#: navbar.html:119 followers.html:18 friends.html:18
 msgid "Friends"
 msgstr "Друзья"
 
-msgid "Settings"
-msgstr "Настройки"
-
-msgid "Log out"
-msgstr "Выйти"
-
-msgid "Looking for someone?"
-msgstr "Ищете кого-то?"
-
-# homepage.html
-msgid "Home Page"
-msgstr "Домашняя страница"
-
-msgid "Welcome to Ripple."
-msgstr "Приветствуем на Ripple."
-
-msgid ""
-"Ripple is a private osu! server, featuring multiplayer, PP, a very active "
-"community and a development team going strong implementing new features and "
-"squashing bugs. <a href='/about'>You can check out even more features "
-"here.</a> It has also a very friendly community, and it's <a "
-"href='https://zxq.co/ripple/ripple'>open source!</a> Just so you know, <b>we "
-"currently have %s users online and %s registered users!</b>"
-msgstr ""
-"Ripple - частный осу сервер с мультиплеером, PP, активным сообществом и "
-"командой разработчиков, которая добавляет новые функции и исправляет баги. <"
-"a href='/about'>Вы можете почитать обо всех возможностях здесь.</a> У нас "
-"дружелюбное сообщество, и у нас <a href='https://zxq.co/ripple/ripple'>"
-"открытый исходный код!</a> К вашему сведению, <b> в данный момент у нас %s "
-"пользователей в сети и %s зарегистрированных пользователей!</b>"
-
-msgid ""
-"What are you waiting for? Join Ripple! It's risk-free: you won't get your "
-"account banned on the official server if you play on Ripple.<br>You can also "
-"switch anytime between the official osu! server and Ripple!"
-msgstr ""
-"Чего же вы ждете? Присоединяйтесь к нам! Это безопасно: ваш аккаунт на "
-"официальном сервере не будет заблокирован, если вы будете играть на "
-"Ripple.<br> Также, вы можете в любой момент переключаться между официальным "
-"сервером osu! и Ripple!"
-
-msgid "Howdy, %s!"
-msgstr "Как дела, %s!"
-
-msgid ""
-"Welcome back to Ripple. We currently have <b>%s online users and %s total "
-"registered users.</b> Nice day to farm a few maps, isn't it?"
-msgstr ""
-"С возвращением на Ripple. На данный момент <b>%s пользователей онлайн и %s "
-"пользователей зарегистрировано.</b> Хороший день пофармить, не так ли?"
-
-msgid "Latest news from our <a href='https://blog.ripple.moe'>blog</a>"
-msgstr "Последние новости из нашего <a href='https://blog.ripple.moe'>блога</a>"
-
-# base.html
-msgid ""
-"Ripple's score submission is currently in maintenance mode. You will not be "
-"allowed to submit scores for the time being."
-msgstr ""
-"Система загрузки игр на Ripple находится на техническом обслуживании. Вам "
-"запрещено отправлять игры в это время."
-
-msgid ""
-"The Ripple website is currently in maintenance mode. Only certain users are "
-"allowed to access the full website."
-msgstr ""
-"Веб-сайт Ripple находится на техническом обслуживании. Только определенные "
-"пользователи имеют доступ к полной версии сайта."
-
-msgid ""
-"Your account is currently in restricted mode. You will not be able to do "
-"certain actions, and your profile can only be seen by you and by Ripple's "
-"staff. If you believe we have mistaken putting you in restricted mode, or a "
-"month has passed since you first saw this, then you can send an appeal at <a "
-"href='https://support.ripple.moe'>support.ripple.moe</a>."
-msgstr ""
-"Ваш аккаунт находится в ограниченном режиме. Вы не сможете производить "
-"некоторые действия, и ваш профиль могут видеть только вы и сотрудники "
-"Ripple. Если вы считаете, что были ограничены по ошибке, или прошел месяц с "
-"того момента, как вы впервые увидели это сообщение, то вы можете отправить "
-"аппеляцию на <a href='https://support.ripple.moe'>support.ripple.moe</a>."
-
-msgid "&copy; 2015-%d Ripple, using Hanayo %s."
-msgstr "&copy; 2015-%d Ripple, используется Hanayo %s."
-
-msgid "Team"
-msgstr "Команда"
-
-msgid "Who is working on this thing?"
-msgstr "Кто разрабатывает это?"
-
-msgid "Developer docs"
-msgstr "Документации для разработчиков"
-
-msgid "See what changed!"
-msgstr "Посмотреть изменения!"
-
-msgid "Changelog"
-msgstr "Журнал изменений"
-
-msgid "Blog"
-msgstr "Блог"
-
-msgid "What's going on under the hood?"
-msgstr "Что же внутри?"
-
-msgid "Follow us on Twitter!"
-msgstr "Подписывайтесь на нас в Twitter!"
-
-msgid "Share irrelevant opinions on reddit!"
-msgstr "Делитесь своими мнениями на Reddit!"
-
-msgid "Language"
-msgstr "Язык"
-
-# beatmap.html
-msgid "Artist"
-msgstr "Исполнитель"
-
-msgid "Title"
-msgstr "Название"
-
-msgid "Creator"
-msgstr "Автор"
-
-msgid "Source"
-msgstr "Источник"
-
-msgid "Circle Size"
-msgstr "Размер нот"
-
-msgid "HP Drain"
-msgstr ""
-
-msgid "Overall Difficulty"
-msgstr "Сложность"
-
-msgid "Passes/Plays"
-msgstr "Пройдено/Сыграно"
-
-msgid "Approach Rate"
-msgstr ""
-
-msgid "Star Difficulty"
-msgstr "Кол-во звезд"
-
-msgid "Length"
-msgstr "Длина"
-
-msgid "BPM"
-msgstr "BPM"
-
-# не переводить
-msgid "osu!direct"
-msgstr ""
-
-msgid "download"
-msgstr "загрузить"
-
-msgid "download (no video)"
-msgstr "загрузить (без видео)"
-
-# 2fa_gateway.html
-msgid "Two Factor Authentication"
-msgstr "Двухфакторная аутентификация"
-
-msgid ""
-"Before proceding further on Ripple, we require you to use your Google "
-"Authenticator App to use the code for Ripple, so that we can log you in."
-msgstr ""
-"Перед тем как продолжить использовать Ripple, мы требуем от вас получить код "
-"из приложения Google Authenticator, чтобы мы смогли вас авторизовать."
-
-msgid ""
-"Before proceding any further on Ripple, we require you to use the message "
-"you just received on telegram to log in to your account."
-msgstr ""
-"Перед тем как продолжить использовать Ripple, мы требуем вас использовать "
-"код из сообщения, которые вы только что получили в Telegram, чтобы войти в "
-"ваш аккаунт."
-
-msgid "Lost your phone, or can't access Google Authenticator?"
-msgstr "Потеряли телефон, или не можете зайти в Google Authenticator?"
-
-msgid "Click here to use a recovery code."
-msgstr "Нажмите здесь, чтобы использовать код восстановления."
-
-msgid "Telegram code"
-msgstr "Код из Telegram"
-
-msgid "(send again?)"
-msgstr "(отправить еще раз?)"
-
-msgid "Google Authenticator passcode"
-msgstr "Код из Google Authenticator"
-
-msgid "Hey, %s."
-msgstr "Эй, %s."
-
-msgid "You need to complete the 2fa challenge first."
-msgstr "Для начала вам нужно пройти двухфакторную аутентификацию."
-
-msgid "A new code has been generated and sent to you through Telegram."
-msgstr "Мы сгенерировали новый код и отправили его вам через Telegram."
-
-msgid "You've been successfully logged in."
-msgstr "Вы успешно вошли."
-
-msgid ""
-"Ooops! Looks like something went really wrong while trying to process your "
-"request. Perhaps report this to a Ripple developer? Retrying doing what you "
-"were trying to do might work, too."
-msgstr ""
-"У-упс! Похоже, что-то пошло не так при обработке Вашего запроса. Может, "
-"уведомить об этом разработчиков Ripple? Повтор всего того, что вы сделали, "
-"тоже может сработать."
-
-msgid "Ripple is a private osu! server."
-msgstr "Ripple - частный сервер osu!"
-
-msgid "There are many like it, but this one is ours."
-msgstr "Таких как он - много, но этот - наш."
-
-# %s is eggplant emoji
-msgid "Don't you like %s?"
-msgstr "Разве вы не любите %s?"
-
-msgid "We have leaderboards."
-msgstr "У нас есть таблица лидеров."
-
-msgid "Online user listing."
-msgstr "Отображение игроков в сети."
-
-msgid "Free osu!direct."
-msgstr "Бесплатный osu!direct."
-
-msgid "Global leaderboards."
-msgstr "Глобальная таблица лидеров."
-
-msgid "and PP for all game modes"
-msgstr ""
-
-msgid "Ranking queue for unranked beatmaps."
-msgstr "Проверка непроверенных карт."
-
-msgid "Spectator."
-msgstr "Режим наблюдателя."
-
-msgid "Multiplayer."
-msgstr "Мультиплеер."
-
-msgid "FokaBot, our chat bot"
-msgstr "Наш чат-бот FokaBot."
-
-msgid ""
-"with plenty of functions for just about anything, <a href=\"/doc/4\">check "
-"it out!</a>"
-msgstr ""
-"с кучей функций почти для всего, чего угодно! <a href=\"/doc/4\">Зацени!</a>"
-
-msgid "And a lot more to come!"
-msgstr "И это еще не все!"
-
-msgid ""
-"Ripple is the result of the hard work of two Italian developers, who got "
-"tired about the whole osu! ecosystem, and also because they wanted to play "
-"with a few banned friends."
-msgstr ""
-"Ripple это результат тяжелого труда двух итальянских разработчиков, которые "
-"устали ото всей экосистемы osu!, а также потому, что они хотели поиграть со "
-"своими заблокированными друзьями."
-
-# %s is wink emoji
-#, fuzzy
-msgid ""
-"It has now evolved into the largest available osu! private server, with more "
-"than 50,000 registered users. <a href=\"/register\">Signing up</a> on Ripple "
-"won't result in getting your account on osu! restricted, so what are you "
-"waiting for?! Come join us! %s"
-msgstr ""
-"Но сейчас он эволюционировал в самый популярный частный сервер osu! с более "
-"чем 10,000 зарегистрированными пользователями. <a href=\"/register\""
-">Регистрация</a> на Ripple не повлечет за собой блокировку аккаунта на "
-"официальном сервере, так чего же ты тогда ждешь?! Присоединяйся! %s"
-
-msgid ""
-"In case you want to make sure we're not doing shady stuff with your data, "
-"you can also check the <a href=\"https://zxq.co/ripple/ripple\">source "
-"code</a> Ripple is running on."
-msgstr ""
-"В случае, если Вы хотите убедиться в том, что мы не делаем каких-либо "
-"пакостных вещей с вашими данными, вы можете просмотреть <a href=\""
-"https://zxq.co/ripple/ripple\">исходный код</a>, на котором работает Ripple."
-
-# changelog.html
-msgid ""
-"This is the changelog. Changes are published here as soon as they hit the "
-"production status (as in, live on the website)."
-msgstr ""
-"Это список изменений. Изменения попадают себя как только попадают в "
-"эксплуатацию (например, на веб-сайт)."
-
-msgid ""
-"For various reasons, some software of Ripple does not contribute to the "
-"changelog, to which this website is a part of. In case you want to see the "
-"changelog of Hanayo, you can do so by <a href=\""
-"https://zxq.co/ripple/hanayo/commits/master\">clicking here</a>."
-msgstr ""
-"По разным причинам, некоторое программное обеспечение Ripple не попадает в "
-"список изменений. Этот сайт - один из них. Если вы хотите увидеть список "
-"изменений Hanayo, <a href=\"https://zxq.co/ripple/hanayo/commits/master\">"
-"нажмите сюда</a>."
-
-msgid "Author"
-msgstr "Автор"
-
-msgid "Subject"
-msgstr "Тема"
-
-msgid "Time"
-msgstr "Время"
-
-# doc_content.html 
-msgid "View document"
-msgstr "Просмотреть документ"
-
-msgid "Documentation file not found!"
-msgstr "Файл документации не найден!"
-
-msgid "View all docs"
-msgstr "Просмотреть все документы"
-
-# doc.html
-msgid ""
-"Need some help getting around? Look no further! From here you will be able "
-"to view our documentation, which is basically a very simplistic wiki."
-msgstr ""
-"Нужна помощь в освоении? Отсюда вы можете просмотреть нашу документацию, "
-"которая, по сути, является простейшей Wiki."
-
-msgid "Looks like there is no documentation on this ripple instance!"
-msgstr "Похоже, что на этом сервере Ripple нет документации!"
-
-# friends.html
-msgid ""
-"On this page you can see all of your friends, and unfriend them as you see "
-"fit."
-msgstr ""
-"На этой странице Вы можете увидеть всех своих друзей и перестать с ними "
-"дружить, если желаете."
-
-msgid "Mutual"
-msgstr "Взаимно"
-
-msgid "Remove"
-msgstr "Удалить"
-
-# irc.html
-msgid ""
-"Here you can generate a new IRC token. You can use it to connect to Ripple's "
-"chat using IRC. Remember that your IRC token is like a password, anyone who "
-"knows it, has access to your account. If you're interested knowing how to "
-"connect to Ripple's chat via IRC, you may want to check out <a href=\"/doc/"
-"11\">this</a>."
-msgstr ""
-"Здесь Вы можете сгенерировать новый IRC-токен. Вы можете использовать его "
-"для соединения с чатом Ripple через IRC. Помните, что токен - как пароль, и "
-"каждый, кто знает его, имеет доступ к Вашему аккаунту. Если Вам интересно, "
-"как соединиться с чатом через IRC, просмотрите <a href=\"/doc/11\">это</a>."
-
-msgid "Generate a new token!"
-msgstr "Генерировать новый токен!"
-
-# leaderboard.html
-msgid "Rank"
-msgstr "Ранг"
-
-msgid "Player"
-msgstr "Игрок"
-
-msgid "PP/Score"
-msgstr "PP/Счет"
-
-msgid "Accuracy"
-msgstr "Точность"
-
-msgid "Playcount"
-msgstr "Сыграно карт"
-
-# profile.html
-msgid "%s's profile"
-msgstr "Профиль %s"
-
-# profile.html
-# for <reason>, expires <placeholder for time>.
-msgid "User is <b>silenced</b> for %s, expires %s."
-msgstr "Пользователь <b>не может говорить</b> за %s, истекает %s."
-
-# %s is placeholder for an adjective of the user, e.g. "locked", "pending verification", "restricted"
-msgid "User is <b>%s</b>"
-msgstr "Пользователь <b>%s</b>"
-
-msgid "pending verification"
-msgstr "ожидает подтверждения"
-
-msgid "banned"
-msgstr "забанен"
-
-msgid "restricted"
-msgstr "ограничен"
-
-msgid "locked"
-msgstr "заблокирован"
-
-msgid "User not found"
-msgstr "Пользователь не найден"
-
-msgid "(aka <b>%s</b>)"
-msgstr "(aka <b>%s</b>)"
-
-msgid "Online"
-msgstr "В сети"
-
-msgid "Offline"
-msgstr "Не в сети"
-
-msgid "Unknown"
-msgstr "Неизвестно"
-
-msgid "<b>%s</b> is a Ripple player from <b>%s</b>."
-msgstr "<b>%s</b> - игрок Ripple из <b>%s</b>."
-
-msgid "Last seen: %s."
-msgstr "Последний раз был в сети: %s."
-
-msgid "They signed up on Ripple %s."
-msgstr "Зарегистрировался на Ripple %s."
-
-msgid "They play with %s."
-msgstr "Играет с помощью %s."
-
-# контекст: "Играет с помощью..."
-msgid "Mouse"
-msgstr "мыши"
-
-# контекст: "Играет с помощью..."
-msgid "Tablet"
-msgstr "планшета"
-
-# контекст: "Играет с помощью..."
-msgid "Keyboard"
-msgstr "клавиатуры"
-
-# контекст: "Играет с помощью..."
-msgid "Touchscreen"
-msgstr "сенсорного экрана"
-
-# контекст: "Играет с помощью..."
-msgid "Spoon"
-msgstr "ложки"
-
-msgid "Leap motion"
-msgstr "Leap motion"
-
-msgid "Oculus rift"
-msgstr "Oculus Rift"
-
-# контекст: "Играет с помощью..."
-msgid "Dick"
-msgstr "члена"
-
-# контекст: "Играет с помощью..."
-msgid "Eggplant"
-msgstr "баклажана"
-
-msgid "This user hasn't got any badges!"
-msgstr "У этого пользователя нет ни одного значка!"
-
-msgid "Global rank"
-msgstr "Глобальный рейтинг"
-
-msgid "Country rank"
-msgstr "Рейтинг по стране"
-
-msgid "PP"
-msgstr "PP"
-
-msgid "Ranked score"
-msgstr "Рейтинговый счет"
-
-msgid "Total score"
-msgstr "Общий счет"
-
-msgid "Replays watched"
-msgstr "Просмотрено повторов"
-
-msgid "Total hits"
-msgstr "Всего попаданий"
-
-msgid "Level %s"
-msgstr "Уровень %s"
-
-msgid "Achievements"
-msgstr "Достижения"
-
-# support.html
-msgid "Support Ripple"
-msgstr "Поддержать Ripple"
-
-msgid "You are a donor!"
-msgstr "Вы - донор!"
-
-msgid ""
-"Your donor expires <b>%s</b>. No need to feel guilty for not having donated!"
-msgstr ""
-"Ваши привелегии истекают <b>%s</b>. Не нужно чувствовать вину за то, что вы "
-"не пожертвовали!"
-
-msgid "Did you know?"
-msgstr "Знали ли вы?"
-
-msgid "(Probably.)"
-msgstr "(Возможно.)"
-
-msgid "(Probably not.)"
-msgstr "(Скорее всего, нет.)"
-
-msgid "Ripple is not cheap to run."
-msgstr "Ripple не дешев в обслуживании."
-
-msgid ""
-"While we provide this service for free, we still have to pay for it, and if "
-"we always took the money out of our own pockets, 1. we would be broke, 2. we "
-"wouldn't be able to upgrade our hardware to accomodate our users. While we "
-"do have loads of software optimisations that allow us to have Ripple run "
-"crazy fast while still being on not so high-end hardware, the more users we "
-"have, the higher-end our hardware needs to be. So we are asking you for help "
-"on this :)."
-msgstr ""
-"Несмотря на то, что мы предлагаем Вам играть бесплатно, нам всё-равно "
-"приходится за это платить, и если бы мы всегда платили со своего кармана, 1. "
-"мы бы разорились, 2. мы не имели бы возможности совершенствовать серверное "
-"железо, чтобы соответствовать нагрузке. И даже с достаточным количеством "
-"оптимизаций кода, которые позволяют Ripple работать крайне быстро на крайне "
-"скудном железе, с увеличением количества пользователей, более продвинутые "
-"серверы становятся необходимы. Именно поэтому мы просим Вас помочь нам с "
-"этим :)."
-
-msgid "We are still students."
-msgstr "Мы все еще студенты."
-
-msgid ""
-"Ripple developers, and most of the Ripple staff, do not have a day job. This "
-"means that we get most of our income as students from doing small jobs as \""
-"freelancers\" every so often, or, you know, allowance."
-msgstr ""
-"У разработчиков и большей части персонала Ripple нет работы. Это значит, что "
-"мы получаем большую часть доходов, выполняя небольшую работу как \""
-"фрилансеры\" или получая стипендию."
-
-msgid "We do not have ads. And never will."
-msgstr "У нас нет рекламы. И никогда не будет."
-
-msgid "We love picking random icons from our icon library."
-msgstr "Нам нравится выбирать случайные иконки из нашей библиотеки иконок."
-
-msgid ""
-"You may have adblock enabled and have not noticed, but we don't have ads "
-"anywhere on our website. We believe ads are bad, as they can be very "
-"annoying to you and that you would rather spend a few bucks to help us "
-"rather than watch annoying ads all the time."
-msgstr ""
-"Возможно, у Вас включен блокировщик рекламы, из-за чего Вы не заметили, что "
-"у нас в принципе нет рекламы на сайте. Мы верим в то, что реклама - это "
-"плохо, так как она может быть очень надоедать и, возможно, лучше потратить "
-"несколько долларов, чтобы помочь нам вместо того, чтобы лицезреть эту "
-"приставучую рекламу все время."
-
-msgid "So what can you do?"
-msgstr "Итак, что Вы можете сделать?"
-
-msgid "Well, you can give us money."
-msgstr "Ну, Вы можете дать нам денег."
-
-msgid "Well, you can give us even more money."
-msgstr "Ну, Вы можете дать нам еще денег."
-
-msgid "Here's what you get:"
-msgstr "Вот, что вы получите:"
-
-msgid "Yellow username"
-msgstr "Желтый юзернейм"
-
-msgid "Donor badge"
-msgstr "Значок донора"
-
-msgid "Custom badge editor"
-msgstr "Редактор значков"
-
-msgid "Friends ranking"
-msgstr "Рейтинг друзей"
-
-msgid "Discord privileges"
-msgstr "Привелегии в Discord"
-
-msgid "Profile background"
-msgstr "Задний фон профиля"
-
-msgid "More to come!"
-msgstr "И это еще не все!"
-
-msgid ""
-"Just like in osu!, you get a <b>shiny yellow username</b> in the in-game "
-"chat to show everyone you're a really cool dude who has helped us pay the "
-"server bills."
-msgstr ""
-"Прямо как в osu!, вы получаете <b>яркий желтый никнейм</b> в игровом чате, "
-"чтобы показать, что вы очень крутой чувак, который помог нам оплатить счета "
-"за сервера."
-
-msgid ""
-"Again, just like in osu!, you will get a <b>donor badge</b> on your profile, "
-"to show everyone you're supporting us."
-msgstr ""
-"Опять же, как в osu!, вы получаете <b>значок донора</b> в вашем профиле, "
-"чтобы показать, что вы поддерживаете нас."
-
-msgid ""
-"You get to be able to create your <b>own personal badge</b>, with custom "
-"text and icon, to show off on your profile! Let the world know you're an "
-"anchor. Or prank people showing a spinnin' wheel with \"Loading...\"! Up to "
-"you."
-msgstr ""
-"Вы сможете создать ваш <b>собственный значок</b> со своим текстом и иконкой, "
-"чтобы красоваться им в вашем профиле! Или разыгрывать людей, показывая им "
-"крутящееся колесо с \"Loading...\"! Все зависит от вас."
-
-msgid ""
-"<b>Competing with friends</b> is really cool, you can play on the "
-"leaderboard with someone more or less on your level, without getting "
-"crippling depression and RSI for not beating that pro!"
-msgstr ""
-"<b>Соревноваться с друзьями</b> очень круто, вы можете играть с кем-то выше "
-"или ниже вашего уровня, не получая калечащую депрессию и RSI после проигрыша "
-"этому профессионалу!"
-
-msgid ""
-"You'll get exclusive access to the <b>\"#donators\"</b> text and voice "
-"channels, you'll be able to change your discord nickname and you'll get a "
-"custom role with custom username colour!"
-msgstr ""
-"Вы получите эксклюзивный доступ в текстовый и голосовой канал <b>\"#"
-"donators\"</b>, вы сможете поменять ваш никнейм в Discord и вы получите "
-"специальную роль с заказным цветом никнейма!"
-
-msgid ""
-"Think about <b>spicing your profile up with some eggplants</b>? Got you "
-"covered! Having donor privileges, you get to be able to change your profile "
-"background."
-msgstr ""
-"Хотите <b>приправить ваш профиль парочкой баклажанов</b>? Мы обо всем "
-"позаботились! Имея донорские привилегии, вы сможете менять ваш задний фон "
-"профиля."
-
-msgid ""
-"<b>Who knows</b> what we could implement next? You could be able to do even "
-"<i>more</i> stuff for donors once we implement it."
-msgstr ""
-"<b>Кто знает</b> что мы добавим в следующий раз? Вы сможете делать еще "
-"<i>больше</i> вещей когда мы их добавим."
-
-msgid "And this is how you pay"
-msgstr "А вот так вы можете оплатить"
-
-msgid ""
-"You may donate through either <b>PayPal</b> (or credit/debit card linked to "
-"PayPal) or <b>Bitcoin</b>. Use the slider below to choose the amount of "
-"months you'd like to have the donor benefits, and the cost will be instantly "
-"calculated. Remember that if, for instance, you choose to donate € 4 instead "
-"of € 3.51, you will only be given one donor month."
-msgstr ""
-"Вы можете пожертвовать через <b>PayPal</b> (или кредитную/банковскую карту, "
-"прикрепленную к PayPal) или через <b>Bitcoin</b>. Используйте слайдер снизу, "
-"чтобы выбрать количество месяцев, на которые вы хотели бы привилегии, и цена "
-"будет автоматически рассчитана. Не забывайте, что если вы решите "
-"пожертвовать €4 вместо €3.51, вы получите только 1 месяц донорства."
-
-msgid "Loading..."
-msgstr "Загрузка..."
-
-msgid "PayPal"
-msgstr "PayPal"
-
-msgid "User:"
-msgstr "Пользователь:"
-
-msgid "Bitcoin"
-msgstr "Bitcoin"
-
-msgid "Send %s BTC to this Bitcoin address:"
-msgstr "Отправьте %s BTC на этот Bitcoin-адрес:"
-
-msgid ""
-"Afterwards, <b>please send an email to <a href=\"mailto:howl@ripple.moe\""
-">howl@ripple.moe</a></b> containing the transaction hash!"
-msgstr ""
-"После этого, <b>отправьте письмо на <a href=\"mailto:howl@ripple.moe\""
-">howl@ripple.moe</a></b> с хешем транзакции!"
-
-msgid "I've donated, now what?"
-msgstr "Я пожертвовал, что теперь?"
-
-msgid ""
-"You'll have to wait until we verify and process your payment. It can take up "
-"to <b>12 hours</b>. If 12 hours have passed and you still haven't received "
-"your Donor tag, contact a <b>Dev/Community Manager</b> in our Discord server "
-"or send an email to <b><a href=\"mailto:support@ripple.moe\""
-">support@ripple.moe</a></b>. Once we have processed your payment, you'll "
-"receive an <b>email</b> to the address you've used to sign up and you'll get "
-"<b>all the donor privileges, except the Discord ones</b>. To get the Discord "
-"donor privileges, go <a href=\"/settings/discord\">here</a>."
-msgstr ""
-"Вам нужно подождать, пока мы проверим и проведем ваш платеж. Это может "
-"занять до <b>12 часов</b>. Если 12 часов прошло и вы все еще не получили "
-"ваше донорство, свяжитесь с <b>менеджером разработки/сообщества</b> на нашем "
-"сервере Discord или отправьте письмо на <b><a href=\"mailto:support@ripple."
-"moe\">support.ripple.moe</a></b>. Как только мы проведем ваш платеж, вы "
-"получите <b>письмо</b> на адрес, который вы используете для входа, и вы "
-"получите <b>все донорские привелегии, кроме привелегий в Discord</b>. Чтобы "
-"получить донорские привелегии в Discord, зайдите <a href=\"/settings/"
-"discord\">сюда</a>."
-
-msgid "Please log in to get supporter"
-msgstr "Войдите, чтобы получить донора"
-
-# Settings
-msgid "Userpage"
-msgstr "Страница пользователя"
-
-msgid "Avatar"
-msgstr "Аватар"
-
-msgid "Discord donor"
-msgstr "Discord-донор"
-
-msgid "Two factor authentication is enabled on your account."
-msgstr "Двухфакторная аутентификация включена на вашем аккаунте."
-
-msgid "Two factor authentication is not enabled on your account."
-msgstr "Двухфакторная аутентификация отключена на вашем аккаунте."
-
-msgid "Telegram 2FA"
-msgstr "Двухфакторная аутентификация Telegram"
-
-msgid ""
-"To enable Telegram Two Factor Authentication, click this button, then click "
-"\"start\" on Telegram:"
-msgstr ""
-"Чтобы включить двухфакторную аутентификацию в Telegram, нажмите на эту "
-"кнопку, потом нажмите \"start\" в Telegram:"
-
-msgid "Enable Telegram 2FA"
-msgstr "Включить двухфакторную аутентификацию в Telegram"
-
-msgid ""
-"If you don't have Telegram on the current device, you can either open this "
-"page from a device on which you have it, or scan this QR code:"
-msgstr ""
-"Если у вас нет Telegram на этом девайсе, вы можете открыть эту страницу с "
-"девайса, на котором он у вас есть, или просканируйте этот QR-код:"
-
-msgid ""
-"In case you don't have a way to scan QR codes or you simply can't be "
-"bothered to download an app that scans them, you can also open Telegram, "
-"start a conversation with <a href=\"http://telegram.me/ripple2fabot\""
-"><b>@ripple2fabot</b></a> and send this message:"
-msgstr ""
-"В случае если вы не можете сканировать QR-коды или вы не утруждаете себя "
-"загрузкой сканера, вы можете открыть Telegram, начать диалог с <a href=\""
-"http://telegram.me/ripple2fabot\"><b>@ripple2fabot</b></a> и отправьте ему "
-"это сообщение:"
-
-msgid "Google Authenticator (TOTP) based 2FA"
-msgstr "Двухфакторная аутентификация через Google Authenticator"
-
-msgid ""
-"At the moment you currently have set up Telegram Two Factor Authentication. "
-"Should you wish to disable it, please fill out the following form:"
-msgstr ""
-"Сейчас у вас включена двухфакторная аутентификация через Telegram. Если вы "
-"хотите отключить ее, заполните данную форму:"
-
-msgid ""
-"At the moment you currently have set up TOTP-based (Google Authenticator) "
-"Two Factor Authentication. Should you wish to disable it, please fill out "
-"the following form:"
-msgstr ""
-"Сейчас у вас включена двухфакторная аутентификация через Google "
-"Authenticator. Если вы хотите отключить ее, заполните данную форму:"
-
-msgid "Disable Telegram 2FA"
-msgstr "Отключить двухфакторную аутентификацию в Telegram"
-
-msgid "Disable TOTP-based 2FA"
-msgstr "Отключить двухфакторную аутентификацию через Google Authenticator"
-
-msgid "Google Authenticator recovery keys"
-msgstr "Ключи восстановления для Google Authenticator"
-
-msgid ""
-"These are the only thing that will let you get back into your Ripple account "
-"if you lose your device. Our suggestion is to paste them inside a document "
-"in your word processor (Microsoft Word, LibreOffice Writer), print them and "
-"store them in a safe place."
-msgstr ""
-"Они - единственная вещь, которая поможет вам войти в ваш аккаунт Ripple, "
-"если вы потеряли ваш девайс. Мы рекомендуем копировать их в документ в ваш "
-"редактор (Microsoft Word, LibreOffice, Writer), распечатать их и сохранить "
-"их в безопасном месте."
-
-msgid "Open File"
-msgstr "Открыть файл"
-
-msgid "Save"
-msgstr "Сохранить"
-
-msgid ""
-"Your discord account has been linked to this Ripple account. <b>Welcome to "
-"the donors club and thank you for supporting us!</b> You have now access to "
-"the #donators text and voice channels on our official Discord server! You "
-"can also set a custom role name and username colour and change your nickname "
-"on Discord. If you want to change your nickname, you can use the "
-"<code>/nick</code> command. To set or edit your <b>custom role</b> name and "
-"colour, use the command <code>!role HEX_COLOUR ROLE_NAME</code>. You can "
-"pick your HEX colour <a href=\"http://www.colorpicker.com/\" target=\""
-"_blank\">here</a>, it's the one that starts with '#'. You can change your "
-"role name and colour <b>whenever you want!</b>"
-msgstr ""
-"Ваш аккаунт Discord был подключен к этому аккаунту Ripple. <b>Приветствуем в "
-"клубе доноров и спасибо за вашу поддержку!</b> Теперь у вас есть доступ к "
-"голосовому и текстовому каналу #donators на нашем официальном сервере "
-"Discord! Также, вы можете установить свою роль, цвет ника и свой никнейм в "
-"Discord. Если вы хотите поменять ваш ник, используйте команду "
-"<code>/nick</code>. Чтобы установить или изменить цвет и название <b>вашей "
-"роли</b>, используйте команду <code>!rode ЦВЕТ_HEX НАЗВАНИЕ_РОЛИ</code>. Вы "
-"можете найти ваш цвет в HEX <a href=\"http://www.colorpicker.com/\" target=\""
-"_blank\">тут</a>, это тот, который начинается с '#'. Вы можете поменять ваш "
-"цвет и название роли <b>когда вам угодно!</b>"
-
-msgid "Thank you for supporting us and have fun on Ripple!"
-msgstr "Спасибо за поддержку и веселитесь на Ripple!"
-
-msgid "Donors get special privileges on our Discord server too!"
-msgstr "Также, доноры получают специальные привелегии на нашем сервере Discord!"
-
-msgid ""
-"Discord is a chatroom with text and voice channels, bots and lots of other "
-"cool features. You can <b>download Discord for free <a href=\""
-"http://discord.gg/\" target=\"_blank\">here</a></b> and you can <b>join our "
-"official Discord server <a href=\"%s\" target=\"_blank\">here</a></b>."
-msgstr ""
-"Discord это чат-клиент с текстовыми и голосовыми каналами, ботами и кучей "
-"других крутых штуковин. Вы можете <b>скачать Discord бесплатно <a href=\""
-"http://discord.gg/\" target=\"_blank\">здесь</a></b> и вы можете <b>зайти на "
-"наш официальный сервер Discord <a href=\"%s\" target=\"_blank\""
-">здесь</a></b>."
-
-msgid "Here's what you get if you link your Discord account:"
-msgstr "Вы получите это, когда прикрепите ваш аккаунт Discord:"
-
-msgid "Access to /nick command, to change your Discord nickname"
-msgstr "Доступ к команде /nick, чтобы менять ваш никнейм в Discord"
-
-msgid "Access to #donators text and voice channels"
-msgstr "Доступ к текстовому и голосовому каналу #donators"
-
-msgid "Username on donors list"
-msgstr "Никнейм в списке доноров"
-
-msgid "Custom role with custom username"
-msgstr "Ваша роль с вашим названием"
-
-msgid ""
-"To get these perks, first of all <a href=\"%s\" target=\"_blank\">join our "
-"Discord server</a>, then click this fancy button:"
-msgstr ""
-"Чтобы получить эти привилегии, сначала <a href=\"%s\" target=\"_blank\">"
-"зайдите на наш сервер Discord</a>, потом нажмите на эту красивую кнопку:"
-
-msgid "Get Discord donor privileges"
-msgstr "Получить привелегии донора в Discord"
-
-msgid "New password (leave blank if you don't want to change it)"
-msgstr "Новый пароль (оставьте пустым, если не хотите менять его)"
-
-msgid "Current password"
-msgstr "Текущий пароль"
-
-msgid "BBCode syntax reference"
-msgstr "Синтаксис BBCode"
-
+#: settings/profile.html:19
 msgid "General"
 msgstr "Общие"
 
-msgid "Email address"
-msgstr "Адрес эл. почты"
+#: settings/clansettings.html:127
+#, fuzzy
+msgid "Generate a new invite!"
+msgstr "Генерировать новый токен!"
 
-msgid "Alternative username (cannot be used for login)"
-msgstr "Дополнительный никнейм (не используется для входа)"
+#: irc.html:18
+msgid "Generate a new token!"
+msgstr "Генерировать новый токен!"
 
-msgid "Also known as..."
-msgstr "Также известен как..."
+#: settings/discord.html:53
+#, fuzzy
+msgid "Get Discord Supporter privileges"
+msgstr "Получить привелегии донора в Discord"
 
-msgid "Custom badge"
-msgstr "Свой значок"
-
-msgid "Enable"
-msgstr "Включить"
-
-msgid ""
-"<b>Do not use offensive badges and do not pretend to be someone else with "
-"your badge.</b> If you abuse the badges system, you'll be silenced and you "
-"won't be able to edit your custom badge anymore."
+#: settings/profbackground.html:33
+msgid "Gif"
 msgstr ""
-"<b>Не используйте оскорбительный значки и не притворяйтесь кем-то другим с "
-"помощью вашего значка.</b> Если вы будете злоупотреблять системой значков, "
-"вы не сможете использовать чат и не сможете изменять ваш личный значок."
 
+#: base.html:147
+msgid "Github"
+msgstr ""
+
+#: beatmap.html:208
+msgid "Grade"
+msgstr ""
+
+#: navbar.html:104
+msgid "Guest"
+msgstr ""
+
+#: beatmap.html:60
+msgid "HP Drain"
+msgstr ""
+
+#: register/welcome.html:25
+msgid "Here's a few things you might want to check out:"
+msgstr "Пара вещей, которые могли бы вам понравиться:"
+
+#: team.html:76
+#, fuzzy
+msgid ""
+"Here's an additional list of some people who helped us out along the way."
+msgstr "Список людей, которые помогали Ripple."
+
+#: premium.html:102
+#, fuzzy
+msgid "Here's what we ask for in return"
+msgstr "Вот, что вы получите:"
+
+#: premium.html:50
+#, fuzzy
+msgid "Here's what we have to offer"
+msgstr "Вот, что вы получите:"
+
+#: settings/discord.html:35
+msgid "Here's what you get if you link your Discord account:"
+msgstr "Вы получите это, когда прикрепите ваш аккаунт Discord:"
+
+#: homepage.html:61
+msgid "How to connect"
+msgstr ""
+
+#: premium.html:188
+msgid "I've donated, now what?"
+msgstr "Я пожертвовал, что теперь?"
+
+#: settings/clansettings.html:60
+msgid "Icon Url"
+msgstr ""
+
+#: clans/create.html:61
+msgid "Icon [URL] (optional)"
+msgstr ""
+
+#: settings/profile.html:109
 msgid "Icon reference"
 msgstr "Ссылка на иконку"
 
-msgid "Dinosaur, oompa-loompa, cool guy..."
-msgstr ""
-
-msgid "Playstyle"
-msgstr "Стиль игры"
-
-msgid "Authorized applications"
-msgstr "Авторизованные приложения"
-
+#: tos.html:20
 msgid ""
-"From here you can check all the applications you granted authorization to "
-"your account, and revoke their permissions if necessary."
-msgstr ""
-"Отсюда можно увидеть все приложения, которые вы авторизовали в свой аккаунт "
-"и забрать их разрешения, если потребуется."
-
-msgid "... but it looks like you have none!"
-msgstr "... но, похоже, у вас их нет!"
-
-msgid "That authorization has been successfully revoked."
-msgstr "Данная авторизация была успешно отозвана."
-
-msgid "Authorization created %s"
-msgstr "Авторизация создана %s"
-
-msgid "Owner"
-msgstr "Владелец"
-
-msgid "Revoke"
-msgstr "Отозвать"
-
-msgid "Dark site"
+"If you see someone breaking the rules, report them in-game or in our "
+"discord. Knowingly helping someone who breaks our terms of service can lead "
+"to removal from our services."
 msgstr ""
 
-msgid "Preferences"
-msgstr "Настройки"
-
-# Go source
-msgid "TOTP-based 2FA has been enabled on your account."
-msgstr ""
-"Двухфакторная аутентификация с использованием TOTP была включена на вашем "
-"аккаунте."
-
-msgid "Passcode is invalid. Perhaps it expired?"
-msgstr "Код доступа неверен. Может, он истек?"
-
-msgid "No passcode/secret was given. Please try again"
-msgstr "Вы не указали код доступа. Попробуйте еще раз."
-
-msgid "TOTP-based 2FA is already enabled!"
-msgstr "Двухфакторная аутентификация с использованием TOTP уже включена!"
-
-msgid ""
-"You currently have Telegram 2FA enabled. You first need to disable that if "
-"you want to use TOTP-based 2FA."
-msgstr ""
-"У вас уже включена двухфакторная аутентификация через Telegram. Если вы "
-"хотите использовать двухфакторную аутентификацию через TOTP, сначала "
-"отключите её."
-
-msgid "2FA disabled successfully."
-msgstr "Двухфакторная аутентификация успешно отключена."
-
-msgid "Changing avatar is currently not possible."
-msgstr "Смена аватара сейчас невозможна."
-
-msgid "An error occurred."
-msgstr "Произошла ошибка."
-
-msgid "We were not able to save your avatar."
-msgstr "Мы не смогли сохранить ваш аватар."
-
-msgid ""
-"Your avatar was successfully changed. It may take some time to properly "
-"update. To force a cache refresh, you can use CTRL+F5."
-msgstr ""
-"Ваш аватар был изменен. Это займет какое-то время прежде чем он обновится. "
-"Чтобы сбросить ваш кэш, используйте CTRL+F5."
-
-msgid "Internal Server Error"
-msgstr "Внутренняя ошибка сервера"
-
-msgid "You're not a donor!"
-msgstr "Вы не донор!"
-
-msgid ""
-"You've not joined the discord server! Links to it are below on the page. "
-"Please join the server before attempting to connect your account to Discord."
-msgstr ""
-"Вы не заходили на сервер Discord! Ссылки на него внизу страницы. Пожалуйста, "
-"сначала зайдите туда, прежде чем вы присоедините ваш Discord-аккаунт."
-
-msgid "Your account has been linked successfully!"
-msgstr "Ваш аккаунт был успешно присоединен!"
-
-msgid ""
-"Your new IRC token is <code>%s</code>. The old IRC token is not valid "
-"anymore.<br>Keep it safe, don't show it around, and store it now! We won't "
-"show it to you again."
-msgstr ""
-"Ваш новый IRC-токен: <code>%s</code>. Старый IRC-токен больше не "
-"работает.<br>Держите его в сохранности, не показывайте и сохраните его! Мы "
-"не покажем его еще раз."
-
-msgid "Your profile background has been saved."
-msgstr "Задний фон профиля был успешно сохранен."
-
-msgid "We were not able to save your profile background."
-msgstr "Мы не смогли сохранить ваш задний фон профиля."
-
-msgid "Background type"
-msgstr "Тип фона"
-
-msgid "None"
-msgstr "Никакой"
-
-msgid "Image"
-msgstr "Изображение"
-
-msgid "Solid colour"
-msgstr "Сплошной цвет"
-
-msgid "Colour is invalid"
-msgstr "Цвет неверен."
-
-msgid ""
-"You have been automatically logged out of your account because your account "
-"has either been banned or locked. Should you believe this is a mistake, you "
-"can contact our support team at support@ripple.moe."
-msgstr ""
-"Вы автоматически вышли из аккаунта из-за того, что он был забанен или "
-"заблокирован. Если вы уверены, что это ошибка, свяжитесь с командой "
-"поддержки: support@ripple.moe."
-
-msgid ""
-"You have been automatically logged out for security reasons. Please <a "
-"href='/login?redir=%s'>log back in</a>."
-msgstr ""
-"Вы автоматически вышли из аккаунта для вашей безопасности. Пожалуйста, <a "
-"href='/login?redir=%s'>войдите еще раз</a>."
-
-msgid "You need to login first."
-msgstr "Сначала войдите."
-
-msgid "Forbidden"
-msgstr "Доступ запрещен."
-
-msgid "You should not be 'round here."
-msgstr "Вы не должны тут находиться."
-
-msgid ""
-"It seems like the original version of this file has been updated, so this "
-"file is out of date and may contain inaccurate information. If you want to "
-"make sure to be up-to-date, please refer to the <a href=\"%s%s\">English "
-"version</a>."
-msgstr ""
-"Похоже, что оригинальная версия этого файла была обновлена. Эта версия "
-"устарела и может содержать неверную информацию. Если вам требуется более "
-"точная информация, пожалуйста, обратитесь к <a href=\"%s%s\">английской "
-"версии</a>."
-
+#: register/elmo.html:35
 msgid ""
 "If you truly have understood what's written above and you have understood "
 "that creating a multiaccount will lead to a restriction on your main "
@@ -1617,265 +533,680 @@ msgstr ""
 "мультиаккаунта приведет к блокировке вашего основного аккаунта, вы можете "
 "нажать сюда и вы попадете на страницу регистрации."
 
-msgid "You look new here. Allow us to introduce you to what Ripple is."
-msgstr "Похоже, вы новичок. Позвольте представить вам, что такое Ripple."
+#: settings/profbackground.html:26
+msgid "Image"
+msgstr "Изображение"
 
-# PAY ATTENTION! This is Log in *with* Ripple, not *on* Ripple. This is for
-# oauth.
-msgid "Log in with Ripple"
-msgstr "Войти с помощью Ripple"
-
-msgid "This application will be able to:"
-msgstr "Это приложение сможет:"
-
-msgid "Identify"
+#: navbar.html:27
+msgid "Information"
 msgstr ""
 
-msgid ""
-"See your public information (everything somebody can see on your user "
-"profile), however with this alone it will not be able to see your private "
-"information (for instance your email address)."
+#: settings/clansettings.html:112
+msgid "Invite"
 msgstr ""
-"Видеть вашу публичную информацию (то, что указано у вас в профиле). "
-"Приложение не сможет видеть вашу приватную информацию (например, вашу почту)."
 
-msgid "Read private information"
-msgstr "Видеть приватную информацию"
-
-msgid ""
-"This application will be able to see your email address, and any private "
-"information we will add in the future."
+#: settings/clansettings.html:83
+msgid "Invite Only"
 msgstr ""
-"Это приложение сможет видеть ваш адрес электронной почты и всю приватную "
-"информацию, которую мы добавим."
 
-msgid "Write"
-msgstr "Записывать"
-
-msgid ""
-"This application will be able to make modifications to your Ripple account. "
-"This is potentially really dangerous! Use this only with applications that "
-"you trust."
+#: settings/clansettings.html:70
+msgid "Invite Policy"
 msgstr ""
-"Это приложение сможет вносить изменения в ваш аккаунт Ripple. Это очень "
-"опасно! Используйте это только с приложениями, которым вы доверяете."
 
-msgid "Approve"
-msgstr "Принять"
-
-msgid "Deny"
-msgstr "Отклонить"
-
-# Team page
+#: patcherdl.html:22
 msgid ""
-"This is a list of the wonderful people who keep Ripple up and running and "
-"deal with its community."
+"It restores critical features such as ranking panels to your relax gameplay, "
+"sweetening the already great experience."
 msgstr ""
-"Это список замечательных людей, которые помогают содержать Ripple и его "
-"сообщество."
 
-msgid "Community Managers"
-msgstr "Менеджеры Сообщества"
-
-msgid ""
-"Community Managers deal with bans, silences, name changes and pretty much "
-"everything that has to do with the community."
+#: clansample.html:184
+msgid "Join"
 msgstr ""
-"Менеджеры Сообщества разбираются с банами, блокировками чата, сменой имен и, "
-"в общем, всем, что связано с сообществом."
 
-msgid ""
-"They take care of our Discord server and reply to emails sent to the support "
-"services (email and support.ripple.moe). Community Managers have a red name "
-"in the in-game chat."
+#: settings/clansettings.html:160
+msgid "Kick"
 msgstr ""
-"Они занимаются нашим сервером в Discord и отвечают на письма, отправленные в "
-"поддержку (email и support.ripple.moe). У Менеджеров Сообщества красный ник "
-"в игровом чате."
 
-msgid "Developers"
-msgstr "Разработчики"
+#: base.html:164
+msgid "Language"
+msgstr "Язык"
 
+#: navbar.html:19
+msgid "Leaderboard"
+msgstr "Таблица лидеров"
+
+#: premium.html:82
+#, fuzzy
+msgid "Leaderboard preferences"
+msgstr "Таблица лидеров"
+
+#: settings/profile.html:43
+msgid "Leaderboard size (In-Game)"
+msgstr ""
+
+#: beatmap.html:78
+msgid "Length"
+msgstr "Длина"
+
+#: settings/connections.html:41
+#, fuzzy
+msgid "Link Discord"
+msgstr "Discord"
+
+#: settings/connections.html:29
+#, fuzzy
+msgid "Link your Discord account"
+msgstr "Вы получите это, когда прикрепите ваш аккаунт Discord:"
+
+#: settings/connections.html:33
 msgid ""
-"Developers add new features to the server, squash bugs, keep the server up "
-"and running and take care of its maintenance."
+"Linking your Discord account will allow you to access extra features related "
+"to interacting in our Discord server. For example, linking your Discord "
+"account will allow you to automatically receive roles such as Akatsuki+ and "
+"Akatsuki Champion."
+msgstr ""
+
+#: multiplayer.html:19
+#, fuzzy
+msgid "Loading match data..."
+msgstr "Загрузка..."
+
+#: premium.html:115
+msgid "Loading..."
+msgstr "Загрузка..."
+
+#: navbar.html:108 register/welcome.html:28
+msgid "Login"
+msgstr "Войти"
+
+#: doc.html:25
+#, fuzzy
+msgid "Looks like there is no documentation on this Akatsuki instance!"
+msgstr "Похоже, что на этом сервере Ripple нет документации!"
+
+#: settings/clansettings.html:134 clansample.html:248
+msgid "Members"
+msgstr ""
+
+#: beatmap.html:215
+msgid "Mods"
+msgstr ""
+
+#: register/welcome.html:11
+#, fuzzy
+msgid "Multiaccounts are not allowed on Akatsuki"
+msgstr "Мультиаккаунты запрещены на Ripple"
+
+#: followers.html:73 friends.html:75
+msgid "Mutual"
+msgstr "Взаимно"
+
+#: tos.html:50
+msgid ""
+"NSFW and offensive avatars/userpage content are not allowed anywhere on "
+"Akatsuki."
+msgstr ""
+
+# doc.html
+#: doc.html:14
+msgid ""
+"Need some help getting around? Look no further! From here you will be able "
+"to view our documentation, which is basically a very simplistic wiki."
+msgstr ""
+"Нужна помощь в освоении? Отсюда вы можете просмотреть нашу документацию, "
+"которая, по сути, является простейшей Wiki."
+
+#: settings/password.html:28
+msgid "New password (leave blank if you don't want to change it)"
+msgstr "Новый пароль (оставьте пустым, если не хотите менять его)"
+
+#: settings/profbackground.html:61
+msgid "No image selected"
+msgstr ""
+
+#: clan_member.html:43
+msgid "No members in this clan. maybe invite someone?"
+msgstr ""
+
+#: settings/profile.html:69
+#, fuzzy
+msgid "No title"
+msgstr "Название"
+
+#: team.html:51
+msgid "Nomination Quality Assurance Team"
+msgstr ""
+
+#: settings/profbackground.html:24
+msgid "None"
+msgstr "Никакой"
+
+#: tos.html:74
+msgid ""
+"Note that the Akatsuki team can disable your access to the game, website, "
+"Discord server or any service provided by Akatsuki; without any warning, by "
+"staff members' discretion. You may not hold Akatsuki liable for any "
+"consequence that might happen due to you taking part in consumption of any "
+"service ran by Akatsuki. The Akatsuki team may change this list of rules at "
+"any time, with or without any notice. New rules may or may not be "
+"retroactive at our own discretion."
+msgstr ""
+
+# friends.html
+#: followers.html:28
+#, fuzzy
+msgid ""
+"On this page you can see all of your followers, and mutual them as you see "
+"fit."
+msgstr ""
+"На этой странице Вы можете увидеть всех своих друзей и перестать с ними "
+"дружить, если желаете."
+
+# friends.html
+#: friends.html:36
+msgid ""
+"On this page you can see all of your friends, and unfriend them as you see "
+"fit."
+msgstr ""
+"На этой странице Вы можете увидеть всех своих друзей и перестать с ними "
+"дружить, если желаете."
+
+#: 500.html:4
+#, fuzzy
+msgid ""
+"Ooops! Looks like something went really wrong while trying to process your "
+"request. Perhaps report this to a developer? Retrying doing what you were "
+"trying to do might work, too."
+msgstr ""
+"У-упс! Похоже, что-то пошло не так при обработке Вашего запроса. Может, "
+"уведомить об этом разработчиков Ripple? Повтор всего того, что вы сделали, "
+"тоже может сработать."
+
+#: settings/clansettings.html:80
+#, fuzzy
+msgid "Open"
+msgstr "Открыть файл"
+
+#: settings/avatar.html:36 settings/profbackground.html:89
+#: settings/profbackground.html:138
+msgid "Open File"
+msgstr "Открыть файл"
+
+#: beatmap.html:63
+msgid "Overall Difficulty"
+msgstr "Сложность"
+
+#: beatmap.html:214
+msgid "PP"
+msgstr "PP"
+
+#: beatmap.html:66
+msgid "Passes/Plays"
+msgstr "Пройдено/Сыграно"
+
+#: pwreset/continue.html:20 login.html:33
+msgid "Password"
+msgstr "Пароль"
+
+#: register/register.html:50
+msgid "Password (at least 8 characters)"
+msgstr "Пароль (не менее 8 символов)"
+
+#: patcherdl.html:48
+msgid "Patcher is currently unavailable"
+msgstr ""
+
+#: premium.html:163
+msgid "PayPal"
+msgstr "PayPal"
+
+#: premium.html:192
+msgid ""
+"Payments are processed automatically and generally apply within 5 minutes of "
+"purchase."
+msgstr ""
+
+#: navbar.html:134 navbar.html:191
+msgid "Performance"
+msgstr ""
+
+#: leaderboard.html:88 clanboard.html:74
+msgid "Performance (Score)"
+msgstr ""
+
+#: clanboard.html:57
+msgid "Performance Rankings"
+msgstr ""
+
+#: leaderboard.html:92 clanboard.html:79
+msgid "Playcount"
+msgstr "Сыграно карт"
+
+#: homepage.html:163
+#, fuzzy
+msgid "Played by"
+msgstr "Игрок"
+
+#: settings/profile.html:142
+msgid "Playstyle"
+msgstr "Стиль игры"
+
+#: clansample.html:216
+msgid "Please login to join a clan"
+msgstr ""
+
+#: tos.html:65
+msgid ""
+"Practice common sense. If a staff member asks you to do something, it is in "
+"your best interests to comply."
+msgstr ""
+
+#: settings/profile.html:158
+msgid "Preferences"
+msgstr "Настройки"
+
+#: beatmap.html:114
+msgid "Preview Audio"
+msgstr ""
+
+#: team.html:28
+msgid "Product Development Team"
+msgstr ""
+
+#: team.html:20
+msgid "Product Management Team"
+msgstr ""
+
+#: homepage.html:49
+msgid "Profile"
+msgstr "Профиль"
+
+#: tos.html:59
+msgid ""
+"Purchasing anything from Akatsuki does not mean that you are immune from the "
+"rules."
+msgstr ""
+
+# leaderboard.html
+#: beatmap.html:206
+msgid "Rank"
+msgstr "Ранг"
+
+# register/register.html
+#: navbar.html:111 homepage.html:47
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: clanboard.html:47
+msgid "Regular"
+msgstr ""
+
+#: clanboard.html:48
+msgid "Relax"
+msgstr ""
+
+#: register/register.html:15
+msgid ""
+"Remember: this seems like it's your second account! Do not multiaccount, or "
+"you're likely to get restricted!"
+msgstr ""
+"Вспомни: выглядит как твой второй аккаунт! Не создавай мультиаккаунты, или "
+"тебя заблокируют!"
+
+#: friends.html:92
+msgid "Remove"
+msgstr "Удалить"
+
+#: beatmap.html:218
+msgid "Replay"
+msgstr ""
+
+#: base.html:79
+#, c-format
+msgid ""
+"Research has proven this website works 727% better if you have JavaScript "
+"enabled."
+msgstr ""
+
+#: team.html:46
+msgid ""
+"Responsible for assisting players with their inquiries and overseeing the "
+"community's well-being."
+msgstr ""
+
+#: team.html:22
+msgid ""
+"Responsible for envisioning Akatsuki's future, and creating ideas to shape "
+"the server."
+msgstr ""
+
+#: team.html:60
+msgid ""
+"Responsible for handling all beatmap related inquiries; such as beatmaps "
+"status requests."
+msgstr ""
+
+#: team.html:30
+#, fuzzy
+msgid ""
+"Responsible for implementing and maintaining Akatsuki's infrastructure - "
+"they keep the server running, and take care of its maintenance."
 msgstr ""
 "Разработчкики добавляют новые функции на сервер, исправляют баги, "
 "поддерживают и обслуживают сервер."
 
-# Said light blue (голубое) because it is light blue. If you don't want it to be this way, replace "голубое" with "синее"
+#: team.html:38
 msgid ""
-"They don't do anything related to the community. Developers have a blue name "
-"in the in-game chat."
+"Responsible for not only the community but also the management team itself."
 msgstr ""
-"Они не занимаются сообществом. У разработчиков голубое имя в игровом чате."
 
-msgid "Chat Moderators"
-msgstr "Модераторы чата"
+#: register/welcome.html:32
+msgid "Rules"
+msgstr "Правила"
 
+#: register/verify.html:29
 msgid ""
-"Chat moderators manage the chat to make sure The Law&trade; (the rules) is "
-"respected."
-msgstr "Модераторы чата следят за тем, чтобы в чате соблюдались все правила."
+"Run the new shortcut to launch Akatsuki - no need to use anything like a "
+"switcher, and you can rename it whatever you'd like."
+msgstr ""
 
+#: settings/profile.html:175 settings/clansettings.html:108
+#: settings/avatar.html:43 settings/username.html:49 settings/userpage.html:41
+#: settings/profbackground.html:75 settings/profbackground.html:94
+#: settings/profbackground.html:123 settings/profbackground.html:143
+#: settings/password.html:48
+msgid "Save"
+msgstr "Сохранить"
+
+#: navbar.html:135 navbar.html:192 beatmap.html:209
+#, fuzzy
+msgid "Score"
+msgstr "PP/Счет"
+
+#: leaderboard.html:86
+msgid "Score (Performance)"
+msgstr ""
+
+#: navbar.html:122
+msgid "Settings"
+msgstr "Настройки"
+
+#: patcherdl.html:33
+msgid "Show Relax Ranking Panels"
+msgstr ""
+
+#: patcherdl.html:24
 msgid ""
-"BATs play beatmaps in the ranking queue and decide whether they are good "
-"enough to be ranked or not."
-msgstr "БАТы играют карты в очереди на ранк и решают, годны ли они ранка."
+"Simply run the executable, it will open osu! and restore the flavour of "
+"normal gameplay!"
+msgstr ""
 
+#: team.html:65
+msgid "Social Media Management Team"
+msgstr ""
+
+#: settings/profbackground.html:29
+msgid "Solid colour"
+msgstr "Сплошной цвет"
+
+#: clans/create.html:11
+#, fuzzy
+msgid ""
+"Sorry, it's not possible to create a clan at the moment. Please try again "
+"later."
+msgstr "Извини, но сейчас нельзя зарегистрироваться. Попробуй позже."
+
+#: register/register.html:10
+msgid ""
+"Sorry, it's not possible to register at the moment. Please try again later."
+msgstr "Извини, но сейчас нельзя зарегистрироваться. Попробуй позже."
+
+#: beatmap.html:52
+msgid "Source"
+msgstr "Источник"
+
+#: team.html:74
 msgid "Special thanks"
 msgstr "Особые благодарности"
 
-msgid "Here's a list of people who helped with Ripple."
-msgstr "Список людей, которые помогали Ripple."
+#: beatmap.html:75
+msgid "Star Difficulty"
+msgstr "Кол-во звезд"
 
-msgid ""
-"<b>Franc[e]sco/lolisamurai</b>, for <a "
-"href='https://github.com/Francesco149/oppai'>oppai</a>, used as standard pp "
-"calculator."
-msgstr ""
-"<b>Franc[e]sco/lolisamurai</b>, за <a "
-"href='https://github.com/Francesco149/oppai'>oppai</a>, используемый как "
-"калькулятор PP."
-
-msgid ""
-"<b>Tom94</b>, for <a href='https://github.com/ppy/osu-performance'>osu-"
-"performance</a>, used as a reference for our mania pp calculator."
-msgstr ""
-"<b>Tom94</b>, for <a href='https://github.com/ppy/osu-performance'>osu-"
-"performance</a> был использован как справочный материал для нашего "
-"калькулятора mania pp."
-
-msgid ""
-"<b>Sunpy</b>, for <a href='https://github.com/osufx/catch-the-pp'>catch-the-"
-"pp</a>, used as catch the beat pp calculator."
+#: premium.html:61
+msgid "Start from scratch"
 msgstr ""
 
-msgid ""
-"<b>jrosdahl</b>, for <a "
-"href='https://github.com/jrosdahl/miniircd'>miniircd</a>, used as a base for "
-"our IRC server."
+#: clans/create.html:78 pwreset.html:51 pwreset/continue.html:34 login.html:57
+#: register/register.html:88
+msgid "Submit"
+msgstr "Отправить"
+
+#: settings/discord.html:28
+#, fuzzy
+msgid "Supporters get special privileges on our Discord server too!"
 msgstr ""
-"<b>jrosdahl</b>, for <a "
-"href='https://github.com/jrosdahl/miniircd'>miniircd</a> был использован как "
-"основа для нашего IRC сервера."
+"Также, доноры получают специальные привелегии на нашем сервере Discord!"
 
-msgid "<b>Avail</b>, for having hosted Ripple on his server."
-msgstr "<b>Avail</b>, за хостинг Ripple на его сервере."
+#: base.html:143
+msgid "Team"
+msgstr "Команда"
 
-msgid "<b>Angela Guerra</b>, for designing the Ripple logo."
-msgstr "<b>Angela Guerra</b>, за дизайн логотипа Ripple."
-
+#: tos.html:12
 msgid ""
-"<b><a id='everyone' class='clickable'>Everyone</a></b> who has supported the "
-"Ripple project by donating or inviting other people."
+"Thank you for playing on Akatsuki! By playing, you agree to follow the below "
+"guidelines. Doing so could warrant immediate removal from our services."
 msgstr ""
-"<b><a id='everyone' class='clickable'>Каждому</a></b> кто помог Ripple "
-"материально или рассказывая о нем людям."
 
+#: settings/discord.html:23
+#, fuzzy
+msgid "Thank you for supporting us and have fun on Akatsuki!"
+msgstr "Спасибо за поддержку и веселитесь на Ripple!"
+
+#: base.html:107
+#, fuzzy
+msgid ""
+"The Akatsuki website is currently in maintenance mode, and access has been "
+"limited for normal users."
+msgstr ""
+"Веб-сайт Ripple находится на техническом обслуживании. Только определенные "
+"пользователи имеют доступ к полной версии сайта."
+
+#: clansample.html:238
+msgid "The leader of the clan."
+msgstr ""
+
+#: register/verify.html:10
+msgid "The simplest way to do this is probably with a shortcut:"
+msgstr ""
+
+#: clansample.html:104
+msgid "The statistics of the clan."
+msgstr ""
+
+#: team.html:53
+msgid ""
+"They ensure that the Beatmap Nomination team is running at its best "
+"performance and promote changes to the Ranking Criteria when deemed "
+"necessary."
+msgstr ""
+
+#: team.html:123
 msgid "They told me these are very cool people."
 msgstr "Мне сказали, что они очень клевые."
 
+#: beatmap.html:216
+msgid "Time"
+msgstr "Время"
+
+#: beatmap.html:46
+msgid "Title"
+msgstr "Название"
+
+#: register/verify.html:8
 msgid ""
-"Looking for how you should contact our team? Check out <a "
-"href='https://support.ripple.moe/'>this page</a>."
+"To switch to akatsuki, you must run your osu with the -devserver command "
+"line argument."
 msgstr ""
-"Хотите связаться с нашей командой? Взгляните на <a "
-"href='https://support.ripple.moe/'>эту страницу</a>."
 
-msgid "And more..."
-msgstr "И еще..."
+#: homepage.html:183
+msgid "Top score (Autopilot)"
+msgstr ""
 
-msgid "Do you want to be in this list?"
-msgstr "Хотите быть в этом списке?"
+#: homepage.html:161
+msgid "Top score (Relax)"
+msgstr ""
 
-msgid "Support us with a donation!"
-msgstr "Помогите нам материально!"
+#: homepage.html:141
+msgid "Top score (Vanilla)"
+msgstr ""
 
-msgid "(You get other cool perks too)"
-msgstr "(Вы получите и другие классные штуки)"
+#: homepage.html:125
+#, fuzzy
+msgid "Total scores (Autopilot)"
+msgstr "Общий счет"
 
+#: homepage.html:110
+#, fuzzy
+msgid "Total scores (Relax)"
+msgstr "Общий счет"
+
+#: homepage.html:95
+#, fuzzy
+msgid "Total scores (Vanilla)"
+msgstr "Общий счет"
+
+#: settings/clansettings.html:153
+msgid "Transfer Ownership"
+msgstr ""
+
+#: tos.html:35
 msgid ""
-"The Ripple API is the system through which developers can create "
-"applications to interact with Ripple. <b>If you're asked to fill out an API "
-"token from this page, be wary and only actually create the token if you "
-"really trust the owner of the application.</b>"
+"Treat all members of Akatsuki with respect. Do not insult people without "
+"warrant & do not be excessively toxic."
 msgstr ""
-"Ripple API - система, с помощью которой разработчики могут создавать "
-"приложения для работы с Ripple. <b>Если вас попросили передать API-токен с "
-"этой страницы - будьте осторожны и создавайте токен, только если вы "
-"доверяете владельцу приложения.</b>"
 
-msgid "and PP for osu!standard and osu!mania"
-msgstr "и PP для режимов osu!standard и osu!mania"
+#: settings/connections.html:24
+#, fuzzy
+msgid "Unlink Discord"
+msgstr "Discord"
 
-# help.html
+#: friends.html:90
+#, fuzzy
+msgid "Unmutual"
+msgstr "Взаимно"
+
+#: premium.html:152
+#, fuzzy
+msgid "User"
+msgstr "Пользователь:"
+
+#: settings/profile.html:67
+#, fuzzy
+msgid "User Title"
+msgstr "Название"
+
+#: settings/profile.html:22 settings/username.html:17
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: login.html:22
+msgid "Username (or email)"
+msgstr "Имя пользователя (или почта)"
+
+#: pwreset.html:29
+#, fuzzy
+msgid "Username or Email Address"
+msgstr "Имя пользователя (или почта)"
+
+#: settings/profile.html:87
+#, fuzzy
+msgid "Vanilla PP Leaderboards"
+msgstr "Глобальная таблица лидеров."
+
+#: doc_content.html:36
+msgid "View all docs"
+msgstr "Просмотреть все документы"
+
+#: homepage.html:63
+#, fuzzy
+msgid "View leaderboards"
+msgstr "У нас есть таблица лидеров."
+
+#: clansample.html:231
+msgid "View on Admin Panel"
+msgstr ""
+
+#: premium.html:88
+msgid "View your followers"
+msgstr ""
+
+#: homepage.html:33
 msgid ""
-"If you need to get in touch with our support team (our Community Managers), "
-"you will need to send an email to our support email address. You can compose "
-"an email to it by clicking the button at the bottom of this page. <b>Please "
-"read the following</b> though, as it is important."
+"We are an osu! private server mainly based around the relax mod - featuring "
+"score submission, leaderboards & rankings, custom pp, and much more for "
+"relax, autopilot and vanilla osu! We have a massive dedicated community "
+"between both our osu! and"
 msgstr ""
-"Если вам нужно связаться с нашей командой поддержки (нашими Менеджерами "
-"Сообщества), вы должны написать письмо на нашу электронную почту. Вы можете "
-"отправить его, нажав на кнопку внизу этой страницы. <b>Пожалуйста, "
-"прочитайте информацию ниже</b>. Это важно."
 
+#: not_found.html:4
 msgid ""
-"The support email <b>is not meant for technical support</b>. If you need "
-"technical support, then please join our <a href='%s'>Discord Server</a>, and "
-"ask your question on the <b>#help channel</b>. You should also join the "
-"Discord server and ask a CM if you have any informal inquiry that you may "
-"have. If you need to contact a specific staff member, you can contact them "
-"by clicking the envelope icon under their name in the <a href='/team'>Team "
-"page</a>."
-msgstr ""
-"Электронная почта поддержки <b>не предназначена для технической поддержки</b>"
-". Если вам нужна техническая помощь, то заходите на наш <a href='%s'>сервер "
-"Discord</a>, и задайте свой вопрос <b>на канале #help</b>. Также вы можете "
-"зайти на Discord и спросить у МС если у вас есть неофициальный запрос. Если "
-"вам нужно связаться с определенным человеком из нашей команды, то вы можете "
-"это сделать нажав на иконку с конвертиком под их именем на <a href='/team'>"
-"странице команды</a>."
+"We're sorry, but we were unable to find the content you were looking for!"
+msgstr "Нам очень жаль, но мы не смогли найти контент, который вы искали!"
 
-msgid "Instead, if you need any of the following:"
-msgstr "Если же вам нужно:"
+#: register/welcome.html:19
+#, fuzzy
+msgid "Welcome to Akatsuki"
+msgstr "Приветствуем в Ripple"
 
-msgid "Username change"
-msgstr "Смена имени пользователя"
+#: homepage.html:32
+#, fuzzy
+msgid "Welcome to Akatsuki."
+msgstr "Приветствуем в Ripple"
 
-msgid "Appeal your ban/restriction"
-msgstr "Оправдать ваш бан/ограничение"
-
+#: settings/clansettings.html:202
 msgid ""
-"Anything else that strictly deals with your account and is not related in "
-"any way to a technical issue of yours."
+"You haven't joined a clan yet, or you aren't the owner of your current one."
 msgstr ""
-"Все, что связано с вашим аккаунтом и не связано с техническими проблемами на "
-"вашей стороне."
 
-msgid "Then the support mail is the way to go."
-msgstr "В таком случае, почта поддержки - то, что нужно."
-
+#: tos.html:23
 msgid ""
-"When contacting the support mail, please make sure to <b>send the email from "
-"the email address you signed up on Ripple with</b>."
+"You may only have one account on Akatsuki. Creating more accounts will lead "
+"to those accounts being disabled and your first account restricted. If you "
+"for some reason need more than one account, please contact us directly."
 msgstr ""
-"Отправляя письмо на адрес электронной почты, <b>обязательно пишите с того "
-"адреса, с помощью которого вы зарегистрировались на Ripple</b>."
 
+#: clans/create.html:7
+#, fuzzy
+msgid "You need to login!"
+msgstr "Сначала войдите."
+
+# General
+#: clans/create.html:15
+#, fuzzy
+msgid "You're already in a Clan."
+msgstr "Вы уже вошли!"
+
+# General
+#: pwreset.html:12 login.html:14 register/register.html:6
+msgid "You're already logged in!"
+msgstr "Вы уже вошли!"
+
+#: settings/connections.html:20
 msgid ""
-"Last but not least, <b>the support email is not meant for filing bug "
-"reports</b>. If you need to report a bug, then please just ask one of our "
-"developers on Discord. If it's a security bug, for instance XSS or SQL "
-"injection, then please contact <a href='mailto:howl@ripple.moe'>Howl</a> or <"
-"a href='mailto:nyo@ripple.moe'>Nyo</a>."
+"Your Discord account is already linked with us. If you wish to unlink your "
+"Discord, please use the button below."
 msgstr ""
-"И наконец, <b>адрес электронной почты поддержки не предназначен для отправки "
-"отчетов об ошибке</b>. Если вы хотите сообщить об ошибке, то свяжитесь с "
-"одним из разработчиков Ripple в Discord. Если это уязвимость, например, "
-"инъекция XSS или SQL, свяжитесь с <a href='mailto:howl@ripple.moe'>Howl</a> "
-"или <a href='mailto:nyo@ripple.moe'>Nyo</a>."
 
-msgid "I have read and understood everything on this page."
-msgstr "Я прочитал и понял все вышеуказанное."
+#: settings/userpage.html:48
+msgid "Your userpage privileges have been revoked by an Administrator."
+msgstr ""
+
+#: beatmap.html:94
+#, fuzzy
+msgid "osu!direct"
+msgstr "Бесплатный osu!direct."
+
+#: homepage.html:35
+msgid "servers."
+msgstr ""

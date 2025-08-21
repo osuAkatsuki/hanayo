@@ -22,13 +22,13 @@ MinPrivileges=2
             {{ with .Get "users/userpage?id=%d&de=1" .Context.User.ID }}
               <form class="ui form" method="post">
                 <textarea tabindex="1" class="monospace" name="data">
-{{ .userpage }}</textarea
-                >
+                  {{ .userpage }}
+                </textarea>
                 <p>
                   <a
                     href="https://docs.ripple.moe/docs/misc/hanayo_bbcode"
                     target="_blank">
-                    {{ $.T "BBCode syntax reference" }}
+                    {{ $.T "BBCode Syntax Reference" }}
                   </a>
                 </p>
                 <div class="ui divider"></div>

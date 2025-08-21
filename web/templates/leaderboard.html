@@ -83,9 +83,9 @@ BannerType=1
           <th class="t-heading t-player"></th>
           <th class="t-heading center aligned">
             {{ if eq $sort "score" }}
-              Score (Performance)
+              {{ .T "Score (Performance)" }}
             {{ else }}
-              Performance (Score)
+              {{ .T "Performance (Score)" }}
             {{ end }}
           </th>
           <th class="t-heading center aligned">{{ .T "Accuracy" }}</th>

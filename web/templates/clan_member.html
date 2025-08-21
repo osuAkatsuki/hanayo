@@ -40,7 +40,7 @@ NoCompile=true
   {{ with .clan }}
     {{ if eq (len .members) 1 }}
       <div>
-        <p>No members in this clan. maybe invite someone?</p>
+        <p>{{ $.T "No members in this clan. maybe invite someone?" }}</p>
       </div>
     {{ else }}
       <div class="ui two column center aligned stackable grid" id="members">

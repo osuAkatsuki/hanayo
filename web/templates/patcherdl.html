@@ -17,46 +17,42 @@ BannerType=1
     <div class="ui segment">
       <div class="ui raised segments">
         <h3 class="ui centered">
-          Akatsuki Patcher is a simple tool made to enhance your Akatsuki Relax
-          experience!
+          {{ $.T "Akatsuki Patcher is a simple tool made to enhance your Akatsuki Relax experience!" }}
           <br />
-          It restores critical features such as ranking panels to your relax
-          gameplay, sweetening the already great experience.
+          {{ $.T "It restores critical features such as ranking panels to your relax gameplay, sweetening the already great experience." }}
           <br />
-          Simply run the executable, it will open osu! and restore the flavour
-          of normal gameplay!
+          {{ $.T "Simply run the executable, it will open osu! and restore the flavour of normal gameplay!" }}
         </h3>
         <div class="ui divider"></div>
         <div class="ui stackable column grid">
           <div class="eight wide column">
-            <h2 class="ui centered">Enable Relax Misses</h2>
+            <h2 class="ui centered">{{ $.T "Enable Relax Misses" }}</h2>
             <img src="/static/images/patcher/akatpatcher_misses.jpg" />
           </div>
           <div class="eight wide column">
-            <h2 class="ui centered">Show Relax Ranking Panels</h2>
+            <h2 class="ui centered">{{ $.T "Show Relax Ranking Panels" }}</h2>
             <img src="/static/images/patcher/akatpatcher_panels.jpg" />
           </div>
         </div>
         <div class="ui raised segments centered aligned">
           <h4 class="ui horizontal divider header">
             <i class="save icon"></i>
-            Download
+            {{ $.T "Download" }}
           </h4>
           <h5>
-            Akatsuki Patcher is a single executable and requires no manual
-            client modification!
+            {{ $.T "Akatsuki Patcher is a single executable and requires no manual client modification!" }}
           </h5>
           {{ if not ($downEnabled.value_int.Bool) }}
             <a class="ui green button disabled" href="#">
               <i class="angle double down icon"></i>
-              Patcher is currently unavailable
+              {{ $.T "Patcher is currently unavailable" }}
             </a>
           {{ else }}
             <a
               class="ui green button"
               href="https://air_conditioning.akatsuki.gg/loader">
               <i class="angle double down icon"></i>
-              Download Patcher
+              {{ $.T "Download Patcher" }}
             </a>
           {{ end }}
         </div>

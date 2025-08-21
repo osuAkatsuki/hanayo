@@ -58,7 +58,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
               <img
                 src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/profile-backgrounds/{{ $value }}" />
             {{ else }}
-              No image selected
+              {{ $.T "No image selected" }}
             {{ end }}
           </div>
           {{ $csrf := csrfGenerate .Context.User.ID }}
@@ -72,7 +72,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
             {{ ieForm .Gin }}
             <button type="submit" class="ui right labeled blue icon button">
               <i class="save icon"></i>
-              Save
+              {{ $.T "Save" }}
             </button>
           </form>
           <form
@@ -120,7 +120,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
               {{ ieForm .Gin }}
               <button type="submit" class="ui right labeled blue icon button">
                 <i class="save icon"></i>
-                Save
+                {{ $.T "Save" }}
               </button>
             </p>
           </form>

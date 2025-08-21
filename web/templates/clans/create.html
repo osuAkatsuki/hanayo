@@ -38,13 +38,13 @@
               </div>
               <div class="field">
                 <label class="left aligned">
-                  {{ "Clantag (2 to 6 characters)" }}
+                  {{ $.T "Clantag (2 to 6 characters)" }}
                 </label>
                 <input
                   tabindex="2"
                   type="text"
                   name="tag"
-                  placeholder="{{ "Clantag" }}"
+                  placeholder="{{ $.T "Clantag" }}"
                   value="{{ .FormData.tag }}"
                   pattern="{2,6}$" />
               </div>
