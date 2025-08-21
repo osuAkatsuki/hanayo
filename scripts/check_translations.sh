@@ -52,8 +52,8 @@ sed "s|$TEMP_DIR/||g" "$TEMP_DIR/templates.pot" > "$TEMP_DIR/extracted.pot"
 msgcat --sort-output "$TEMP_DIR/extracted.pot" -o "$TEMP_DIR/extracted_sorted.pot"
 msgcat --sort-output "locale/locales/templates.pot" -o "$TEMP_DIR/current_sorted.pot"
 
-# Compare files
-if ! diff -q "$TEMP_DIR/extracted_sorted.pot" "$TEMP_DIR/current_sorted.pot" > /dev/null; then
+# Compare files, ignoring POT-Creation-Date which changes every time
+if ! diff -I "^\"POT-Creation-Date:" "$TEMP_DIR/extracted_sorted.pot" "$TEMP_DIR/current_sorted.pot" > /dev/null; then
     echo "ERROR: POT file is out of sync! Please run './scripts/update_templates.sh' and commit the changes."
     exit 1
 fi
