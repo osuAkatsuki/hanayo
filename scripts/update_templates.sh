@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Extracting template strings from HTML files..."
-go run scripts/extract_templates.go
+./scripts/extract_templates_standard.sh
 
 echo "Template extraction completed!"
 echo "Updated files:"
