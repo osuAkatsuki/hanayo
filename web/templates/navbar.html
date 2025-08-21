@@ -101,14 +101,14 @@
         <div class="head">
           <a href="#" class="user">
             <img class="avatar" src="https://a.akatsuki.gg/999" />
-            <div class="username">Guest</div>
+            <div class="username">{{ $.T "Guest" }}</div>
           </a>
           <div class="user-control">
             <a class="single" href="/login">
-              <span class="header-block--title">Login</span>
+              <span class="header-block--title">{{ $.T "Login" }}</span>
             </a>
             <a class="single" href="/register">
-              <span class="header-block--title">Register</span>
+              <span class="header-block--title">{{ $.T "Register" }}</span>
             </a>
           </div>
         </div>
@@ -116,10 +116,10 @@
       <div class="mcontent">
         {{ if .Context.User.Username }}
           <a class="single" href="/friends">
-            <span class="header-block--title">Friends</span>
+            <span class="header-block--title">{{ $.T "Friends" }}</span>
           </a>
           <a class="single" href="/settings">
-            <span class="header-block--title">Settings</span>
+            <span class="header-block--title">{{ $.T "Settings" }}</span>
           </a>
           <div class="single">
             <span
