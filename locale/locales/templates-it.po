@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-21 07:16+0100\n"
+"POT-Creation-Date: 2025-08-21 07:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,48 +14,401 @@ msgstr ""
 "X-Pootle-Path: /it/Hanayo/templates-it.po\n"
 "X-Pootle-Revision: 8354\n"
 
-#: clans/create.html:7
-#, fuzzy
-msgid "You need to login!"
-msgstr "Devi effettuare l'accesso prima."
+#: register/welcome.html:29
+msgid " - in case you don't know where to start"
+msgstr " - se non sai da dove cominciare"
 
-#: clans/create.html:11
+#: register/welcome.html:33
+msgid " - in case you haven't already read them"
+msgstr " - in caso tu non le abbia già lette"
+
+#: register/welcome.html:43
+#, fuzzy
+msgid " - in case you want to talk with people about Akatsuki"
+msgstr " - nel caso tu volessi parlare di Ripple con dell'altra gente"
+
+#: register/welcome.html:37
+msgid " - in case, well, you need help doing stuff"
+msgstr " - nel caso, avessi bisogno di aiuto per fare qualcosa"
+
+#: clanboard.html:72
+msgid "#1 Count"
+msgstr ""
+
+#: team.html:137
+msgid "(You get other cool perks too)"
+msgstr "(Otterrai altri vantaggi oltre a questo)"
+
+# pwreset/continue.html
+#: login.html:34
+#, fuzzy
+msgid "(reset password)"
+msgstr "Reimposta password"
+
+# Team page
+#: team.html:16
 #, fuzzy
 msgid ""
-"Sorry, it's not possible to create a clan at the moment. Please try again "
-"later."
+"A list of wonderful people who keep Akatsuki running smoothly, and take "
+"pride in its community."
 msgstr ""
-"Siamo spiacenti, non è al momento possibile registrarsi. Per favore riprova "
-"più tardi."
+"Questa è una lista delle magnifiche persone che sostengono Ripple e "
+"gestiscono la community."
 
-# General
-#: clans/create.html:15
+#: tos.html:17
+msgid ""
+"Absolutely no botting, cheating, or hacking. This includes any method of "
+"giving yourself an unfair advantage over other players."
+msgstr ""
+
+#: tos.html:41
+msgid ""
+"Absolutely no racism, sexism, transphobia, whatever. This includes slurs."
+msgstr ""
+
+#: settings/discord.html:41
+msgid "Access to #donators text and voice channels"
+msgstr "Accesso ai canali vocali e testuali #donators"
+
+#: settings/discord.html:39
+msgid "Access to /nick command, to change your Discord nickname"
+msgstr "Accesso al comando /nick, per cambiare il tuo username di Discord"
+
+#: leaderboard.html:91 clanboard.html:76 beatmap.html:210
+msgid "Accuracy"
+msgstr "Accuracy"
+
+#: register/verify.html:25
+msgid "Add ` -devserver akatsuki.gg` to the Target path (the space matters)."
+msgstr ""
+
+#: patcherdl.html:20
+msgid ""
+"Akatsuki Patcher is a simple tool made to enhance your Akatsuki Relax "
+"experience!"
+msgstr ""
+
+#: patcherdl.html:43
+msgid ""
+"Akatsuki Patcher is a single executable and requires no manual client "
+"modification!"
+msgstr ""
+
+#: tos.html:62
+msgid ""
+"Akatsuki services are meant for users that are 13 years of age or older. If "
+"you are under 13, do not use our services without parental consent."
+msgstr ""
+
+# base.html
+#: base.html:102
 #, fuzzy
-msgid "You're already in a Clan."
-msgstr "Hai già effettuato il login!"
+msgid ""
+"Akatsuki's score submission is currently in maintenance mode. You will not "
+"be allowed to submit scores for the time being."
+msgstr ""
+"L'invio degli score su Ripple è al momento in modalità di manutenzione. Non "
+"ti è permesso inviare punteggi per il momento."
+
+#: tos.html:32
+msgid ""
+"All communications on our Discord and in-game public chats must be in "
+"English. Players are allowed to use any language in other forms of "
+"communication."
+msgstr ""
+
+#: premium.html:209
+msgid ""
+"All money received from donations go towards server, development, "
+"maintenance and other costs associated with running Akatsuki."
+msgstr ""
+
+#: clansample.html:165
+msgid "Already in another Clan"
+msgstr ""
+
+#: beatmap.html:72
+msgid "Approach Rate"
+msgstr "Velocità di Approccio (AR)"
+
+# beatmap.html
+#: beatmap.html:43
+msgid "Artist"
+msgstr "Artista"
+
+#: clansample.html:192
+msgid "Ask for Invite"
+msgstr ""
+
+#: settings/username.html:20
+msgid "Attention! You are consuming your free username change!"
+msgstr ""
+
+#: clanboard.html:49
+msgid "Autopilot"
+msgstr ""
+
+#: settings/userpage.html:31
+#, fuzzy
+msgid "BBCode Syntax Reference"
+msgstr "Sintassi BBCode di riferimento"
+
+#: beatmap.html:84
+msgid "BPM"
+msgstr "BPM"
+
+#: settings/clansettings.html:90
+#, fuzzy
+msgid "Background Url"
+msgstr "Tipo di sfondo"
+
+#: settings/profbackground.html:23
+msgid "Background type"
+msgstr "Tipo di sfondo"
+
+#: team.html:58
+msgid "Beatmap Nomination Team"
+msgstr ""
+
+#: team.html:135
+msgid "Become an Akatsuki+ member!"
+msgstr ""
+
+#: register/elmo.html:44
+msgid "Bring me back to safety!"
+msgstr "Portami al sicuro!"
+
+#: premium.html:56
+msgid "Change your identity"
+msgstr ""
+
+#: beatmap.html:57
+msgid "Circle Size"
+msgstr "Circle Size"
+
+#: settings/clansettings.html:31
+msgid "Clan Name (2 to 15 characters)"
+msgstr ""
+
+#: settings/clansettings.html:18
+#, fuzzy
+msgid "Clan Settings"
+msgstr "Impostazioni"
+
+#: clansample.html:103
+msgid "Clan Statistics"
+msgstr ""
+
+#: settings/clansettings.html:41
+#, fuzzy
+msgid "Clan Tag (2 to 6 characters)"
+msgstr "Password (almeno 8 caratteri)"
+
+#: navbar.html:136 navbar.html:193
+msgid "Clans"
+msgstr ""
 
 #: clans/create.html:41
 #, fuzzy
 msgid "Clantag (2 to 6 characters)"
 msgstr "Password (almeno 8 caratteri)"
 
+#: settings/clansettings.html:77
+msgid "Closed"
+msgstr ""
+
+#: clansample.html:176
+msgid "Closed."
+msgstr ""
+
+#: beatmap.html:212
+msgid "Combo"
+msgstr ""
+
+#: team.html:36
+#, fuzzy
+msgid "Community Management Team"
+msgstr "Community Manager"
+
+#: team.html:44
+msgid "Community Support Team"
+msgstr ""
+
+#: register/register.html:62
+#, fuzzy
+msgid "Confirm Password"
+msgstr "Password"
+
+#: register/welcome.html:7
+msgid "Congratulations for not reading things!"
+msgstr "Congratulazioni per non aver letto gli avvisi!"
+
+#: register/verify.html:15
+msgid "Create a shortcut of osu!.exe."
+msgstr ""
+
+#: beatmap.html:49
+msgid "Creator"
+msgstr "Creatore"
+
+#: settings/password.html:37
+msgid "Current password"
+msgstr "Password attuale"
+
+#: settings/profile.html:92
+msgid "Custom badge"
+msgstr "Badge personalizzato"
+
+#: settings/discord.html:42
+msgid "Custom role with custom username"
+msgstr "Role con nome e colore personalizzabili"
+
+#: premium.html:69
+msgid "Customize your profile"
+msgstr ""
+
+#: premium.html:94
+msgid "DM-only commands in public channels"
+msgstr ""
+
+#: settings/clansettings.html:50
+msgid "Description"
+msgstr ""
+
 #: clans/create.html:52
 msgid "Description (optional)"
 msgstr ""
 
-#: clans/create.html:61
-msgid "Icon [URL] (optional)"
+#: premium.html:205
+msgid "Disclaimer of Terms & Liability"
 msgstr ""
 
-#: clans/create.html:78 pwreset.html:51 pwreset/continue.html:34 login.html:57
-#: register/register.html:88
-msgid "Submit"
-msgstr "Invia"
+#: homepage.html:34 register/welcome.html:41
+msgid "Discord"
+msgstr "Discord"
 
-# General
-#: pwreset.html:12 login.html:14 register/register.html:6
-msgid "You're already logged in!"
-msgstr "Hai già effettuato il login!"
+#: tos.html:56
+msgid ""
+"Do not cause unneeded drama. Use the appropriate channels to report rule "
+"breaking; Hackusating in public channels is not allowed. Complaining about a "
+"user's ban in public channels is also dissalowed. Bans are to be kept "
+"between Akatsuki staff and the user only."
+msgstr ""
+
+#: tos.html:44
+msgid ""
+"Do not discuss cheating, other servers, or breaking any US or International "
+"law in any of our services. Doing so will result in an immediate ban and if "
+"neccessary reported to relevant authorities."
+msgstr ""
+
+#: tos.html:38
+msgid ""
+"Do not harass people. If a member asks you to stop harassing them, simply "
+"stop doing so. This rule is heavily enforced, so please be nice."
+msgstr ""
+
+#: tos.html:53
+msgid ""
+"Do not impersonate any user, especially staff. This is actively enforced."
+msgstr ""
+
+#: tos.html:29
+msgid ""
+"Do not try to exploit bugs found on the server, report them to a developer "
+"immediately for a fair reward."
+msgstr ""
+
+#: tos.html:26
+msgid ""
+"Do not use any other person's account. This is known as account sharing and "
+"is taken quite seriously. Sharing your login details with any other user can "
+"result in a permanent ban."
+msgstr ""
+
+#: team.html:133
+msgid "Do you want to be in this list?"
+msgstr "Vuoi essere su questa lista?"
+
+#: register/welcome.html:36
+msgid "Documentation"
+msgstr "Documentazione"
+
+#: doc_content.html:29
+msgid "Documentation file not found!"
+msgstr "File di documentazione non trovato!"
+
+#: tos.html:70
+msgid ""
+"Don't abuse our patience; while we try to best satisfy our users' need, if "
+"you repeatedly infringe our rules or abuse services provided by the staff "
+"(e.g. appealing and name changing) (with particular regard to users who also "
+"disrespect our staff's efforts, passively or actively, or are otherwise "
+"toxic within the community), we will first warn you, and if it comes to it "
+"we will offer an ultimatum. If you refuse or otherwise don't change your "
+"behaviour, we'll have no choice but to ban you. If you are found damaging "
+"the server directly - attempted attacks, chargebacks, hacking users, "
+"damaging reputation etc; your entire account data will be removed with no "
+"chance of being recovered ever."
+msgstr ""
+
+#: tos.html:47
+msgid ""
+"Don't spam or flood, unless you're occasionally sending a link to e.g. "
+"Twitch when you're streaming Akatsuki when no discussion is going on."
+msgstr ""
+
+#: beatmap.html:100 patcherdl.html:40
+#, fuzzy
+msgid "Download"
+msgstr "download"
+
+#: beatmap.html:107
+#, fuzzy
+msgid "Download (no video)"
+msgstr "download (senza video)"
+
+#: patcherdl.html:55
+#, fuzzy
+msgid "Download Patcher"
+msgstr "download"
+
+#: register/verify.html:20
+msgid "Edit the shortcut's properties."
+msgstr ""
+
+#: settings/password.html:18
+msgid "Email"
+msgstr "Email"
+
+#: register/register.html:40
+#, fuzzy
+msgid "Email Address"
+msgstr "Indirizzo e-mail"
+
+#: settings/profile.html:31
+msgid "Email address"
+msgstr "Indirizzo e-mail"
+
+#: settings/profile.html:101
+msgid "Enable"
+msgstr "Abilita"
+
+#: patcherdl.html:29
+msgid "Enable Relax Misses"
+msgstr ""
+
+#: settings/profile.html:55
+msgid "Favourite mode"
+msgstr ""
+
+#: followers.html:23 friends.html:24 friends.html:30
+msgid "Followers"
+msgstr ""
+
+#: premium.html:76
+msgid "Force score overwrites"
+msgstr ""
 
 # pwreset.html
 #: pwreset.html:19
@@ -72,227 +425,172 @@ msgstr ""
 "continuare la procedura di reset della password, clicca sul link su quella "
 "email."
 
-#: pwreset.html:29
+#: friends.html:77
 #, fuzzy
-msgid "Username or Email Address"
-msgstr "Username (o email)"
+msgid "Friend"
+msgstr "Amici"
+
+#: navbar.html:119 followers.html:18 friends.html:18
+msgid "Friends"
+msgstr "Amici"
 
 #: settings/profile.html:19
 msgid "General"
 msgstr "Generale"
-
-#: settings/profile.html:22 settings/username.html:17
-msgid "Username"
-msgstr "Username"
-
-#: settings/profile.html:31
-msgid "Email address"
-msgstr "Indirizzo e-mail"
-
-#: settings/profile.html:43
-msgid "Leaderboard size (In-Game)"
-msgstr ""
-
-#: settings/profile.html:55
-msgid "Favourite mode"
-msgstr ""
-
-#: settings/profile.html:67
-#, fuzzy
-msgid "User Title"
-msgstr "Titolo"
-
-#: settings/profile.html:69
-#, fuzzy
-msgid "No title"
-msgstr "Titolo"
-
-#: settings/profile.html:87
-#, fuzzy
-msgid "Vanilla PP Leaderboards"
-msgstr "Leaderboard globali."
-
-#: settings/profile.html:92
-msgid "Custom badge"
-msgstr "Badge personalizzato"
-
-#: settings/profile.html:101
-msgid "Enable"
-msgstr "Abilita"
-
-#: settings/profile.html:109
-msgid "Icon reference"
-msgstr "Lista di icone"
-
-#: settings/profile.html:142
-msgid "Playstyle"
-msgstr "Stile di gioco"
-
-#: settings/profile.html:158
-msgid "Preferences"
-msgstr "Preferenze"
-
-#: settings/profile.html:175 settings/clansettings.html:108
-#: settings/avatar.html:43 settings/username.html:49 settings/userpage.html:41
-#: settings/profbackground.html:75 settings/profbackground.html:94
-#: settings/profbackground.html:123 settings/profbackground.html:143
-#: settings/password.html:48
-msgid "Save"
-msgstr "Salva"
-
-#: settings/clansettings.html:18
-#, fuzzy
-msgid "Clan Settings"
-msgstr "Impostazioni"
-
-#: settings/clansettings.html:31
-msgid "Clan Name (2 to 15 characters)"
-msgstr ""
-
-#: settings/clansettings.html:41
-#, fuzzy
-msgid "Clan Tag (2 to 6 characters)"
-msgstr "Password (almeno 8 caratteri)"
-
-#: settings/clansettings.html:50
-msgid "Description"
-msgstr ""
-
-#: settings/clansettings.html:60
-msgid "Icon Url"
-msgstr ""
-
-#: settings/clansettings.html:70
-msgid "Invite Policy"
-msgstr ""
-
-#: settings/clansettings.html:77
-msgid "Closed"
-msgstr ""
-
-#: settings/clansettings.html:80
-#, fuzzy
-msgid "Open"
-msgstr "Apri file"
-
-#: settings/clansettings.html:83
-msgid "Invite Only"
-msgstr ""
-
-#: settings/clansettings.html:90
-#, fuzzy
-msgid "Background Url"
-msgstr "Tipo di sfondo"
-
-#: settings/clansettings.html:112
-msgid "Invite"
-msgstr ""
 
 #: settings/clansettings.html:127
 #, fuzzy
 msgid "Generate a new invite!"
 msgstr "Genera un nuovo token!"
 
-#: settings/clansettings.html:134 clansample.html:248
-msgid "Members"
-msgstr ""
-
-#: settings/clansettings.html:153
-msgid "Transfer Ownership"
-msgstr ""
-
-#: settings/clansettings.html:160
-msgid "Kick"
-msgstr ""
-
-#: settings/clansettings.html:202
-msgid ""
-"You haven't joined a clan yet, or you aren't the owner of your current one."
-msgstr ""
-
-#: settings/avatar.html:36 settings/profbackground.html:89
-#: settings/profbackground.html:138
-msgid "Open File"
-msgstr "Apri file"
-
-#: settings/username.html:20
-msgid "Attention! You are consuming your free username change!"
-msgstr ""
-
-#: settings/discord.html:23
-#, fuzzy
-msgid "Thank you for supporting us and have fun on Akatsuki!"
-msgstr "Grazie per aver donato e divertiti su Ripple!"
-
-#: settings/discord.html:28
-#, fuzzy
-msgid "Supporters get special privileges on our Discord server too!"
-msgstr ""
-"I donatori ottengono privilegi speciali anche sul nostro server di Discord!"
-
-#: settings/discord.html:35
-msgid "Here's what you get if you link your Discord account:"
-msgstr "Questo è quello che ottieni se colleghi il tuo account di Discord:"
-
-#: settings/discord.html:39
-msgid "Access to /nick command, to change your Discord nickname"
-msgstr "Accesso al comando /nick, per cambiare il tuo username di Discord"
-
-#: settings/discord.html:41
-msgid "Access to #donators text and voice channels"
-msgstr "Accesso ai canali vocali e testuali #donators"
-
-#: settings/discord.html:42
-msgid "Custom role with custom username"
-msgstr "Role con nome e colore personalizzabili"
+#: irc.html:18
+msgid "Generate a new token!"
+msgstr "Genera un nuovo token!"
 
 #: settings/discord.html:53
 #, fuzzy
 msgid "Get Discord Supporter privileges"
 msgstr "Ottieni privilegi di Donatore su Discord"
 
-#: settings/userpage.html:31
-#, fuzzy
-msgid "BBCode Syntax Reference"
-msgstr "Sintassi BBCode di riferimento"
-
-#: settings/userpage.html:48
-msgid "Your userpage privileges have been revoked by an Administrator."
+#: settings/profbackground.html:33
+msgid "Gif"
 msgstr ""
 
-#: settings/profbackground.html:23
-msgid "Background type"
-msgstr "Tipo di sfondo"
+#: base.html:147
+msgid "Github"
+msgstr ""
 
-#: settings/profbackground.html:24
-msgid "None"
-msgstr "Nessuno"
+#: beatmap.html:208
+msgid "Grade"
+msgstr ""
+
+#: navbar.html:104
+msgid "Guest"
+msgstr ""
+
+#: beatmap.html:60
+msgid "HP Drain"
+msgstr "Drain HP"
+
+#: register/welcome.html:25
+msgid "Here's a few things you might want to check out:"
+msgstr "Ecco un po' di cose che potresti trovare utili:"
+
+#: team.html:76
+#, fuzzy
+msgid ""
+"Here's an additional list of some people who helped us out along the way."
+msgstr "Ecco una lista di persone che ci ha aiutato con Ripple."
+
+#: premium.html:102
+#, fuzzy
+msgid "Here's what we ask for in return"
+msgstr "Ecco cosa ottieni:"
+
+#: premium.html:50
+#, fuzzy
+msgid "Here's what we have to offer"
+msgstr "Ecco cosa ottieni:"
+
+#: settings/discord.html:35
+msgid "Here's what you get if you link your Discord account:"
+msgstr "Questo è quello che ottieni se colleghi il tuo account di Discord:"
+
+#: homepage.html:61
+msgid "How to connect"
+msgstr ""
+
+#: premium.html:188
+msgid "I've donated, now what?"
+msgstr "Ho donato, e ora che faccio?"
+
+#: settings/clansettings.html:60
+msgid "Icon Url"
+msgstr ""
+
+#: clans/create.html:61
+msgid "Icon [URL] (optional)"
+msgstr ""
+
+#: settings/profile.html:109
+msgid "Icon reference"
+msgstr "Lista di icone"
+
+#: tos.html:20
+msgid ""
+"If you see someone breaking the rules, report them in-game or in our "
+"discord. Knowingly helping someone who breaks our terms of service can lead "
+"to removal from our services."
+msgstr ""
+
+#: register/elmo.html:35
+msgid ""
+"If you truly have understood what's written above and you have understood "
+"that creating a multiaccount will lead to a restriction on your main "
+"account, you can click here and you'll be brought to the sign up page."
+msgstr ""
+"Se hai davvero capito il testo soprastante e capisci che creare un secondo "
+"account risulterà nel mettere il tuo account principale in restricted, puoi "
+"cliccare qui e sarai portanto alla pagina di registrazione."
 
 #: settings/profbackground.html:26
 msgid "Image"
 msgstr "Immagine"
 
-#: settings/profbackground.html:29
-msgid "Solid colour"
-msgstr "Tinta unita"
-
-#: settings/profbackground.html:33
-msgid "Gif"
+#: navbar.html:27
+msgid "Information"
 msgstr ""
 
-#: settings/profbackground.html:61
-msgid "No image selected"
+#: settings/clansettings.html:112
+msgid "Invite"
 msgstr ""
 
-#: settings/connections.html:20
+#: settings/clansettings.html:83
+msgid "Invite Only"
+msgstr ""
+
+#: settings/clansettings.html:70
+msgid "Invite Policy"
+msgstr ""
+
+#: patcherdl.html:22
 msgid ""
-"Your Discord account is already linked with us. If you wish to unlink your "
-"Discord, please use the button below."
+"It restores critical features such as ranking panels to your relax gameplay, "
+"sweetening the already great experience."
 msgstr ""
 
-#: settings/connections.html:24
+#: clansample.html:184
+msgid "Join"
+msgstr ""
+
+#: settings/clansettings.html:160
+msgid "Kick"
+msgstr ""
+
+#: base.html:164
+msgid "Language"
+msgstr "Lingua"
+
+#: navbar.html:19
+msgid "Leaderboard"
+msgstr "Leaderboard"
+
+#: premium.html:82
 #, fuzzy
-msgid "Unlink Discord"
+msgid "Leaderboard preferences"
+msgstr "Leaderboard"
+
+#: settings/profile.html:43
+msgid "Leaderboard size (In-Game)"
+msgstr ""
+
+#: beatmap.html:78
+msgid "Length"
+msgstr "Durata"
+
+#: settings/connections.html:41
+#, fuzzy
+msgid "Link Discord"
 msgstr "Discord"
 
 #: settings/connections.html:29
@@ -308,315 +606,46 @@ msgid ""
 "Akatsuki Champion."
 msgstr ""
 
-#: settings/connections.html:41
+#: multiplayer.html:19
 #, fuzzy
-msgid "Link Discord"
-msgstr "Discord"
+msgid "Loading match data..."
+msgstr "Caricamento..."
 
-#: settings/password.html:18
-msgid "Email"
-msgstr "Email"
-
-#: settings/password.html:28
-msgid "New password (leave blank if you don't want to change it)"
-msgstr "Nuova password (lascia in bianco se non desideri cambiarla)"
-
-#: settings/password.html:37
-msgid "Current password"
-msgstr "Password attuale"
-
-#: navbar.html:19
-msgid "Leaderboard"
-msgstr "Leaderboard"
-
-#: navbar.html:27
-msgid "Information"
-msgstr ""
-
-#: navbar.html:104
-msgid "Guest"
-msgstr ""
+#: premium.html:115
+msgid "Loading..."
+msgstr "Caricamento..."
 
 #: navbar.html:108 register/welcome.html:28
 msgid "Login"
 msgstr "Login"
 
-# register/register.html
-#: navbar.html:111 homepage.html:47
-msgid "Register"
-msgstr "Iscriviti"
+#: doc.html:25
+#, fuzzy
+msgid "Looks like there is no documentation on this Akatsuki instance!"
+msgstr ""
+"Sembra che non ci sia nessuna documentazione per questa istanza di Ripple!"
 
-#: navbar.html:119 followers.html:18 friends.html:18
-msgid "Friends"
-msgstr "Amici"
-
-#: navbar.html:122
-msgid "Settings"
-msgstr "Impostazioni"
-
-#: navbar.html:134 navbar.html:191
-msgid "Performance"
+#: settings/clansettings.html:134 clansample.html:248
+msgid "Members"
 msgstr ""
 
-#: navbar.html:135 navbar.html:192 beatmap.html:209
-#, fuzzy
-msgid "Score"
-msgstr "PP/Punteggio"
-
-#: navbar.html:136 navbar.html:193
-msgid "Clans"
+#: beatmap.html:215
+msgid "Mods"
 msgstr ""
 
-# Team page
-#: team.html:16
+#: register/welcome.html:11
 #, fuzzy
+msgid "Multiaccounts are not allowed on Akatsuki"
+msgstr "I multiaccount non sono ammessi su Ripple"
+
+#: followers.html:73 friends.html:75
+msgid "Mutual"
+msgstr "Reciproco"
+
+#: tos.html:50
 msgid ""
-"A list of wonderful people who keep Akatsuki running smoothly, and take "
-"pride in its community."
-msgstr ""
-"Questa è una lista delle magnifiche persone che sostengono Ripple e "
-"gestiscono la community."
-
-#: team.html:20
-msgid "Product Management Team"
-msgstr ""
-
-#: team.html:22
-msgid ""
-"Responsible for envisioning Akatsuki's future, and creating ideas to shape "
-"the server."
-msgstr ""
-
-#: team.html:28
-msgid "Product Development Team"
-msgstr ""
-
-#: team.html:30
-#, fuzzy
-msgid ""
-"Responsible for implementing and maintaining Akatsuki's infrastructure - "
-"they keep the server running, and take care of its maintenance."
-msgstr ""
-"Gli sviluppatori aggiungono nuove funzionalità al server, fixano i bug, "
-"mantengono il server vivo e si occupano delle adeguate manutenzioni."
-
-#: team.html:36
-#, fuzzy
-msgid "Community Management Team"
-msgstr "Community Manager"
-
-#: team.html:38
-msgid ""
-"Responsible for not only the community but also the management team itself."
-msgstr ""
-
-#: team.html:44
-msgid "Community Support Team"
-msgstr ""
-
-#: team.html:46
-msgid ""
-"Responsible for assisting players with their inquiries and overseeing the "
-"community's well-being."
-msgstr ""
-
-#: team.html:51
-msgid "Nomination Quality Assurance Team"
-msgstr ""
-
-#: team.html:53
-msgid ""
-"They ensure that the Beatmap Nomination team is running at its best "
-"performance and promote changes to the Ranking Criteria when deemed "
-"necessary."
-msgstr ""
-
-#: team.html:58
-msgid "Beatmap Nomination Team"
-msgstr ""
-
-#: team.html:60
-msgid ""
-"Responsible for handling all beatmap related inquiries; such as beatmaps "
-"status requests."
-msgstr ""
-
-#: team.html:65
-msgid "Social Media Management Team"
-msgstr ""
-
-#: team.html:74
-msgid "Special thanks"
-msgstr "Ringraziamenti speciali"
-
-#: team.html:76
-#, fuzzy
-msgid ""
-"Here's an additional list of some people who helped us out along the way."
-msgstr "Ecco una lista di persone che ci ha aiutato con Ripple."
-
-#: team.html:123
-msgid "They told me these are very cool people."
-msgstr "Dicono che queste persone sono molto fighe."
-
-#: team.html:133
-msgid "Do you want to be in this list?"
-msgstr "Vuoi essere su questa lista?"
-
-#: team.html:135
-msgid "Become an Akatsuki+ member!"
-msgstr ""
-
-#: team.html:137
-msgid "(You get other cool perks too)"
-msgstr "(Otterrai altri vantaggi oltre a questo)"
-
-#: clansample.html:103
-msgid "Clan Statistics"
-msgstr ""
-
-#: clansample.html:104
-msgid "The statistics of the clan."
-msgstr ""
-
-#: clansample.html:165
-msgid "Already in another Clan"
-msgstr ""
-
-#: clansample.html:176
-msgid "Closed."
-msgstr ""
-
-#: clansample.html:184
-msgid "Join"
-msgstr ""
-
-#: clansample.html:192
-msgid "Ask for Invite"
-msgstr ""
-
-#: clansample.html:216
-msgid "Please login to join a clan"
-msgstr ""
-
-#: clansample.html:231
-msgid "View on Admin Panel"
-msgstr ""
-
-#: clansample.html:238
-msgid "The leader of the clan."
-msgstr ""
-
-#: homepage.html:32
-#, fuzzy
-msgid "Welcome to Akatsuki."
-msgstr "Benvenuto su Ripple"
-
-#: homepage.html:33
-msgid ""
-"We are an osu! private server mainly based around the relax mod - featuring "
-"score submission, leaderboards & rankings, custom pp, and much more for "
-"relax, autopilot and vanilla osu! We have a massive dedicated community "
-"between both our osu! and"
-msgstr ""
-
-#: homepage.html:34 register/welcome.html:41
-msgid "Discord"
-msgstr "Discord"
-
-#: homepage.html:35
-msgid "servers."
-msgstr ""
-
-#: homepage.html:49
-msgid "Profile"
-msgstr "Profilo"
-
-#: homepage.html:61
-msgid "How to connect"
-msgstr ""
-
-#: homepage.html:63
-#, fuzzy
-msgid "View leaderboards"
-msgstr "Abbiamo le leaderboard."
-
-#: homepage.html:95
-#, fuzzy
-msgid "Total scores (Vanilla)"
-msgstr "Punteggio totale"
-
-#: homepage.html:110
-#, fuzzy
-msgid "Total scores (Relax)"
-msgstr "Punteggio totale"
-
-#: homepage.html:125
-#, fuzzy
-msgid "Total scores (Autopilot)"
-msgstr "Punteggio totale"
-
-#: homepage.html:141
-msgid "Top score (Vanilla)"
-msgstr ""
-
-#: homepage.html:161
-msgid "Top score (Relax)"
-msgstr ""
-
-#: homepage.html:163
-#, fuzzy
-msgid "Played by"
-msgstr "Giocatore"
-
-#: homepage.html:183
-msgid "Top score (Autopilot)"
-msgstr ""
-
-#: pwreset/continue.html:20 login.html:33
-msgid "Password"
-msgstr "Password"
-
-#: base.html:79
-#, c-format
-msgid ""
-"Research has proven this website works 727% better if you have JavaScript "
-"enabled."
-msgstr ""
-
-# base.html
-#: base.html:102
-#, fuzzy
-msgid ""
-"Akatsuki's score submission is currently in maintenance mode. You will not "
-"be allowed to submit scores for the time being."
-msgstr ""
-"L'invio degli score su Ripple è al momento in modalità di manutenzione. Non "
-"ti è permesso inviare punteggi per il momento."
-
-#: base.html:107
-#, fuzzy
-msgid ""
-"The Akatsuki website is currently in maintenance mode, and access has been "
-"limited for normal users."
-msgstr ""
-"Il sito di Ripple è in modalità di manutenzione. Solo certi utenti hanno "
-"accesso al sito intero."
-
-#: base.html:143
-msgid "Team"
-msgstr "Team"
-
-#: base.html:147
-msgid "Github"
-msgstr ""
-
-#: base.html:164
-msgid "Language"
-msgstr "Lingua"
-
-#: clan_member.html:43
-msgid "No members in this clan. maybe invite someone?"
+"NSFW and offensive avatars/userpage content are not allowed anywhere on "
+"Akatsuki."
 msgstr ""
 
 # doc.html
@@ -629,11 +658,60 @@ msgstr ""
 "vedere la nostra documentazione, che è in parole povere una wiki molto "
 "semplice."
 
-#: doc.html:25
-#, fuzzy
-msgid "Looks like there is no documentation on this Akatsuki instance!"
+#: settings/password.html:28
+msgid "New password (leave blank if you don't want to change it)"
+msgstr "Nuova password (lascia in bianco se non desideri cambiarla)"
+
+#: settings/profbackground.html:61
+msgid "No image selected"
 msgstr ""
-"Sembra che non ci sia nessuna documentazione per questa istanza di Ripple!"
+
+#: clan_member.html:43
+msgid "No members in this clan. maybe invite someone?"
+msgstr ""
+
+#: settings/profile.html:69
+#, fuzzy
+msgid "No title"
+msgstr "Titolo"
+
+#: team.html:51
+msgid "Nomination Quality Assurance Team"
+msgstr ""
+
+#: settings/profbackground.html:24
+msgid "None"
+msgstr "Nessuno"
+
+#: tos.html:74
+msgid ""
+"Note that the Akatsuki team can disable your access to the game, website, "
+"Discord server or any service provided by Akatsuki; without any warning, by "
+"staff members' discretion. You may not hold Akatsuki liable for any "
+"consequence that might happen due to you taking part in consumption of any "
+"service ran by Akatsuki. The Akatsuki team may change this list of rules at "
+"any time, with or without any notice. New rules may or may not be "
+"retroactive at our own discretion."
+msgstr ""
+
+# friends.html
+#: followers.html:28
+#, fuzzy
+msgid ""
+"On this page you can see all of your followers, and mutual them as you see "
+"fit."
+msgstr ""
+"Su questa pagina puoi vedere tutti i tuoi amici e toglierli se desideri "
+"farlo."
+
+# friends.html
+#: friends.html:36
+msgid ""
+"On this page you can see all of your friends, and unfriend them as you see "
+"fit."
+msgstr ""
+"Su questa pagina puoi vedere tutti i tuoi amici e toglierli se desideri "
+"farlo."
 
 #: 500.html:4
 #, fuzzy
@@ -647,56 +725,120 @@ msgstr ""
 "sviluppatore di Ripple? Anche riprovare a fare quello che stavi facendo "
 "potrebbe funzionare."
 
-#: not_found.html:4
-msgid ""
-"We're sorry, but we were unable to find the content you were looking for!"
-msgstr ""
-"Ci dispiace, ma non siamo stati in grado di trovare il contenuto che stavi "
-"cercando!"
-
-#: login.html:22
-msgid "Username (or email)"
-msgstr "Username (o email)"
-
-# pwreset/continue.html
-#: login.html:34
+#: settings/clansettings.html:80
 #, fuzzy
-msgid "(reset password)"
-msgstr "Reimposta password"
+msgid "Open"
+msgstr "Apri file"
 
-#: followers.html:23 friends.html:24 friends.html:30
-msgid "Followers"
+#: settings/avatar.html:36 settings/profbackground.html:89
+#: settings/profbackground.html:138
+msgid "Open File"
+msgstr "Apri file"
+
+#: beatmap.html:63
+msgid "Overall Difficulty"
+msgstr "Difficoltà Generale (OD)"
+
+#: beatmap.html:214
+msgid "PP"
+msgstr "PP"
+
+#: beatmap.html:66
+msgid "Passes/Plays"
+msgstr "Partite"
+
+#: pwreset/continue.html:20 login.html:33
+msgid "Password"
+msgstr "Password"
+
+#: register/register.html:50
+msgid "Password (at least 8 characters)"
+msgstr "Password (almeno 8 caratteri)"
+
+#: patcherdl.html:48
+msgid "Patcher is currently unavailable"
 msgstr ""
 
-# friends.html
-#: followers.html:28
-#, fuzzy
+#: premium.html:163
+msgid "PayPal"
+msgstr "PayPal"
+
+#: premium.html:192
 msgid ""
-"On this page you can see all of your followers, and mutual them as you see "
-"fit."
+"Payments are processed automatically and generally apply within 5 minutes of "
+"purchase."
 msgstr ""
-"Su questa pagina puoi vedere tutti i tuoi amici e toglierli se desideri "
-"farlo."
 
-#: followers.html:73 friends.html:75
-msgid "Mutual"
-msgstr "Reciproco"
-
-#: leaderboard.html:86
-msgid "Score (Performance)"
+#: navbar.html:134 navbar.html:191
+msgid "Performance"
 msgstr ""
 
 #: leaderboard.html:88 clanboard.html:74
 msgid "Performance (Score)"
 msgstr ""
 
-#: leaderboard.html:91 clanboard.html:76 beatmap.html:210
-msgid "Accuracy"
-msgstr "Accuracy"
+#: clanboard.html:57
+msgid "Performance Rankings"
+msgstr ""
 
 #: leaderboard.html:92 clanboard.html:79
 msgid "Playcount"
 msgstr "Numero di partite"
+
+#: homepage.html:163
+#, fuzzy
+msgid "Played by"
+msgstr "Giocatore"
+
+#: settings/profile.html:142
+msgid "Playstyle"
+msgstr "Stile di gioco"
+
+#: clansample.html:216
+msgid "Please login to join a clan"
+msgstr ""
+
+#: tos.html:65
+msgid ""
+"Practice common sense. If a staff member asks you to do something, it is in "
+"your best interests to comply."
+msgstr ""
+
+#: settings/profile.html:158
+msgid "Preferences"
+msgstr "Preferenze"
+
+#: beatmap.html:114
+msgid "Preview Audio"
+msgstr ""
+
+#: team.html:28
+msgid "Product Development Team"
+msgstr ""
+
+#: team.html:20
+msgid "Product Management Team"
+msgstr ""
+
+#: homepage.html:49
+msgid "Profile"
+msgstr "Profilo"
+
+#: tos.html:59
+msgid ""
+"Purchasing anything from Akatsuki does not mean that you are immune from the "
+"rules."
+msgstr ""
+
+# leaderboard.html
+#: beatmap.html:206
+msgid "Rank"
+msgstr "Posizione"
+
+# register/register.html
+#: navbar.html:111 homepage.html:47
+msgid "Register"
+msgstr "Iscriviti"
 
 #: clanboard.html:47
 msgid "Regular"
@@ -706,39 +848,6 @@ msgstr ""
 msgid "Relax"
 msgstr ""
 
-#: clanboard.html:49
-msgid "Autopilot"
-msgstr ""
-
-#: clanboard.html:57
-msgid "Performance Rankings"
-msgstr ""
-
-#: clanboard.html:72
-msgid "#1 Count"
-msgstr ""
-
-#: register/elmo.html:35
-msgid ""
-"If you truly have understood what's written above and you have understood "
-"that creating a multiaccount will lead to a restriction on your main "
-"account, you can click here and you'll be brought to the sign up page."
-msgstr ""
-"Se hai davvero capito il testo soprastante e capisci che creare un secondo "
-"account risulterà nel mettere il tuo account principale in restricted, puoi "
-"cliccare qui e sarai portanto alla pagina di registrazione."
-
-#: register/elmo.html:44
-msgid "Bring me back to safety!"
-msgstr "Portami al sicuro!"
-
-#: register/register.html:10
-msgid ""
-"Sorry, it's not possible to register at the moment. Please try again later."
-msgstr ""
-"Siamo spiacenti, non è al momento possibile registrarsi. Per favore riprova "
-"più tardi."
-
 #: register/register.html:15
 msgid ""
 "Remember: this seems like it's your second account! Do not multiaccount, or "
@@ -747,84 +856,56 @@ msgstr ""
 "Ricorda: questo sembra essere il tuo secondo account! Non creare account "
 "multipli, o altrimenti rischi di essere messo in restricted!"
 
-#: register/register.html:40
+#: friends.html:92
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: beatmap.html:218
+msgid "Replay"
+msgstr ""
+
+#: base.html:79
+#, c-format
+msgid ""
+"Research has proven this website works 727% better if you have JavaScript "
+"enabled."
+msgstr ""
+
+#: team.html:46
+msgid ""
+"Responsible for assisting players with their inquiries and overseeing the "
+"community's well-being."
+msgstr ""
+
+#: team.html:22
+msgid ""
+"Responsible for envisioning Akatsuki's future, and creating ideas to shape "
+"the server."
+msgstr ""
+
+#: team.html:60
+msgid ""
+"Responsible for handling all beatmap related inquiries; such as beatmaps "
+"status requests."
+msgstr ""
+
+#: team.html:30
 #, fuzzy
-msgid "Email Address"
-msgstr "Indirizzo e-mail"
+msgid ""
+"Responsible for implementing and maintaining Akatsuki's infrastructure - "
+"they keep the server running, and take care of its maintenance."
+msgstr ""
+"Gli sviluppatori aggiungono nuove funzionalità al server, fixano i bug, "
+"mantengono il server vivo e si occupano delle adeguate manutenzioni."
 
-#: register/register.html:50
-msgid "Password (at least 8 characters)"
-msgstr "Password (almeno 8 caratteri)"
-
-#: register/register.html:62
-#, fuzzy
-msgid "Confirm Password"
-msgstr "Password"
-
-#: register/welcome.html:7
-msgid "Congratulations for not reading things!"
-msgstr "Congratulazioni per non aver letto gli avvisi!"
-
-#: register/welcome.html:11
-#, fuzzy
-msgid "Multiaccounts are not allowed on Akatsuki"
-msgstr "I multiaccount non sono ammessi su Ripple"
-
-#: register/welcome.html:19
-#, fuzzy
-msgid "Welcome to Akatsuki"
-msgstr "Benvenuto su Ripple"
-
-#: register/welcome.html:25
-msgid "Here's a few things you might want to check out:"
-msgstr "Ecco un po' di cose che potresti trovare utili:"
-
-#: register/welcome.html:29
-msgid " - in case you don't know where to start"
-msgstr " - se non sai da dove cominciare"
+#: team.html:38
+msgid ""
+"Responsible for not only the community but also the management team itself."
+msgstr ""
 
 #: register/welcome.html:32
 msgid "Rules"
 msgstr "Regole"
-
-#: register/welcome.html:33
-msgid " - in case you haven't already read them"
-msgstr " - in caso tu non le abbia già lette"
-
-#: register/welcome.html:36
-msgid "Documentation"
-msgstr "Documentazione"
-
-#: register/welcome.html:37
-msgid " - in case, well, you need help doing stuff"
-msgstr " - nel caso, avessi bisogno di aiuto per fare qualcosa"
-
-#: register/welcome.html:43
-#, fuzzy
-msgid " - in case you want to talk with people about Akatsuki"
-msgstr " - nel caso tu volessi parlare di Ripple con dell'altra gente"
-
-#: register/verify.html:8
-msgid ""
-"To switch to akatsuki, you must run your osu with the -devserver command "
-"line argument."
-msgstr ""
-
-#: register/verify.html:10
-msgid "The simplest way to do this is probably with a shortcut:"
-msgstr ""
-
-#: register/verify.html:15
-msgid "Create a shortcut of osu!.exe."
-msgstr ""
-
-#: register/verify.html:20
-msgid "Edit the shortcut's properties."
-msgstr ""
-
-#: register/verify.html:25
-msgid "Add ` -devserver akatsuki.gg` to the Target path (the space matters)."
-msgstr ""
 
 #: register/verify.html:29
 msgid ""
@@ -832,23 +913,269 @@ msgid ""
 "switcher, and you can rename it whatever you'd like."
 msgstr ""
 
+#: settings/profile.html:175 settings/clansettings.html:108
+#: settings/avatar.html:43 settings/username.html:49 settings/userpage.html:41
+#: settings/profbackground.html:75 settings/profbackground.html:94
+#: settings/profbackground.html:123 settings/profbackground.html:143
+#: settings/password.html:48
+msgid "Save"
+msgstr "Salva"
+
+#: navbar.html:135 navbar.html:192 beatmap.html:209
+#, fuzzy
+msgid "Score"
+msgstr "PP/Punteggio"
+
+#: leaderboard.html:86
+msgid "Score (Performance)"
+msgstr ""
+
+#: navbar.html:122
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: patcherdl.html:33
+msgid "Show Relax Ranking Panels"
+msgstr ""
+
+#: patcherdl.html:24
+msgid ""
+"Simply run the executable, it will open osu! and restore the flavour of "
+"normal gameplay!"
+msgstr ""
+
+#: team.html:65
+msgid "Social Media Management Team"
+msgstr ""
+
+#: settings/profbackground.html:29
+msgid "Solid colour"
+msgstr "Tinta unita"
+
+#: clans/create.html:11
+#, fuzzy
+msgid ""
+"Sorry, it's not possible to create a clan at the moment. Please try again "
+"later."
+msgstr ""
+"Siamo spiacenti, non è al momento possibile registrarsi. Per favore riprova "
+"più tardi."
+
+#: register/register.html:10
+msgid ""
+"Sorry, it's not possible to register at the moment. Please try again later."
+msgstr ""
+"Siamo spiacenti, non è al momento possibile registrarsi. Per favore riprova "
+"più tardi."
+
+#: beatmap.html:52
+msgid "Source"
+msgstr "Origine"
+
+#: team.html:74
+msgid "Special thanks"
+msgstr "Ringraziamenti speciali"
+
+#: beatmap.html:75
+msgid "Star Difficulty"
+msgstr "Difficoltà"
+
+#: premium.html:61
+msgid "Start from scratch"
+msgstr ""
+
+#: clans/create.html:78 pwreset.html:51 pwreset/continue.html:34 login.html:57
+#: register/register.html:88
+msgid "Submit"
+msgstr "Invia"
+
+#: settings/discord.html:28
+#, fuzzy
+msgid "Supporters get special privileges on our Discord server too!"
+msgstr ""
+"I donatori ottengono privilegi speciali anche sul nostro server di Discord!"
+
+#: base.html:143
+msgid "Team"
+msgstr "Team"
+
 #: tos.html:12
 msgid ""
 "Thank you for playing on Akatsuki! By playing, you agree to follow the below "
 "guidelines. Doing so could warrant immediate removal from our services."
 msgstr ""
 
-#: tos.html:17
+#: settings/discord.html:23
+#, fuzzy
+msgid "Thank you for supporting us and have fun on Akatsuki!"
+msgstr "Grazie per aver donato e divertiti su Ripple!"
+
+#: base.html:107
+#, fuzzy
 msgid ""
-"Absolutely no botting, cheating, or hacking. This includes any method of "
-"giving yourself an unfair advantage over other players."
+"The Akatsuki website is currently in maintenance mode, and access has been "
+"limited for normal users."
+msgstr ""
+"Il sito di Ripple è in modalità di manutenzione. Solo certi utenti hanno "
+"accesso al sito intero."
+
+#: clansample.html:238
+msgid "The leader of the clan."
 msgstr ""
 
-#: tos.html:20
+#: register/verify.html:10
+msgid "The simplest way to do this is probably with a shortcut:"
+msgstr ""
+
+#: clansample.html:104
+msgid "The statistics of the clan."
+msgstr ""
+
+#: team.html:53
 msgid ""
-"If you see someone breaking the rules, report them in-game or in our "
-"discord. Knowingly helping someone who breaks our terms of service can lead "
-"to removal from our services."
+"They ensure that the Beatmap Nomination team is running at its best "
+"performance and promote changes to the Ranking Criteria when deemed "
+"necessary."
+msgstr ""
+
+#: team.html:123
+msgid "They told me these are very cool people."
+msgstr "Dicono che queste persone sono molto fighe."
+
+#: beatmap.html:216
+msgid "Time"
+msgstr "Data e ora"
+
+#: beatmap.html:46
+msgid "Title"
+msgstr "Titolo"
+
+#: register/verify.html:8
+msgid ""
+"To switch to akatsuki, you must run your osu with the -devserver command "
+"line argument."
+msgstr ""
+
+#: homepage.html:183
+msgid "Top score (Autopilot)"
+msgstr ""
+
+#: homepage.html:161
+msgid "Top score (Relax)"
+msgstr ""
+
+#: homepage.html:141
+msgid "Top score (Vanilla)"
+msgstr ""
+
+#: homepage.html:125
+#, fuzzy
+msgid "Total scores (Autopilot)"
+msgstr "Punteggio totale"
+
+#: homepage.html:110
+#, fuzzy
+msgid "Total scores (Relax)"
+msgstr "Punteggio totale"
+
+#: homepage.html:95
+#, fuzzy
+msgid "Total scores (Vanilla)"
+msgstr "Punteggio totale"
+
+#: settings/clansettings.html:153
+msgid "Transfer Ownership"
+msgstr ""
+
+#: tos.html:35
+msgid ""
+"Treat all members of Akatsuki with respect. Do not insult people without "
+"warrant & do not be excessively toxic."
+msgstr ""
+
+#: settings/connections.html:24
+#, fuzzy
+msgid "Unlink Discord"
+msgstr "Discord"
+
+#: friends.html:90
+#, fuzzy
+msgid "Unmutual"
+msgstr "Reciproco"
+
+#: premium.html:152
+#, fuzzy
+msgid "User"
+msgstr "Utente:"
+
+#: settings/profile.html:67
+#, fuzzy
+msgid "User Title"
+msgstr "Titolo"
+
+#: settings/profile.html:22 settings/username.html:17
+msgid "Username"
+msgstr "Username"
+
+#: login.html:22
+msgid "Username (or email)"
+msgstr "Username (o email)"
+
+#: pwreset.html:29
+#, fuzzy
+msgid "Username or Email Address"
+msgstr "Username (o email)"
+
+#: settings/profile.html:87
+#, fuzzy
+msgid "Vanilla PP Leaderboards"
+msgstr "Leaderboard globali."
+
+#: doc_content.html:36
+msgid "View all docs"
+msgstr "Vai alla documentazione"
+
+#: homepage.html:63
+#, fuzzy
+msgid "View leaderboards"
+msgstr "Abbiamo le leaderboard."
+
+#: clansample.html:231
+msgid "View on Admin Panel"
+msgstr ""
+
+#: premium.html:88
+msgid "View your followers"
+msgstr ""
+
+#: homepage.html:33
+msgid ""
+"We are an osu! private server mainly based around the relax mod - featuring "
+"score submission, leaderboards & rankings, custom pp, and much more for "
+"relax, autopilot and vanilla osu! We have a massive dedicated community "
+"between both our osu! and"
+msgstr ""
+
+#: not_found.html:4
+msgid ""
+"We're sorry, but we were unable to find the content you were looking for!"
+msgstr ""
+"Ci dispiace, ma non siamo stati in grado di trovare il contenuto che stavi "
+"cercando!"
+
+#: register/welcome.html:19
+#, fuzzy
+msgid "Welcome to Akatsuki"
+msgstr "Benvenuto su Ripple"
+
+#: homepage.html:32
+#, fuzzy
+msgid "Welcome to Akatsuki."
+msgstr "Benvenuto su Ripple"
+
+#: settings/clansettings.html:202
+msgid ""
+"You haven't joined a clan yet, or you aren't the owner of your current one."
 msgstr ""
 
 #: tos.html:23
@@ -858,363 +1185,36 @@ msgid ""
 "for some reason need more than one account, please contact us directly."
 msgstr ""
 
-#: tos.html:26
+#: clans/create.html:7
+#, fuzzy
+msgid "You need to login!"
+msgstr "Devi effettuare l'accesso prima."
+
+# General
+#: clans/create.html:15
+#, fuzzy
+msgid "You're already in a Clan."
+msgstr "Hai già effettuato il login!"
+
+# General
+#: pwreset.html:12 login.html:14 register/register.html:6
+msgid "You're already logged in!"
+msgstr "Hai già effettuato il login!"
+
+#: settings/connections.html:20
 msgid ""
-"Do not use any other person's account. This is known as account sharing and "
-"is taken quite seriously. Sharing your login details with any other user can "
-"result in a permanent ban."
+"Your Discord account is already linked with us. If you wish to unlink your "
+"Discord, please use the button below."
 msgstr ""
 
-#: tos.html:29
-msgid ""
-"Do not try to exploit bugs found on the server, report them to a developer "
-"immediately for a fair reward."
+#: settings/userpage.html:48
+msgid "Your userpage privileges have been revoked by an Administrator."
 msgstr ""
-
-#: tos.html:32
-msgid ""
-"All communications on our Discord and in-game public chats must be in "
-"English. Players are allowed to use any language in other forms of "
-"communication."
-msgstr ""
-
-#: tos.html:35
-msgid ""
-"Treat all members of Akatsuki with respect. Do not insult people without "
-"warrant & do not be excessively toxic."
-msgstr ""
-
-#: tos.html:38
-msgid ""
-"Do not harass people. If a member asks you to stop harassing them, simply "
-"stop doing so. This rule is heavily enforced, so please be nice."
-msgstr ""
-
-#: tos.html:41
-msgid ""
-"Absolutely no racism, sexism, transphobia, whatever. This includes slurs."
-msgstr ""
-
-#: tos.html:44
-msgid ""
-"Do not discuss cheating, other servers, or breaking any US or International "
-"law in any of our services. Doing so will result in an immediate ban and if "
-"neccessary reported to relevant authorities."
-msgstr ""
-
-#: tos.html:47
-msgid ""
-"Don't spam or flood, unless you're occasionally sending a link to e.g. "
-"Twitch when you're streaming Akatsuki when no discussion is going on."
-msgstr ""
-
-#: tos.html:50
-msgid ""
-"NSFW and offensive avatars/userpage content are not allowed anywhere on "
-"Akatsuki."
-msgstr ""
-
-#: tos.html:53
-msgid ""
-"Do not impersonate any user, especially staff. This is actively enforced."
-msgstr ""
-
-#: tos.html:56
-msgid ""
-"Do not cause unneeded drama. Use the appropriate channels to report rule "
-"breaking; Hackusating in public channels is not allowed. Complaining about a "
-"user's ban in public channels is also dissalowed. Bans are to be kept "
-"between Akatsuki staff and the user only."
-msgstr ""
-
-#: tos.html:59
-msgid ""
-"Purchasing anything from Akatsuki does not mean that you are immune from the "
-"rules."
-msgstr ""
-
-#: tos.html:62
-msgid ""
-"Akatsuki services are meant for users that are 13 years of age or older. If "
-"you are under 13, do not use our services without parental consent."
-msgstr ""
-
-#: tos.html:65
-msgid ""
-"Practice common sense. If a staff member asks you to do something, it is in "
-"your best interests to comply."
-msgstr ""
-
-#: tos.html:70
-msgid ""
-"Don't abuse our patience; while we try to best satisfy our users' need, if "
-"you repeatedly infringe our rules or abuse services provided by the staff "
-"(e.g. appealing and name changing) (with particular regard to users who also "
-"disrespect our staff's efforts, passively or actively, or are otherwise "
-"toxic within the community), we will first warn you, and if it comes to it "
-"we will offer an ultimatum. If you refuse or otherwise don't change your "
-"behaviour, we'll have no choice but to ban you. If you are found damaging "
-"the server directly - attempted attacks, chargebacks, hacking users, "
-"damaging reputation etc; your entire account data will be removed with no "
-"chance of being recovered ever."
-msgstr ""
-
-#: tos.html:74
-msgid ""
-"Note that the Akatsuki team can disable your access to the game, website, "
-"Discord server or any service provided by Akatsuki; without any warning, by "
-"staff members' discretion. You may not hold Akatsuki liable for any "
-"consequence that might happen due to you taking part in consumption of any "
-"service ran by Akatsuki. The Akatsuki team may change this list of rules at "
-"any time, with or without any notice. New rules may or may not be "
-"retroactive at our own discretion."
-msgstr ""
-
-# beatmap.html
-#: beatmap.html:43
-msgid "Artist"
-msgstr "Artista"
-
-#: beatmap.html:46
-msgid "Title"
-msgstr "Titolo"
-
-#: beatmap.html:49
-msgid "Creator"
-msgstr "Creatore"
-
-#: beatmap.html:52
-msgid "Source"
-msgstr "Origine"
-
-#: beatmap.html:57
-msgid "Circle Size"
-msgstr "Circle Size"
-
-#: beatmap.html:60
-msgid "HP Drain"
-msgstr "Drain HP"
-
-#: beatmap.html:63
-msgid "Overall Difficulty"
-msgstr "Difficoltà Generale (OD)"
-
-#: beatmap.html:66
-msgid "Passes/Plays"
-msgstr "Partite"
-
-#: beatmap.html:72
-msgid "Approach Rate"
-msgstr "Velocità di Approccio (AR)"
-
-#: beatmap.html:75
-msgid "Star Difficulty"
-msgstr "Difficoltà"
-
-#: beatmap.html:78
-msgid "Length"
-msgstr "Durata"
-
-#: beatmap.html:84
-msgid "BPM"
-msgstr "BPM"
 
 #: beatmap.html:94
 msgid "osu!direct"
 msgstr "osu!direct"
 
-#: beatmap.html:100 patcherdl.html:40
-#, fuzzy
-msgid "Download"
-msgstr "download"
-
-#: beatmap.html:107
-#, fuzzy
-msgid "Download (no video)"
-msgstr "download (senza video)"
-
-#: beatmap.html:114
-msgid "Preview Audio"
-msgstr ""
-
-# leaderboard.html
-#: beatmap.html:206
-msgid "Rank"
-msgstr "Posizione"
-
-#: beatmap.html:208
-msgid "Grade"
-msgstr ""
-
-#: beatmap.html:212
-msgid "Combo"
-msgstr ""
-
-#: beatmap.html:214
-msgid "PP"
-msgstr "PP"
-
-#: beatmap.html:215
-msgid "Mods"
-msgstr ""
-
-#: beatmap.html:216
-msgid "Time"
-msgstr "Data e ora"
-
-#: beatmap.html:218
-msgid "Replay"
-msgstr ""
-
-#: doc_content.html:29
-msgid "Documentation file not found!"
-msgstr "File di documentazione non trovato!"
-
-#: doc_content.html:36
-msgid "View all docs"
-msgstr "Vai alla documentazione"
-
-#: patcherdl.html:20
-msgid ""
-"Akatsuki Patcher is a simple tool made to enhance your Akatsuki Relax "
-"experience!"
-msgstr ""
-
-#: patcherdl.html:22
-msgid ""
-"It restores critical features such as ranking panels to your relax gameplay, "
-"sweetening the already great experience."
-msgstr ""
-
-#: patcherdl.html:24
-msgid ""
-"Simply run the executable, it will open osu! and restore the flavour of "
-"normal gameplay!"
-msgstr ""
-
-#: patcherdl.html:29
-msgid "Enable Relax Misses"
-msgstr ""
-
-#: patcherdl.html:33
-msgid "Show Relax Ranking Panels"
-msgstr ""
-
-#: patcherdl.html:43
-msgid ""
-"Akatsuki Patcher is a single executable and requires no manual client "
-"modification!"
-msgstr ""
-
-#: patcherdl.html:48
-msgid "Patcher is currently unavailable"
-msgstr ""
-
-#: patcherdl.html:55
-#, fuzzy
-msgid "Download Patcher"
-msgstr "download"
-
-#: irc.html:18
-msgid "Generate a new token!"
-msgstr "Genera un nuovo token!"
-
-#: multiplayer.html:19
-#, fuzzy
-msgid "Loading match data..."
-msgstr "Caricamento..."
-
-# friends.html
-#: friends.html:36
-msgid ""
-"On this page you can see all of your friends, and unfriend them as you see "
-"fit."
-msgstr ""
-"Su questa pagina puoi vedere tutti i tuoi amici e toglierli se desideri "
-"farlo."
-
-#: friends.html:77
-#, fuzzy
-msgid "Friend"
-msgstr "Amici"
-
-#: friends.html:90
-#, fuzzy
-msgid "Unmutual"
-msgstr "Reciproco"
-
-#: friends.html:92
-msgid "Remove"
-msgstr "Rimuovi"
-
-#: premium.html:50
-#, fuzzy
-msgid "Here's what we have to offer"
-msgstr "Ecco cosa ottieni:"
-
-#: premium.html:56
-msgid "Change your identity"
-msgstr ""
-
-#: premium.html:61
-msgid "Start from scratch"
-msgstr ""
-
-#: premium.html:69
-msgid "Customize your profile"
-msgstr ""
-
-#: premium.html:76
-msgid "Force score overwrites"
-msgstr ""
-
-#: premium.html:82
-#, fuzzy
-msgid "Leaderboard preferences"
-msgstr "Leaderboard"
-
-#: premium.html:88
-msgid "View your followers"
-msgstr ""
-
-#: premium.html:94
-msgid "DM-only commands in public channels"
-msgstr ""
-
-#: premium.html:102
-#, fuzzy
-msgid "Here's what we ask for in return"
-msgstr "Ecco cosa ottieni:"
-
-#: premium.html:115
-msgid "Loading..."
-msgstr "Caricamento..."
-
-#: premium.html:152
-#, fuzzy
-msgid "User"
-msgstr "Utente:"
-
-#: premium.html:163
-msgid "PayPal"
-msgstr "PayPal"
-
-#: premium.html:188
-msgid "I've donated, now what?"
-msgstr "Ho donato, e ora che faccio?"
-
-#: premium.html:192
-msgid ""
-"Payments are processed automatically and generally apply within 5 minutes of "
-"purchase."
-msgstr ""
-
-#: premium.html:205
-msgid "Disclaimer of Terms & Liability"
-msgstr ""
-
-#: premium.html:209
-msgid ""
-"All money received from donations go towards server, development, "
-"maintenance and other costs associated with running Akatsuki."
+#: homepage.html:35
+msgid "servers."
 msgstr ""

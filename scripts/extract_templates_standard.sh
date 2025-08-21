@@ -55,6 +55,10 @@ echo "Fixing file references..."
 
 sed "s|$TEMP_DIR/||g" "$TEMP_DIR/templates.pot" > "locale/locales/templates.pot"
 
+# Step 3.5: Sort POT file for stable diffs
+echo "Sorting POT file for stable diffs..."
+msgcat --sort-output "locale/locales/templates.pot" -o "locale/locales/templates.pot"
+
 echo "Generated templates.pot"
 
 # Step 4: Update existing .po files with new strings
