@@ -142,13 +142,13 @@
                         {{ end }}
                       </div>
                       <div class="bottom-side psmaller-text">
-                        Player Since:
+                        {{ $global.T "Player Since" }}:
                         <b>
                           {{ $global.T "%s" (time $user.registered_on) | html }}
                         </b>
                       </div>
                       <div class="bottom-side psmaller-text">
-                        Last Seen:
+                        {{ $global.T "Last Seen" }}:
                         <b>
                           {{ $global.T "%s" (time $user.latest_activity) | html }}
                         </b>
@@ -249,7 +249,7 @@
                 {{ end }}"
                 data-rx="0"
                 href="/u/{{ $user.id }}?rx=0">
-                Vanilla
+                {{ $global.T "Vanilla" }}
               </a>
               <a
                 class="1 simple-banner-swtich{{ if eq (int $preferRelax) 1 }}
@@ -257,7 +257,7 @@
                 {{ end }}"
                 data-rx="1"
                 href="/u/{{ $user.id }}?rx=1">
-                Relax
+                {{ $global.T "Relax" }}
               </a>
               <a
                 class="2 simple-banner-swtich{{ if eq (int $preferRelax) 2 }}
@@ -265,7 +265,7 @@
                 {{ end }}"
                 data-rx="2"
                 href="/u/{{ $user.id }}?rx=2">
-                Autopilot
+                {{ $global.T "Autopilot" }}
               </a>
             </div>
           </div>
@@ -428,7 +428,7 @@
                           <div class="progress">{{ levelPercent .level }}%</div>
                         </div>
                         <div class="label">
-                          {{ $global.T "Level %s" (level .level) }}
+                          {{ $global.T "Level" }} {{ level .level }}
                         </div>
                       </div>
                     </div>
@@ -472,7 +472,7 @@
 
             <div class="ui raised segment twemoji sui">
               <div class="header-top">
-                <h2 class="ui header">me!</h2>
+                <h2 class="ui header">{{ $global.T "me!" }}</h2>
               </div>
               <div id="userpage-content" style="display: none;"></div>
             </div>
@@ -494,7 +494,7 @@
 
             <div class="ui segment sui">
               <div class="header-top">
-                <h2 class="ui header">Achievements</h2>
+                <h2 class="ui header">{{ $global.T "Achievements" }}</h2>
               </div>
               <div id="achievements" class="ui grid achivement-data"></div>
               <div class="right aligned">

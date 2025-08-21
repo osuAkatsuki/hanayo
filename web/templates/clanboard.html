@@ -44,9 +44,9 @@ BannerType=1
       </div>
       <div class="five wide column">
         <div class="ui three item menu" id="rx-menu">
-          <a class="0 item" data-rx="0" href="/clans?rx=0">Regular</a>
-          <a class="1 item" data-rx="1" href="/clans?rx=1">Relax</a>
-          <a class="2 item" data-rx="2" href="/clans?rx=2">Autopilot</a>
+          <a class="0 item" data-rx="0" href="/clans?rx=0">{{ $.T "Regular" }}</a>
+          <a class="1 item" data-rx="1" href="/clans?rx=1">{{ $.T "Relax" }}</a>
+          <a class="2 item" data-rx="2" href="/clans?rx=2">{{ $.T "Autopilot" }}</a>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@ BannerType=1
     <div class="ui two item menu" id="sort-menu">
       <a class="0 item" data-sort="1s" href="/clans?sort=1s">#1 Rankings</a>
       <a class="1 item" data-sort="pp" href="/clans?sort=pp">
-        Performance Rankings
+        {{ $.T "Performance Rankings" }}
       </a>
     </div>
 
@@ -63,9 +63,7 @@ BannerType=1
         {{ if eq $sort "1s" }}
           {{ template "simplepag" 3 }}
         {{ else }}
-          {{ template
-            "simplepag" 5
-          }}
+          {{ template "simplepag" 5 }}
         {{ end }}
         <tr>
           <th class="one wide l-head"></th>
@@ -73,7 +71,7 @@ BannerType=1
           {{ if eq $sort "1s" }}
             <th class="two wide l-head center aligned">{{ .T "#1 Count" }}</th>
           {{ else }}
-            <th class="four wide l-head center aligned">Performance (Score)</th>
+            <th class="four wide l-head center aligned">{{ $.T "Performance (Score)" }}</th>
             <th class="three wide l-head center aligned">
               {{ .T "Accuracy" }}
             </th>
@@ -88,9 +86,7 @@ BannerType=1
         {{ if eq $sort "1s" }}
           {{ template "simplepag" 3 }}
         {{ else }}
-          {{ template
-            "simplepag" 5
-          }}
+          {{ template "simplepag" 5 }}
         {{ end }}
       </tfoot>
     </table>

@@ -76,8 +76,7 @@
 
         <div id="messages-container">
           <noscript>
-            Research has proven this website works 727% better if you have
-            JavaScript enabled.
+            {{ $.T "Research has proven this website works 727% better if you have JavaScript enabled." }}
           </noscript>
           {{ if and .Context.User.Username (not (has .Context.User.Privileges 1)) }}
             <div class="ui warning message">
