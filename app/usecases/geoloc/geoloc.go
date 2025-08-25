@@ -27,6 +27,10 @@ func CountryReadable(s string) string {
 		return ""
 	}
 
+	if s == "XK" {
+		return "Kosovo"
+	}
+
 	country, err := countrySelector.FindCountryByAlpha(s)
 
 	if err != nil {
