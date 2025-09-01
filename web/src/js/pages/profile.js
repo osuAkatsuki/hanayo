@@ -151,7 +151,6 @@ function applyPeakRankLabel() {
 
   var rankLabel = $(`#global-rank-${preferRelax}-${favouriteMode}`);
   var rankRowText = $(`#global-row-rank-${preferRelax}-${favouriteMode}`);
-  var rankRow = $(`#global-row-${preferRelax}-${favouriteMode}`);
   if (!rankLabel) return;
 
   api(
@@ -173,7 +172,6 @@ function applyPeakRankLabel() {
       });
       var formattedDate = formatter.format(date);
       rankLabel.attr("data-tooltip", `Peak rank: #${rank} on ${formattedDate}`);
-      rankRow.removeAttr("hidden");
       rankRowText.text(`#${rank} on ${formattedDate}`);
     }
   );
