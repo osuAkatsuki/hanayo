@@ -162,7 +162,7 @@ Include=clan_member.html
                         <a
                           class="item"
                           style="background-color:rgba(255,0,0,.3)">
-                          Already in another Clan
+                          {{ $.T "Already in another Clan" }}
                         </a>
                       </div>
                     {{ end }}
@@ -173,7 +173,7 @@ Include=clan_member.html
                         <a
                           class="item"
                           style="background-color:rgba(255,0,64,.3)">
-                          Closed.
+                          {{ $.T "Closed." }}
                         </a>
                       </div>
                     {{ else if eq .status 1.0 }}
@@ -181,7 +181,7 @@ Include=clan_member.html
                         <a
                           class="item"
                           style="background-color:rgba(0,255,128,.3)">
-                          Join
+                          {{ $.T "Join" }}
                         </a>
                       </div>
                     {{ else if eq .status 2.0 }}
@@ -189,7 +189,7 @@ Include=clan_member.html
                         <a
                           class="item"
                           style="background-color:rgba(255,64,64,.3)">
-                          Ask for Invite
+                          {{ $.T "Ask for Invite" }}
                         </a>
                       </div>
                       <script>
@@ -213,7 +213,7 @@ Include=clan_member.html
                       class="item"
                       href="/login"
                       style="background-color:rgba(0,128,255,.3)">
-                      Please login to join a clan
+                      {{ $.T "Please login to join a clan" }}
                     </a>
                   </div>
                 {{ end }}
@@ -228,7 +228,7 @@ Include=clan_member.html
                       class="item"
                       style="background-color:rgba(128,0,255,.3)">
                       <i class="fa-solid fa-folder-open"></i>
-                      &nbsp;View on Admin Panel
+                      &nbsp;{{ $.T "View on Admin Panel" }}
                     </a>
                   </div>
                 {{ end }}

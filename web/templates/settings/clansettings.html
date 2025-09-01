@@ -15,7 +15,7 @@ Include=menu.html
         <div class="ui segment">
           {{ $clan := (qb "SELECT * FROM clans WHERE owner = ? LIMIT 1;" .Context.User.ID) }}
           {{ if $clan }}
-            <font size="6">Clan Settings</font>
+            <font size="6">{{ $.T "Clan Settings" }}</font>
             <br />
             <br />
             <div class="ui center aligned segment">
@@ -28,7 +28,7 @@ Include=menu.html
               <form id="register-form" class="ui form">
                 <div class="field">
                   <label class="left aligned">
-                    Clan Name (2 to 15 characters)
+                    {{ $.T "Clan Name (2 to 15 characters)" }}
                   </label>
                   <input
                     tabindex="1"
@@ -38,7 +38,7 @@ Include=menu.html
                 </div>
                 <div class="field">
                   <label class="left aligned">
-                    Clan Tag (2 to 6 characters)
+                    {{ $.T "Clan Tag (2 to 6 characters)" }}
                   </label>
                   <input
                     tabindex="2"
@@ -47,7 +47,7 @@ Include=menu.html
                     value="{{ $tag }}" />
                 </div>
                 <div class="field">
-                  <label class="left aligned">Description</label>
+                  <label class="left aligned">{{ $.T "Description" }}</label>
                   <input
                     tabindex="3"
                     type="text"
@@ -57,7 +57,7 @@ Include=menu.html
                 </div>
                 <div class="field">
                   <label class="left aligned">
-                    {{ "Icon Url" }}
+                    {{ $.T "Icon Url" }}
                   </label>
                   <input
                     tabindex="4"
@@ -67,27 +67,27 @@ Include=menu.html
                     value="{{ $icon }}" />
                 </div>
                 <div class="field">
-                  <label class="left aligned">Invite Policy</label>
+                  <label class="left aligned">{{ $.T "Invite Policy" }}</label>
                   <select
                     class="ui dropdown"
                     tabindex="5"
                     name="status"
                     data-cast="int">
                     <option value="0" {{ if eq $status 0 }}selected{{ end }}>
-                      Closed
+                      {{ $.T "Closed" }}
                     </option>
                     <option value="1" {{ if eq $status 1 }}selected{{ end }}>
-                      Open
+                      {{ $.T "Open" }}
                     </option>
                     <option value="2" {{ if eq $status 2 }}selected{{ end }}>
-                      Invite Only
+                      {{ $.T "Invite Only" }}
                     </option>
                   </select>
                 </div>
                 {{ if has .Context.User.Privileges 8388612 }}
                   <div class="field">
                     <label class="left aligned">
-                      {{ "Background Url" }}
+                      {{ $.T "Background Url" }}
                     </label>
                     <input
                       tabindex="6"
@@ -109,7 +109,7 @@ Include=menu.html
               </button>
             </div>
             <br />
-            <font size="6">Invite</font>
+            <font size="6">{{ $.T "Invite" }}</font>
             <br />
             <br />
             <center>
@@ -131,7 +131,7 @@ Include=menu.html
               <br />
               {{ $members := (qb "SELECT COUNT(id)-1 AS c FROM users WHERE clan_id = ? LIMIT 1" $clan.id.Int) }}
               {{ if ne $members.c.Int 0 }}
-                <font size="6">Members: {{ $members.c }}</font>
+                <font size="6">{{ $.T "Members" }}: {{ $members.c }}</font>
                 <br />
                 {{ $ := . }}
                 {{ range (.Get "clans/members?id=%d" $clan.id.Int).clan.members }}
@@ -150,14 +150,14 @@ Include=menu.html
                                   name="transfer-ownership"
                                   value="{{ .id }}"
                                   class="ui right green button">
-                                  Transfer Ownership
+                                  {{ $.T "Transfer Ownership" }}
                                 </button>
                                 <button
                                   name="kick-member"
                                   value="{{ .id }}"
                                   class="ui right green button"
                                   style="margin-top: 5px;">
-                                  Kick
+                                  {{ $.T "Kick" }}
                                 </button>
                               </div>
                             </a>
@@ -199,8 +199,7 @@ Include=menu.html
             </center>
           {{ else }}
             <font size="3">
-              You haven't joined a clan yet, or you aren't the owner of your
-              current one.
+              {{ $.T "You haven't joined a clan yet, or you aren't the owner of your current one." }}
             </font>
           {{ end }}
         </div>
