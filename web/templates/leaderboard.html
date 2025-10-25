@@ -18,13 +18,13 @@ BannerType=1
     {{ $sort := or (.Gin.Query "sort") "pp" }}
 
     <script>
-			var favouriteMode = '{{ $favMode }}';
-			var rx = '{{ $relax }}';
-			var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
-			var sort = '{{ $sort }}'
-			var country = '{{ .Gin.Query "country" }}'.toLowerCase();
-			if (country.length != 2)
-				country = "";
+		var favouriteMode = '{{ $favMode }}';
+		var rx = '{{ $relax }}';
+		var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
+		var sort = '{{ $sort }}'
+		var country = '{{ .Gin.Query "country" }}'.toLowerCase();
+		if (country.length != 2)
+			country = "";
     </script>
 
     <div class="ui grid stackable">
