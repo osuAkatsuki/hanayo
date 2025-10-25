@@ -1,4 +1,4 @@
-{{/* prettier-ignore-start */}}
+{{/* prettier-ignore-start  / }}
 {{/*###
 Handler=/leaderboard
 TitleBar=Leaderboard
@@ -16,37 +16,36 @@ BannerType=1
     {{ end }}
     {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
     {{ $sort := or (.Gin.Query "sort") "pp" }}
+
     <script>
-      var favouriteMode = '{{ $favMode }}';
-      var rx = '{{ $relax }}';
-      var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
-      var sort = '{{ $sort }}'
-      var country = '{{ .Gin.Query "country" }}'.toLowerCase();
-      if (country.length != 2)
-        country = "";
+			var favouriteMode = '{{ $favMode }}';
+			var rx = '{{ $relax }}';
+			var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
+			var sort = '{{ $sort }}'
+			var country = '{{ .Gin.Query "country" }}'.toLowerCase();
+			if (country.length != 2)
+				country = "";
     </script>
+
     <div class="ui grid stackable">
       <div class="five wide column">
         <div class="ui three item menu" id="rx-menu">
           <a
             class="{{ favMode $relax 0 }}item"
             data-rx="0"
-            href="/leaderboard?rx=0"
-          >
+            href="/leaderboard?rx=0">
             Vanilla
           </a>
           <a
             class="{{ favMode $relax 1 }}item"
             data-rx="1"
-            href="/leaderboard?rx=1"
-          >
+            href="/leaderboard?rx=1">
             Relax
           </a>
           <a
             class="{{ favMode $relax 2 }}item"
             data-rx="2"
-            href="/leaderboard?rx=2"
-          >
+            href="/leaderboard?rx=2">
             Autopilot
           </a>
         </div>
@@ -57,34 +56,31 @@ BannerType=1
             <a
               class="{{ favMode $favMode $k }}item"
               data-mode="{{ $k }}"
-              href="/leaderboard?mode={{ $k }}"
-            >
+              href="/leaderboard?mode={{ $k }}">
               {{ $v }}
             </a>
           {{ end }}
         </div>
       </div>
     </div>
+
     <div class="ui three item menu" id="sort-menu">
       <a
         class="{{ if eq $sort \"pp\" }}active {{ end }}item"
         data-sort="pp"
-        href="/leaderboard?sort=pp"
-      >
+        href="/leaderboard?sort=pp">
         Performance Points
       </a>
       <a
         class="{{ if eq $sort \"pp_total\" }}active {{ end }}item"
         data-sort="pp_total"
-        href="/leaderboard?sort=pp_total"
-      >
+        href="/leaderboard?sort=pp_total">
         Total PP
       </a>
       <a
         class="{{ if eq $sort \"pp_stddev\" }}active {{ end }}item"
         data-sort="pp_stddev"
-        href="/leaderboard?sort=pp_stddev"
-      >
+        href="/leaderboard?sort=pp_stddev">
         StdDev PP
       </a>
     </div>
@@ -118,6 +114,7 @@ BannerType=1
           <th class="t-heading center aligned">{{ .T "Playcount" }}</th>
         </tr>
       </thead>
+      <tbody></tbody>
       <tfoot>
         {{ template "simplepag" 5 }}
       </tfoot>
@@ -129,8 +126,7 @@ BannerType=1
             <div class="ui clickable column lb-country" data-country="{{ . }}">
               <img
                 src="/static/images/flags/{{ countryCodepoints . }}.svg"
-                class="new-flag fixed--flag--margin"
-              />
+                class="new-flag fixed--flag--margin" />
               {{ countryReadable . }}
             </div>
           {{ end }}
