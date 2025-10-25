@@ -1,4 +1,4 @@
-{{/* prettier-ignore-start / }}
+{{/* prettier-ignore-start */}}
 {{/*###
 Handler=/leaderboard
 TitleBar=Leaderboard
@@ -8,7 +8,6 @@ BannerType=1
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
   <link rel="stylesheet" href="/static/css/pages/leaderboard.min.css" />
-
   <div class="ui container akat-box">
     {{ $favMode := 0.0 }}
     {{ if .Context.User.ID }}
@@ -17,8 +16,7 @@ BannerType=1
     {{ end }}
     {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
     {{ $sort := or (.Gin.Query "sort") "pp" }}
-
-	<script>
+    <script>
 		var favouriteMode = '{{ $favMode }}';
 		var rx = '{{ $relax }}';
 		var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
@@ -27,7 +25,6 @@ BannerType=1
 		if (country.length != 2)
 			country = "";
 	</script>
-
     <div class="ui grid stackable">
       <div class="five wide column">
         <div class="ui three item menu" id="rx-menu">
@@ -64,7 +61,26 @@ BannerType=1
         </div>
       </div>
     </div>
-
+    <div class="ui three item menu" id="sort-menu">
+      <a
+        class="{{ if eq $sort "pp" }}active {{ end }}item"
+        data-sort="pp"
+        href="/leaderboard?sort=pp">
+        Performance Points
+      </a>
+      <a
+        class="{{ if eq $sort "pp_total" }}active {{ end }}item"
+        data-sort="pp_total"
+        href="/leaderboard?sort=pp_total">
+        Total PP
+      </a>
+      <a
+        class="{{ if eq $sort "pp_stddev" }}active {{ end }}item"
+        data-sort="pp_stddev"
+        href="/leaderboard?sort=pp_stddev">
+        StdDev PP
+      </a>
+    </div>
     <div class="ui twelve item stackable menu" id="country-menu">
       {{ range countryList 11 }}
         {{ $code := . }}
@@ -74,7 +90,6 @@ BannerType=1
       {{ end }}
       <a class="item" id="country-chooser-modal">...</a>
     </div>
-
     <table class="ui table leaderboard-table" id="main">
       <thead>
         {{ template "simplepag" 5 }}
@@ -84,6 +99,10 @@ BannerType=1
           <th class="t-heading center aligned">
             {{ if eq $sort "score" }}
               Score (Performance)
+            {{ else if eq $sort "pp_total" }}
+              Total PP (Accuracy)
+            {{ else if eq $sort "pp_stddev" }}
+              StdDev PP (Accuracy)
             {{ else }}
               Performance (Score)
             {{ end }}
