@@ -1,4 +1,4 @@
-{{/* prettier-ignore-start / }}
+{{/* prettier-ignore-start */}}
 {{/*###
 Handler=/leaderboard
 TitleBar=Leaderboard
@@ -8,7 +8,6 @@ BannerType=1
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
   <link rel="stylesheet" href="/static/css/pages/leaderboard.min.css" />
-
   <div class="ui container akat-box">
     {{ $favMode := 0.0 }}
     {{ if .Context.User.ID }}
@@ -17,7 +16,6 @@ BannerType=1
     {{ end }}
     {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
     {{ $sort := or (.Gin.Query "sort") "pp" }}
-
 	<script>
 		var favouriteMode = '{{ $favMode }}';
 		var rx = '{{ $relax }}';
@@ -27,7 +25,6 @@ BannerType=1
 		if (country.length != 2)
 			country = "";
 	</script>
-
     <div class="ui grid stackable">
       <div class="five wide column">
         <div class="ui three item menu" id="rx-menu">
@@ -64,7 +61,26 @@ BannerType=1
         </div>
       </div>
     </div>
-
+    <!-- Total/SPP Overlay -->
+    <div class="ui grid stackable">
+      <div class="sixteen wide column">
+        <div class="ui two item menu" id="sort-menu">
+          <a
+            class="{{ if or (eq $sort "pp") (hasPrefix $sort "pp_total_") }}active {{ end }}item"
+            data-sort-type="total"
+            href="#">
+            Total PP
+          </a>
+          <a
+            class="{{ if hasPrefix $sort "pp_stddev_" }}active {{ end }}item"
+            data-sort-type="spp"
+            href="#">
+            SPP
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- End Total/SPP Overlay -->
     <div class="ui twelve item stackable menu" id="country-menu">
       {{ range countryList 11 }}
         {{ $code := . }}
@@ -74,7 +90,6 @@ BannerType=1
       {{ end }}
       <a class="item" id="country-chooser-modal">...</a>
     </div>
-
     <table class="ui table leaderboard-table" id="main">
       <thead>
         {{ template "simplepag" 5 }}
@@ -92,7 +107,7 @@ BannerType=1
           <th class="t-heading center aligned">{{ .T "Playcount" }}</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      
       <tfoot>
         {{ template "simplepag" 5 }}
       </tfoot>
@@ -103,7 +118,7 @@ BannerType=1
           {{ range countryList 500 }}
             <div class="ui clickable column lb-country" data-country="{{ . }}">
               <img
-                src="/static/images/flags/{{ countryCodepoints . }}.svg"
+                              src="/static/images/flags/{{ countryCodepoints . }}.svg"
                 class="new-flag fixed--flag--margin" />
               {{ countryReadable . }}
             </div>
@@ -112,4 +127,45 @@ BannerType=1
       </div>
     </div>
   </div>
+  <script>
+    // Generate sort parameter dynamically based on rx mode and game mode
+    function generateSortParam(sortType) {
+      var rxMode = parseInt(rx);
+      var mode = parseInt(favouriteMode);
+      
+      if (sortType === 'total') {
+        // Return default 'pp' or construct pp_total_X_Y
+        if (rxMode === 0 && mode === 0) {
+          return 'pp'; // Default vanilla osu!
+        }
+        // Format: pp_total_{rx}_{mode}
+        return 'pp_total_' + rxMode + '_' + mode;
+      } else if (sortType === 'spp') {
+        // Format: pp_stddev_{rx}_{mode}
+        return 'pp_stddev_' + rxMode + '_' + mode;
+      }
+      return 'pp';
+    }
+    
+    // Handle sort menu clicks
+    $(document).ready(function() {
+      $('#sort-menu a').on('click', function(e) {
+        e.preventDefault();
+        var sortType = $(this).data('sort-type');
+        var sortParam = generateSortParam(sortType);
+        
+        // Build URL with current parameters
+        var url = '/leaderboard?';
+        var params = [];
+        
+        if (rx) params.push('rx=' + rx);
+        if (favouriteMode) params.push('mode=' + favouriteMode);
+        params.push('sort=' + sortParam);
+        if (country) params.push('country=' + country);
+        if (page > 1) params.push('p=' + page);
+        
+        window.location.href = url + params.join('&');
+      });
+    });
+  </script>
 {{ end }}
