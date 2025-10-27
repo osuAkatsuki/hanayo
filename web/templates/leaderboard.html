@@ -7,133 +7,61 @@ BannerType=1
 */}}
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
-  <link rel="stylesheet" href="/static/css/pages/leaderboard.min.css" />
-
-  <div class="ui container akat-box">
-    {{ $favMode := 0.0 }}
-    {{ if .Context.User.ID }}
-      {{ $favModeRaw := .Get "users/self/favourite_mode" }}
-      {{ $favMode = _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
-    {{ end }}
-    {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
-    {{ $sort := or (.Gin.Query "sort") "pp" }}
-
-	<script>
-		var favouriteMode = '{{ $favMode }}';
-		var rx = '{{ $relax }}';
-		var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
-		var sort = '{{ $sort }}'
-		var country = '{{ .Gin.Query "country" }}'.toLowerCase();
-		if (country.length != 2)
-			country = "";
-	</script>
-
-    <div class="ui grid stackable">
-      <div class="five wide column">
-        <div class="ui three item menu" id="rx-menu">
-          <a
-            class="{{ favMode $relax 0 }}item"
-            data-rx="0"
-            href="/leaderboard?rx=0">
-            Vanilla
-          </a>
-          <a
-            class="{{ favMode $relax 1 }}item"
-            data-rx="1"
-            href="/leaderboard?rx=1">
-            Relax
-          </a>
-          <a
-            class="{{ favMode $relax 2 }}item"
-            data-rx="2"
-            href="/leaderboard?rx=2">
-            Autopilot
-          </a>
-        </div>
-      </div>
-      <div class="eleven wide column">
-        <div class="ui four item menu" id="mode-menu">
-          {{ range $k, $v := modes }}
-            <a
-              class="{{ favMode $favMode $k }}item"
-              data-mode="{{ $k }}"
-              href="/leaderboard?mode={{ $k }}">
-              {{ $v }}
-            </a>
-          {{ end }}
-        </div>
-      </div>
-    </div>
-
-    <div class="ui three item menu" id="sort-menu">
-      <a
-        class="{{ if eq $sort \"pp\" }}active {{ end }}item"
-        data-sort="pp"
-        href="/leaderboard?sort=pp">
-        Performance Points
-      </a>
-      <a
-        class="{{ if eq $sort \"pp_total\" }}active {{ end }}item"
-        data-sort="pp_total"
-        href="/leaderboard?sort=pp_total">
-        Total PP
-      </a>
-      <a
-        class="{{ if eq $sort \"pp_stddev\" }}active {{ end }}item"
-        data-sort="pp_stddev"
-        href="/leaderboard?sort=pp_stddev">
-        StdDev PP
-      </a>
-    </div>
-    <div class="ui twelve item stackable menu" id="country-menu">
-      {{ range countryList 11 }}
-        {{ $code := . }}
-        {{ with country . false }}
-          <a class="item lb-country" data-country="{{ $code }}">{{ . }}</a>
+    <link rel="stylesheet" href="/static/css/pages/leaderboard.min.css" />
+    <div class="ui container akat-box">
+        {{ $favMode := 0.0 }}
+        {{ if .Context.User.ID }}
+            {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+            {{ $favMode = _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
         {{ end }}
-      {{ end }}
-      <a class="item" id="country-chooser-modal">...</a>
-    </div>
-
-    <table class="ui table leaderboard-table" id="main">
-      <thead>
-        {{ template "simplepag" 5 }}
-        <tr>
-          <th class="t-heading"></th>
-          <th class="t-heading t-player"></th>
-          <th class="t-heading center aligned">
-            {{ if eq $sort "score" }}
-              Score (Performance)
-            {{ else if eq $sort "pp_total" }}
-              Total PP (Accuracy)
-            {{ else if eq $sort "pp_stddev" }}
-              StdDev PP (Accuracy)
-            {{ else }}
-              Performance (Score)
-            {{ end }}
-          </th>
-          <th class="t-heading center aligned">{{ .T "Accuracy" }}</th>
-          <th class="t-heading center aligned">{{ .T "Playcount" }}</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-      <tfoot>
-        {{ template "simplepag" 5 }}
-      </tfoot>
-    </table>
-    <div class="ui modal">
-      <div class="content">
-        <div class="ui four column grid">
-          {{ range countryList 500 }}
-            <div class="ui clickable column lb-country" data-country="{{ . }}">
-              <img
-                src="/static/images/flags/{{ countryCodepoints . }}.svg"
-                class="new-flag fixed--flag--margin" />
-              {{ countryReadable . }}
+        {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
+        {{ $sort := or (.Gin.Query "sort") "pp" }}
+        <script>
+        var favouriteMode = '{{ $favMode }}';
+        var rx = '{{ $relax }}';
+        var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
+        var sort = '{{ $sort }}'
+        var country = '{{ .Gin.Query "country" }}'.toLowerCase();
+        if (country.length != 2) country = "";
+        </script>
+        <div class="ui grid stackable">
+            <div class="five wide column">
+                <div class="ui three item menu" id="rx-menu">
+                    <a class="{{ favMode $relax 0 }}item" data-rx="0" href="/leaderboard?rx=0&mode={{ atoint $favMode }}&sort={{ $sort }}">Vanilla</a>
+                    <a class="{{ favMode $relax 1 }}item" data-rx="1" href="/leaderboard?rx=1&mode={{ atoint $favMode }}&sort={{ $sort }}">Relax</a>
+                    <a class="{{ favMode $relax 2 }}item" data-rx="2" href="/leaderboard?rx=2&mode={{ atoint $favMode }}&sort={{ $sort }}">Autopilot</a>
+                </div>
             </div>
-          {{ end }}
+            <div class="eleven wide column">
+                <div class="ui four item menu" id="mode-menu">
+                    <a class="{{ activeIfEq $favMode 0 }} item" data-mode="0" href="/leaderboard?rx={{ atoint $relax }}&mode=0&sort={{ $sort }}">osu</a>
+                    <a class="{{ activeIfEq $favMode 1 }} item" data-mode="1" href="/leaderboard?rx={{ atoint $relax }}&mode=1&sort={{ $sort }}">taiko</a>
+                    <a class="{{ activeIfEq $favMode 2 }} item" data-mode="2" href="/leaderboard?rx={{ atoint $relax }}&mode=2&sort={{ $sort }}">catch</a>
+                    <a class="{{ activeIfEq $favMode 3 }} item" data-mode="3" href="/leaderboard?rx={{ atoint $relax }}&mode=3&sort={{ $sort }}">mania</a>
+                </div>
+            </div>
         </div>
-      </div>
+        {{/* Sorting options for pp_total and pp_stddev (aggregates) */}}
+        <div class="ui grid stackable">
+            <div class="sixteen wide column">
+                <div class="ui nine item menu" id="total-spp-menu">
+                    <a class="item" href="/leaderboard?sort=total_all_modes">total_all_modes</a>
+                    <a class="item" href="/leaderboard?sort=stddev_all_modes">stddev_all_modes</a>
+                    <a class="item" href="/leaderboard?sort=total_classic">total_classic</a>
+                    <a class="item" href="/leaderboard?sort=stddev_classic">stddev_classic</a>
+                    <a class="item" href="/leaderboard?sort=total_relax">total_relax</a>
+                    <a class="item" href="/leaderboard?sort=stddev_relax">stddev_relax</a>
+                    <a class="item" href="/leaderboard?sort=total_std">total_std</a>
+                    <a class="item" href="/leaderboard?sort=total_taiko">total_taiko</a>
+                    <a class="item" href="/leaderboard?sort=total_catch">total_catch</a>
+                </div>
+            </div>
+        </div>
+        <div class="ui three item menu" id="sort-menu">
+            <a class="{{ activeIfEq $sort "pp" }} item" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort=pp">Performance Points</a>
+            <a class="{{ activeIfEq $sort "pp_total" }} item" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort=pp_total">Total PP</a>
+            <a class="{{ activeIfEq $sort "pp_stddev" }} item" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort=pp_stddev">StdDev PP</a>
+        </div>
+        {{ template "leaderboard_table" . }}
     </div>
-  </div>
 {{ end }}
