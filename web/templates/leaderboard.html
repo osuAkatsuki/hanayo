@@ -29,31 +29,20 @@ BannerType=1
             // sortType is either 'total' or 'stddev'
             var prefix = 'pp_' + sortType;
             
-            // Map rx values to suffixes
-            var rxSuffix = '';
-            if (rxValue == 1) {
-                rxSuffix = '_rx';
-            } else if (rxValue == 2) {
-                rxSuffix = '_ap';
+            // If mode is selected (0-2), use mode-specific suffix (ignore rx)
+            if (modeValue !== null && modeValue !== undefined && modeValue !== '' && modeValue !== '3') {
+                var modeNames = ['_std', '_taiko', '_ctb'];
+                return prefix + modeNames[parseInt(modeValue)];
             }
             
-            // Map mode values to suffixes
-            var modeSuffix = '';
-            if (modeValue !== null && modeValue !== undefined && modeValue !== '') {
-                var modeNames = ['_std', '_taiko', '_ctb', '_mania'];
-                modeSuffix = modeNames[parseInt(modeValue)];
+            // If NO mode selected, use rx-specific suffix
+            if (rxValue == 0) {
+                return prefix + '_classic';  // vanilla
+            } else if (rxValue == 1) {
+                return prefix + '_relax';  // relax
             } else {
-                // No mode selected
-                if (rxValue == 0) {
-                    modeSuffix = '_all_modes';
-                } else if (rxValue == 1) {
-                    modeSuffix = '_relax';
-                } else if (rxValue == 2) {
-                    modeSuffix = '_ap';
-                }
+                return prefix + '_all_modes';  // autopilot or fallback
             }
-            
-            return prefix + rxSuffix + modeSuffix;
         }
         
         // Function to update menu item links and active states
