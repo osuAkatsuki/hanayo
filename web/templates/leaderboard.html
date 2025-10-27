@@ -66,13 +66,13 @@ BannerType=1
       <div class="sixteen wide column">
         <div class="ui two item menu" id="sort-menu">
           <a
-            class="{{ if or (eq $sort "pp") (hasPrefix $sort "pp_total_") }}active {{ end }}item"
+            class="{{ if or (eq $sort "pp") (eq $sort "total") }}active {{ end }}item"
             data-sort-type="total"
             href="#">
             Total PP
           </a>
           <a
-            class="{{ if hasPrefix $sort "pp_stddev_" }}active {{ end }}item"
+            class="{{ if eq $sort "spp" }}active {{ end }}item"
             data-sort-type="spp"
             href="#">
             SPP
@@ -97,7 +97,7 @@ BannerType=1
           <th class="t-heading"></th>
           <th class="t-heading t-player"></th>
           <th class="t-heading center aligned">
-            {{ if eq $sort "score" }}
+            {{ if or (eq $sort "score") (eq $sort "total") (eq $sort "spp") }}
               Score (Performance)
             {{ else }}
               Performance (Score)
@@ -128,21 +128,11 @@ BannerType=1
     </div>
   </div>
   <script>
-    // Generate sort parameter dynamically based on rx mode and game mode
     function generateSortParam(sortType) {
-      var rxMode = parseInt(rx);
-      var mode = parseInt(favouriteMode);
-      
       if (sortType === 'total') {
-        // Return default 'pp' or construct pp_total_X_Y
-        if (rxMode === 0 && mode === 0) {
-          return 'pp'; // Default vanilla osu!
-        }
-        // Format: pp_total_{rx}_{mode}
-        return 'pp_total_' + rxMode + '_' + mode;
+        return 'total';
       } else if (sortType === 'spp') {
-        // Format: pp_stddev_{rx}_{mode}
-        return 'pp_stddev_' + rxMode + '_' + mode;
+        return 'spp';
       }
       return 'pp';
     }
