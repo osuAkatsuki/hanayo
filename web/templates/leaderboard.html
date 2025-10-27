@@ -7,127 +7,104 @@ BannerType=1
 */}}
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
-    <link rel="stylesheet" href="/static/css/pages/leaderboard.min.css" />
-    <div class="ui container akat-box">
-        {{ $favMode := 0.0 }}
-        {{ if .Context.User.ID }}
-            {{ $favModeRaw := .Get "users/self/favourite_mode" }}
-            {{ $favMode = _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
-        {{ end }}
-        {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
-        {{ $sort := or (.Gin.Query "sort") "pp" }}
-        <script type="text/javascript">
-        var favouriteMode = '{{ $favMode }}';
-        var rx = '{{ $relax }}';
-        var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
-        var sort = '{{ $sort }}';
-        var country = '{{ .Gin.Query "country" }}'.toLowerCase();
-        if (country.length != 2) country = "";
-        
-        // Function to generate proper sort parameter based on rx, mode, and sort type
-        function generateSortParam(rxValue, modeValue, sortType) {
-            // sortType is either 'total' or 'stddev'
-            var prefix = 'pp_' + sortType;
-            
-            // If mode is selected (0-2), use mode-specific suffix (ignore rx)
-            if (modeValue !== null && modeValue !== undefined && modeValue !== '' && modeValue !== '3') {
-                var modeNames = ['_std', '_taiko', '_ctb'];
-                return prefix + modeNames[parseInt(modeValue)];
-            }
-            
-            // If NO mode selected, use rx-specific suffix
-            if (rxValue == 0) {
-                return prefix + '_classic';  // vanilla
-            } else if (rxValue == 1) {
-                return prefix + '_relax';  // relax
-            } else {
-                return prefix + '_all_modes';  // autopilot or fallback
-            }
-        }
-        
-        // Function to update menu item links and active states
-        function updateMenuLinks() {
-            var currentRx = rx;
-            var currentMode = favouriteMode;
-            var currentSortType = 'total'; // default
-            
-            // Determine current sort type from sort parameter
-            if (sort.indexOf('stddev') !== -1) {
-                currentSortType = 'stddev';
-            } else if (sort.indexOf('total') !== -1) {
-                currentSortType = 'total';
-            }
-            
-            // Update rx menu links
-            var rxItems = document.querySelectorAll('#rx-menu a');
-            rxItems.forEach(function(item) {
-                var itemRx = item.getAttribute('data-rx');
-                var newSort = generateSortParam(parseInt(itemRx), currentMode, currentSortType);
-                item.href = '/leaderboard?rx=' + itemRx + '&mode=' + currentMode + '&sort=' + newSort;
-                
-                // Update active class
-                if (itemRx == currentRx) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-            
-            // Update mode menu links
-            var modeItems = document.querySelectorAll('#mode-menu a');
-            modeItems.forEach(function(item) {
-                var itemMode = item.getAttribute('data-mode');
-                var newSort = generateSortParam(parseInt(currentRx), itemMode, currentSortType);
-                item.href = '/leaderboard?rx=' + currentRx + '&mode=' + itemMode + '&sort=' + newSort;
-                
-                // Update active class
-                if (itemMode == currentMode) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-            
-            // Update sort menu links
-            var sortItems = document.querySelectorAll('#sort-menu a');
-            sortItems.forEach(function(item, index) {
-                var sortType = (index === 0) ? 'total' : 'stddev';
-                var newSort = generateSortParam(parseInt(currentRx), currentMode, sortType);
-                item.href = '/leaderboard?rx=' + currentRx + '&mode=' + currentMode + '&sort=' + newSort;
-                
-                // Update active class
-                if (sortType === currentSortType) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-        }
-        
-        // Run on page load
-        document.addEventListener('DOMContentLoaded', updateMenuLinks);
-        </script>
-        <div class="ui grid stackable">
-            <div class="five wide column">
-                <div class="ui three item menu" id="rx-menu">
-                    <a class="{{ if eq $relax 0 }}active {{ end }}item" data-rx="0" href="/leaderboard?rx=0&mode={{ atoint $favMode }}&sort={{ $sort }}">Vanilla</a>
-                    <a class="{{ if eq $relax 1 }}active {{ end }}item" data-rx="1" href="/leaderboard?rx=1&mode={{ atoint $favMode }}&sort={{ $sort }}">Relax</a>
-                    <a class="{{ if eq $relax 2 }}active {{ end }}item" data-rx="2" href="/leaderboard?rx=2&mode={{ atoint $favMode }}&sort={{ $sort }}">Autopilot</a>
-                </div>
-            </div>
-            <div class="eleven wide column">
-                <div class="ui four item menu" id="mode-menu">
-                    <a class="{{ activeIfEq $favMode 0 }} item" data-mode="0" href="/leaderboard?rx={{ atoint $relax }}&mode=0&sort={{ $sort }}">osu</a>
-                    <a class="{{ activeIfEq $favMode 1 }} item" data-mode="1" href="/leaderboard?rx={{ atoint $relax }}&mode=1&sort={{ $sort }}">taiko</a>
-                    <a class="{{ activeIfEq $favMode 2 }} item" data-mode="2" href="/leaderboard?rx={{ atoint $relax }}&mode=2&sort={{ $sort }}">catch</a>
-                    <a class="{{ activeIfEq $favMode 3 }} item" data-mode="3" href="/leaderboard?rx={{ atoint $relax }}&mode=3&sort={{ $sort }}">mania</a>
-                </div>
-            </div>
+  <link href="/static/css/pages/leaderboard.min.css" rel="stylesheet"/>
+  <div class="ui container akat-box">
+    {{ $favMode := 0.0 }}
+    {{ if .Context.User.ID }}
+      {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+      {{ $favMode = _or (atoi (.Gin.Query "mode")) $favModeRaw.favourite_mode (float 0) }}
+    {{ end }}
+    {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
+    {{ $sort := or (.Gin.Query "sort") "pp" }}
+	<script type="text/javascript">
+		var favouriteMode = '{{ $favMode }}';
+		var rx = '{{ $relax }}';
+		var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
+		var sort = '{{ $sort }}';
+		var country = '{{ .Gin.Query "country" }}'.toLowerCase();
+		if (country.length != 2)
+			country = "";
+	</script>
+    <div class="ui grid stackable">
+      <div class="five wide column">
+        <div class="ui three item menu" id="rx-menu">
+          <a
+            class="{{ favMode $relax 0 }}item"
+            data-rx="0"
+            href="/leaderboard?rx=0">
+            Vanilla
+          </a>
+          <a
+            class="{{ favMode $relax 1 }}item"
+            data-rx="1"
+            href="/leaderboard?rx=1">
+            Relax
+          </a>
+          <a
+            class="{{ favMode $relax 2 }}item"
+            data-rx="2"
+            href="/leaderboard?rx=2">
+            Autopilot
+          </a>
         </div>
-        <div class="ui two item menu" id="sort-menu">
-            <a class="item" data-sort="total" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort={{ $sort }}">Total</a>
-            <a class="item" data-sort="stddev" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort={{ $sort }}">SPP</a>
+      </div>
+      <div class="eleven wide column">
+        <div class="ui four item menu" id="mode-menu">
+          {{ range $k, $v := modes }}
+            <a
+              class="{{ favMode $favMode $k }}item"
+              data-mode="{{ $k }}"
+              href="/leaderboard?mode={{ $k }}">
+              {{ $v }}
+            </a>
+          {{ end }}
         </div>
-        {{ template "leaderboard_table" . }}
+      </div>
     </div>
+    <div class="ui twelve item stackable menu" id="country-menu">
+      {{ range countryList 11 }}
+        {{ $code := . }}
+        {{ with country . false }}
+          <a class="item lb-country" data-country="{{ $code }}">{{ . }}</a>
+        {{ end }}
+      {{ end }}
+      <a class="item" id="country-chooser-modal">...</a>
+    </div>
+    <table class="ui table leaderboard-table" id="main">
+      <thead>
+        {{ template "simplepag" 5 }}
+        <tr>
+          <th class="t-heading"></th>
+          <th class="t-heading t-player"></th>
+          <th class="t-heading center aligned">
+            {{ if eq $sort "score" }}
+              Score (Performance)
+            {{ else }}
+              Performance (Score)
+            {{ end }}
+          </th>
+          <th class="t-heading center aligned">{{ .T "Accuracy" }}</th>
+          <th class="t-heading center aligned">{{ .T "Playcount" }}</th>
+        </tr>
+      </thead>
+      
+      <tfoot>
+        {{ template "simplepag" 5 }}
+      </tfoot>
+    </table>
+    <div class="ui modal">
+      <div class="content">
+        <div class="ui four column grid">
+          {{ range countryList 500 }}
+            <div class="ui clickable column lb-country" data-country="{{ . }}">
+              <img
+                              src="/static/images/flags/{{ countryCodepoints . }}.svg"
+                class="new-flag fixed--flag--margin" />
+              {{ countryReadable . }}
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
 {{ end }}
