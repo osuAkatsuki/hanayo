@@ -1,4 +1,4 @@
-{{/* prettier-ignore-start */}}
+{{/* prettier-ignore-start / }}
 {{/*###
 Handler=/leaderboard
 TitleBar=Leaderboard
@@ -7,7 +7,8 @@ BannerType=1
 */}}
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
-  <link href="/static/css/pages/leaderboard.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/pages/leaderboard.min.css" />
+
   <div class="ui container akat-box">
     {{ $favMode := 0.0 }}
     {{ if .Context.User.ID }}
@@ -16,15 +17,17 @@ BannerType=1
     {{ end }}
     {{ $relax := _or (atoi (.Gin.Query "rx")) (float 0) }}
     {{ $sort := or (.Gin.Query "sort") "pp" }}
-	<script type="text/javascript">
+
+	<script>
 		var favouriteMode = '{{ $favMode }}';
 		var rx = '{{ $relax }}';
 		var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
-		var sort = '{{ $sort }}';
+		var sort = '{{ $sort }}'
 		var country = '{{ .Gin.Query "country" }}'.toLowerCase();
 		if (country.length != 2)
 			country = "";
 	</script>
+
     <div class="ui grid stackable">
       <div class="five wide column">
         <div class="ui three item menu" id="rx-menu">
@@ -61,6 +64,7 @@ BannerType=1
         </div>
       </div>
     </div>
+
     <div class="ui twelve item stackable menu" id="country-menu">
       {{ range countryList 11 }}
         {{ $code := . }}
@@ -70,6 +74,7 @@ BannerType=1
       {{ end }}
       <a class="item" id="country-chooser-modal">...</a>
     </div>
+
     <table class="ui table leaderboard-table" id="main">
       <thead>
         {{ template "simplepag" 5 }}
@@ -87,7 +92,7 @@ BannerType=1
           <th class="t-heading center aligned">{{ .T "Playcount" }}</th>
         </tr>
       </thead>
-      
+      <tbody></tbody>
       <tfoot>
         {{ template "simplepag" 5 }}
       </tfoot>
@@ -98,7 +103,7 @@ BannerType=1
           {{ range countryList 500 }}
             <div class="ui clickable column lb-country" data-country="{{ . }}">
               <img
-                              src="/static/images/flags/{{ countryCodepoints . }}.svg"
+                src="/static/images/flags/{{ countryCodepoints . }}.svg"
                 class="new-flag fixed--flag--margin" />
               {{ countryReadable . }}
             </div>
