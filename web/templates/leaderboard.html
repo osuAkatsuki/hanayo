@@ -20,16 +20,110 @@ BannerType=1
         var favouriteMode = '{{ $favMode }}';
         var rx = '{{ $relax }}';
         var page = '{{ .Gin.Query "p" | atoint | atLeastOne }}';
-        var sort = '{{ $sort }}'
+        var sort = '{{ $sort }}';
         var country = '{{ .Gin.Query "country" }}'.toLowerCase();
         if (country.length != 2) country = "";
+        
+        // Function to generate proper sort parameter based on rx, mode, and sort type
+        function generateSortParam(rxValue, modeValue, sortType) {
+            // sortType is either 'total' or 'stddev'
+            var prefix = 'pp_' + sortType;
+            
+            // Map rx values to suffixes
+            var rxSuffix = '';
+            if (rxValue == 1) {
+                rxSuffix = '_rx';
+            } else if (rxValue == 2) {
+                rxSuffix = '_ap';
+            }
+            
+            // Map mode values to suffixes
+            var modeSuffix = '';
+            if (modeValue !== null && modeValue !== undefined && modeValue !== '') {
+                var modeNames = ['_std', '_taiko', '_ctb', '_mania'];
+                modeSuffix = modeNames[parseInt(modeValue)];
+            } else {
+                // No mode selected
+                if (rxValue == 0) {
+                    modeSuffix = '_all_modes';
+                } else if (rxValue == 1) {
+                    modeSuffix = '_relax';
+                } else if (rxValue == 2) {
+                    modeSuffix = '_ap';
+                }
+            }
+            
+            return prefix + rxSuffix + modeSuffix;
+        }
+        
+        // Function to update menu item links and active states
+        function updateMenuLinks() {
+            var currentRx = rx;
+            var currentMode = favouriteMode;
+            var currentSortType = 'total'; // default
+            
+            // Determine current sort type from sort parameter
+            if (sort.indexOf('stddev') !== -1) {
+                currentSortType = 'stddev';
+            } else if (sort.indexOf('total') !== -1) {
+                currentSortType = 'total';
+            }
+            
+            // Update rx menu links
+            var rxItems = document.querySelectorAll('#rx-menu a');
+            rxItems.forEach(function(item) {
+                var itemRx = item.getAttribute('data-rx');
+                var newSort = generateSortParam(parseInt(itemRx), currentMode, currentSortType);
+                item.href = '/leaderboard?rx=' + itemRx + '&mode=' + currentMode + '&sort=' + newSort;
+                
+                // Update active class
+                if (itemRx == currentRx) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Update mode menu links
+            var modeItems = document.querySelectorAll('#mode-menu a');
+            modeItems.forEach(function(item) {
+                var itemMode = item.getAttribute('data-mode');
+                var newSort = generateSortParam(parseInt(currentRx), itemMode, currentSortType);
+                item.href = '/leaderboard?rx=' + currentRx + '&mode=' + itemMode + '&sort=' + newSort;
+                
+                // Update active class
+                if (itemMode == currentMode) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Update sort menu links
+            var sortItems = document.querySelectorAll('#sort-menu a');
+            sortItems.forEach(function(item, index) {
+                var sortType = (index === 0) ? 'total' : 'stddev';
+                var newSort = generateSortParam(parseInt(currentRx), currentMode, sortType);
+                item.href = '/leaderboard?rx=' + currentRx + '&mode=' + currentMode + '&sort=' + newSort;
+                
+                // Update active class
+                if (sortType === currentSortType) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+        
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', updateMenuLinks);
         </script>
         <div class="ui grid stackable">
             <div class="five wide column">
                 <div class="ui three item menu" id="rx-menu">
-                    <a class="{{ favMode $relax 0 }}item" data-rx="0" href="/leaderboard?rx=0&mode={{ atoint $favMode }}&sort={{ $sort }}">Vanilla</a>
-                    <a class="{{ favMode $relax 1 }}item" data-rx="1" href="/leaderboard?rx=1&mode={{ atoint $favMode }}&sort={{ $sort }}">Relax</a>
-                    <a class="{{ favMode $relax 2 }}item" data-rx="2" href="/leaderboard?rx=2&mode={{ atoint $favMode }}&sort={{ $sort }}">Autopilot</a>
+                    <a class="{{ if eq $relax 0 }}active {{ end }}item" data-rx="0" href="/leaderboard?rx=0&mode={{ atoint $favMode }}&sort={{ $sort }}">Vanilla</a>
+                    <a class="{{ if eq $relax 1 }}active {{ end }}item" data-rx="1" href="/leaderboard?rx=1&mode={{ atoint $favMode }}&sort={{ $sort }}">Relax</a>
+                    <a class="{{ if eq $relax 2 }}active {{ end }}item" data-rx="2" href="/leaderboard?rx=2&mode={{ atoint $favMode }}&sort={{ $sort }}">Autopilot</a>
                 </div>
             </div>
             <div class="eleven wide column">
@@ -42,8 +136,8 @@ BannerType=1
             </div>
         </div>
         <div class="ui two item menu" id="sort-menu">
-            <a class="{{ activeIfEq $sort \"pp_total\" }} item" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort=pp_total">Total</a>
-            <a class="{{ activeIfEq $sort \"pp_stddev\" }} item" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort=pp_stddev">SPP</a>
+            <a class="item" data-sort="total" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort={{ $sort }}">Total</a>
+            <a class="item" data-sort="stddev" href="/leaderboard?rx={{ atoint $relax }}&mode={{ atoint $favMode }}&sort={{ $sort }}">SPP</a>
         </div>
         {{ template "leaderboard_table" . }}
     </div>
