@@ -366,6 +366,14 @@
                             <td class="right aligned">{{ humanize .pp }}</td>
                           </tr>
                           <tr>
+                            <td><b>{{ $global.T "Total PP" }}</b></td>
+                            <td class="right aligned">{{ humanize .pp_total }}</td>
+                          </tr>
+                          <tr>
+                            <td><b>{{ $global.T "SPP" }}</b></td>
+                            <td class="right aligned">{{ humanize .pp_stddev }}</td>
+                          </tr>
+                          <tr>
                             <td><b>{{ $global.T "Ranked score" }}</b></td>
                             <td class="right aligned">
                               {{ humanize .ranked_score }}
