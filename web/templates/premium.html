@@ -213,4 +213,37 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.
       </center>
     </div>
   </div>
+  <script>
+    $(document).ready(function () {
+      const PREMIUM_PRICE_PER_MONTH = 5.0;
+      
+      var sl = $("#months-slider")[0];
+      noUiSlider.create(sl, {
+        start: [1],
+        step: 1,
+        connect: [true, false],
+        range: {
+          min: [1],
+          max: [36],
+        },
+      });
+      var us = sl.noUiSlider;
+      us.on("update", function () {
+        var months = us.get();
+        var priceUSD = months * PREMIUM_PRICE_PER_MONTH;
+        $("#cost").html(
+          T("The cost of <b>{{ months }}</b> {{ monthSpelling }} of Akatsuki<sup>+</sup> is <b>${{ amount }} USD</b>", {
+            monthSpelling: months == 1 ? T("month") : T("months"),
+            months: (+months).toFixed(0),
+            amount: priceUSD.toFixed(2),
+          })
+        );
+        $("input[name='os0']").attr(
+          "value",
+          (+months).toFixed(0) + " month" + (months == 1 ? "" : "s")
+        );
+        $("#paypal-amt").val(priceUSD.toFixed(2));
+      });
+    });
+  </script>
 {{ end }}
