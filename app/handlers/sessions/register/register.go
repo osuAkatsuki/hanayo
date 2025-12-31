@@ -239,6 +239,11 @@ func RegisterSubmitHandler(c *gin.Context) {
 
 	uu.SetYCookie(int(userId), c)
 
+	err = uu.SetCountry(c, int(userId))
+	if err != nil {
+		slog.Error("Error setting country", "error", err.Error())
+	}
+
 	err = uu.LogIP(c, int(userId))
 	if err != nil {
 		slog.Error("Error logging IP", "error", err.Error())
