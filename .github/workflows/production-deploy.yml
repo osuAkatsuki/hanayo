@@ -50,7 +50,7 @@ jobs:
       - name: Install helm
         uses: azure/setup-helm@v3
         with:
-          version: "latest"
+          version: "v3.19.2"
           token: ${{ secrets.GITHUB_TOKEN }}
         id: install
 
