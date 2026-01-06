@@ -122,4 +122,35 @@ BannerType=1
       {{ end }}
     </div>
   </div>
+  <script>
+    $(document).ready(function () {
+      $(".ui.compact.labeled.button").on("click", function () {
+        var t = $(this);
+        var delAdd = t.data("deleted") == 1 ? "add" : "del";
+        t.addClass("disabled");
+        api(
+          "friends/" + delAdd,
+          { user: parseInt(t.data("userid")) },
+          function (data) {
+            t.removeClass("disabled");
+            t.data("deleted", data.friend ? "0" : "1");
+            t.removeClass("green red blue");
+            t.addClass(data.friend ? (data.mutual ? "red" : "green") : "blue");
+            t.find(".icon")
+              .removeClass("minus plus heart")
+              .removeClass("green red blue")
+              .addClass(
+                data.friend
+                  ? data.mutual
+                    ? "red heart"
+                    : "green minus"
+                  : "blue plus"
+              );
+            t.find("span").text(data.friend ? T("Unfriend") : T("Befriend"));
+          },
+          true
+        );
+      });
+    });
+  </script>
 {{ end }}

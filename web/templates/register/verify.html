@@ -34,4 +34,19 @@
       </p>
     </div>
   </div>
+  <script>
+    $(document).ready(function () {
+      var qu = query("u");
+      setInterval(function () {
+        $.getJSON(
+          hanayoConf.banchoAPI + "/api/v1/verifiedStatus?u=" + qu,
+          function (data) {
+            if (data.result >= 0) {
+              window.location.href = "/register/welcome?u=" + qu;
+            }
+          }
+        );
+      }, 5000);
+    });
+  </script>
 {{ end }}

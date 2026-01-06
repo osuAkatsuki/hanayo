@@ -169,31 +169,72 @@ Include=menu.html
                 {{ end }}
               {{ end }}
               <script>
-                $("button[name = 'transfer-ownership']").on(
-                  "click",
-                  function (e) {
+                $(document).ready(function () {
+                  $("#ginvite").click(function (e) {
                     e.preventDefault();
                     api(
-                      "clans/transfer-ownership",
-                      { new_owner_user_id: parseInt($(this).val()) },
+                      "clans/invite",
+                      {},
+                      function (data) {
+                        if (!data.invite) {
+                          return;
+                        }
+                        console.log(data);
+                        $("#invin").attr("value", data.invite);
+                        $("#invin").attr("style", "background-color: rgba(0,128,0,.5)");
+                        setTimeout(() => $("#invin").attr("style", null), 1100);
+                      },
+                      true
+                    );
+                  });
+
+                  $("form#register-form").submit(function (e) {
+                    e.preventDefault();
+                    var obj = formToObject($(this));
+                    var f = $(this);
+                    return api(
+                      "clans/settings",
+                      obj,
+                      function (data) {
+                        if (data.message === "tag already exists") {
+                          showMessage("error", "A clan with that tag already exists!");
+                          f.removeClass("loading");
+                          return;
+                        }
+
+                        showMessage("success", "Clan Settings have been saved.");
+                        f.removeClass("loading");
+                      },
+                      true
+                    );
+                  });
+
+                  $("button[name = 'transfer-ownership']").on(
+                    "click",
+                    function (e) {
+                      e.preventDefault();
+                      api(
+                        "clans/transfer-ownership",
+                        { new_owner_user_id: parseInt($(this).val()) },
+                        function (t) {
+                          window.location.reload();
+                        },
+                        !0,
+                      );
+                    },
+                  );
+
+                  $("button[name = 'kick-member']").on("click", function (e) {
+                    e.preventDefault();
+                    api(
+                      "clans/kick",
+                      { user: parseInt($(this).val()) },
                       function (t) {
                         window.location.reload();
                       },
                       !0,
                     );
-                  },
-                );
-
-                $("button[name = 'kick-member']").on("click", function (e) {
-                  e.preventDefault();
-                  api(
-                    "clans/kick",
-                    { user: parseInt($(this).val()) },
-                    function (t) {
-                      window.location.reload();
-                    },
-                    !0,
-                  );
+                  });
                 });
               </script>
             </center>

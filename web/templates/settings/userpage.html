@@ -51,4 +51,48 @@ MinPrivileges=2
       </div>
     </div>
   </div>
+  <script>
+    $(document).ready(function () {
+      var lastTimeout = null;
+      $("textarea[name='data']").on("input", function () {
+        if (lastTimeout !== null) {
+          clearTimeout(lastTimeout);
+        }
+        var v = $(this).val();
+        lastTimeout = setTimeout(function () {
+          $("#userpage-content").addClass("loading");
+          $.post(
+            "/settings/userpage/parse",
+            $("textarea[name='data']").val(),
+            function (data) {
+              var e = $("#userpage-content").removeClass("loading").html(data);
+              if (typeof twemoji !== "undefined") {
+                twemoji.parse(e[0]);
+              }
+            },
+            "text"
+          );
+        }, 800);
+      });
+      $("form").submit(function (e) {
+        e.preventDefault();
+        var obj = formToObject($(this));
+        var f = $(this);
+        api(
+          "users/self/userpage",
+          obj,
+          function (data) {
+            showMessage("success", "Your userpage has been saved.");
+            f.removeClass("loading");
+          },
+          function (data) {
+            showMessage("error", data.message);
+            f.removeClass("loading");
+          },
+          true
+        );
+        return false;
+      });
+    });
+  </script>
 {{ end }}
