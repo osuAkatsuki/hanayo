@@ -932,7 +932,7 @@ var modsString = [
   "K6",
   "K7",
   "K8",
-  "K9",
+  "FI", // FadeIn
   "RN", // Random
   "LM", // LastMod. Cinema?
   "K9",
