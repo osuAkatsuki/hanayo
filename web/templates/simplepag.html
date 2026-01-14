@@ -1,18 +1,19 @@
 {{ define "simplepag" }}
   <tr>
     <th colspan="{{ . }}">
-      <div class="simplepag">
-        <div class="ui left floated pagination menu">
-          <a class="icon item">
+      <nav class="simplepag" aria-label="Pagination">
+        <div class="ui pagination menu">
+          <a class="icon item" aria-label="Previous page" role="button">
             <i class="left chevron icon"></i>
           </a>
         </div>
-        <div class="ui right floated pagination menu">
-          <a class="icon item">
+        <span class="simplepag-info" aria-live="polite"></span>
+        <div class="ui pagination menu">
+          <a class="icon item" aria-label="Next page" role="button">
             <i class="right chevron icon"></i>
           </a>
         </div>
-      </div>
+      </nav>
     </th>
   </tr>
 {{ end }}
