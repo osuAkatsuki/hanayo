@@ -172,7 +172,7 @@ button:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 2px;
   height: 50px;
 }
 
