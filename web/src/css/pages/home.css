@@ -33,44 +33,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: linear-gradient(180deg, #1a0a2e 0%, var(--bg-deep) 100%);
+  background: url(/static/images/headers/homepage_banner.svg);
+  background-size: cover;
+  background-position: center;
   padding: 3rem 1.5rem;
-}
-
-/* Animated Gradient Orbs */
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: -40%;
-  left: -20%;
-  width: 70%;
-  height: 140%;
-  background: radial-gradient(circle, rgba(44, 151, 251, 0.2) 0%, transparent 55%);
-  animation: float-orb-1 20s ease-in-out infinite;
-  mix-blend-mode: screen;
-}
-
-.hero-section::after {
-  content: '';
-  position: absolute;
-  bottom: -20%;
-  right: -15%;
-  width: 60%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(165, 23, 247, 0.25) 0%, transparent 50%);
-  animation: float-orb-2 25s ease-in-out infinite;
-  mix-blend-mode: screen;
-}
-
-@keyframes float-orb-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(5%, 8%) scale(1.05); }
-  66% { transform: translate(-3%, -5%) scale(0.98); }
-}
-
-@keyframes float-orb-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-6%, -8%) scale(1.1); }
 }
 
 /* Hero Layout - Three Column */

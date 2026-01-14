@@ -1,0 +1,23 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_13_980)">
+<rect width="1920" height="1080" fill="url(#paint0_linear_13_980)"/>
+<g style="mix-blend-mode:hard-light">
+<circle cx="-16.4176" cy="444.582" r="817.582" fill="#2C97FB" fill-opacity="0.25"/>
+</g>
+<g style="mix-blend-mode:hard-light">
+<circle cx="801.758" cy="1099.12" r="817.582" fill="#0E53C5" fill-opacity="0.25"/>
+</g>
+<g style="mix-blend-mode:hard-light">
+<circle cx="1350.33" cy="181.319" r="817.582" fill="#A517F7" fill-opacity="0.25"/>
+</g>
+<g style="mix-blend-mode:hard-light">
+<circle cx="1714.29" cy="972.527" r="817.582" fill="#EF43FE" fill-opacity="0.25"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_13_980" x1="960" y1="0" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EF43FE"/>
+<stop offset="1" stop-color="#2C97FB"/>
+</linearGradient>
+</defs>
+</svg>
