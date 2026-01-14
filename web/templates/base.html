@@ -196,7 +196,7 @@
 
       {{ if .Scripts }}
         {{ range .Scripts }}
-          <script src="{{ . }}"></script>
+          <script src="{{ asset . }}"></script>
         {{ end }}
       {{ end }}
     </body>
