@@ -19,24 +19,23 @@
 
   <link rel="stylesheet" href="{{ asset "/static/css/pages/home.min.css" }}" />
 
-  {{/* Hero Section with Overlay Stats */}}
-  <div class="hero-section bg14">
-    <div class="hero-content">
-      {{/* Top Row Stats */}}
-      <div class="hero-stats-row">
-        <div class="stat-overlay">
+  {{/* Hero Section with Scattered Stats */}}
+  <div class="hero-section">
+    <div class="hero-layout">
+      {{/* Left side: Stacked stats */}}
+      <div class="hero-stats-left">
+        <div class="stat-card stat-players">
           {{ $users := rediget "akatsuki:registered_users" }}
           <span class="stat-value">{{ with atoi $users }}{{ humanize . }}{{ else }}100K+{{ end }}</span>
           <span class="stat-label">players</span>
         </div>
-        <div class="stat-overlay">
-          {{ $maps := rediget "akatsuki:ranked_beatmaps" }}
-          <span class="stat-value">{{ with atoi $maps }}{{ humanize . }}{{ else }}280K+{{ end }}</span>
-          <span class="stat-label">beatmaps</span>
+        <div class="stat-card stat-scores">
+          <span class="stat-value">78M+</span>
+          <span class="stat-label">scores</span>
         </div>
       </div>
 
-      {{/* Center: Wordmark + Online Count + Buttons */}}
+      {{/* Center: Wordmark + Online + Buttons */}}
       <div class="hero-center">
         <img src="/static/images/logos/wordmark.svg" alt="Akatsuki" class="hero-wordmark">
         <div class="hero-online">
@@ -47,29 +46,31 @@
             {{ end }}
           {{ end }}
         </div>
+        <p class="hero-tagline">The home of relaxed osu! gameplay</p>
         <div class="hero-buttons">
           <a
             href="{{ if not .Context.User.ID }}/register{{ else }}/u/{{ .Context.User.ID }}{{ end }}"
             class="btn-primary"
           >
-            {{ if not .Context.User.ID }}Register{{ else }}Profile{{ end }}
+            {{ if not .Context.User.ID }}Get Started{{ else }}Profile{{ end }}
           </a>
           <a
             href="{{ if not .Context.User.ID }}/doc/connection_guide{{ else }}/leaderboard{{ end }}"
             class="btn-secondary"
           >
-            {{ if not .Context.User.ID }}Connect{{ else }}Leaderboards{{ end }}
+            {{ if not .Context.User.ID }}How to Connect{{ else }}Leaderboards{{ end }}
           </a>
         </div>
       </div>
 
-      {{/* Bottom Row Stats */}}
-      <div class="hero-stats-row">
-        <div class="stat-overlay">
-          <span class="stat-value">78M+</span>
-          <span class="stat-label">scores</span>
+      {{/* Right side: Stacked stats */}}
+      <div class="hero-stats-right">
+        <div class="stat-card stat-beatmaps">
+          {{ $maps := rediget "akatsuki:ranked_beatmaps" }}
+          <span class="stat-value">{{ with atoi $maps }}{{ humanize . }}{{ else }}280K+{{ end }}</span>
+          <span class="stat-label">beatmaps</span>
         </div>
-        <div class="stat-overlay">
+        <div class="stat-card stat-playtime">
           {{ $years := rediget "akatsuki:total_playtime_years" }}
           <span class="stat-value">{{ with atoi $years }}{{ humanize . }}{{ else }}1,200+{{ end }}</span>
           <span class="stat-label">years played</span>
