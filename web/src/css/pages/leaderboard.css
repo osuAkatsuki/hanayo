@@ -20,7 +20,7 @@
 }
 
 .l-player {
-  background: hsl(0, 0%, 18%);
+  background: var(--color-bg-elevated);
 }
 
 .l-player td div a {
