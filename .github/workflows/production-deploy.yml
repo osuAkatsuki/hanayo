@@ -101,6 +101,9 @@ jobs:
 
       - name: Deploy service to production cluster
         run: |
+          echo "=== Helm list before deploy ==="
+          helm list -A
+          echo "=== Starting helm upgrade ==="
           helm upgrade \
             --install \
             --atomic \
