@@ -487,6 +487,23 @@
           </div>
         </div>
       </div>
+    {{ else }}
+      <link rel="stylesheet" href="{{ asset "/static/css/pages/profile.min.css" }}" />
+      <div class="ui container margin">
+        <div class="ui segment">
+          <div class="ui icon message" style="background: transparent">
+            <i class="exclamation triangle icon"></i>
+            <div class="content">
+              <div class="header">
+                {{ $global.T "Unable to load profile" }}
+              </div>
+              <p>
+                {{ $global.T "The profile service is currently unavailable. Please try again later." }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     {{ end }}
   {{ end }}
   <script defer>
@@ -497,6 +514,8 @@
       var username = document.querySelector(".profile-username");
       var container = document.querySelector(".ten.wide.column");
       var userLabel = document.querySelector(".label-mobile");
+
+      if (!username || !container) return;
 
       if (window.innerWidth > 990) {
         // Usually 28pt is fine, but we need to reset it in case we resized from mobile to desktop.

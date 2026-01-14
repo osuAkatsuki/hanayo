@@ -29,9 +29,11 @@ function loadApexCharts(callback) {
 
 // code that is executed on every user profile
 $(document).ready(function () {
+  // userID is defined in profile.html - exit early if not on a profile page
+  if (typeof userID === "undefined") return;
+
   var wl = window.location;
   var newPathName = wl.pathname;
-  // userID is defined in profile.html
   if (newPathName.split("/")[2] != userID) {
     newPathName = "/u/" + userID;
   }
@@ -400,6 +402,12 @@ function initialiseChartGraph(graphType, udpate) {
           window.chart.render();
         }
       });
+    },
+    error: function () {
+      var chartCanvas = document.querySelector("#profile-history-graph");
+      var chartNotFound = document.querySelector("#profile-history-not-found");
+      chartNotFound.style.display = "block";
+      chartCanvas.style.display = "none";
     }
   });
 }
