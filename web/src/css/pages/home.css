@@ -133,20 +133,46 @@ button:focus {
   text-shadow: 2px 2px #000000;
 }
 
+.btn-key,
+.btn-how {
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
 .btn-key {
-  background-color: #f6a;
-  box-shadow: 0 4px rgb(134, 56, 91), 0 2px 2px rgb(0, 0, 0);
+  background: linear-gradient(135deg, #ff66aa 0%, #e84393 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(255, 102, 170, 0.3);
+}
+
+.btn-key:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 102, 170, 0.4);
 }
 
 .btn-how {
-  background-color: #2094ca;
-  box-shadow: 0 4px #2f537d, 0 2px 2px #000;
+  background: linear-gradient(135deg, #2094ca 0%, #1a7ba8 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(32, 148, 202, 0.3);
+}
+
+.btn-how:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(32, 148, 202, 0.4);
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 16px;
   height: 50px;
 }
 
@@ -209,5 +235,62 @@ button:focus {
   }
   .status {
     visibility: hidden;
+  }
+}
+
+/* Homepage stat boxes - CSS Grid for equal sizing */
+.stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1rem 0 !important;
+  padding: 0 !important;
+}
+
+.stats-grid .stat-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stats-grid .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.2;
+}
+
+.stats-grid .stat-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.stats-grid .stat-sub {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.5rem;
+}
+
+.stats-grid .stat-sub a {
+  color: #7a9ec2;
+}
+
+.stats-grid .stat-sub a:hover {
+  color: #9bb8d4;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -15,6 +15,10 @@ func getEnv(key string) string {
 	return val
 }
 
+func getEnvOptional(key string) string {
+	return os.Getenv(key)
+}
+
 func strToInt(s string) int {
 	val, _ := strconv.Atoi(s)
 	return val
@@ -38,7 +42,8 @@ type Settings struct {
 	PUBLIC_AVATARS_SERVICE_BASE_URL string
 	INTERNAL_AKATSUKI_API_BASE_URL  string
 	PUBLIC_AKATSUKI_API_BASE_URL    string
-	PUBLIC_BANCHO_SERVICE_BASE_URL  string
+	PUBLIC_BANCHO_SERVICE_BASE_URL          string
+	PUBLIC_PROFILE_HISTORY_SERVICE_BASE_URL string
 
 	INTERNAL_BEATMAPS_SERVICE_BASE_URL string
 	PUBLIC_BEATMAPS_SERVICE_BASE_URL   string
@@ -101,6 +106,7 @@ func LoadSettings() Settings {
 	settings.INTERNAL_AKATSUKI_API_BASE_URL = getEnv("INTERNAL_AKATSUKI_API_BASE_URL")
 	settings.PUBLIC_AKATSUKI_API_BASE_URL = getEnv("PUBLIC_AKATSUKI_API_BASE_URL")
 	settings.PUBLIC_BANCHO_SERVICE_BASE_URL = getEnv("PUBLIC_BANCHO_SERVICE_BASE_URL")
+	settings.PUBLIC_PROFILE_HISTORY_SERVICE_BASE_URL = getEnvOptional("PUBLIC_PROFILE_HISTORY_SERVICE_BASE_URL")
 
 	settings.INTERNAL_BEATMAPS_SERVICE_BASE_URL = getEnv("INTERNAL_BEATMAPS_SERVICE_BASE_URL")
 	settings.PUBLIC_BEATMAPS_SERVICE_BASE_URL = getEnv("PUBLIC_BEATMAPS_SERVICE_BASE_URL")

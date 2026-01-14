@@ -426,19 +426,9 @@
                 </button>
               </div>
               <div id="profile-history-graph" style="display: none;"></div>
-              <div id="profile-history-not-found" style="display: none">
-                <div
-                  class="ui icon message"
-                  style="background: rgb(34, 33, 33)">
-                  <div class="content">
-                    <div class="header">
-                      {{ $global.T "No graph data found" }}
-                    </div>
-                    <p>
-                      {{ $global.T "No graph data found for this user" }}
-                    </p>
-                  </div>
-                </div>
+              <div id="profile-history-not-found" class="empty-state" style="display: none">
+                <div class="empty-state-title">{{ $global.T "No history available" }}</div>
+                <div class="empty-state-description">{{ $global.T "Play some maps to start tracking progress" }}</div>
               </div>
             </div>
 
@@ -487,6 +477,16 @@
           </div>
         </div>
       </div>
+    {{ else }}
+      <link rel="stylesheet" href="{{ asset "/static/css/pages/profile.min.css" }}" />
+      <div class="ui container margin">
+        <div class="ui segment">
+          <div class="empty-state">
+            <div class="empty-state-title">{{ $global.T "Unable to load profile" }}</div>
+            <div class="empty-state-description">{{ $global.T "Please try again later" }}</div>
+          </div>
+        </div>
+      </div>
     {{ end }}
   {{ end }}
   <script defer>
@@ -497,6 +497,8 @@
       var username = document.querySelector(".profile-username");
       var container = document.querySelector(".ten.wide.column");
       var userLabel = document.querySelector(".label-mobile");
+
+      if (!username || !container) return;
 
       if (window.innerWidth > 990) {
         // Usually 28pt is fine, but we need to reset it in case we resized from mobile to desktop.
