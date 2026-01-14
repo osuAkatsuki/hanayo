@@ -446,8 +446,7 @@ function initialiseAchievements() {
           $ach.append(
             $("<div class='ui two wide column'>").append(
               $(
-                "<img src='https://s.ripple.moe/images/medals-" +
-                  "client/" +
+                "<img src='https://assets.ppy.sh/medals/client/" +
                   ach.icon +
                   ".png' alt='" +
                   ach.name +
