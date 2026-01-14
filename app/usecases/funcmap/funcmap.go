@@ -523,6 +523,19 @@ var FuncMap = template.FuncMap{
 		}
 		return x.Val()
 	},
+	// redigetJSON retrieves a JSON array from redis and parses it.
+	"redigetJSON": func(k string) []map[string]interface{} {
+		x := services.RD.Get(k)
+		if x == nil || x.Err() != nil {
+			return nil
+		}
+		var result []map[string]interface{}
+		if err := json.Unmarshal([]byte(x.Val()), &result); err != nil {
+			slog.Error("Failed to parse JSON from Redis", "key", k, "error", err.Error())
+			return nil
+		}
+		return result
+	},
 	"languageInformation": func() []langInfo {
 		return languageInformation
 	},

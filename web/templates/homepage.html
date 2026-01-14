@@ -1,7 +1,6 @@
 {{ define "tpl" }}
   {{ $   := . }}
   <head>
-    {{/* Meta tags */}}
     <meta property="og:title" content="home | Akatsuki" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://akatsuki.gg" />
@@ -12,7 +11,6 @@
       content="Akatsuki is an osu! private server mainly based around the relax mod - featuring score submission, leaderboards & rankings, custom pp, and much more for relax, autopilot and vanilla osu!"
     />
 
-    {{/* Twitter-specific stuff */}}
     <meta name="twitter:title" content="home | Akatsuki" />
     <meta name="twitter:image" content="/static/logos/logo.png" />
     <meta name="twitter:url" content="https://akatsuki.gg" />
@@ -21,6 +19,7 @@
 
   <link rel="stylesheet" href="{{ asset "/static/css/pages/home.min.css" }}" />
 
+  {{/* Hero Section */}}
   <div class="masthead segment bg14">
     <div class="ui container">
       <div class="introduction">
@@ -28,6 +27,17 @@
           <div class="library">
             <img src="/static/images/logos/wordmark.svg" alt="Akatsuki" style="height: 60px;"></img>
           </div>
+
+          {{/* Live Player Count */}}
+          <div class="hero-live-stats">
+            {{ with bget "onlineUsers" }}
+              {{ with .result }}
+                <span class="pulse-dot"></span>
+                <span class="live-count">{{ humanize . }} players online</span>
+              {{ end }}
+            {{ end }}
+          </div>
+
           <div class="tagline">
             <b>Welcome to Akatsuki.</b>
             We are an osu! private server mainly based around the relax mod -
@@ -39,32 +49,16 @@
           </div>
           <div class="buttons">
             <a
-              href="{{ if not .Context.User.ID }}
-                /register
-              {{ else }}
-                /u/{{ .Context.User.ID }}
-              {{ end }}"
+              href="{{ if not .Context.User.ID }}/register{{ else }}/u/{{ .Context.User.ID }}{{ end }}"
               class="btn-key"
             >
-              {{ if not .Context.User.ID }}
-                Register
-              {{ else }}
-                Profile
-              {{ end }}
+              {{ if not .Context.User.ID }}Register{{ else }}Profile{{ end }}
             </a>
             <a
-              href="{{ if not .Context.User.ID }}
-                /doc/connection_guide
-              {{ else }}
-                /leaderboard
-              {{ end }}"
+              href="{{ if not .Context.User.ID }}/doc/connection_guide{{ else }}/leaderboard{{ end }}"
               class="btn-how"
             >
-              {{ if not .Context.User.ID }}
-                How to connect
-              {{ else }}
-                View leaderboards
-              {{ end }}
+              {{ if not .Context.User.ID }}How to connect{{ else }}View leaderboards{{ end }}
             </a>
           </div>
         </div>
@@ -73,6 +67,7 @@
   </div>
 
   <div class="ui container">
+    {{/* Alert Banner */}}
     {{ $set := systemSettings "website_home_alert" }}
     {{ with $set.website_home_alert.String }}
       <div class="ui warning message">
@@ -80,48 +75,193 @@
       </div>
     {{ end }}
 
+    {{/* Global Statistics Grid */}}
+    <section class="homepage-section">
+      <h2 class="section-title">Server Statistics</h2>
+      <div class="stats-grid">
+        {{/* Score counts */}}
+        <div class="stat-box">
+          <p class="stat-value">{{ rediget "ripple:submitted_scores" }}</p>
+          <p class="stat-label">Vanilla Scores</p>
+        </div>
+        <div class="stat-box featured">
+          <p class="stat-value">{{ rediget "ripple:submitted_scores_relax" }}</p>
+          <p class="stat-label">Relax Scores</p>
+        </div>
+        <div class="stat-box">
+          <p class="stat-value">{{ rediget "ripple:submitted_scores_ap" }}</p>
+          <p class="stat-label">Autopilot Scores</p>
+        </div>
 
-    <br />
+        {{/* Community stats */}}
+        <div class="stat-box">
+          {{ $users := rediget "akatsuki:registered_users" }}
+          <p class="stat-value">{{ with atoi $users }}{{ humanize . }}{{ else }}100,000+{{ end }}</p>
+          <p class="stat-label">Registered Players</p>
+        </div>
+        <div class="stat-box">
+          {{ $maps := rediget "akatsuki:ranked_beatmaps" }}
+          <p class="stat-value">{{ with atoi $maps }}{{ humanize . }}{{ else }}280,000+{{ end }}</p>
+          <p class="stat-label">Ranked Beatmaps</p>
+        </div>
+        <div class="stat-box">
+          {{ $years := rediget "akatsuki:total_playtime_years" }}
+          <p class="stat-value">{{ with atoi $years }}{{ humanize . }}{{ else }}1,200+{{ end }}</p>
+          <p class="stat-label">Years of Playtime</p>
+        </div>
 
-    {{/* Global Statistics */}}
-    <div class="stats-grid">
-      <div class="stat-box">
-        <p class="stat-value">{{ with atoi (rediget "ripple:submitted_scores") }}{{ humanize . }}{{ else }}{{ rediget "ripple:submitted_scores" }}{{ end }}</p>
-        <p class="stat-label">Total scores (Vanilla)</p>
+        {{/* Top scores */}}
+        {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
+        {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
+        {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
+        <div class="stat-box">
+          <p class="stat-value">{{ with atoi $vanilla_pp }}{{ humanize . }}{{ else }}{{ $vanilla_pp }}{{ end }}pp</p>
+          <p class="stat-label">Top Vanilla Score</p>
+          <p class="stat-sub">by <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a></p>
+        </div>
+
+        {{ $relax_pp := (rediget "akatsuki:top:scores_relax:pp") }}
+        {{ $relax_id := (rediget "akatsuki:top:scores_relax:id") }}
+        {{ $relax_name := (rediget "akatsuki:top:scores_relax:name") }}
+        <div class="stat-box featured">
+          <p class="stat-value">{{ with atoi $relax_pp }}{{ humanize . }}{{ else }}{{ $relax_pp }}{{ end }}pp</p>
+          <p class="stat-label">Top Relax Score</p>
+          <p class="stat-sub">by <a href="/u/{{ $relax_id }}?rx=1">{{ $relax_name }}</a></p>
+        </div>
+
+        {{ $ap_pp := (rediget "akatsuki:top:scores_ap:pp") }}
+        {{ $ap_id := (rediget "akatsuki:top:scores_ap:id") }}
+        {{ $ap_name := (rediget "akatsuki:top:scores_ap:name") }}
+        <div class="stat-box">
+          <p class="stat-value">{{ with atoi $ap_pp }}{{ humanize . }}{{ else }}{{ $ap_pp }}{{ end }}pp</p>
+          <p class="stat-label">Top Autopilot Score</p>
+          <p class="stat-sub">by <a href="/u/{{ $ap_id }}?rx=2">{{ $ap_name }}</a></p>
+        </div>
       </div>
-      <div class="stat-box">
-        <p class="stat-value">{{ with atoi (rediget "ripple:submitted_scores_relax") }}{{ humanize . }}{{ else }}{{ rediget "ripple:submitted_scores_relax" }}{{ end }}</p>
-        <p class="stat-label">Total scores (Relax)</p>
+    </section>
+
+    {{/* Activity Feed */}}
+    <section class="homepage-section">
+      <h2 class="section-title">What's Happening</h2>
+      <div class="activity-section">
+        <div class="activity-tabs">
+          <button class="activity-tab active" data-tab="first-places">First Places</button>
+          <button class="activity-tab" data-tab="high-pp">High PP</button>
+          <button class="activity-tab" data-tab="trending">Trending Maps</button>
+        </div>
+
+        <div class="activity-content active" id="first-places">
+          {{ range redigetJSON "akatsuki:recent_first_places" }}
+            <div class="activity-item">
+              <img src="https://a.akatsuki.gg/{{ .userid }}" class="activity-avatar" loading="lazy" alt="">
+              <div class="activity-details">
+                <a href="/u/{{ .userid }}">{{ .username }}</a>
+                claimed <strong>#1</strong> on
+                <a href="/b/{{ .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
+              </div>
+              <span class="activity-pp">{{ .pp }}pp</span>
+            </div>
+          {{ else }}
+            <p class="no-activity">No recent first places to show</p>
+          {{ end }}
+        </div>
+
+        <div class="activity-content" id="high-pp">
+          {{ range redigetJSON "akatsuki:high_pp_plays_24h" }}
+            <div class="activity-item">
+              <img src="https://a.akatsuki.gg/{{ .userid }}" class="activity-avatar" loading="lazy" alt="">
+              <div class="activity-details">
+                <a href="/u/{{ .userid }}">{{ .username }}</a>
+                set <strong>{{ .pp }}pp</strong> on
+                <a href="/b/{{ .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
+              </div>
+            </div>
+          {{ else }}
+            <p class="no-activity">No high PP plays in the last 24 hours</p>
+          {{ end }}
+        </div>
+
+        <div class="activity-content" id="trending">
+          <div class="trending-grid">
+            {{ range redigetJSON "akatsuki:trending_beatmaps" }}
+              <a href="/b/{{ .beatmap_id }}" class="trending-map">
+                <img
+                  src="https://assets.ppy.sh/beatmaps/{{ .beatmapset_id }}/covers/card.jpg"
+                  class="trending-bg"
+                  loading="lazy"
+                  alt=""
+                >
+                <div class="trending-info">
+                  <span class="trending-name">{{ .song_name }}</span>
+                  <span class="trending-plays">{{ .play_count }} plays this week</span>
+                </div>
+              </a>
+            {{ else }}
+              <p class="no-activity">No trending maps to show</p>
+            {{ end }}
+          </div>
+        </div>
       </div>
-      <div class="stat-box">
-        <p class="stat-value">{{ with atoi (rediget "ripple:submitted_scores_ap") }}{{ humanize . }}{{ else }}{{ rediget "ripple:submitted_scores_ap" }}{{ end }}</p>
-        <p class="stat-label">Total scores (Autopilot)</p>
+    </section>
+
+    {{/* Game Mode Showcase */}}
+    <section class="homepage-section">
+      <h2 class="section-title">Choose Your Playstyle</h2>
+      <div class="mode-cards">
+        <div class="mode-card">
+          <div class="mode-icon">
+            <i class="fa fa-keyboard-o"></i>
+          </div>
+          <h3>Vanilla</h3>
+          <p>Classic osu! experience with competitive PP rankings</p>
+          <span class="mode-stat">{{ rediget "ripple:submitted_scores" }} scores</span>
+        </div>
+        <div class="mode-card featured">
+          <span class="mode-badge">Most Popular</span>
+          <div class="mode-icon">
+            <i class="fa fa-hand-paper-o"></i>
+          </div>
+          <h3>Relax</h3>
+          <p>Focus purely on aim - automatic key presses</p>
+          <span class="mode-stat">{{ rediget "ripple:submitted_scores_relax" }} scores</span>
+        </div>
+        <div class="mode-card">
+          <div class="mode-icon">
+            <i class="fa fa-mouse-pointer"></i>
+          </div>
+          <h3>Autopilot</h3>
+          <p>Master rhythm and timing - automatic cursor movement</p>
+          <span class="mode-stat">{{ rediget "ripple:submitted_scores_ap" }} scores</span>
+        </div>
       </div>
-      {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
-      {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
-      {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
-      <div class="stat-box">
-        <p class="stat-value">{{ with atoi $vanilla_pp }}{{ humanize . }}{{ else }}{{ $vanilla_pp }}{{ end }}pp</p>
-        <p class="stat-label">Top score (Vanilla)</p>
-        <p class="stat-sub">Played by <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a></p>
+    </section>
+
+    {{/* Personalized Section (Logged-in Only) */}}
+    {{ if .Context.User.ID }}
+    <section class="homepage-section personalized-section">
+      <h2 class="section-title">Welcome back, {{ .Context.User.Username }}!</h2>
+      <div class="quick-actions">
+        <a href="/u/{{ .Context.User.ID }}" class="quick-action">
+          <i class="fa fa-user"></i>
+          <span>My Profile</span>
+        </a>
+        <a href="/settings" class="quick-action">
+          <i class="fa fa-cog"></i>
+          <span>Settings</span>
+        </a>
+        <a href="/leaderboard" class="quick-action">
+          <i class="fa fa-trophy"></i>
+          <span>Leaderboards</span>
+        </a>
+        <a href="/discord" class="quick-action">
+          <i class="fa fa-comments"></i>
+          <span>Discord</span>
+        </a>
       </div>
-      {{ $relax_pp := (rediget "akatsuki:top:scores_relax:pp") }}
-      {{ $relax_id := (rediget "akatsuki:top:scores_relax:id") }}
-      {{ $relax_name := (rediget "akatsuki:top:scores_relax:name") }}
-      <div class="stat-box">
-        <p class="stat-value">{{ with atoi $relax_pp }}{{ humanize . }}{{ else }}{{ $relax_pp }}{{ end }}pp</p>
-        <p class="stat-label">Top score (Relax)</p>
-        <p class="stat-sub">Played by <a href="/u/{{ $relax_id }}?rx=1">{{ $relax_name }}</a></p>
-      </div>
-      {{ $ap_pp := (rediget "akatsuki:top:scores_ap:pp") }}
-      {{ $ap_id := (rediget "akatsuki:top:scores_ap:id") }}
-      {{ $ap_name := (rediget "akatsuki:top:scores_ap:name") }}
-      <div class="stat-box">
-        <p class="stat-value">{{ with atoi $ap_pp }}{{ humanize . }}{{ else }}{{ $ap_pp }}{{ end }}pp</p>
-        <p class="stat-label">Top score (Autopilot)</p>
-        <p class="stat-sub">Played by <a href="/u/{{ $ap_id }}?rx=2">{{ $ap_name }}</a></p>
-      </div>
-    </div>
-    {{/* Global Stats end past this /div */}}
+    </section>
+    {{ end }}
+
   </div>
+
+  <script src="{{ asset "/static/js/pages/home.min.js" }}" defer></script>
 {{ end }}
