@@ -1,3 +1,9 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 @media (max-width: 576px) {
   .row {
     margin-right: 0 !important;
@@ -252,10 +258,11 @@ a.inherit:hover {
 }
 
 .main.wrapper {
-  min-height: calc(100vh - 45.99px);
+  flex: 1;
 }
 
 .footer {
+  flex-shrink: 0;
   padding: 15px 20px;
   background: hsl(var(--base), 0%, 2%);
 }
