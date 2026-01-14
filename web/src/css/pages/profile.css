@@ -171,7 +171,13 @@
 }
 
 .ranks-column {
-  width: 23% !important;
+  width: auto !important;
+  flex-shrink: 0;
+}
+
+#profile-info .ten.wide.column {
+  flex: 1;
+  width: auto !important;
 }
 
 .profile-rank {
@@ -186,17 +192,6 @@
   width: 20px;
 }
 
-@media screen and (max-width: 1199px) {
-  .ranks-column {
-    width: 20% !important;
-  }
-}
-
-@media screen and (max-width: 991px) {
-  .ranks-column {
-    width: 15% !important;
-  }
-}
 
 @media screen and (max-width: 499px) {
   .profile-badges:has(.badge) {
