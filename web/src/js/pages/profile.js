@@ -27,6 +27,24 @@ function loadApexCharts(callback) {
   document.head.appendChild(script);
 }
 
+// Helper for profile-history API calls (uses separate service URL)
+function profileHistoryApi(endpoint, data, success, failure) {
+  var baseUrl = hanayoConf.profileHistoryAPI || hanayoConf.baseAPI;
+  $.ajax({
+    method: "GET",
+    dataType: "json",
+    url: baseUrl + "/" + endpoint,
+    data: data,
+    success: function (resp) {
+      if (success) success(resp);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error("Profile history API error:", textStatus, errorThrown);
+      if (failure) failure(jqXHR, textStatus, errorThrown);
+    }
+  });
+}
+
 // code that is executed on every user profile
 $(document).ready(function () {
   var wl = window.location;
@@ -183,7 +201,7 @@ function applyPeakRankLabel() {
   var rankRow = $(`#global-row-${preferRelax}-${favouriteMode}`);
   if (!rankLabel) return;
 
-  api(
+  profileHistoryApi(
     "profile-history/peak-rank",
     { user_id: userID, mode: modeVal },
     (resp) => {
@@ -282,7 +300,7 @@ function initialiseChartGraph(graphType, udpate) {
   window.graphColor = graphType == "pp" ? "#e03997" : "#2185d0";
   var yaxisReverse = graphType == "pp" ? false : true;
 
-  api(
+  profileHistoryApi(
     `profile-history/${graphType}`,
     { user_id: userID, mode: modeVal },
     (resp) => {
