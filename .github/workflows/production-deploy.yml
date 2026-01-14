@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+      - debug-helm-deploy
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
