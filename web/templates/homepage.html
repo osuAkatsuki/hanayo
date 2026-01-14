@@ -44,7 +44,7 @@
               {{ else }}
                 /u/{{ .Context.User.ID }}
               {{ end }}"
-              class="ui small pink button"
+              class="btn-key"
             >
               {{ if not .Context.User.ID }}
                 Register
@@ -58,7 +58,7 @@
               {{ else }}
                 /leaderboard
               {{ end }}"
-              class="ui small blue button right--margin"
+              class="btn-how"
             >
               {{ if not .Context.User.ID }}
                 How to connect

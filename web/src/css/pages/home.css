@@ -158,14 +158,14 @@ button:focus {
 }
 
 .btn-how {
-  background: linear-gradient(135deg, #2094ca 0%, #1a7ba8 100%);
+  background: linear-gradient(135deg, #2c97fb 0%, #0e53c5 100%);
   color: #fff;
-  box-shadow: 0 4px 15px rgba(32, 148, 202, 0.3);
+  box-shadow: 0 4px 15px rgba(44, 151, 251, 0.3);
 }
 
 .btn-how:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(32, 148, 202, 0.4);
+  box-shadow: 0 6px 20px rgba(44, 151, 251, 0.4);
 }
 
 .buttons {
