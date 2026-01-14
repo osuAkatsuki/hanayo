@@ -80,6 +80,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: linear-gradient(135deg, hsl(280, 15%, 8%) 0%, hsl(213, 20%, 10%) 100%);
+  background-attachment: fixed;
 }
 
 /* Accessibility - Focus states */
@@ -159,14 +161,32 @@ i.icon {
   }
 }
 
-a.navbar-icon {
-  font-size: 16px;
-  color: white;
-  transition: var(--transition-normal);
+a.navbar-logo {
+  display: flex;
+  align-items: center;
 }
 
-a.navbar-icon:hover {
-  transform: scale(1.05);
+a.navbar-logo img {
+  transition: var(--transition-normal);
+  opacity: 0.9;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8))
+          drop-shadow(0 0 1px rgba(0, 0, 0, 0.8));
+}
+
+a.navbar-logo:hover img {
+  opacity: 1;
+}
+
+/* Navbar item hover effects */
+#navbar .ui.dropdown.item,
+#navbar a.item:not(.mobile) {
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+#navbar .ui.dropdown.item:hover,
+#navbar a.item:not(.mobile):hover {
+  background-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 .mobile-header {
@@ -446,7 +466,7 @@ a.inherit:hover {
 }
 
 .white.background {
-  background-color: hsl(var(--base), 42%, 36%);
+  background: linear-gradient(90deg, hsl(280, 20%, 15%) 0%, hsl(213, 25%, 18%) 100%);
 }
 
 body.ds .white.background {
@@ -998,12 +1018,6 @@ body::-webkit-scrollbar-thumb {
   #navbar .item {
     font-size: 0.8rem;
     padding: 0.88571429em 0.52857143em;
-    transition: var(--transition-slow);
-  }
-
-  #navbar .item:hover {
-    background: transparent !important;
-    font-weight: 600;
   }
 }
 
