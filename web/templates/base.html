@@ -190,7 +190,7 @@
 
       {{ if .Scripts }}
         {{ range .Scripts }}
-          <script src="{{ asset . }}"></script>
+          <script src="{{ asset . }}" defer></script>
         {{ end }}
       {{ end }}
     </body>
