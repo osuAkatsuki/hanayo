@@ -18,6 +18,14 @@
   display: none !important;
 }
 
+.level-progress.ui.progress .bar {
+  background: var(--brand-gradient-purple-to-blue);
+}
+
+.level-progress.ui.progress {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .nowrap {
   white-space: nowrap !important;
 }

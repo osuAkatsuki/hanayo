@@ -2,6 +2,17 @@
   /* Base hue for theming (HSL) */
   --base: 213;
 
+  /* Brand colors (from logo - inner colors are primary/secondary) */
+  --brand-primary: #a517f7;    /* Purple (inner) */
+  --brand-secondary: #2c97fb;  /* Cyan (inner) */
+  --brand-tertiary-pink: #ef43fe;   /* Pink (outer) */
+  --brand-tertiary-blue: #0e53c5;   /* Deep blue (outer) */
+
+  /* Gradients */
+  --brand-gradient-pink: linear-gradient(135deg, #ff66aa 0%, #e84393 100%);
+  --brand-gradient-cyan: linear-gradient(135deg, #2c97fb 0%, #0e53c5 100%);
+  --brand-gradient-purple-to-blue: linear-gradient(90deg, #a517f7 0%, #0e53c5 100%);
+
   /* Background colors */
   --color-bg-primary: hsl(var(--base), 0%, 2%);
   --color-bg-secondary: hsl(var(--base), 0%, 10%);
