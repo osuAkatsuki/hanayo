@@ -1102,7 +1102,15 @@ function privilegesToString(privs) {
 }
 
 function toggleNavbar() {
-  $(".mobile-header").toggleClass("active");
+  var mobileHeader = $(".mobile-header");
+  mobileHeader.toggleClass("active");
+
+  // Toggle body scroll lock
+  if (mobileHeader.hasClass("active")) {
+    $("body").addClass("mobile-menu-open");
+  } else {
+    $("body").removeClass("mobile-menu-open");
+  }
 }
 
 function countryToCodepoints(country) {
