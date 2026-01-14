@@ -190,6 +190,35 @@
     currentCmodeChanged = true;
   });
   $("table.sortable").tablesort();
+
+  // Preview audio
+  var $previewAudio = $("#beatmap-preview");
+  var $previewText = $("#preview-text");
+  var $previewIcon = $("#preview-icon");
+  var previewPlaying = false;
+  $previewAudio.prop("volume", 0.2);
+
+  $previewAudio.on("playing", function () {
+    previewPlaying = true;
+    $previewText.text(i18n.pauseAudio);
+    $previewIcon.removeClass("fa-play").addClass("fa-pause");
+  });
+
+  $previewAudio.on("pause", function () {
+    previewPlaying = false;
+    $previewText.text(i18n.previewAudio);
+    $previewIcon.removeClass("fa-pause").addClass("fa-play");
+  });
+
+  $previewAudio.on("ended", function () {
+    previewPlaying = false;
+    $previewText.text(i18n.previewAudio);
+    $previewIcon.removeClass("fa-pause").addClass("fa-play");
+  });
+
+  $("#preview-btn").on("click", function () {
+    previewPlaying ? $previewAudio[0].pause() : $previewAudio[0].play();
+  });
 })();
 
 function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {
