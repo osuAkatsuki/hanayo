@@ -151,7 +151,7 @@
 
 #profile-info > .row {
   display: flex !important;
-  align-items: flex-end !important;
+  align-items: flex-start !important;
 }
 
 .profile-rank-container {
@@ -381,11 +381,11 @@
   }
 
   .profile-dates {
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .profile-actions {
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .profile-user-info {
@@ -394,19 +394,19 @@
 
   .profile-smaller-section {
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .profile-badges {
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .bottom-column {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .ranks-column {
