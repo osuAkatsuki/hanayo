@@ -84,113 +84,42 @@
     <br />
 
     {{/* Global Statistics */}}
-    <div class="ui stackable four grid">
-      <div class="five wide column less-pad">
-        <div class="ui segment">
-          <div class="ui grid">
-            <div class="four wide column">
-              <i class="angle double right icon status-icon"></i>
-            </div>
-            <div class="twelve wide column">
-              <p class="status-head">
-                {{ .T "%s" (rediget "ripple:submitted_scores") | html }}
-              </p>
-              <p class="status-footer">Total scores (Vanilla)</p>
-            </div>
-          </div>
-        </div>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <p class="stat-value">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
+        <p class="stat-label">Total scores (Vanilla)</p>
       </div>
-      <div class="six wide column less-pad">
-        <div class="ui segment">
-          <div class="ui grid">
-            <div class="four wide column">
-              <i class="angle double right icon status-icon"></i>
-            </div>
-            <div class="twelve wide column">
-              <p class="status-head">
-                {{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}
-              </p>
-              <p class="status-footer">Total scores (Relax)</p>
-            </div>
-          </div>
-        </div>
+      <div class="stat-box">
+        <p class="stat-value">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
+        <p class="stat-label">Total scores (Relax)</p>
       </div>
-      <div class="five wide column less-pad">
-        <div class="ui segment">
-          <div class="ui grid">
-            <div class="four wide column">
-              <i class="angle double right icon status-icon"></i>
-            </div>
-            <div class="twelve wide column">
-              <p class="status-head">
-                {{ .T "%s" (rediget "ripple:submitted_scores_ap") | html }}
-              </p>
-              <p class="status-footer">Total scores (Autopilot)</p>
-            </div>
-          </div>
-        </div>
+      <div class="stat-box">
+        <p class="stat-value">{{ .T "%s" (rediget "ripple:submitted_scores_ap") | html }}</p>
+        <p class="stat-label">Total scores (Autopilot)</p>
       </div>
-      <div class="five wide column less-pad">
-        <div class="ui segment">
-          <div class="ui grid">
-            <div class="four wide column">
-              <i class="thumbs up icon status-icon"></i>
-            </div>
-            <div class="twelve wide column">
-              {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
-              {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
-              {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
-              <p class="status-head">{{ $vanilla_pp }}pp</p>
-              <p class="status-footer">Top score (Vanilla)</p>
-              <p class="status-head" style="font-size: 12px!important;">
-                Played by
-                <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a>
-              </p>
-            </div>
-          </div>
-        </div>
+      {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
+      {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
+      {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
+      <div class="stat-box">
+        <p class="stat-value">{{ $vanilla_pp }}pp</p>
+        <p class="stat-label">Top score (Vanilla)</p>
+        <p class="stat-sub">Played by <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a></p>
       </div>
-      <div class="six wide column less-pad">
-        <div class="ui segment">
-          <div class="ui grid">
-            <div class="four wide column">
-              <i class="thumbs up outline icon status-icon"></i>
-            </div>
-            <div class="twelve wide column">
-              {{ $relax_pp := (rediget "akatsuki:top:scores_relax:pp") }}
-              {{ $relax_id := (rediget "akatsuki:top:scores_relax:id") }}
-              {{ $relax_name := (rediget "akatsuki:top:scores_relax:name") }}
-              <p class="status-head">{{ $relax_pp }}pp</p>
-              <p class="status-footer">Top score (Relax)</p>
-              <p class="status-head" style="font-size: 12px!important;">
-                Played by
-                <a href="/u/{{ $relax_id }}?rx=1">
-                  {{ .T "%s" $relax_name | html }}
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
+      {{ $relax_pp := (rediget "akatsuki:top:scores_relax:pp") }}
+      {{ $relax_id := (rediget "akatsuki:top:scores_relax:id") }}
+      {{ $relax_name := (rediget "akatsuki:top:scores_relax:name") }}
+      <div class="stat-box">
+        <p class="stat-value">{{ $relax_pp }}pp</p>
+        <p class="stat-label">Top score (Relax)</p>
+        <p class="stat-sub">Played by <a href="/u/{{ $relax_id }}?rx=1">{{ .T "%s" $relax_name | html }}</a></p>
       </div>
-      <div class="five wide column less-pad">
-        <div class="ui segment">
-          <div class="ui grid">
-            <div class="four wide column">
-              <i class="thumbs up outline icon status-icon"></i>
-            </div>
-            <div class="twelve wide column">
-              {{ $ap_pp := (rediget "akatsuki:top:scores_ap:pp") }}
-              {{ $ap_id := (rediget "akatsuki:top:scores_ap:id") }}
-              {{ $ap_name := (rediget "akatsuki:top:scores_ap:name") }}
-              <p class="status-head">{{ $ap_pp }}pp</p>
-              <p class="status-footer">Top score (Autopilot)</p>
-              <p class="status-head" style="font-size: 12px!important;">
-                Played by
-                <a href="/u/{{ $ap_id }}?rx=2">{{ .T "%s" $ap_name | html }}</a>
-              </p>
-            </div>
-          </div>
-        </div>
+      {{ $ap_pp := (rediget "akatsuki:top:scores_ap:pp") }}
+      {{ $ap_id := (rediget "akatsuki:top:scores_ap:id") }}
+      {{ $ap_name := (rediget "akatsuki:top:scores_ap:name") }}
+      <div class="stat-box">
+        <p class="stat-value">{{ $ap_pp }}pp</p>
+        <p class="stat-label">Top score (Autopilot)</p>
+        <p class="stat-sub">Played by <a href="/u/{{ $ap_id }}?rx=2">{{ .T "%s" $ap_name | html }}</a></p>
       </div>
     </div>
     {{/* Global Stats end past this /div */}}

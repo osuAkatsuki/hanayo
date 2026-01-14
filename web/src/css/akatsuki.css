@@ -132,13 +132,7 @@ a.navbar-icon {
 }
 
 a.navbar-icon:hover {
-  color: white;
-  transform: scale(1.1);
-  font-weight: 700;
-}
-
-a.navbar-icon b:hover {
-  font-weight: 500;
+  transform: scale(1.05);
 }
 
 .mobile-header {
