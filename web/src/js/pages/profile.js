@@ -17,7 +17,7 @@ function loadApexCharts(callback) {
 
   apexChartsLoading = true;
   var script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/apexcharts';
+  script.src = 'https://cdn.jsdelivr.net/npm/apexcharts@5.3.6';
   script.onload = function() {
     apexChartsLoaded = true;
     apexChartsLoading = false;
