@@ -1,7 +1,33 @@
+/* Typography improvements */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* Accessibility - Focus states */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid #7a9ec2;
+  outline-offset: 2px;
+}
+
+/* Skip focus outline on mouse click but show on keyboard */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
 }
 
 @media (max-width: 576px) {
@@ -1001,5 +1027,36 @@ body::-webkit-scrollbar-thumb {
 }
 
 .btn-disabled:hover {
-  background: hsl(var(--base),0%,15%) !important;
+  background: hsl(0, 0%, 15%) !important;
+}
+
+/* Modern button hover effects */
+.ui.button:not(.disabled):not(.loading) {
+  transition: transform 0.15s ease,
+              box-shadow 0.15s ease,
+              background-color 0.15s ease;
+}
+
+.ui.button:not(.disabled):not(.loading):hover {
+  transform: translateY(-1px);
+}
+
+.ui.button:not(.disabled):not(.loading):active {
+  transform: translateY(0);
+}
+
+/* Improved card and segment shadows */
+.ui.segment {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.ui.raised.segment,
+.ui.card,
+.ui.cards > .card {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.ui.card:hover,
+.ui.cards > .card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
