@@ -153,13 +153,13 @@
         <div class="activity-content active" id="first-places">
           {{ range redigetJSON "akatsuki:recent_first_places" }}
             <div class="activity-item">
-              <img src="https://a.akatsuki.gg/{{ .userid }}" class="activity-avatar" loading="lazy" alt="">
+              <img src="https://a.akatsuki.gg/{{ ftoi .userid }}" class="activity-avatar" loading="lazy" alt="">
               <div class="activity-details">
-                <a href="/u/{{ .userid }}">{{ .username }}</a>
+                <a href="/u/{{ ftoi .userid }}">{{ .username }}</a>
                 claimed <strong>#1</strong> on
-                <a href="/b/{{ .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
+                <a href="/b/{{ ftoi .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
               </div>
-              <span class="activity-pp">{{ .pp }}pp</span>
+              <span class="activity-pp">{{ ftoi .pp }}pp</span>
             </div>
           {{ else }}
             <p class="no-activity">No recent first places to show</p>
@@ -169,11 +169,11 @@
         <div class="activity-content" id="high-pp">
           {{ range redigetJSON "akatsuki:high_pp_plays_24h" }}
             <div class="activity-item">
-              <img src="https://a.akatsuki.gg/{{ .userid }}" class="activity-avatar" loading="lazy" alt="">
+              <img src="https://a.akatsuki.gg/{{ ftoi .userid }}" class="activity-avatar" loading="lazy" alt="">
               <div class="activity-details">
-                <a href="/u/{{ .userid }}">{{ .username }}</a>
-                set <strong>{{ .pp }}pp</strong> on
-                <a href="/b/{{ .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
+                <a href="/u/{{ ftoi .userid }}">{{ .username }}</a>
+                set <strong>{{ ftoi .pp }}pp</strong> on
+                <a href="/b/{{ ftoi .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
               </div>
             </div>
           {{ else }}
@@ -184,16 +184,16 @@
         <div class="activity-content" id="trending">
           <div class="trending-grid">
             {{ range redigetJSON "akatsuki:trending_beatmaps" }}
-              <a href="/b/{{ .beatmap_id }}" class="trending-map">
+              <a href="/b/{{ ftoi .beatmap_id }}" class="trending-map">
                 <img
-                  src="https://assets.ppy.sh/beatmaps/{{ .beatmapset_id }}/covers/card.jpg"
+                  src="https://assets.ppy.sh/beatmaps/{{ ftoi .beatmapset_id }}/covers/card.jpg"
                   class="trending-bg"
                   loading="lazy"
                   alt=""
                 >
                 <div class="trending-info">
                   <span class="trending-name">{{ .song_name }}</span>
-                  <span class="trending-plays">{{ .play_count }} plays this week</span>
+                  <span class="trending-plays">{{ ftoi .play_count }} plays this week</span>
                 </div>
               </a>
             {{ else }}
