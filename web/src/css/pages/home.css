@@ -85,15 +85,15 @@ button:focus {
 }
 
 .main-block {
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   display: flex;
   justify-content: center;
-  background-color: hsl(var(--base), 10%, 15%) !important;
+  background-color: var(--color-bg-elevated) !important;
   margin-top: 96px;
   align-items: flex-end;
   height: 288px;
   padding-right: 34px;
-  box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);
+  box-shadow: var(--shadow-sm);
 }
 
 .margined.container {

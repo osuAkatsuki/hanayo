@@ -11773,10 +11773,10 @@ ol.ui.list li[value]:before {
 
 .ui.segment {
   position: relative;
-  background: #222121;
+  background: var(--color-bg-secondary);
   margin: 1rem 0;
   padding: 1em;
-  border-radius: 0.28571429rem;
+  border-radius: var(--radius-md);
 }
 
 .ui.segment:first-child {

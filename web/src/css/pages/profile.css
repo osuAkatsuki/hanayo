@@ -148,8 +148,8 @@
   flex-direction: column;
   font-size: 20px;
   padding: 11px;
-  background: #292929e3;
-  border-radius: 5px;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
   margin-bottom: 4px;
   float: right;
   margin-top: 40%;
@@ -443,7 +443,7 @@
 
 .sui .header-top {
   padding: 16px;
-  background: #292929;
+  background: var(--color-bg-elevated);
 }
 
 .scores {
@@ -460,8 +460,8 @@
   margin: 8px 0;
   justify-content: space-between;
   overflow: hidden;
-  background: hsl(var(--base), 0%, 15%);
-  transition: 0.1s ease;
+  background: var(--color-bg-elevated);
+  transition: var(--transition-fast);
   cursor: pointer;
 }
 
@@ -479,7 +479,7 @@
 
 .map-single:hover {
   transform: scale(1.01);
-  background: hsl(var(--base), 0%, 16%);
+  background: var(--color-bg-hover);
 }
 
 .map-single:first-child {
@@ -608,7 +608,7 @@
 
 .score-data {
   padding: 8px 12px;
-  background: #222121;
+  background: var(--color-bg-secondary);
 }
 
 .achivement-data {
@@ -628,8 +628,8 @@
 
 .show-button {
   padding: 6px 22px;
-  background: hsl(var(--base), 0%, 16%);
-  color: white;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
   margin: 0px 8px 8px 8px;
   cursor: pointer;
 }
@@ -663,8 +663,8 @@
 
 .badge {
   padding: 3px 11px;
-  background: #292929e3;
-  border-radius: 5px;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-sm);
   margin-bottom: 4px;
 }
 
