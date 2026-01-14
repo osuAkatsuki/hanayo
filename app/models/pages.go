@@ -26,6 +26,12 @@ type BaseTemplateData struct {
 	Messages       []msg.Message
 	RequestInfo    map[string]interface{}
 
+	// OpenGraph meta tags (optional, for social sharing)
+	OGTitle       string
+	OGDescription string
+	OGImage       string
+	OGUrl         string
+
 	// ignore, they're set by resp()
 	Context  Context
 	Path     string

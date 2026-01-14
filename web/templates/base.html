@@ -10,6 +10,20 @@
       <title>{{ if .TitleBar }}{{ .T .TitleBar }} - {{ end }}Akatsuki</title>
       {{/* prettier-ignore-end */}}
 
+      {{ if .OGTitle }}
+      <meta property="og:title" content="{{ .OGTitle }}" />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Akatsuki" />
+      <meta property="og:url" content="{{ .OGUrl }}" />
+      <meta property="og:image" content="{{ .OGImage }}" />
+      <meta property="og:description" content="{{ .OGDescription }}" />
+      <meta name="theme-color" content="#AC88D8" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="{{ .OGTitle }}" />
+      <meta name="twitter:image" content="{{ .OGImage }}" />
+      <meta name="twitter:url" content="{{ .OGUrl }}" />
+      {{ end }}
+
       <!-- Fonts -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
