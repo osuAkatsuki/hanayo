@@ -3,6 +3,15 @@
   <div class="ui container">
     {{ $ := . }}
     {{ if ne .Beatmapset.ID 0 }}
+      {{ $p := .Gin.Query "p" }}
+      {{ $curMode := atoi (.Gin.Query "mode") }}
+      {{ $relax := atoi (.Gin.Query "rx") }}
+      {{ $favMode := 0 }}
+      {{ if .Context.User.ID }}
+        {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+        {{ $favMode = _or $favModeRaw.favourite_mode 0 }}
+      {{ end }}
+
       <div class="ui floating icon labeled dropdown button" id="diff-menu">
         <i class="fa-solid fa-caret-down icon"></i>
         <span class="text">
@@ -120,14 +129,6 @@
         </div>
       </div>
 
-      {{ $p := .Gin.Query "p" }}
-      {{ $curMode := atoi (.Gin.Query "mode") }}
-      {{ $relax := atoi (.Gin.Query "rx") }}
-      {{ $favMode := 0 }}
-      {{ if .Context.User.ID }}
-        {{ $favModeRaw := .Get "users/self/favourite_mode" }}
-        {{ $favMode = _or $favModeRaw.favourite_mode 0 }}
-      {{ end }}
       <div
         class="akat-box ui segment"
         id="beatmap-page"
