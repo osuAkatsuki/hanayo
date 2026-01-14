@@ -12,6 +12,7 @@ import (
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
+	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
 	bu "github.com/osuAkatsuki/hanayo/app/usecases/beatmaps"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
@@ -76,4 +77,11 @@ func BeatmapPageHandler(c *gin.Context) {
 
 	data.TitleBar = lu.T(c, "%s - %s", data.Beatmapset.Artist, data.Beatmapset.Title)
 	data.Scripts = append(data.Scripts, "/static/js/pages/beatmap.tablesort.min.js", "/static/js/pages/beatmap.min.js")
+
+	// OpenGraph meta tags for social sharing
+	settings := settingsState.GetSettings()
+	data.OGTitle = fmt.Sprintf("%s - %s | Akatsuki", data.Beatmapset.Artist, data.Beatmapset.Title)
+	data.OGDescription = fmt.Sprintf("Beatmap by %s", data.Beatmapset.Creator)
+	data.OGImage = fmt.Sprintf("https://assets.ppy.sh/beatmaps/%d/covers/cover.jpg", data.Beatmapset.ID)
+	data.OGUrl = fmt.Sprintf("%s/b/%d", settings.APP_BASE_URL, data.Beatmap.ID)
 }
