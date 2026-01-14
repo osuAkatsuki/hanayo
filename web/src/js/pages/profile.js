@@ -16,12 +16,14 @@ function loadApexCharts(callback) {
   }
 
   apexChartsLoading = true;
-  var script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/apexcharts@5.3.6';
-  script.onload = function() {
+  var script = document.createElement("script");
+  script.src = "https://cdn.jsdelivr.net/npm/apexcharts@5.3.6";
+  script.onload = function () {
     apexChartsLoaded = true;
     apexChartsLoading = false;
-    apexChartsCallbacks.forEach(function(cb) { cb(); });
+    apexChartsCallbacks.forEach(function (cb) {
+      cb();
+    });
     apexChartsCallbacks = [];
   };
   document.head.appendChild(script);
@@ -188,7 +190,9 @@ function applyPeakRankLabel() {
   $.ajax({
     method: "GET",
     dataType: "json",
-    url: (hanayoConf.profileHistoryAPI || hanayoConf.baseAPI) + "/profile-history/peak-rank",
+    url:
+      (hanayoConf.profileHistoryAPI || hanayoConf.baseAPI) +
+      "/profile-history/peak-rank",
     data: { user_id: userID, mode: modeVal },
     success: function (resp) {
       if (!resp.data.rank) {
@@ -208,7 +212,7 @@ function applyPeakRankLabel() {
       rankLabel.attr("data-tooltip", `Peak rank: #${rank} on ${formattedDate}`);
       rankRow.removeAttr("hidden");
       rankRowText.text(`#${rank} on ${formattedDate}`);
-    }
+    },
   });
 }
 
@@ -289,7 +293,10 @@ function initialiseChartGraph(graphType, udpate) {
   $.ajax({
     method: "GET",
     dataType: "json",
-    url: (hanayoConf.profileHistoryAPI || hanayoConf.baseAPI) + "/profile-history/" + graphType,
+    url:
+      (hanayoConf.profileHistoryAPI || hanayoConf.baseAPI) +
+      "/profile-history/" +
+      graphType,
     data: { user_id: userID, mode: modeVal },
     success: function (resp) {
       var chartCanvas = document.querySelector("#profile-history-graph");
@@ -389,7 +396,7 @@ function initialiseChartGraph(graphType, udpate) {
       };
 
       // Lazy load ApexCharts before creating the chart
-      loadApexCharts(function() {
+      loadApexCharts(function () {
         if (udpate) {
           if ("chart" in window) {
             window.chart.updateOptions(options);
@@ -408,7 +415,7 @@ function initialiseChartGraph(graphType, udpate) {
       var chartNotFound = document.querySelector("#profile-history-not-found");
       chartNotFound.style.display = "block";
       chartCanvas.style.display = "none";
-    }
+    },
   });
 }
 
@@ -420,7 +427,16 @@ function initialiseUserpage() {
     userpage.removeClass("loading");
 
     if (!resp.userpage_compiled) {
-      userpage.html(`<h5>` + T("Nothing here. Yet.") + `</h5>`);
+      userpage.html(
+        `<div class="empty-state">
+        <div class="empty-state-title">` +
+          T("No userpage set") +
+          `</div>
+        <div class="empty-state-description">` +
+          T("This user hasn't written anything yet") +
+          `</div>
+      </div>`
+      );
       return;
     }
 
@@ -437,8 +453,17 @@ function initialiseAchievements() {
       // no achievements -- show default message
       if (achievements.length === 0) {
         $("#achievements").append(
-          $("<div class='ui sixteen wide column'>").text(
-            T("Nothing here. Yet.")
+          $(
+            `<div class='ui sixteen wide column'>
+            <div class="empty-state">
+              <div class="empty-state-title">` +
+              T("No achievements unlocked") +
+              `</div>
+              <div class="empty-state-description">` +
+              T("Keep playing to unlock medals") +
+              `</div>
+            </div>
+          </div>`
           )
         );
         $("#load-more-achievements").remove();
@@ -652,22 +677,9 @@ var aPage = {
   3: { pinned: 0, best: 0, most_played: 0, recent: 0, first: 0 },
 };
 
-const scoreNotFoundElement = `<div class="map-single" id="not-found-container">
-<div class="map-content1">
-	<div class="map-data">
-		<div class="map-image" style="background:linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)); background-size: cover;">
-			<div class="map-grade rank-SHD">: (</div>
-		</div>
-		<div class="map-title-block map-padding">
-			<div class="map-title">
-				<h4>No score available</h4>
-			</div>
-			<div class="play-stats">
-				Maybe you should play something?
-			</div>
-		</div>
-	</div>
-</div>
+const scoreNotFoundElement = `<div class="empty-state" id="not-found-container">
+  <div class="empty-state-title">No scores yet</div>
+  <div class="empty-state-description">Play some maps to see scores here</div>
 </div>`;
 
 function loadMostPlayedBeatmaps(type, mode) {
@@ -692,7 +704,7 @@ function loadMostPlayedBeatmaps(type, mode) {
     function (resp) {
       if (resp.most_played_beatmaps == null) {
         mostPlayedTable.html(scoreNotFoundElement);
-        disableLoadMoreButton(type, mode);
+        hideLoadMoreButton(type, mode);
         return;
       }
 
@@ -783,6 +795,7 @@ function loadScoresPage(type, mode) {
         let table_score_count = table.children().length;
         if (table_score_count === 0) {
           table.html(scoreNotFoundElement);
+          hideLoadMoreButton(type, mode);
           return;
         }
       }
@@ -1089,6 +1102,18 @@ function disableLoadMoreButton(type, mode, enable) {
   );
   if (enable) button.removeClass("disabled");
   else button.addClass("disabled");
+}
+function hideLoadMoreButton(type, mode) {
+  var extraBlock = $(
+    "#scores-zone div[data-mode=" +
+      mode +
+      "][data-rx=" +
+      preferRelax +
+      "] div[data-type=" +
+      type +
+      "] .extra-block"
+  );
+  extraBlock.hide();
 }
 function viewScoreInfo() {
   var scoreid = $(this).data("scoreid");

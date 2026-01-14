@@ -90,6 +90,29 @@ textarea:focus:not(:focus-visible) {
   outline: none;
 }
 
+/* Empty states */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  color: var(--color-text-muted);
+}
+
+.empty-state-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.empty-state-description {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
 @media (max-width: 576px) {
   .row {
     margin-right: 0 !important;
