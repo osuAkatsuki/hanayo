@@ -104,7 +104,8 @@ BannerType=1
             <div class="ui clickable column lb-country" data-country="{{ . }}">
               <img
                 src="/static/images/flags/{{ countryCodepoints . }}.svg"
-                class="new-flag fixed--flag--margin" />
+                class="new-flag fixed--flag--margin"
+                loading="lazy" />
               {{ countryReadable . }}
             </div>
           {{ end }}
