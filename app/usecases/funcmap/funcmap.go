@@ -536,6 +536,19 @@ var FuncMap = template.FuncMap{
 		}
 		return result
 	},
+	// ftoi converts a float64 to int64 for display (avoids scientific notation).
+	"ftoi": func(v interface{}) int64 {
+		switch n := v.(type) {
+		case float64:
+			return int64(n)
+		case int:
+			return int64(n)
+		case int64:
+			return n
+		default:
+			return 0
+		}
+	},
 	"languageInformation": func() []langInfo {
 		return languageInformation
 	},
