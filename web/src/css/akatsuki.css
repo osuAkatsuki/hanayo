@@ -1017,6 +1017,9 @@ body::-webkit-scrollbar-thumb {
   grid-template-rows: 1fr;
   grid-column-gap: 7px;
   grid-row-gap: 7px;
+}
+
+.tournament-badges:has(.tournament-badge) {
   margin-bottom: 8px;
 }
 
