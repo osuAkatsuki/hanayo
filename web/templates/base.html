@@ -176,18 +176,6 @@
         </div>
       </center>
 
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          $(".language-select").on("click", function (event) {
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-            var lang = $(this).data("lang");
-            document.cookie = "language=" + lang + ";path=/;max-age=31536000";
-            window.location.reload();
-          });
-        });
-      </script>
-
       {{ if .Scripts }}
         {{ range .Scripts }}
           <script src="{{ asset . }}" defer></script>
