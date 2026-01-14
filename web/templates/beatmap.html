@@ -120,29 +120,23 @@
         </div>
       </div>
 
-      <script>
-        {{ $p := .Gin.Query "p" }}
-        {{ $curMode := atoi (.Gin.Query "mode") }}
-        {{ $relax := atoi (.Gin.Query "rx") }}
-        var favMode = 0;
-        {{ if .Context.User.ID }}
-          {{ $favModeRaw := .Get "users/self/favourite_mode" }}
-          favMode = parseInt({{ $favModeRaw.favourite_mode }}) || 0;
-        {{ end }}
-        var beatmapID = {{ .Beatmap.ID }};
-        var setData = JSON.parse({{ .SetJSON }});
-        var page = {{ $p | atoint | atLeastOne }};
-        var currentMode = {{ $curMode }};
-        var currentCmode = parseInt({{ $relax }}) || 0;
-        var currentModeChanged = false;
-        var currentCmodeChanged = false;
-        var i18n = {
-          previewAudio: '{{ .T "Preview Audio" }}',
-          pauseAudio: '{{ .T "Pause Audio" }}'
-        };
-      </script>
-
-      <div class="akat-box ui segment">
+      {{ $p := .Gin.Query "p" }}
+      {{ $curMode := atoi (.Gin.Query "mode") }}
+      {{ $relax := atoi (.Gin.Query "rx") }}
+      {{ $favMode := 0 }}
+      {{ if .Context.User.ID }}
+        {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+        {{ $favMode = _or $favModeRaw.favourite_mode 0 }}
+      {{ end }}
+      <div
+        class="akat-box ui segment"
+        id="beatmap-page"
+        data-beatmap-id="{{ .Beatmap.ID }}"
+        data-set-data="{{ .SetJSON }}"
+        data-page="{{ $p | atoint | atLeastOne }}"
+        data-mode="{{ $curMode }}"
+        data-cmode="{{ $relax }}"
+        data-fav-mode="{{ $favMode }}">
         <div class="ui grid stackable">
           <div class="five wide column" id="rx-column">
             <div class="ui three item menu" id="cmode-menu">
