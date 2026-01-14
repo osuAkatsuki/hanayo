@@ -284,10 +284,15 @@ function initialiseChartGraph(graphType, udpate) {
     modeVal += 8;
   }
 
+  // Read brand colors from CSS variables
+  var rootStyles = getComputedStyle(document.documentElement);
+  var brandCyan = rootStyles.getPropertyValue('--brand-secondary').trim() || "#2c97fb";
+  var brandPurple = rootStyles.getPropertyValue('--brand-primary').trim() || "#a517f7";
+
   window.graphPoints = [];
   window.countryRankPoints = [];
   window.graphName = graphType == "pp" ? "Performance Points" : "Global Rank";
-  window.graphColor = graphType == "pp" ? "#e03997" : "#2185d0";
+  window.graphColor = graphType == "pp" ? brandCyan : brandPurple;
   var yaxisReverse = graphType == "pp" ? false : true;
 
   $.ajax({
@@ -319,7 +324,13 @@ function initialiseChartGraph(graphType, udpate) {
 
       var minGraphOffset = Math.min(...window.graphPoints);
       var maxGraphOffset = Math.max(...window.graphPoints);
-      var minMaxGraphOffset = minGraphOffset == maxGraphOffset ? 10 : 1;
+      var range = maxGraphOffset - minGraphOffset;
+      // Add 20% padding, minimum of 5 for small ranges
+      var minMaxGraphOffset = Math.max(5, Math.ceil(range * 0.2));
+
+      // Clamp to positive values (rank min 1, PP min 0)
+      var yMin = Math.max(graphType === "rank" ? 1 : 0, minGraphOffset - minMaxGraphOffset);
+      var yMax = maxGraphOffset + minMaxGraphOffset;
 
       window.graphLabels = createLabels(window.graphPoints.length);
       var options = {
@@ -331,8 +342,9 @@ function initialiseChartGraph(graphType, udpate) {
         ],
         grid: {
           show: true,
-          borderColor: "#383838",
+          borderColor: "rgba(255, 255, 255, 0.06)",
           position: "back",
+          strokeDashArray: 0,
           xaxis: {
             lines: {
               show: false,
@@ -343,10 +355,16 @@ function initialiseChartGraph(graphType, udpate) {
               show: true,
             },
           },
+          padding: {
+            top: 10,
+            right: 10,
+            bottom: 0,
+            left: 10,
+          },
         },
         chart: {
-          height: 160,
-          type: "line",
+          height: 220,
+          type: "area",
           fontFamily:
             '"Rubik", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
           zoom: {
@@ -356,31 +374,99 @@ function initialiseChartGraph(graphType, udpate) {
             show: false,
           },
           background: "rgba(0,0,0,0)",
+          animations: {
+            enabled: true,
+            easing: "easeinout",
+            speed: 600,
+          },
+          dropShadow: {
+            enabled: true,
+            top: 3,
+            left: 0,
+            blur: 6,
+            color: graphColor,
+            opacity: 0.3,
+          },
         },
         stroke: {
           curve: "smooth",
-          width: 4,
+          width: 3,
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shade: "dark",
+            type: "vertical",
+            shadeIntensity: 0.5,
+            gradientToColors: [graphColor],
+            inverseColors: false,
+            opacityFrom: 0.35,
+            opacityTo: 0,
+            stops: [0, 100],
+          },
         },
         colors: [graphColor],
         theme: {
           mode: "dark",
         },
         xaxis: {
-          labels: { show: false },
+          labels: {
+            show: true,
+            rotate: 0,
+            style: {
+              colors: "rgba(255, 255, 255, 0.5)",
+              fontSize: "11px",
+            },
+            formatter: function (value) {
+              // Show labels only at key positions
+              if (value === "Today") return "Today";
+              if (value === "30 days ago") return "30d";
+              if (value === "60 days ago") return "60d";
+              if (value === "89 days ago") return "90d";
+              return "";
+            },
+          },
           categories: window.graphLabels,
           axisTicks: {
+            show: false,
+          },
+          axisBorder: {
             show: false,
           },
           tooltip: {
             enabled: false,
           },
+          crosshairs: {
+            show: true,
+            stroke: {
+              color: graphColor,
+              width: 1,
+              dashArray: 3,
+            },
+          },
         },
         yaxis: [
           {
-            max: maxGraphOffset + minMaxGraphOffset,
-            min: minGraphOffset - minMaxGraphOffset,
+            max: yMax,
+            min: yMin,
             reversed: yaxisReverse,
-            labels: { show: false },
+            labels: {
+              show: true,
+              style: {
+                colors: "rgba(255, 255, 255, 0.5)",
+                fontSize: "11px",
+              },
+              formatter: function (val) {
+                if (graphType === "rank") {
+                  return "#" + Math.round(val).toLocaleString();
+                } else {
+                  if (val >= 1000) {
+                    return Math.round(val / 1000).toLocaleString() + "k";
+                  }
+                  return Math.round(val).toLocaleString();
+                }
+              },
+            },
             tickAmount: 4,
           },
         ],
@@ -389,9 +475,13 @@ function initialiseChartGraph(graphType, udpate) {
         },
         markers: {
           size: 0,
-          fillColor: graphColor,
-          strokeWidth: 0,
-          hover: { size: 7 },
+          hover: {
+            size: 6,
+            sizeOffset: 3,
+          },
+        },
+        dataLabels: {
+          enabled: false,
         },
       };
 
