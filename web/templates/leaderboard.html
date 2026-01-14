@@ -112,4 +112,150 @@ BannerType=1
       </div>
     </div>
   </div>
+  <script>
+    $(document).ready(function () {
+      page = page === 0 ? 1 : page;
+
+      function loadLeaderboard() {
+        var wl = window.location;
+        window.history.replaceState(
+          "",
+          document.title,
+          wl.pathname +
+            "?mode=" +
+            favouriteMode +
+            "&rx=" +
+            rx +
+            "&p=" +
+            page +
+            "&sort=" +
+            sort +
+            (country != "" ? "&country=" + encodeURI(country) : "") +
+            wl.hash
+        );
+        api(
+          "leaderboard",
+          {
+            mode: favouriteMode,
+            rx: rx,
+            p: page,
+            l: 50,
+            country: country,
+            sort: sort,
+          },
+          function (data) {
+            var tb = $(".ui.table tbody");
+            tb.find("tr").remove();
+            if (data.users == null) {
+              disableSimplepagButtons(true);
+              data.users = [];
+            }
+            var i = 0;
+            data.users.forEach(function (v) {
+              codepoints = countryToCodepoints(v.country);
+              tb.append(
+                $("<tr class='l-player' />").append(
+                  $("<td />").text("#" + ((page - 1) * 50 + ++i)),
+                  $("<td />").html(
+                    "<div class='flag-container'><a href='/leaderboard?mode=" +
+                      favouriteMode +
+                      "&rx=" +
+                      rx +
+                      "&country=" +
+                      v.country.toLowerCase() +
+                      "'><img src='/static/images/flags/" +
+                      codepoints +
+                      ".svg' class='new-flag nopad'></img></a><a href='/u/" +
+                      v.id +
+                      "?mode=" +
+                      favouriteMode +
+                      "&rx=" +
+                      rx +
+                      "'>" +
+                      escapeHTML(v.username) +
+                      "</a></div>"
+                  ),
+                  $("<td class='center aligned' />").html(
+                    scoreOrPP(
+                      v.chosen_mode.ranked_score,
+                      v.chosen_mode.pp,
+                      sort === "score"
+                    )
+                  ),
+                  $("<td class='center aligned' />").text(
+                    v.chosen_mode.accuracy.toFixed(2) + "%"
+                  ),
+                  $("<td class='center aligned' />").html(
+                    addCommas(v.chosen_mode.playcount) +
+                      " <i>(lv. " +
+                      v.chosen_mode.level.toFixed(0) +
+                      ")</i>"
+                  )
+                )
+              );
+            });
+            disableSimplepagButtons(data.users.length < 50);
+          }
+        );
+      }
+
+      function scoreOrPP(s, pp, forceScore) {
+        if (pp === 0) {
+          return "<b>" + addCommas(s) + "</b>";
+        }
+
+        if (forceScore) {
+          return "<b>" + addCommas(s) + "</b> (" + addCommas(pp) + "pp)";
+        }
+
+        return "<b>" + addCommas(pp) + "pp</b> (" + addCommas(s) + ")";
+      }
+
+      if (country) {
+        $(`[data-country=${country}]`).addClass("active");
+      }
+
+      // country stuff
+      $("#country-chooser-modal").on("click", function () {
+        $(".ui.modal").modal("show");
+      });
+
+      $(".lb-country").on("click", function () {
+        country = $(this).data("country");
+        $("#country-menu .active.item").removeClass("active");
+        $(this).addClass("active");
+        page = 1;
+        $(".ui.modal").modal("hide");
+        loadLeaderboard();
+      });
+
+      toggleModeAvailability(favouriteMode, rx);
+      loadLeaderboard();
+      setupSimplepag(loadLeaderboard);
+
+      $("#mode-menu .item").on("click", function (e) {
+        e.preventDefault();
+        $("#mode-menu .active.item").removeClass("active");
+        $("#country-menu .active.item").removeClass("active");
+        $(this).addClass("active");
+        favouriteMode = $(this).data("mode");
+        country = "";
+        page = 1;
+        toggleModeAvailability(favouriteMode, rx);
+        loadLeaderboard();
+      });
+
+      $("#rx-menu .item").on("click", function (e) {
+        e.preventDefault();
+        $("#rx-menu .active.item").removeClass("active");
+        $("#country-menu .active.item").removeClass("active");
+        $(this).addClass("active");
+        country = "";
+        page = 1;
+        rx = $(this).data("rx");
+        toggleModeAvailability(favouriteMode, rx);
+        loadLeaderboard();
+      });
+    });
+  </script>
 {{ end }}

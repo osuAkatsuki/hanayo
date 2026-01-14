@@ -159,4 +159,28 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
     rel="stylesheet"
     type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jquery.minicolors.min.css" />
+  <script>
+    $(document).ready(function () {
+      $("#colorpicker").minicolors({
+        inline: true,
+      });
+      $("#background-type").change(function () {
+        $("[data-type]:not([hidden])").attr("hidden", "hidden");
+        $("[data-type=" + $(this).val() + "]").removeAttr("hidden");
+      });
+      $("#file").change(function (e) {
+        var f = e.target.files;
+        if (f.length < 1) {
+          return;
+        }
+        var u = window.URL.createObjectURL(f[0]);
+        var i = document.createElement("img");
+        i.src = u;
+        i.onload = function () {
+          window.URL.revokeObjectURL(this.src);
+        };
+        $("#image-background").empty().append(i);
+      });
+    });
+  </script>
 {{ end }}
