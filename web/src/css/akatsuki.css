@@ -1084,3 +1084,32 @@ body::-webkit-scrollbar-thumb {
 .btn-disabled:hover {
   background: hsl(var(--base),0%,15%) !important;
 }
+
+/* Settings page sidebar responsive styles */
+@media (max-width: 768px) {
+  /* Make sidebar full width on mobile */
+  .ui.stackable.grid > .four.wide.column:has(.ui.fluid.vertical.menu) {
+    width: 100% !important;
+    margin-bottom: var(--space-md);
+  }
+
+  /* Convert vertical menu to horizontal on mobile */
+  .ui.fluid.vertical.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .ui.fluid.vertical.menu .item {
+    flex: 1 1 auto;
+    text-align: center;
+    min-width: 100px;
+    padding: var(--space-sm) var(--space-md) !important;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Make main content full width */
+  .ui.stackable.grid > .twelve.wide.column {
+    width: 100% !important;
+  }
+}
