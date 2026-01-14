@@ -86,22 +86,22 @@
     {{/* Global Statistics */}}
     <div class="stats-grid">
       <div class="stat-box">
-        <p class="stat-value">{{ .T "%s" (rediget "ripple:submitted_scores") | html }}</p>
+        <p class="stat-value">{{ humanize (atoi (rediget "ripple:submitted_scores")) }}</p>
         <p class="stat-label">Total scores (Vanilla)</p>
       </div>
       <div class="stat-box">
-        <p class="stat-value">{{ .T "%s" (rediget "ripple:submitted_scores_relax") | html }}</p>
+        <p class="stat-value">{{ humanize (atoi (rediget "ripple:submitted_scores_relax")) }}</p>
         <p class="stat-label">Total scores (Relax)</p>
       </div>
       <div class="stat-box">
-        <p class="stat-value">{{ .T "%s" (rediget "ripple:submitted_scores_ap") | html }}</p>
+        <p class="stat-value">{{ humanize (atoi (rediget "ripple:submitted_scores_ap")) }}</p>
         <p class="stat-label">Total scores (Autopilot)</p>
       </div>
       {{ $vanilla_pp := (rediget "akatsuki:top:scores:pp") }}
       {{ $vanilla_id := (rediget "akatsuki:top:scores:id") }}
       {{ $vanilla_name := (rediget "akatsuki:top:scores:name") }}
       <div class="stat-box">
-        <p class="stat-value">{{ $vanilla_pp }}pp</p>
+        <p class="stat-value">{{ humanize (atoi $vanilla_pp) }}pp</p>
         <p class="stat-label">Top score (Vanilla)</p>
         <p class="stat-sub">Played by <a href="/u/{{ $vanilla_id }}?rx=0">{{ $vanilla_name }}</a></p>
       </div>
@@ -109,17 +109,17 @@
       {{ $relax_id := (rediget "akatsuki:top:scores_relax:id") }}
       {{ $relax_name := (rediget "akatsuki:top:scores_relax:name") }}
       <div class="stat-box">
-        <p class="stat-value">{{ $relax_pp }}pp</p>
+        <p class="stat-value">{{ humanize (atoi $relax_pp) }}pp</p>
         <p class="stat-label">Top score (Relax)</p>
-        <p class="stat-sub">Played by <a href="/u/{{ $relax_id }}?rx=1">{{ .T "%s" $relax_name | html }}</a></p>
+        <p class="stat-sub">Played by <a href="/u/{{ $relax_id }}?rx=1">{{ $relax_name }}</a></p>
       </div>
       {{ $ap_pp := (rediget "akatsuki:top:scores_ap:pp") }}
       {{ $ap_id := (rediget "akatsuki:top:scores_ap:id") }}
       {{ $ap_name := (rediget "akatsuki:top:scores_ap:name") }}
       <div class="stat-box">
-        <p class="stat-value">{{ $ap_pp }}pp</p>
+        <p class="stat-value">{{ humanize (atoi $ap_pp) }}pp</p>
         <p class="stat-label">Top score (Autopilot)</p>
-        <p class="stat-sub">Played by <a href="/u/{{ $ap_id }}?rx=2">{{ .T "%s" $ap_name | html }}</a></p>
+        <p class="stat-sub">Played by <a href="/u/{{ $ap_id }}?rx=2">{{ $ap_name }}</a></p>
       </div>
     </div>
     {{/* Global Stats end past this /div */}}
