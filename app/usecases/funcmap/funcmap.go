@@ -36,9 +36,42 @@ import (
 
 const PREMIUM_PRICE_PER_MONTH = 5.0
 
+// assetManifest maps original asset paths to content-hashed paths
+var assetManifest map[string]string
+var assetManifestLoaded bool
+
+// loadAssetManifest loads the asset manifest from disk
+func loadAssetManifest() {
+	if assetManifestLoaded {
+		return
+	}
+	assetManifestLoaded = true
+	assetManifest = make(map[string]string)
+
+	data, err := ioutil.ReadFile("web/static/manifest.json")
+	if err != nil {
+		slog.Warn("Asset manifest not found, using original paths", "error", err.Error())
+		return
+	}
+
+	if err := json.Unmarshal(data, &assetManifest); err != nil {
+		slog.Error("Failed to parse asset manifest", "error", err.Error())
+		return
+	}
+	slog.Info("Loaded asset manifest", "entries", len(assetManifest))
+}
+
 // funcMap contains useful functions for the various templates.
 var FuncMap = template.FuncMap{
 	"print": fmt.Println,
+	// asset returns the content-hashed path for a static asset
+	"asset": func(path string) string {
+		loadAssetManifest()
+		if hashed, ok := assetManifest[path]; ok {
+			return hashed
+		}
+		return path
+	},
 	// html disables HTML escaping on the values it is given.
 	"html": func(value interface{}) template.HTML {
 		return template.HTML(fmt.Sprint(value))

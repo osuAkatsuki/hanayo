@@ -8,7 +8,7 @@ BannerType=1
 {{/* prettier-ignore-end */}}
 {{ define "tpl" }}
   <div class="ui container akat-box">
-    <link rel="stylesheet" href="/static/css/pages/clanboard.min.css" />
+    <link rel="stylesheet" href="{{ asset "/static/css/pages/clanboard.min.css" }}" />
 
     {{ $favMode := 0.0 }}
     {{ if .Context.User.ID }}
