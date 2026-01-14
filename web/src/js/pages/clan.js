@@ -103,6 +103,18 @@ $(document).ready(function () {
       !0
     );
   });
+
+  // Invite-only clan join button
+  $("#inv-btn>.item").on("click", function (e) {
+    e.preventDefault();
+    if (!currentUserID) return;
+
+    var inv = prompt("Enter the Clan's Invite");
+    if (inv == null || inv == "") return;
+
+    var btn = $(this);
+    joinClan({ invite: inv }, btn);
+  });
 });
 
 function joinClan(obj, btn) {
