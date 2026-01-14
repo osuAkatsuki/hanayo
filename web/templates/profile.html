@@ -113,19 +113,21 @@
                           {{ end }}
                         {{ end }}
                       </div>
-                      <div class="bottom-side psmaller-text">
-                        Player Since:
-                        <b>
-                          {{ $global.T "%s" (time $user.registered_on) | html }}
-                        </b>
+                      <div class="profile-dates">
+                        <div class="bottom-side psmaller-text">
+                          Player Since:
+                          <b>
+                            {{ $global.T "%s" (time $user.registered_on) | html }}
+                          </b>
+                        </div>
+                        <div class="bottom-side psmaller-text">
+                          Last Seen:
+                          <b>
+                            {{ $global.T "%s" (time $user.latest_activity) | html }}
+                          </b>
+                        </div>
                       </div>
-                      <div class="bottom-side psmaller-text">
-                        Last Seen:
-                        <b>
-                          {{ $global.T "%s" (time $user.latest_activity) | html }}
-                        </b>
-                      </div>
-                      <div class="bottom-side">
+                      <div class="profile-actions">
                         {{ if and (ne $global.Context.User.ID $global.UserID) (ne $global.Context.User.ID 0) }}
                           <a
                             class="ui button loading action-button"

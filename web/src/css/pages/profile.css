@@ -376,30 +376,42 @@
     display: flex !important;
     justify-content: center !important;
     margin-bottom: 12px;
+    padding: 0 !important;
   }
 
   #profile-info .ten.wide.column {
     width: 100% !important;
     text-align: center;
+    padding: 0 !important;
+  }
+
+  .profile-dates {
+    margin-top: 8px;
+  }
+
+  .profile-actions {
+    margin-top: 8px;
   }
 
   .profile-user-info {
     flex-direction: column;
-    gap: 4px;
   }
 
   .profile-smaller-section {
     justify-content: center;
+    margin-top: 8px;
   }
 
   .profile-badges {
     justify-content: center;
+    margin-top: 8px;
   }
 
   .bottom-column {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 8px;
   }
 
   .ranks-column {
@@ -627,7 +639,7 @@
 .score-details_right-block {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   height: 100%;
   min-width: 140px;
   justify-content: center;
@@ -637,7 +649,6 @@
   border-radius: 0 10px 10px 0;
   z-index: 0;
   margin-left: 6px;
-  align-items: center;
   gap: 12px;
 }
 
@@ -668,7 +679,7 @@
 }
 
 .beatmap-link {
-  width: 400px;
+  max-width: 400px;
   overflow: hidden;
 }
 
@@ -759,7 +770,7 @@
 }
 
 .modified-menu {
-  left: 1 !important; /* Just so we can disable it */
+  left: auto !important;
   right: 0 !important;
 }
 
@@ -801,14 +812,5 @@
 @media only screen and (max-width: 500px) {
   .avatar-container {
     margin-bottom: -1.2em !important;
-  }
-
-  .flex {
-    justify-content: left;
-    margin-left: 0.7em;
-  }
-
-  .flex2 {
-    margin-left: -0.7em;
   }
 }
