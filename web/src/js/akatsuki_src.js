@@ -453,10 +453,7 @@ var singlePageSnippets = {
           "/settings/userpage/parse",
           $("textarea[name='data']").val(),
           function (data) {
-            var e = $("#userpage-content").removeClass("loading").html(data);
-            if (typeof twemoji !== "undefined") {
-              twemoji.parse(e[0]);
-            }
+            $("#userpage-content").removeClass("loading").html(data);
           },
           "text"
         );
@@ -630,13 +627,6 @@ $(document).ready(function () {
     var f = t.attr("id");
     $("[form='" + f + "']").addClass("loading");
   });
-
-  // emojis!
-  if (typeof twemoji !== "undefined") {
-    $(".twemoji").each(function (k, v) {
-      twemoji.parse(v);
-    });
-  }
 
   // amplitude
   const AMPLITUDE_API_KEY = "d24b21f57762f540f5b9c9791b7e3f91";

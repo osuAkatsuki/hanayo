@@ -412,7 +412,7 @@ function initialiseUserpage() {
       return;
     }
 
-    userpage.html(twemoji.parse(resp.userpage_compiled));
+    userpage.html(resp.userpage_compiled);
   });
 }
 
