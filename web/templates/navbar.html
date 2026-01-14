@@ -234,31 +234,5 @@
         {{ end }}
       </div>
     </div>
-    <script>
-      $(document).ready(() => {
-        // Dropdowns for mobile view.
-        $("[data-menu]").on("click", function () {
-          dropdownType = $(this).data("menu");
-          isInvoked = $(this).data("invoked") == "true";
-          console.log(dropdownType, isInvoked);
-
-          dropdown = $(`[data-dropdown-menu="${dropdownType}"]`);
-          dropdownIcon = $(`[data-dropdown-icon="${dropdownType}"]`);
-          if (!isInvoked) {
-            $(this).data("invoked", "true");
-            dropdown.slideDown(300, () => {
-              dropdown.css("display", "");
-              dropdownIcon.removeClass("fa-caret-down").addClass("fa-caret-up");
-            });
-          } else {
-            $(this).data("invoked", "false");
-            dropdown.slideUp(300, () => {
-              dropdown.css("display", "none");
-              dropdownIcon.removeClass("fa-caret-up").addClass("fa-caret-down");
-            });
-          }
-        });
-      });
-    </script>
   </div>
 {{ end }}

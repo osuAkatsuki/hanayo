@@ -693,10 +693,35 @@ $(document).ready(function () {
   $.timeago.settings.allowFuture = true;
   $("time.timeago").timeago();
 
-  $("#language-select").on("click", function () {
+  // Language selector
+  $(".language-select").on("click", function (event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
     var lang = $(this).data("lang");
     document.cookie = "language=" + lang + ";path=/;max-age=31536000";
     window.location.reload();
+  });
+
+  // Mobile navbar dropdowns
+  $("[data-menu]").on("click", function () {
+    var dropdownType = $(this).data("menu");
+    var isInvoked = $(this).data("invoked") == "true";
+    var $dropdown = $('[data-dropdown-menu="' + dropdownType + '"]');
+    var $dropdownIcon = $('[data-dropdown-icon="' + dropdownType + '"]');
+
+    if (!isInvoked) {
+      $(this).data("invoked", "true");
+      $dropdown.slideDown(300, function () {
+        $dropdown.css("display", "");
+        $dropdownIcon.removeClass("fa-caret-down").addClass("fa-caret-up");
+      });
+    } else {
+      $(this).data("invoked", "false");
+      $dropdown.slideUp(300, function () {
+        $dropdown.css("display", "none");
+        $dropdownIcon.removeClass("fa-caret-up").addClass("fa-caret-down");
+      });
+    }
   });
 
   // hook submit button to handle validation of username input
