@@ -203,6 +203,7 @@
     display: grid;
     gap: 4px;
     grid-template-columns: repeat(5, 35px);
+    justify-content: center;
   }
 
   .profile-info {
