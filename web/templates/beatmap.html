@@ -109,7 +109,7 @@
                   {{ end }}
                   <a
                     class="ui purple labeled icon button"
-                    onclick="playPreview()">
+                    id="preview-btn">
                     <i class="fa-solid fa-play icon" id="preview-icon"></i>
                     <span id="preview-text">{{ $.T "Preview Audio" }}</span>
                   </a>
@@ -138,35 +138,35 @@
         var currentModeChanged = false;
         var currentCmodeChanged = false;
 
-        var previewAudio = document.querySelector("#beatmap-preview")
-        var previewText = document.querySelector("#preview-text")
-        var previewIcon = $("#preview-icon")
-        var previewPlaying = false
-        previewAudio.volume = 0.2
+        document.addEventListener("DOMContentLoaded", function () {
+          var $previewAudio = $("#beatmap-preview");
+          var $previewText = $("#preview-text");
+          var $previewIcon = $("#preview-icon");
+          var previewPlaying = false;
+          $previewAudio.prop("volume", 0.2);
 
-        previewAudio.onplaying = () => {
-          previewPlaying = true
-          previewText.innerHTML = '{{ .T "Pause Audio" }}';
-          previewIcon.removeClass("fa-play").addClass("fa-pause");
-        }
+          $previewAudio.on("playing", function () {
+            previewPlaying = true;
+            $previewText.text('{{ .T "Pause Audio" }}');
+            $previewIcon.removeClass("fa-play").addClass("fa-pause");
+          });
 
-        previewAudio.onpause = () => {
-          previewPlaying = false
-          previewText.innerHTML = '{{ .T "Preview Audio" }}';
-          previewIcon.removeClass("fa-pause").addClass("fa-play");
-        }
+          $previewAudio.on("pause", function () {
+            previewPlaying = false;
+            $previewText.text('{{ .T "Preview Audio" }}');
+            $previewIcon.removeClass("fa-pause").addClass("fa-play");
+          });
 
-        previewAudio.onended = () => {
-          previewPlaying = false
-          previewText.innerHTML = '{{ .T "Preview Audio" }}';
-          previewIcon.removeClass("fa-pause").addClass("fa-play");
+          $previewAudio.on("ended", function () {
+            previewPlaying = false;
+            $previewText.text('{{ .T "Preview Audio" }}');
+            $previewIcon.removeClass("fa-pause").addClass("fa-play");
+          });
 
-        }
-
-        // Le curse.
-        const playPreview = () => {
-          previewPlaying ? previewAudio.pause() : previewAudio.play()
-        }
+          $("#preview-btn").on("click", function () {
+            previewPlaying ? $previewAudio[0].pause() : $previewAudio[0].play();
+          });
+        });
       </script>
 
       <div class="akat-box ui segment">

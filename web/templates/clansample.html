@@ -193,16 +193,18 @@ Include=clan_member.html
                         </a>
                       </div>
                       <script>
-                        $("#inv-btn>.item").on("click", function (e) {
-                          e.preventDefault();
-                          if (!currentUserID) return;
+                        document.addEventListener("DOMContentLoaded", function () {
+                          $("#inv-btn>.item").on("click", function (e) {
+                            e.preventDefault();
+                            if (!currentUserID) return;
 
-                          var inv = prompt("Enter the Clan's Invite");
+                            var inv = prompt("Enter the Clan's Invite");
 
-                          if (inv == null || inv == "") return;
+                            if (inv == null || inv == "") return;
 
-                          var btn = $(this);
-                          joinClan({ invite: inv }, btn);
+                            var btn = $(this);
+                            joinClan({ invite: inv }, btn);
+                          });
                         });
                       </script>
                     {{ end }}

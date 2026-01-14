@@ -235,12 +235,11 @@
       </div>
     </div>
     <script>
-      $(document).ready(() => {
+      document.addEventListener("DOMContentLoaded", () => {
         // Dropdowns for mobile view.
         $("[data-menu]").on("click", function () {
           dropdownType = $(this).data("menu");
           isInvoked = $(this).data("invoked") == "true";
-          console.log(dropdownType, isInvoked);
 
           dropdown = $(`[data-dropdown-menu="${dropdownType}"]`);
           dropdownIcon = $(`[data-dropdown-icon="${dropdownType}"]`);
