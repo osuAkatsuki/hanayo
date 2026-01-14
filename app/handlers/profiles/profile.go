@@ -14,6 +14,7 @@ import (
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"
+	"github.com/osuAkatsuki/hanayo/app/usecases/geoloc"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 )
@@ -23,6 +24,7 @@ func UserProfilePageHandler(c *gin.Context) {
 		userID     int
 		username   string
 		privileges uint64
+		country    string
 	)
 
 	settings := settingsState.GetSettings()
@@ -30,17 +32,17 @@ func UserProfilePageHandler(c *gin.Context) {
 
 	u := c.Param("user")
 	if _, err := strconv.Atoi(u); err != nil {
-		err := services.DB.QueryRow("SELECT id, username, privileges FROM users WHERE username = ? AND "+ctx.OnlyUserPublic()+" LIMIT 1", u).Scan(&userID, &username, &privileges)
+		err := services.DB.QueryRow("SELECT id, username, privileges, country FROM users WHERE username = ? AND "+ctx.OnlyUserPublic()+" LIMIT 1", u).Scan(&userID, &username, &privileges, &country)
 		if err != nil && err != sql.ErrNoRows {
 			c.Error(err)
 			slog.ErrorContext(c, err.Error())
 		}
 	} else {
-		err := services.DB.QueryRow(`SELECT id, username, privileges FROM users WHERE id = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
+		err := services.DB.QueryRow(`SELECT id, username, privileges, country FROM users WHERE id = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges, &country)
 		switch {
 		case err == nil:
 		case err == sql.ErrNoRows:
-			err := services.DB.QueryRow(`SELECT id, username, privileges FROM users WHERE username = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges)
+			err := services.DB.QueryRow(`SELECT id, username, privileges, country FROM users WHERE username = ? AND `+ctx.OnlyUserPublic()+` LIMIT 1`, u).Scan(&userID, &username, &privileges, &country)
 			if err != nil && err != sql.ErrNoRows {
 				c.Error(err)
 				slog.ErrorContext(c, err.Error())
@@ -82,4 +84,10 @@ func UserProfilePageHandler(c *gin.Context) {
 	data.TitleBar = lu.T(c, "%s's profile", username)
 	data.DisableHH = true
 	data.Scripts = append(data.Scripts, "/static/js/pages/profile.min.js")
+
+	// OpenGraph meta tags for social sharing
+	data.OGTitle = fmt.Sprintf("%s's profile | Akatsuki", username)
+	data.OGDescription = fmt.Sprintf("%s is a player from %s.", username, geoloc.CountryReadable(country))
+	data.OGImage = fmt.Sprintf("%s/%d", settings.PUBLIC_AVATARS_SERVICE_BASE_URL, userID)
+	data.OGUrl = fmt.Sprintf("%s/u/%d", settings.APP_BASE_URL, userID)
 }

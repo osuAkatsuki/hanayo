@@ -9,37 +9,7 @@
       {{ $preferRelax := _or $grx 0 }}
 
 
-      <head>
-        {{ $user := . }}
-
-        {{/* Meta tags */}}
-        <meta
-          property="og:title"
-          content="{{ .username }}'s profile | Akatsuki" />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://akatsuki.gg/u/{{ $global.UserID }}?mode=0&rx=1" />
-        <meta
-          property="og:image"
-          content="https://a.akatsuki.gg/{{ $global.UserID }}" />
-        <meta
-          property="og:description"
-          content="{{ .username }} is a player from {{ country .country true }}." />
-        <meta name="theme-color" content="#AC88D8" />
-
-        {{/* Twitter-specific stuff */}}
-        <meta
-          name="twitter:title"
-          content="{{ .username }}'s profile | Akatsuki" />
-        <meta
-          name="twitter:image"
-          content="https://a.akatsuki.gg/{{ $global.UserID }}?mode=0&rx=1" />
-        <meta
-          name="twitter:url"
-          content="https://akatsuki.gg/u/{{ $global.UserID }}" />
-        <meta name="twitter:card" content="" />
-      </head>
+      {{ $user := . }}
 
       <script>
         window.favouriteMode = parseInt("{{ $favouritemode }}");
