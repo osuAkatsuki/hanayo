@@ -116,20 +116,34 @@ a.navbar-icon b:hover {
 }
 
 .mobile-header {
-  margin-top: var(--navbar-height);
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
   width: 100%;
-  display: flex;
+  max-height: calc(100vh - var(--navbar-height));
+  overflow-y: auto;
   background-color: var(--color-bg-secondary);
-  position: absolute;
   box-shadow: var(--shadow-lg);
   z-index: 115;
   flex-direction: column;
-  animation-duration: 310ms !important;
-  display: none;
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform var(--transition-normal),
+              opacity var(--transition-normal),
+              visibility var(--transition-normal);
 }
 
 .mobile-header.active {
-  display: block;
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.mobile-menu-open {
+  overflow: hidden;
 }
 
 .mobile-header .user {
@@ -162,18 +176,23 @@ a.navbar-icon b:hover {
 
 .mobile-header .single {
   color: #fff !important;
-  padding: 8px 4px;
-  font-size: 17px;
-  line-height: 20px;
+  padding: 12px var(--space-md);
+  font-size: 16px;
+  line-height: 1.4;
   cursor: pointer;
   display: block;
   text-decoration: none !important;
+  min-height: 44px;
+  transition: background-color var(--transition-fast);
+}
+
+.mobile-header .single:hover,
+.mobile-header .single:active {
+  background-color: var(--color-bg-hover);
 }
 
 .mobile-header .mcontent {
-  padding-left: 18px;
-  padding-bottom: 8px;
-  padding-top: 8px;
+  padding: var(--space-sm) var(--space-md);
 }
 
 @media (min-width: 769px) {
@@ -189,8 +208,9 @@ a.navbar-icon b:hover {
 
 .m-menu .single {
   font-size: 14px;
-  color: #ffffffd9 !important;
-  margin-left: 6px;
+  color: var(--color-text-secondary) !important;
+  padding-left: var(--space-lg);
+  min-height: 40px;
 }
 
 .user-control {
