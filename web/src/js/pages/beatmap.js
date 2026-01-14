@@ -1,9 +1,20 @@
 (function () {
+  // Read page data from HTML attributes
+  var $page = $("#beatmap-page");
+  var beatmapID = parseInt($page.data("beatmap-id"));
+  var setData = $page.data("set-data"); // jQuery auto-parses JSON
+  var page = parseInt($page.data("page")) || 1;
+  var currentMode = parseInt($page.data("mode")) || 0;
+  var currentCmode = parseInt($page.data("cmode")) || 0;
+  var favMode = parseInt($page.data("fav-mode")) || 0;
+  var currentModeChanged = false;
+  var currentCmodeChanged = false;
+
   var mapset = {};
   setData.ChildrenBeatmaps.forEach(function (diff) {
     mapset[diff.BeatmapID] = diff;
   });
-  console.log(mapset);
+
   function loadLeaderboard(b, m, rx) {
     var wl = window.location;
     window.history.replaceState(
@@ -190,6 +201,35 @@
     currentCmodeChanged = true;
   });
   $("table.sortable").tablesort();
+
+  // Preview audio
+  var $previewAudio = $("#beatmap-preview");
+  var $previewText = $("#preview-text");
+  var $previewIcon = $("#preview-icon");
+  var previewPlaying = false;
+  $previewAudio.prop("volume", 0.2);
+
+  $previewAudio.on("playing", function () {
+    previewPlaying = true;
+    $previewText.text(T("Pause Audio"));
+    $previewIcon.removeClass("fa-play").addClass("fa-pause");
+  });
+
+  $previewAudio.on("pause", function () {
+    previewPlaying = false;
+    $previewText.text(T("Preview Audio"));
+    $previewIcon.removeClass("fa-pause").addClass("fa-play");
+  });
+
+  $previewAudio.on("ended", function () {
+    previewPlaying = false;
+    $previewText.text(T("Preview Audio"));
+    $previewIcon.removeClass("fa-pause").addClass("fa-play");
+  });
+
+  $("#preview-btn").on("click", function () {
+    previewPlaying ? $previewAudio[0].pause() : $previewAudio[0].play();
+  });
 })();
 
 function getRank(gameMode, mods, acc, c300, c100, c50, cmiss) {

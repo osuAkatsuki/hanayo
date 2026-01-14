@@ -3,6 +3,15 @@
   <div class="ui container">
     {{ $ := . }}
     {{ if ne .Beatmapset.ID 0 }}
+      {{ $p := .Gin.Query "p" }}
+      {{ $curMode := atoi (.Gin.Query "mode") }}
+      {{ $relax := atoi (.Gin.Query "rx") }}
+      {{ $favMode := 0 }}
+      {{ if .Context.User.ID }}
+        {{ $favModeRaw := .Get "users/self/favourite_mode" }}
+        {{ $favMode = _or $favModeRaw.favourite_mode 0 }}
+      {{ end }}
+
       <div class="ui floating icon labeled dropdown button" id="diff-menu">
         <i class="fa-solid fa-caret-down icon"></i>
         <span class="text">
@@ -109,7 +118,7 @@
                   {{ end }}
                   <a
                     class="ui purple labeled icon button"
-                    onclick="playPreview()">
+                    id="preview-btn">
                     <i class="fa-solid fa-play icon" id="preview-icon"></i>
                     <span id="preview-text">{{ $.T "Preview Audio" }}</span>
                   </a>
@@ -120,56 +129,15 @@
         </div>
       </div>
 
-      <script>
-        {{ $p := .Gin.Query "p" }}
-        {{ $curMode := atoi (.Gin.Query "mode") }}
-        {{ $relax := atoi (.Gin.Query "rx") }}
-        var favMode = 0;
-        {{ if .Context.User.ID }}
-          {{ $favModeRaw := .Get "users/self/favourite_mode" }}
-          favMode = parseInt({{ $favModeRaw.favourite_mode }}) || 0;
-        {{ end }}
-        var beatmapID = {{ .Beatmap.ID }};
-        var setData = JSON.parse({{ .SetJSON }});
-        var page = {{ $p | atoint | atLeastOne }};
-        // defaults to 0
-        var currentMode = {{ $curMode }};
-        var currentCmode = parseInt({{ $relax }}) || 0;
-        var currentModeChanged = false;
-        var currentCmodeChanged = false;
-
-        var previewAudio = document.querySelector("#beatmap-preview")
-        var previewText = document.querySelector("#preview-text")
-        var previewIcon = $("#preview-icon")
-        var previewPlaying = false
-        previewAudio.volume = 0.2
-
-        previewAudio.onplaying = () => {
-          previewPlaying = true
-          previewText.innerHTML = '{{ .T "Pause Audio" }}';
-          previewIcon.removeClass("fa-play").addClass("fa-pause");
-        }
-
-        previewAudio.onpause = () => {
-          previewPlaying = false
-          previewText.innerHTML = '{{ .T "Preview Audio" }}';
-          previewIcon.removeClass("fa-pause").addClass("fa-play");
-        }
-
-        previewAudio.onended = () => {
-          previewPlaying = false
-          previewText.innerHTML = '{{ .T "Preview Audio" }}';
-          previewIcon.removeClass("fa-pause").addClass("fa-play");
-
-        }
-
-        // Le curse.
-        const playPreview = () => {
-          previewPlaying ? previewAudio.pause() : previewAudio.play()
-        }
-      </script>
-
-      <div class="akat-box ui segment">
+      <div
+        class="akat-box ui segment"
+        id="beatmap-page"
+        data-beatmap-id="{{ .Beatmap.ID }}"
+        data-set-data="{{ .SetJSON }}"
+        data-page="{{ $p | atoint | atLeastOne }}"
+        data-mode="{{ $curMode }}"
+        data-cmode="{{ $relax }}"
+        data-fav-mode="{{ $favMode }}">
         <div class="ui grid stackable">
           <div class="five wide column" id="rx-column">
             <div class="ui three item menu" id="cmode-menu">
