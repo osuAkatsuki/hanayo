@@ -193,6 +193,7 @@ func generateEngine() *gin.Engine {
 	r.GET("/logout", logoutHandlers.LogoutSubmitHandler)
 
 	r.GET("/", miscHandlers.HomepagePageHandler)
+	r.GET("/api/v1/homepage/activity", miscHandlers.HomepageActivityHandler)
 
 	r.GET("/register", registerHandlers.RegisterPageHandler)
 	r.POST("/register", registerHandlers.RegisterSubmitHandler)
