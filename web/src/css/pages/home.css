@@ -39,6 +39,15 @@
   padding: 3rem 1.5rem;
 }
 
+/* Dark overlay to tone down the bright gradient */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 14, 27, 0.4);
+  pointer-events: none;
+}
+
 /* Hero Layout - Three Column */
 .hero-layout {
   position: relative;
@@ -87,16 +96,14 @@
 .stat-card {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  background: rgba(25, 21, 39, 0.7);
-  border: 1px solid var(--border-subtle);
+  background: rgba(40, 35, 60, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 1.25rem 1.75rem;
   min-width: 130px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: translate 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
 }
 
-.stat-card:hover {
-  transform: translateY(-4px) !important;
-}
+/* Base hover - overridden per card */
 
 /* Asymmetric corners and colored shadows per stat */
 .stat-players {
@@ -104,11 +111,23 @@
   box-shadow: -10px 10px 0 rgba(44, 151, 251, 0.2);
   text-align: right;
 }
+.stat-players:hover {
+  translate: 0 -4px;
+  background: rgba(44, 151, 251, 0.25);
+  border-color: rgba(44, 151, 251, 0.5);
+  box-shadow: -16px 16px 0 rgba(44, 151, 251, 0.4);
+}
 
 .stat-scores {
   border-radius: 20px 6px 20px 20px;
   box-shadow: -10px -8px 0 rgba(239, 67, 254, 0.15);
   text-align: right;
+}
+.stat-scores:hover {
+  translate: 0 -4px;
+  background: rgba(239, 67, 254, 0.2);
+  border-color: rgba(239, 67, 254, 0.5);
+  box-shadow: -16px -14px 0 rgba(239, 67, 254, 0.35);
 }
 
 .stat-beatmaps {
@@ -116,11 +135,23 @@
   box-shadow: 10px 10px 0 rgba(165, 23, 247, 0.2);
   text-align: left;
 }
+.stat-beatmaps:hover {
+  translate: 0 -4px;
+  background: rgba(165, 23, 247, 0.2);
+  border-color: rgba(165, 23, 247, 0.5);
+  box-shadow: 16px 16px 0 rgba(165, 23, 247, 0.4);
+}
 
 .stat-playtime {
   border-radius: 6px 20px 20px 20px;
   box-shadow: 10px -8px 0 rgba(14, 83, 197, 0.2);
   text-align: left;
+}
+.stat-playtime:hover {
+  translate: 0 -4px;
+  background: rgba(14, 83, 197, 0.25);
+  border-color: rgba(14, 83, 197, 0.5);
+  box-shadow: 16px -14px 0 rgba(14, 83, 197, 0.4);
 }
 
 .stat-card .stat-value {
@@ -150,7 +181,7 @@
 .hero-wordmark {
   height: 60px;
   margin-bottom: 1rem;
-  filter: drop-shadow(0 4px 20px rgba(255, 255, 255, 0.1));
+  filter: drop-shadow(0 0 0.5px white) drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
 }
 
 .hero-online {
