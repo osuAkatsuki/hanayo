@@ -11,7 +11,7 @@ MinPrivileges=2
 {{ define "tpl" }}
   {{ $ := . }}
   {{ $can_userpage := qb "SELECT 1 FROM users WHERE id = ? AND userpage_allowed LIMIT 1" .Context.User.ID }}
-  <link rel="stylesheet" href="/static/css/pages/bbcode.min.css" />
+  <link rel="stylesheet" href="{{ asset "/static/css/pages/bbcode.min.css" }}" />
   <div class="ui container">
     <div class="ui stackable grid">
       {{ template "settingsSidebar" . }}

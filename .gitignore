@@ -5,3 +5,4 @@ team.json
 .env
 web/static/css
 web/static/js
+web/static/manifest.json
