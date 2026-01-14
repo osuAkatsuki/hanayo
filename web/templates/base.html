@@ -53,7 +53,7 @@
       <script
         src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"
         crossorigin="anonymous"></script>
-      <script src="{{ asset "/static/js/dist.min.js" }}"></script>
+      <script src="{{ asset "/static/js/dist.min.js" }}" defer></script>
 
       <style>
         body {
@@ -185,12 +185,14 @@
       </center>
 
       <script>
-        $(".language-select").on("click", function (event) {
-          event.stopPropagation();
-          event.stopImmediatePropagation();
-          var lang = $(this).data("lang");
-          document.cookie = "language=" + lang + ";path=/;max-age=31536000";
-          window.location.reload();
+        document.addEventListener("DOMContentLoaded", function () {
+          $(".language-select").on("click", function (event) {
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            var lang = $(this).data("lang");
+            document.cookie = "language=" + lang + ";path=/;max-age=31536000";
+            window.location.reload();
+          });
         });
       </script>
 
