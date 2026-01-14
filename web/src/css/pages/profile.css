@@ -195,9 +195,9 @@
 
 @media screen and (max-width: 499px) {
   .profile-badges:has(.badge) {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 4px;
-    grid-template-columns: repeat(5, 35px);
     justify-content: center;
   }
 
