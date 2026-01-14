@@ -1102,7 +1102,16 @@ function privilegesToString(privs) {
 }
 
 function toggleNavbar() {
-  $(".mobile-header").toggleClass("active");
+  var mobileHeader = $(".mobile-header");
+  var menuToggle = $("#mobile-menu-toggle");
+  mobileHeader.toggleClass("active");
+
+  // Update aria-expanded state
+  if (mobileHeader.hasClass("active")) {
+    menuToggle.attr("aria-expanded", "true");
+  } else {
+    menuToggle.attr("aria-expanded", "false");
+  }
 }
 
 function countryToCodepoints(country) {

@@ -1,11 +1,13 @@
 {{ define "navbar" }}
   {{ $isRAP   := and (hasAdmin .Context.User.Privileges) (isRAP .Path) }}
   {{ $isAdmin := hasAdmin .Context.User.Privileges }}
-  <div
+  <nav
     class="ui secondary fixed-height white background main menu no margin bottom{{ if .DisableHH }}
       dropped
     {{ end }}"
     id="navbar"
+    role="navigation"
+    aria-label="Main navigation"
   >
     <div class="ui container">
       <div class="item">
@@ -15,17 +17,17 @@
       </div>
       {{ if $isRAP }}
       {{ else }}
-        <div class="ui dropdown item">
+        <div class="ui dropdown item" aria-haspopup="true">
           <span>{{ .T "Leaderboard" }}</span>
-          <div class="menu">
+          <div class="menu" role="menu">
             {{ navbarItem .Path (.T "Performance") "/leaderboard" }}
             {{ navbarItem .Path (.T "Score") "/leaderboard?sort=score" }}
             {{ navbarItem .Path (.T "Clans") "/clans?mode=0" }}
           </div>
         </div>
-        <div class="ui dropdown item">
+        <div class="ui dropdown item" aria-haspopup="true">
           <span>{{ .T "Information" }}</span>
-          <div class="menu">
+          <div class="menu" role="menu">
             {{/* navbarItem .Path (.T "About Akatsuki") "/about" */}}
             {{ navbarItem .Path (.T "Documentation") "/doc" }}
             {{ navbarItem .Path (.T "Rules") "/doc/tos" }}
@@ -58,13 +60,14 @@
         </div>
 
         {{ if .Context.User.Username }}
-          <div class="ui dropdown item">
+          <div class="ui dropdown item" aria-haspopup="true">
             <img
               class="ui avatar image"
               src="{{ config "PUBLIC_AVATARS_SERVICE_BASE_URL" }}/{{ .Context.User.ID }}"
+              alt=""
             />
             <span>{{ .Context.User.Username }}</span>
-            <div class="menu">
+            <div class="menu" role="menu">
               {{ navbarItem .Path (.T "Profile") (printf "/u/%d" .Context.User.ID) }}
               {{ navbarItem .Path (.T "Friends") "/friends" }}
               {{ navbarItem .Path (.T "Settings") "/settings" }}
@@ -78,13 +81,13 @@
 
 
         <a class="item mobile" onclick="toggleNavbar()">
-          <button class="ui icon button">
-            <i class="list icon"></i>
+          <button class="ui icon button" aria-label="Toggle navigation menu" aria-expanded="false" id="mobile-menu-toggle">
+            <i class="list icon" aria-hidden="true"></i>
           </button>
         </a>
       </div>
     </div>
-    <div class="mobile-header">
+    <div class="mobile-header" role="navigation" aria-label="Mobile navigation">
       {{ if .Context.User.Username }}
         <div class="head">
           <a href="/u/{{ .Context.User.ID }}" class="user">
@@ -234,5 +237,5 @@
         {{ end }}
       </div>
     </div>
-  </div>
+  </nav>
 {{ end }}
