@@ -1,3 +1,32 @@
+// Lazy load ApexCharts only when needed
+var apexChartsLoaded = false;
+var apexChartsLoading = false;
+var apexChartsCallbacks = [];
+
+function loadApexCharts(callback) {
+  if (apexChartsLoaded) {
+    callback();
+    return;
+  }
+
+  apexChartsCallbacks.push(callback);
+
+  if (apexChartsLoading) {
+    return;
+  }
+
+  apexChartsLoading = true;
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/apexcharts';
+  script.onload = function() {
+    apexChartsLoaded = true;
+    apexChartsLoading = false;
+    apexChartsCallbacks.forEach(function(cb) { cb(); });
+    apexChartsCallbacks = [];
+  };
+  document.head.appendChild(script);
+}
+
 // code that is executed on every user profile
 $(document).ready(function () {
   var wl = window.location;
@@ -353,17 +382,20 @@ function initialiseChartGraph(graphType, udpate) {
         },
       };
 
-      if (udpate) {
-        if ("chart" in window) {
-          window.chart.updateOptions(options);
+      // Lazy load ApexCharts before creating the chart
+      loadApexCharts(function() {
+        if (udpate) {
+          if ("chart" in window) {
+            window.chart.updateOptions(options);
+          } else {
+            window.chart = new ApexCharts(chartCanvas, options);
+            window.chart.render();
+          }
         } else {
           window.chart = new ApexCharts(chartCanvas, options);
           window.chart.render();
         }
-      } else {
-        window.chart = new ApexCharts(chartCanvas, options);
-        window.chart.render();
-      }
+      });
     }
   );
 }
