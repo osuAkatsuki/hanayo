@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - debug-helm-deploy
   workflow_dispatch:
 
 concurrency:
@@ -49,17 +48,6 @@ jobs:
           sudo chown $(id -u):$(id -g) $HOME/.kube/config
           chmod 600 $HOME/.kube/config
 
-      - name: Debug - Check kubeconfig
-        run: |
-          echo "=== Kubeconfig server URL ==="
-          grep server: $HOME/.kube/config
-          echo "=== Kubeconfig line count ==="
-          wc -l $HOME/.kube/config
-          echo "=== Test kubectl connectivity ==="
-          kubectl cluster-info
-          echo "=== kubectl get nodes ==="
-          kubectl get nodes
-
       - name: Install helm
         uses: azure/setup-helm@v3
         with:
@@ -70,17 +58,6 @@ jobs:
       - name: Install helm-diff
         run: helm plugin install https://github.com/databus23/helm-diff
 
-      - name: Debug - Check helm
-        run: |
-          echo "=== Helm version ==="
-          helm version
-          echo "=== Helm list all releases ==="
-          helm list -A
-          echo "=== Helm list hanayo release ==="
-          helm list | grep hanayo || echo "No hanayo release found in default namespace"
-          echo "=== Check helm secrets ==="
-          kubectl get secrets -l owner=helm | grep hanayo || echo "No hanayo helm secrets found"
-
       - name: Checkout common-helm-charts repo
         uses: actions/checkout@v3
         with:
@@ -90,11 +67,12 @@ jobs:
 
       - name: Clear pending deployments
         run: |
-          kubectl delete secret -l 'status in (pending-install, pending-upgrade, pending-rollback),name=hanayo-production'
+          kubectl delete secret -n default -l 'status in (pending-install, pending-upgrade, pending-rollback),name=hanayo-production'
 
       - name: Show manifest diff since previous release
         run: |
           helm diff upgrade \
+          --namespace default \
           --allow-unreleased \
           --color=true \
           --values chart/values.yaml \
@@ -103,15 +81,12 @@ jobs:
 
       - name: Deploy service to production cluster
         run: |
-          echo "=== Helm list before deploy ==="
-          helm list -A
-          echo "=== Starting helm upgrade ==="
           helm upgrade \
+            --namespace default \
             --install \
             --atomic \
             --wait --timeout 10m \
             --cleanup-on-fail \
-            --debug \
             --values chart/values.yaml \
             hanayo-production \
             common-helm-charts/microservice-base/
