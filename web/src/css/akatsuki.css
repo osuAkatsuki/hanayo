@@ -1181,10 +1181,12 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 6px 12px;
-  border-radius: 6px;
-  min-width: 48px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  min-width: 52px;
   flex: 1;
+  background: linear-gradient(135deg, hsl(280, 30%, 25%) 0%, hsl(213, 35%, 20%) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .grade-label {
@@ -1193,23 +1195,31 @@ body::-webkit-scrollbar-thumb {
 }
 
 .grade-count {
-  font-size: 0.9em;
-  opacity: 0.9;
+  font-size: 0.85em;
+  opacity: 0.7;
 }
 
-.grade-badge-xh,
-.grade-badge-sh {
-  background: #c0c0c0;
-  color: #333;
+.grade-badge-xh .grade-label {
+  color: #e0e0e0;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
-.grade-badge-x,
-.grade-badge-s {
-  background: #ebcc5e;
-  color: #333;
+.grade-badge-x .grade-label {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
 }
 
-.grade-badge-a {
-  background: #8ef97d;
-  color: #333;
+.grade-badge-sh .grade-label {
+  color: #e0e0e0;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.grade-badge-s .grade-label {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.grade-badge-a .grade-label {
+  color: #8ef97d;
+  text-shadow: 0 0 8px rgba(142, 249, 125, 0.5);
 }
