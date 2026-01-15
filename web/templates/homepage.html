@@ -68,13 +68,17 @@
 
   {{/* Main Content: Two-Column Layout */}}
   <div class="homepage-main">
-    {{/* Mode Selector */}}
+    {{/* Mode Selectors - matching leaderboard layout */}}
     <div class="mode-selector-bar">
-      <span class="mode-label">Mode:</span>
-      <div class="mode-selector">
-        <button class="mode-btn active" data-rx="1">Relax</button>
-        <button class="mode-btn" data-rx="0">Vanilla</button>
-        <button class="mode-btn" data-rx="2">Autopilot</button>
+      <div class="mode-selector" id="rx-selector">
+        {{ range $k, $v := cmodes }}
+          <button class="mode-btn{{ if eq $k 0 }} active{{ end }}" data-rx="{{ $k }}">{{ $v }}</button>
+        {{ end }}
+      </div>
+      <div class="mode-selector" id="mode-selector">
+        {{ range $k, $v := modes }}
+          <button class="mode-btn{{ if eq $k 0 }} active{{ end }}" data-mode="{{ $k }}">{{ $v }}</button>
+        {{ end }}
       </div>
     </div>
 

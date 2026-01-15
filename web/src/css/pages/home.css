@@ -234,6 +234,12 @@
   box-shadow: 0 2px 10px rgba(56, 126, 252, 0.3);
 }
 
+.mode-btn.disabled,
+.mode-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 /* Content Grid */
 .content-grid {
   display: grid;
