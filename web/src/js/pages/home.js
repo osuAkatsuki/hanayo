@@ -37,6 +37,38 @@ function updateModeAvailability() {
   }
 }
 
+// Convert mods integer to string (e.g., 24 -> "HDHR")
+function modsToString(mods) {
+  if (!mods || mods === 0) return '';
+
+  const modMap = {
+    1: 'NF', 2: 'EZ', 8: 'HD', 16: 'HR', 64: 'DT',
+    256: 'HT', 512: 'NC', 1024: 'FL', 2048: 'SO'
+  };
+
+  const parts = [];
+  for (const [flag, name] of Object.entries(modMap)) {
+    if (mods & parseInt(flag)) {
+      parts.push(name);
+    }
+  }
+  return parts.join('');
+}
+
+// Format ISO timestamp for tooltip
+function formatISODate(isoString) {
+  const date = new Date(isoString);
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZoneName: 'short'
+  });
+}
+
 // Create activity item element safely (no innerHTML)
 function createActivityItem(item, type) {
   const userid = Math.floor(item.userid);
@@ -57,29 +89,80 @@ function createActivityItem(item, type) {
   const details = document.createElement('div');
   details.className = 'activity-details';
 
+  // First row: player/action/map and PP
+  const row1 = document.createElement('div');
+  row1.className = 'activity-row';
+
+  const mainDiv = document.createElement('div');
+  mainDiv.className = 'activity-main';
+
   const playerLink = document.createElement('a');
   playerLink.href = `/u/${userid}`;
   playerLink.className = 'activity-player';
   playerLink.textContent = item.username;
-  details.appendChild(playerLink);
+  mainDiv.appendChild(playerLink);
 
   const actionSpan = document.createElement('span');
   actionSpan.className = 'activity-action';
   actionSpan.textContent = ` ${action} `;
-  details.appendChild(actionSpan);
+  mainDiv.appendChild(actionSpan);
 
   const mapLink = document.createElement('a');
   mapLink.href = `/b/${beatmapId}`;
   mapLink.className = 'activity-map';
   mapLink.textContent = item.song_name;
-  details.appendChild(mapLink);
+  mainDiv.appendChild(mapLink);
 
-  div.appendChild(details);
+  row1.appendChild(mainDiv);
 
   const ppSpan = document.createElement('span');
   ppSpan.className = 'activity-pp';
   ppSpan.textContent = `${pp}pp`;
-  div.appendChild(ppSpan);
+  row1.appendChild(ppSpan);
+
+  details.appendChild(row1);
+
+  // Second row: mods/time and accuracy
+  const row2 = document.createElement('div');
+  row2.className = 'activity-row';
+
+  const metaDiv = document.createElement('div');
+  metaDiv.className = 'activity-meta';
+
+  // Add mods if present
+  if (item.mods) {
+    const modsStr = modsToString(item.mods);
+    if (modsStr) {
+      const modsSpan = document.createElement('span');
+      modsSpan.className = 'activity-mods';
+      modsSpan.textContent = `+${modsStr}`;
+      metaDiv.appendChild(modsSpan);
+    }
+  }
+
+  // Add time ago (using jQuery timeago plugin)
+  const isoString = type === 'first-places' ? item.score_time : item.time;
+  if (isoString) {
+    const timeEl = document.createElement('time');
+    timeEl.className = 'new timeago';
+    timeEl.dateTime = isoString; // ISO format required for jQuery timeago
+    timeEl.title = formatISODate(isoString); // Tooltip with formatted date
+    metaDiv.appendChild(timeEl);
+  }
+
+  row2.appendChild(metaDiv);
+
+  // Add accuracy
+  if (item.accuracy !== undefined) {
+    const accSpan = document.createElement('span');
+    accSpan.className = 'activity-accuracy';
+    accSpan.textContent = `${item.accuracy.toFixed(2)}%`;
+    row2.appendChild(accSpan);
+  }
+
+  details.appendChild(row2);
+
+  div.appendChild(details);
 
   return div;
 }
@@ -100,6 +183,8 @@ function renderActivityContent(container, items, type) {
     return;
   }
   items.forEach(item => container.appendChild(createActivityItem(item, type)));
+  // Initialize jQuery timeago for newly added elements
+  $(".new.timeago").timeago().removeClass("new");
 }
 
 // Fetch and update activity data
@@ -148,3 +233,9 @@ document.querySelectorAll('#mode-selector .mode-btn').forEach(btn => {
 
 // Initialize mode availability on page load
 updateModeAvailability();
+
+// Initialize jQuery timeago for server-rendered content
+$(".new.timeago").timeago().removeClass("new");
+
+// Fetch initial data for the default mode/rx
+updateActivityData();

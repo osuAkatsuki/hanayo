@@ -29,6 +29,21 @@ function loadApexCharts(callback) {
   document.head.appendChild(script);
 }
 
+// Format ISO timestamp to human-readable date/time
+function formatISODate(isoString) {
+  var date = new Date(isoString);
+  var options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZoneName: 'short'
+  };
+  return date.toLocaleString('en-US', options);
+}
+
 // code that is executed on every user profile
 $(document).ready(function () {
   // userID is defined in profile.html - exit early if not on a profile page
@@ -931,7 +946,7 @@ function loadScoresPage(type, mode) {
                 )} / ${addCommas(v.max_combo)}x / <b>${getScoreMods(v.mods, true)}</b>
               </div>
               <div class="map-date">
-                <time class="new timeago" datetime="${v.time}">
+                <time class="new timeago" datetime="${v.time}" title="${formatISODate(v.time)}">
                   ${v.time}
                 </time>
               </div>

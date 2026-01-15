@@ -574,6 +574,63 @@ var FuncMap = template.FuncMap{
 		return common.Privileges(privs).String()
 	},
 	"htmlescaper": template.HTMLEscaper,
+	// formatISO formats ISO 8601 string to human-readable date/time
+	"formatISO": func(isoString interface{}) string {
+		str, ok := isoString.(string)
+		if !ok {
+			return ""
+		}
+
+		t, err := time.Parse(time.RFC3339, str)
+		if err != nil {
+			return ""
+		}
+
+		return t.Format("January 2, 2006 at 3:04:05 PM MST")
+	},
+	// modsToString converts mod flags to their string representation
+	"modsToString": func(mods interface{}) string {
+		var m int
+		switch v := mods.(type) {
+		case float64:
+			m = int(v)
+		case int:
+			m = v
+		default:
+			return ""
+		}
+
+		if m == 0 {
+			return ""
+		}
+
+		var parts []string
+		modMap := map[int]string{
+			1:        "NF",
+			2:        "EZ",
+			8:        "HD",
+			16:       "HR",
+			32:       "SD",
+			64:       "DT",
+			128:      "RX",
+			256:      "HT",
+			512:      "NC",
+			1024:     "FL",
+			2048:     "AT",
+			4096:     "SO",
+			8192:     "AP",
+			16384:    "PF",
+			536870912: "V2",
+		}
+
+		for flag, name := range modMap {
+			if m&flag != 0 {
+				parts = append(parts, name)
+			}
+		}
+
+		return strings.Join(parts, "")
+	},
 }
 
 var hanayoStarted = time.Now().UnixNano()
