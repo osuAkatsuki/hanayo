@@ -1137,18 +1137,18 @@ body::-webkit-scrollbar-thumb {
   background: hsl(0, 0%, 15%) !important;
 }
 
-/* Modern button hover effects */
-.ui.button:not(.disabled):not(.loading) {
+/* Modern button hover effects (exclude dropdowns to prevent menu misalignment) */
+.ui.button:not(.disabled):not(.loading):not(.dropdown) {
   transition: transform 0.15s ease,
               box-shadow 0.15s ease,
               background-color 0.15s ease;
 }
 
-.ui.button:not(.disabled):not(.loading):hover {
+.ui.button:not(.disabled):not(.loading):not(.dropdown):hover {
   transform: translateY(-1px);
 }
 
-.ui.button:not(.disabled):not(.loading):active {
+.ui.button:not(.disabled):not(.loading):not(.dropdown):active {
   transform: translateY(0);
 }
 
