@@ -96,11 +96,22 @@
               <div class="activity-item">
                 <img src="https://a.akatsuki.gg/{{ ftoi .userid }}" class="activity-avatar" loading="lazy" alt="">
                 <div class="activity-details">
-                  <a href="/u/{{ ftoi .userid }}" class="activity-player">{{ .username }}</a>
-                  <span class="activity-action">claimed #1 on</span>
-                  <a href="/b/{{ ftoi .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
+                  <div class="activity-row">
+                    <div class="activity-main">
+                      <a href="/u/{{ ftoi .userid }}" class="activity-player">{{ .username }}</a>
+                      <span class="activity-action">claimed #1 on</span>
+                      <a href="/b/{{ ftoi .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
+                    </div>
+                    <span class="activity-pp">{{ ftoi .pp }}pp</span>
+                  </div>
+                  <div class="activity-row">
+                    <div class="activity-meta">
+                      {{ if .mods }}{{ if modsToString .mods }}<span class="activity-mods">+{{ modsToString .mods }}</span>{{ end }}{{ end }}
+                      {{ if .score_time }}<time class="activity-time" datetime="{{ .score_time }}" title="{{ formatISO .score_time }}">{{ timeAgoISO .score_time }}</time>{{ end }}
+                    </div>
+                    <span class="activity-accuracy">{{ printf "%.2f" .accuracy }}%</span>
+                  </div>
                 </div>
-                <span class="activity-pp">{{ ftoi .pp }}pp</span>
               </div>
             {{ else }}
               <p class="no-activity">No recent first places</p>
@@ -112,11 +123,22 @@
               <div class="activity-item">
                 <img src="https://a.akatsuki.gg/{{ ftoi .userid }}" class="activity-avatar" loading="lazy" alt="">
                 <div class="activity-details">
-                  <a href="/u/{{ ftoi .userid }}" class="activity-player">{{ .username }}</a>
-                  <span class="activity-action">set</span>
-                  <a href="/b/{{ ftoi .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
+                  <div class="activity-row">
+                    <div class="activity-main">
+                      <a href="/u/{{ ftoi .userid }}" class="activity-player">{{ .username }}</a>
+                      <span class="activity-action">set</span>
+                      <a href="/b/{{ ftoi .beatmap_id }}" class="activity-map">{{ .song_name }}</a>
+                    </div>
+                    <span class="activity-pp">{{ ftoi .pp }}pp</span>
+                  </div>
+                  <div class="activity-row">
+                    <div class="activity-meta">
+                      {{ if .mods }}{{ if modsToString .mods }}<span class="activity-mods">+{{ modsToString .mods }}</span>{{ end }}{{ end }}
+                      {{ if .time }}<time class="activity-time" datetime="{{ .time }}" title="{{ formatISO .time }}">{{ timeAgoISO .time }}</time>{{ end }}
+                    </div>
+                    <span class="activity-accuracy">{{ printf "%.2f" .accuracy }}%</span>
+                  </div>
                 </div>
-                <span class="activity-pp">{{ ftoi .pp }}pp</span>
               </div>
             {{ else }}
               <p class="no-activity">No high PP plays in the last 24h</p>
