@@ -394,7 +394,7 @@
   flex-shrink: 0;
 }
 
-.activity-time {
+.activity-meta .timeago {
   color: var(--text-muted);
 }
 

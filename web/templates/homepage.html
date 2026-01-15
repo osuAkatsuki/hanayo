@@ -107,7 +107,7 @@
                   <div class="activity-row">
                     <div class="activity-meta">
                       {{ if .mods }}{{ if modsToString .mods }}<span class="activity-mods">+{{ modsToString .mods }}</span>{{ end }}{{ end }}
-                      {{ if .score_time }}<time class="activity-time" datetime="{{ .score_time }}" title="{{ formatISO .score_time }}">{{ timeAgoISO .score_time }}</time>{{ end }}
+                      {{ if .score_time }}<time class="new timeago" datetime="{{ .score_time }}" title="{{ formatISO .score_time }}"></time>{{ end }}
                     </div>
                     <span class="activity-accuracy">{{ printf "%.2f" .accuracy }}%</span>
                   </div>
@@ -134,7 +134,7 @@
                   <div class="activity-row">
                     <div class="activity-meta">
                       {{ if .mods }}{{ if modsToString .mods }}<span class="activity-mods">+{{ modsToString .mods }}</span>{{ end }}{{ end }}
-                      {{ if .time }}<time class="activity-time" datetime="{{ .time }}" title="{{ formatISO .time }}">{{ timeAgoISO .time }}</time>{{ end }}
+                      {{ if .time }}<time class="new timeago" datetime="{{ .time }}" title="{{ formatISO .time }}"></time>{{ end }}
                     </div>
                     <span class="activity-accuracy">{{ printf "%.2f" .accuracy }}%</span>
                   </div>
