@@ -523,6 +523,32 @@ var FuncMap = template.FuncMap{
 		}
 		return x.Val()
 	},
+	// redigetJSON retrieves a JSON array from redis and parses it.
+	"redigetJSON": func(k string) []map[string]interface{} {
+		x := services.RD.Get(k)
+		if x == nil || x.Err() != nil {
+			return nil
+		}
+		var result []map[string]interface{}
+		if err := json.Unmarshal([]byte(x.Val()), &result); err != nil {
+			slog.Error("Failed to parse JSON from Redis", "key", k, "error", err.Error())
+			return nil
+		}
+		return result
+	},
+	// ftoi converts a float64 to int64 for display (avoids scientific notation).
+	"ftoi": func(v interface{}) int64 {
+		switch n := v.(type) {
+		case float64:
+			return int64(n)
+		case int:
+			return int64(n)
+		case int64:
+			return n
+		default:
+			return 0
+		}
+	},
 	"languageInformation": func() []langInfo {
 		return languageInformation
 	},
