@@ -257,12 +257,11 @@ function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
   return `
       <div
       class="apexcharts-tooltip-title"
-      style="font-family: &quot;Rubik&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px;"
+      style="font-family: &quot;Rubik&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px; padding: 4px 10px;"
       >${window.graphLabels[dataPointIndex]}</div>
-      <div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">
-        <span class="apexcharts-tooltip-marker" style="background-color: ${graphColor};"></span>
+      <div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex; padding: 0 10px 4px 10px;">
         <div class="apexcharts-tooltip-text" style="font-family: Rubik, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 12px;">
-          <div class="apexcharts-tooltip-y-group">
+          <div class="apexcharts-tooltip-y-group" style="padding: 2px 0;">
             <span class="apexcharts-tooltip-text-y-label">${graphName}: </span>
             <span class="apexcharts-tooltip-text-y-value">${prefix}${addCommas(
     series[seriesIndex][dataPointIndex]
@@ -270,7 +269,7 @@ function getGraphTooltip({ series, seriesIndex, dataPointIndex, w }) {
           </div>
           ${
             graphType == "rank"
-              ? `<div class="apexcharts-tooltip-y-group">
+              ? `<div class="apexcharts-tooltip-y-group" style="padding: 2px 0;">
             <span class="apexcharts-tooltip-text-y-label">Country Rank: </span>
             <span class="apexcharts-tooltip-text-y-value">#${getCountryRank(
               dataPointIndex
