@@ -573,6 +573,10 @@
   animation: fade-up 0.6s ease-out 0.1s backwards;
 }
 
+.mode-selector-bar {
+  animation: fade-up 0.6s ease-out 0.15s backwards;
+}
+
 .activity-card,
 .trending-card {
   animation: fade-up 0.6s ease-out 0.2s backwards;
