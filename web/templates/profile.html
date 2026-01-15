@@ -395,6 +395,28 @@
                           </tr>
                         </tbody>
                       </table>
+                      <div class="grade-counts">
+                        <div class="grade-badge grade-badge-xh">
+                          <span class="grade-label">SS</span>
+                          <span class="grade-count">{{ humanize .grades.xh_count }}</span>
+                        </div>
+                        <div class="grade-badge grade-badge-x">
+                          <span class="grade-label">SS</span>
+                          <span class="grade-count">{{ humanize .grades.x_count }}</span>
+                        </div>
+                        <div class="grade-badge grade-badge-sh">
+                          <span class="grade-label">S</span>
+                          <span class="grade-count">{{ humanize .grades.sh_count }}</span>
+                        </div>
+                        <div class="grade-badge grade-badge-s">
+                          <span class="grade-label">S</span>
+                          <span class="grade-count">{{ humanize .grades.s_count }}</span>
+                        </div>
+                        <div class="grade-badge grade-badge-a">
+                          <span class="grade-label">A</span>
+                          <span class="grade-count">{{ humanize .grades.a_count }}</span>
+                        </div>
+                      </div>
                       <div
                         class="ui blue progress little margin top level-progress"
                         data-percent="{{ levelPercent .level }}">

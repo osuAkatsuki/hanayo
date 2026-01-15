@@ -1167,3 +1167,49 @@ body::-webkit-scrollbar-thumb {
 .ui.cards > .card:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
+
+/* Grade count badges on user profiles */
+.grade-counts {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.grade-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 48px;
+  flex: 1;
+}
+
+.grade-label {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.grade-count {
+  font-size: 0.9em;
+  opacity: 0.9;
+}
+
+.grade-badge-xh,
+.grade-badge-sh {
+  background: #c0c0c0;
+  color: #333;
+}
+
+.grade-badge-x,
+.grade-badge-s {
+  background: #ebcc5e;
+  color: #333;
+}
+
+.grade-badge-a {
+  background: #8ef97d;
+  color: #333;
+}
