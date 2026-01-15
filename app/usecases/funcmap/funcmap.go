@@ -645,41 +645,6 @@ var FuncMap = template.FuncMap{
 		tm := time.Unix(t, 0)
 		return tm.Format(time.RFC3339)
 	},
-	// timeAgoISO calculates relative time from ISO 8601 string
-	"timeAgoISO": func(isoString interface{}) string {
-		str, ok := isoString.(string)
-		if !ok {
-			return ""
-		}
-
-		t, err := time.Parse(time.RFC3339, str)
-		if err != nil {
-			return ""
-		}
-
-		duration := time.Since(t)
-
-		if duration < time.Minute {
-			return "just now"
-		} else if duration < time.Hour {
-			mins := int(duration.Minutes())
-			return fmt.Sprintf("%dm ago", mins)
-		} else if duration < 24*time.Hour {
-			hours := int(duration.Hours())
-			return fmt.Sprintf("%dh ago", hours)
-		} else if duration < 7*24*time.Hour {
-			days := int(duration.Hours() / 24)
-			return fmt.Sprintf("%dd ago", days)
-		} else if duration < 30*24*time.Hour {
-			weeks := int(duration.Hours() / 24 / 7)
-			return fmt.Sprintf("%dw ago", weeks)
-		} else if duration < 365*24*time.Hour {
-			months := int(duration.Hours() / 24 / 30)
-			return fmt.Sprintf("%dmo ago", months)
-		}
-		years := int(duration.Hours() / 24 / 365)
-		return fmt.Sprintf("%dy ago", years)
-	},
 	// formatISO formats ISO 8601 string to human-readable date/time
 	"formatISO": func(isoString interface{}) string {
 		str, ok := isoString.(string)

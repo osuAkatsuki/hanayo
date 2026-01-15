@@ -55,18 +55,18 @@ function modsToString(mods) {
   return parts.join('');
 }
 
-// Convert ISO 8601 string to relative time (e.g., "2y ago", "3d ago")
-function timeAgo(isoString) {
+// Format ISO timestamp for tooltip
+function formatISODate(isoString) {
   const date = new Date(isoString);
-  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-
-  if (seconds < 60) return 'just now';
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-  if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`;
-  if (seconds < 2592000) return `${Math.floor(seconds / 604800)}w ago`;
-  if (seconds < 31536000) return `${Math.floor(seconds / 2592000)}mo ago`;
-  return `${Math.floor(seconds / 31536000)}y ago`;
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZoneName: 'short'
+  });
 }
 
 // Create activity item element safely (no innerHTML)
@@ -140,24 +140,13 @@ function createActivityItem(item, type) {
     }
   }
 
-  // Add time ago
+  // Add time ago (using jQuery timeago plugin)
   const isoString = type === 'first-places' ? item.score_time : item.time;
   if (isoString) {
     const timeEl = document.createElement('time');
-    timeEl.className = 'activity-time';
-    timeEl.dateTime = isoString; // Already in ISO format
-    timeEl.textContent = timeAgo(isoString);
-    // Add tooltip with full date/time
-    const date = new Date(isoString);
-    timeEl.title = date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      timeZoneName: 'short'
-    });
+    timeEl.className = 'new timeago';
+    timeEl.dateTime = isoString; // ISO format required for jQuery timeago
+    timeEl.title = formatISODate(isoString); // Tooltip with formatted date
     metaDiv.appendChild(timeEl);
   }
 
@@ -194,6 +183,8 @@ function renderActivityContent(container, items, type) {
     return;
   }
   items.forEach(item => container.appendChild(createActivityItem(item, type)));
+  // Initialize jQuery timeago for newly added elements
+  $(".new.timeago").timeago().removeClass("new");
 }
 
 // Fetch and update activity data
@@ -242,6 +233,9 @@ document.querySelectorAll('#mode-selector .mode-btn').forEach(btn => {
 
 // Initialize mode availability on page load
 updateModeAvailability();
+
+// Initialize jQuery timeago for server-rendered content
+$(".new.timeago").timeago().removeClass("new");
 
 // Fetch initial data for the default mode/rx
 updateActivityData();
