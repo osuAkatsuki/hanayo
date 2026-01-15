@@ -1172,18 +1172,17 @@ body::-webkit-scrollbar-thumb {
 .grade-counts {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
-  margin-top: 12px;
-  margin-bottom: 8px;
+  gap: 4px;
+  margin: 12px 8px 8px 8px;
 }
 
 .grade-badge {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 14px;
-  border-radius: 8px;
-  min-width: 52px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  min-width: 0;
   flex: 1;
   background: linear-gradient(135deg, hsl(280, 30%, 25%) 0%, hsl(213, 35%, 20%) 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
