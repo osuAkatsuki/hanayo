@@ -1167,3 +1167,59 @@ body::-webkit-scrollbar-thumb {
 .ui.cards > .card:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
+
+/* Grade count badges on user profiles */
+.grade-counts {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.grade-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 8px;
+  min-width: 52px;
+  flex: 1;
+  background: linear-gradient(135deg, hsl(280, 30%, 25%) 0%, hsl(213, 35%, 20%) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.grade-label {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.grade-count {
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.grade-badge-xh .grade-label {
+  color: #e0e0e0;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.grade-badge-x .grade-label {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.grade-badge-sh .grade-label {
+  color: #e0e0e0;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.grade-badge-s .grade-label {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.grade-badge-a .grade-label {
+  color: #8ef97d;
+  text-shadow: 0 0 8px rgba(142, 249, 125, 0.5);
+}

@@ -29,3 +29,14 @@ go build -o hanayo .
 - `web/src/js/` - Source JavaScript files
 - `web/static/` - Compiled static assets (output of gulp)
 - `main.go` - Server setup with Gin router
+
+## Design Mockups
+
+When exploring visual design options (CSS styling, component layouts, color schemes), create standalone HTML mockup files in `web/static/` to compare alternatives side-by-side before implementing:
+
+```bash
+# Example: create mockups for a new component
+web/static/component-mockups.html
+```
+
+Include multiple design variations in a single file with the same background/context as the target page. This allows quick visual comparison without modifying production code. Once a design is chosen, implement it in the actual CSS/templates.
