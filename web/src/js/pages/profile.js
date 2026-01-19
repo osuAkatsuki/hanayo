@@ -550,9 +550,22 @@ function initialiseUserpage() {
 }
 
 function initialiseAchievements() {
+  // Compute combined mode value for relax/autopilot support
+  // favouriteMode: 0=std, 1=taiko, 2=catch, 3=mania
+  // preferRelax: 0=vanilla, 1=relax, 2=autopilot
+  // Combined: vanilla=0-3, relax=4-6, autopilot=8
+  var combinedMode = favouriteMode;
+  if (preferRelax === 1) {
+    // Relax: std_rx=4, taiko_rx=5, catch_rx=6
+    combinedMode = 4 + favouriteMode;
+  } else if (preferRelax === 2) {
+    // Autopilot: only std_ap=8
+    combinedMode = 8 + favouriteMode;
+  }
+
   api(
     "users/achievements" + (currentUserID == userID ? "?all" : ""),
-    { id: userID, mode: favouriteMode },
+    { id: userID, mode: combinedMode },
     function (resp) {
       var achievements = resp.achievements;
       // no achievements -- show default message
