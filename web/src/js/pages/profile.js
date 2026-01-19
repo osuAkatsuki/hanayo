@@ -558,7 +558,7 @@ function initialiseAchievements() {
   if (preferRelax === 1) {
     // Relax: std_rx=4, taiko_rx=5, catch_rx=6
     combinedMode = 4 + favouriteMode;
-  } else if (preferRelax === 2 && favouriteMode === 0) {
+  } else if (preferRelax === 2) {
     // Autopilot: only std_ap=8
     combinedMode = 8;
   }
