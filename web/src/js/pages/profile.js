@@ -560,7 +560,7 @@ function initialiseAchievements() {
     combinedMode = 4 + favouriteMode;
   } else if (preferRelax === 2) {
     // Autopilot: only std_ap=8
-    combinedMode = 8;
+    combinedMode = 8 + favouriteMode;
   }
 
   api(
