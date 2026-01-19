@@ -550,39 +550,11 @@ function initialiseUserpage() {
 }
 
 function initialiseAchievements() {
-  // Helper function to check if an achievement belongs to the current mode
-  var achievementMatchesMode = function (achievement, mode) {
-    var icon = achievement.icon.toLowerCase();
-
-    // Achievements with "all-" prefix are shown for all modes
-    if (icon.startsWith("all-")) {
-      return true;
-    }
-
-    // Mode-specific prefixes
-    switch (mode) {
-      case 0: // osu!standard
-        return icon.startsWith("osu-") || icon.startsWith("std-");
-      case 1: // taiko
-        return icon.startsWith("taiko-");
-      case 2: // catch the beat
-        return icon.startsWith("fruits-") || icon.startsWith("catch-");
-      case 3: // mania
-        return icon.startsWith("mania-");
-      default:
-        return false;
-    }
-  };
-
   api(
     "users/achievements" + (currentUserID == userID ? "?all" : ""),
     { id: userID, mode: favouriteMode },
     function (resp) {
-      // Filter achievements to only show ones for the current mode
-      var achievements = resp.achievements.filter(function (ach) {
-        return achievementMatchesMode(ach, favouriteMode);
-      });
-
+      var achievements = resp.achievements;
       // no achievements -- show default message
       if (achievements.length === 0) {
         $("#achievements").empty().append(
