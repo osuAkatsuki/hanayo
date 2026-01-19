@@ -151,6 +151,7 @@ $(document).ready(function () {
       `${wl.pathname}?mode=${m}&rx=${preferRelax}${wl.hash}`
     );
     initialiseChartGraph(graphType, true);
+    initialiseAchievements();
   });
   initialiseAchievements();
   initialiseUserpage();
@@ -551,12 +552,12 @@ function initialiseUserpage() {
 function initialiseAchievements() {
   api(
     "users/achievements" + (currentUserID == userID ? "?all" : ""),
-    { id: userID },
+    { id: userID, mode: favouriteMode },
     function (resp) {
       var achievements = resp.achievements;
       // no achievements -- show default message
       if (achievements.length === 0) {
-        $("#achievements").append(
+        $("#achievements").empty().append(
           $(
             `<div class='ui sixteen wide column'>
             <div class="empty-state">
@@ -619,6 +620,7 @@ function initialiseAchievements() {
       } else {
         $("#load-more-achievements")
           .removeClass("disabled")
+          .off("click")
           .on("click", function () {
             $(this).remove();
             displayAchievements(-1, false);
