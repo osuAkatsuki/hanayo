@@ -115,6 +115,7 @@ $(document).ready(function () {
     );
     initialiseChartGraph(graphType, true);
     applyPeakRankLabel();
+    initialiseAchievements();
   });
 
   // when an item in the mode menu is clicked, it means we should change the mode.
