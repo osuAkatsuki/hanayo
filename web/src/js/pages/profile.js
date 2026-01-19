@@ -557,7 +557,7 @@ function initialiseAchievements() {
       var achievements = resp.achievements;
       // no achievements -- show default message
       if (achievements.length === 0) {
-        $("#achievements").append(
+        $("#achievements").empty().append(
           $(
             `<div class='ui sixteen wide column'>
             <div class="empty-state">
@@ -620,6 +620,7 @@ function initialiseAchievements() {
       } else {
         $("#load-more-achievements")
           .removeClass("disabled")
+          .off("click")
           .on("click", function () {
             $(this).remove();
             displayAchievements(-1, false);
