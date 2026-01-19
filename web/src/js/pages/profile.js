@@ -624,18 +624,17 @@ function initialiseAchievements() {
         }
       };
 
-      // only 8 achievements - we can remove the button completely, because
-      // it won't be used (no more achievements).
-      // otherwise, we simply remove the disabled class and add the click handler
-      // to activate it.
+      // only 8 achievements - hide the button
+      // otherwise, show the button and add the click handler
       if (achievements.length <= 8) {
-        $("#load-more-achievements").remove();
+        $("#load-more-achievements").hide();
       } else {
         $("#load-more-achievements")
+          .show()
           .removeClass("disabled")
           .off("click")
           .on("click", function () {
-            $(this).remove();
+            $(this).hide();
             displayAchievements(-1, false);
           });
       }
