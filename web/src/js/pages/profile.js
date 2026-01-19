@@ -639,7 +639,7 @@ function initialiseAchievements() {
             displayAchievements(-1, false);
           });
       }
-      displayAchievements(8, true);
+      displayAchievements(8, false);
     }
   );
 }
