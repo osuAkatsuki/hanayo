@@ -13,7 +13,8 @@ apps:
         tag: latest
       port: 80
       readinessProbe:
-        tcpSocket:
+        httpGet:
+          path: /_health
           port: 80
         initialDelaySeconds: 5
         periodSeconds: 10

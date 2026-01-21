@@ -189,6 +189,10 @@ func generateEngine() *gin.Engine {
 	r.Static("/static", "web/static")
 	r.StaticFile("/favicon.ico", "web/static/favicon.ico")
 
+	r.GET("/_health", func(c *gin.Context) {
+		c.String(200, "ok")
+	})
+
 	r.POST("/login", loginHandlers.LoginSubmitHandler)
 	r.GET("/logout", logoutHandlers.LogoutSubmitHandler)
 
