@@ -33,12 +33,12 @@ BannerType=1
         {{ template "users" (.Get "badges/members?id=%d" 2) }}
       </div>
       <div class="ui center aligned segment">
-        <h1 class="ui heading">{{ .T "Community Management Team" }}</h1>
+        <h1 class="ui heading">{{ .T "Account Management Team" }}</h1>
         <p>
-          {{ .T "Responsible for not only the community but also the management team itself." }}
+          {{ .T "Responsible for overseeing player accounts, including handling bans, appeals, user status, and ensuring fair play within the community." }}
           <br />
         </p>
-        {{ template "users" (.Get "badges/members?id=%d" 97) }}
+        {{ template "users" (.Get "badges/members?id=%d" 32) }}
       </div>
       <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Community Support Team" }}</h1>
@@ -60,6 +60,14 @@ BannerType=1
           {{ .T "Responsible for handling all beatmap related inquiries; such as beatmaps status requests." }}
         </p>
         {{ template "users" (.Get "badges/members?id=%d" 53) }}
+      </div>
+      <div class="ui center aligned segment">
+        <h1 class="ui heading">{{ .T "Event Management Team" }}</h1>
+        <p>
+          {{ .T "Responsible for hosting events to keep the community engaged." }}
+          <br />
+        </p>
+        {{ template "users" (.Get "badges/members?id=%d" 78) }}
       </div>
       <div class="ui center aligned segment">
         <h1 class="ui heading">{{ .T "Social Media Management Team" }}</h1>
