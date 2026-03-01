@@ -81,7 +81,9 @@ func SessionInitializer() func(c *gin.Context) {
 			addBannedMessage = true
 		}
 
-		ctx.Language = lu.GetLanguageFromGin(c)
+		// XXX: Disabled Oct 2024 due to very poor coverage
+		ctx.Language = "en"
+		// ctx.Language = lu.GetLanguageFromGin(c)
 
 		c.Set("context", ctx)
 		c.Set("session", sess)
