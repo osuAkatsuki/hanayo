@@ -3,7 +3,6 @@ module github.com/osuAkatsuki/hanayo
 go 1.21
 
 require (
-	github.com/amplitude/analytics-go v1.0.1
 	github.com/aws/aws-sdk-go v1.47.3
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/structs v1.1.0
@@ -15,7 +14,6 @@ require (
 	github.com/johnniedoe/contrib v0.0.0-20150821124612-d553224621be
 	github.com/joho/godotenv v1.5.1
 	github.com/microcosm-cc/bluemonday v1.0.26
-	github.com/mileusna/useragent v1.3.3
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/pariz/gountries v0.1.6
 	github.com/rjeczalik/notify v0.9.3-0.20181126183243-629144ba06a1

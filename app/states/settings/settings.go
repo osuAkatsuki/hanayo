@@ -82,8 +82,6 @@ type Settings struct {
 	IP_LOOKUP_URL string
 
 	PAYPAL_EMAIL_ADDRESS string
-
-	AMPLITUDE_API_KEY string
 }
 
 var settings = Settings{}
@@ -145,8 +143,6 @@ func LoadSettings() Settings {
 	settings.IP_LOOKUP_URL = getEnv("IP_LOOKUP_URL")
 
 	settings.PAYPAL_EMAIL_ADDRESS = getEnv("PAYPAL_EMAIL_ADDRESS")
-
-	settings.AMPLITUDE_API_KEY = getEnv("AMPLITUDE_API_KEY")
 
 	return settings
 }

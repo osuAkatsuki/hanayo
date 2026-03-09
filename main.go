@@ -14,7 +14,6 @@ import (
 
 	"golang.org/x/exp/slog"
 
-	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/fatih/structs"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -35,7 +34,6 @@ import (
 	loginHandlers "github.com/osuAkatsuki/hanayo/app/handlers/sessions/login"
 	logoutHandlers "github.com/osuAkatsuki/hanayo/app/handlers/sessions/logout"
 	registerHandlers "github.com/osuAkatsuki/hanayo/app/handlers/sessions/register"
-	logging "github.com/osuAkatsuki/hanayo/app/logging"
 	middleware "github.com/osuAkatsuki/hanayo/app/middleware"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	sessionsmanager "github.com/osuAkatsuki/hanayo/app/sessions"
@@ -124,11 +122,6 @@ func main() {
 		TLSConfig: tlsConfig,
 	})
 	services.RD = rd
-
-	amplitudeConfig := amplitude.NewConfig(settings.AMPLITUDE_API_KEY)
-	amplitudeConfig.MinIDLength = 4 // our user ids start from 1000
-	amplitudeConfig.Logger = (*logging.AmplitudeLogger)(logger)
-	services.Amplitude = amplitude.NewClient(amplitudeConfig)
 
 	// even if it's not release, we say that it's release
 	// so that gin doesn't spam
