@@ -8,9 +8,7 @@ import (
 
 	"golang.org/x/exp/slog"
 
-	"github.com/amplitude/analytics-go/amplitude"
 	"github.com/gin-gonic/gin"
-	"github.com/mileusna/useragent"
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	eh "github.com/osuAkatsuki/hanayo/app/handlers/errors"
 	"github.com/osuAkatsuki/hanayo/app/models"
@@ -191,51 +189,6 @@ func RegisterSubmitHandler(c *gin.Context) {
 	*/
 	// delete the key c
 	//db.Exec("DELETE FROM beta_keys WHERE beta_key = ?", c.PostForm("key"))
-
-	latitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLatitude"), 64)
-	if err != nil {
-		slog.Error("Error parsing latitude", "error", err.Error())
-		latitude = 0.0
-	}
-
-	longitude, err := strconv.ParseFloat(c.Request.Header.Get("CF-IPLongitude"), 64)
-	if err != nil {
-		slog.Error("Error parsing longitude", "error", err.Error())
-		longitude = 0.0
-	}
-
-	userAgent := useragent.Parse(c.Request.UserAgent())
-
-	services.Amplitude.Track(amplitude.Event{
-		EventType: "web_signup",
-		EventOptions: amplitude.EventOptions{
-			UserID:      strconv.FormatInt(userId, 10),
-			IP:          c.ClientIP(),
-			Country:     c.Request.Header.Get("CF-IPCountry"),
-			City:        c.Request.Header.Get("CF-IPCity"),
-			LocationLat: latitude,
-			LocationLng: longitude,
-			Region:      c.Request.Header.Get("CF-Region"),
-			Language:    c.Request.Header.Get("Accept-Language"),
-			OSName:      userAgent.OS,
-			OSVersion:   userAgent.OSVersion,
-			DeviceModel: userAgent.Device,
-		},
-		EventProperties: map[string]interface{}{"source": "hanayo"},
-	})
-
-	identifyObj := amplitude.Identify{}
-	identifyObj.SetOnce("username", username)
-	identifyObj.SetOnce("email", email)
-	identifyObj.SetOnce("signup_date", time.Now().Unix())
-	identifyObj.SetOnce("signup_ip", c.ClientIP())
-
-	services.Amplitude.Identify(
-		identifyObj,
-		amplitude.EventOptions{
-			UserID: strconv.FormatInt(userId, 10),
-		},
-	)
 
 	uu.SetYCookie(int(userId), c)
 
