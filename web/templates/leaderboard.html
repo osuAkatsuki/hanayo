@@ -64,7 +64,26 @@ BannerType=1
         </div>
       </div>
     </div>
-
+	<!-- Total/SPP Overlay -->
+    <div class="ui grid stackable">
+      <div class="sixteen wide column">
+        <div class="ui two item menu" id="sort-menu">
+          <a
+            class="{{ if or (eq $sort "pp") (eq $sort "total") }}active {{ end }}item"
+            data-sort-type="total"
+            href="#">
+            Total PP
+          </a>
+          <a
+            class="{{ if eq $sort "spp" }}active {{ end }}item"
+            data-sort-type="spp"
+            href="#">
+            SPP
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- End Total/SPP Overlay -->
     <div class="ui twelve item stackable menu" id="country-menu">
       {{ range countryList 11 }}
         {{ $code := . }}
@@ -82,7 +101,7 @@ BannerType=1
           <th class="t-heading"></th>
           <th class="t-heading t-player"></th>
           <th class="t-heading center aligned">
-            {{ if eq $sort "score" }}
+			{{ if or (eq $sort "score") (eq $sort "total") (eq $sort "spp") }}
               Score (Performance)
             {{ else }}
               Performance (Score)
@@ -113,4 +132,35 @@ BannerType=1
       </div>
     </div>
   </div>
+  <script>
+    function generateSortParam(sortType) {
+      if (sortType === 'total') {
+        return 'total';
+      } else if (sortType === 'spp') {
+        return 'spp';
+      }
+      return 'pp';
+    }
+
+    // Handle sort menu clicks
+    $(document).ready(function() {
+      $('#sort-menu a').on('click', function(e) {
+        e.preventDefault();
+        var sortType = $(this).data('sort-type');
+        var sortParam = generateSortParam(sortType);
+
+        // Build URL with current parameters
+        var url = '/leaderboard?';
+        var params = [];
+
+        if (rx) params.push('rx=' + rx);
+        if (favouriteMode) params.push('mode=' + favouriteMode);
+        params.push('sort=' + sortParam);
+        if (country) params.push('country=' + country);
+        if (page > 1) params.push('p=' + page);
+
+        window.location.href = url + params.join('&');
+      });
+    });
+  </script>
 {{ end }}
