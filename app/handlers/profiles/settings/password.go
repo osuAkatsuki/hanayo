@@ -23,6 +23,7 @@ func ChangePasswordPageHandler(c *gin.Context) {
 	ctx := sessions.GetContext(c)
 	if ctx.User.ID == 0 {
 		tu.Resp403(c)
+		return
 	}
 	s, err := services.QB.QueryRow("SELECT email FROM users WHERE id = ?", ctx.User.ID)
 	if err != nil {
@@ -39,6 +40,7 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 	ctx := sessions.GetContext(c)
 	if ctx.User.ID == 0 {
 		tu.Resp403(c)
+		return
 	}
 	defer func() {
 		s, err := services.QB.QueryRow("SELECT email FROM users WHERE id = ?", ctx.User.ID)
