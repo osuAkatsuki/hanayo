@@ -94,7 +94,7 @@ func MultiplayerHistoryHandler(c *gin.Context) {
 	}
 
 	if privateMatch &&
-		(!inList(participantsIds, ctx.User.ID) ||
+		(!inList(participantsIds, ctx.User.ID) &&
 			ctx.User.Privileges&common.UserPrivilegeTournamentStaff == 0) {
 		data.MatchID = 0
 		data.TitleBar = lu.T(c, "Match not found.")
