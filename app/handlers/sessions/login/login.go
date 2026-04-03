@@ -129,7 +129,7 @@ func LoginSubmitHandler(c *gin.Context) {
 	AfterLogin(c, data.ID, data.Country)
 
 	redir := c.PostForm("redir")
-	if len(redir) > 0 && redir[0] != '/' {
+	if len(redir) > 0 && (redir[0] != '/' || strings.HasPrefix(redir, "//")) {
 		redir = ""
 	}
 
