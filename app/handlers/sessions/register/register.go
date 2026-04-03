@@ -113,7 +113,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	}
 
 	// check whether an user with that email already exists
-	if services.DB.QueryRow("SELECT 1 FROM users WHERE email LIKE ?", email).
+	if services.DB.QueryRow("SELECT 1 FROM users WHERE email = ?", email).
 		Scan(new(int)) != sql.ErrNoRows {
 		registerResp(c, msg.ErrorMessage{lu.T(c, "An user with that email address already exists!")})
 		return

@@ -77,7 +77,7 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 	services.DB.Get(&currentEmail, "SELECT email FROM users WHERE id = ?", ctx.User.ID)
 
 	if email != "" && email != currentEmail {
-		if services.DB.QueryRow("SELECT 1 FROM users WHERE email LIKE ?", email).
+		if services.DB.QueryRow("SELECT 1 FROM users WHERE email = ?", email).
 			Scan(new(int)) != sql.ErrNoRows {
 			messages = append(messages, msg.ErrorMessage{lu.T(c, "This email is already in use!")})
 			return
