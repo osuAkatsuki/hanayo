@@ -90,7 +90,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 		settings.APP_BASE_URL+"/pwreset/continue?k="+key,
 	)
 	mailMessage := mailgun.NewMessage(
-		settings.MAILGUN_FROM,
+		"Akatsuki <"+settings.MAILGUN_FROM+">",
 		lu.T(c, "Akatsuki password recovery instructions"),
 		content,
 		email,
