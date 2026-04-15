@@ -52,11 +52,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           envs: GHCR_TOKEN
           script: |
-            TMP_CFG_DIR=$(mktemp -d)
-            echo "$GHCR_TOKEN" | docker --config "$TMP_CFG_DIR" login ghcr.io -u github-actions --password-stdin
             cd /opt/akatsuki
-            docker --config "$TMP_CFG_DIR" compose pull hanayo
+            docker compose pull hanayo
             docker compose up -d hanayo
-            rm -rf "$TMP_CFG_DIR"
         env:
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
