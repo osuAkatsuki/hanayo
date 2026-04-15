@@ -50,10 +50,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
-          envs: GHCR_TOKEN
           script: |
             cd /opt/akatsuki
             docker compose pull hanayo
             docker compose up -d hanayo
-        env:
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
