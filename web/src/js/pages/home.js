@@ -187,6 +187,50 @@ function renderActivityContent(container, items, type) {
   $(".new.timeago").timeago().removeClass("new");
 }
 
+// Render trending maps into container
+function renderTrending(container, items) {
+  container.replaceChildren();
+  if (!items || items.length === 0) {
+    const p = document.createElement('p');
+    p.className = 'no-activity';
+    p.textContent = 'No trending maps';
+    container.appendChild(p);
+    return;
+  }
+  items.forEach(item => {
+    const beatmapId = Math.floor(item.beatmap_id);
+    const beatmapsetId = Math.floor(item.beatmapset_id);
+    const playCount = Math.floor(item.play_count);
+
+    const a = document.createElement('a');
+    a.href = `/b/${beatmapId}`;
+    a.className = 'trending-map';
+
+    const img = document.createElement('img');
+    img.src = `https://assets.ppy.sh/beatmaps/${beatmapsetId}/covers/card.jpg`;
+    img.className = 'trending-bg';
+    img.loading = 'lazy';
+    img.alt = '';
+    a.appendChild(img);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'trending-overlay';
+
+    const name = document.createElement('span');
+    name.className = 'trending-name';
+    name.textContent = item.song_name;
+    overlay.appendChild(name);
+
+    const plays = document.createElement('span');
+    plays.className = 'trending-plays';
+    plays.textContent = `${playCount} plays`;
+    overlay.appendChild(plays);
+
+    a.appendChild(overlay);
+    container.appendChild(a);
+  });
+}
+
 // Fetch and update activity data
 async function updateActivityData() {
   try {
@@ -203,6 +247,11 @@ async function updateActivityData() {
     const highPPEl = document.getElementById('high-pp');
     if (highPPEl) {
       renderActivityContent(highPPEl, data.high_pp, 'high-pp');
+    }
+
+    const trendingEl = document.getElementById('trending-grid');
+    if (trendingEl) {
+      renderTrending(trendingEl, data.trending);
     }
   } catch (error) {
     console.error('Error fetching activity data:', error);

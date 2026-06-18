@@ -151,7 +151,7 @@
       <div class="trending-column">
         <div class="trending-card">
           <h3 class="trending-title">Trending This Week</h3>
-          <div class="trending-grid">
+          <div class="trending-grid" id="trending-grid">
             {{ range redigetJSON "akatsuki:trending_beatmaps" }}
               <a href="/b/{{ ftoi .beatmap_id }}" class="trending-map">
                 <img
