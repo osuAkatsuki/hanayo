@@ -589,7 +589,7 @@ var singlePageSnippets = {
       $("[data-type]:not([hidden])").attr("hidden", "hidden");
       $("[data-type=" + $(this).val() + "]").removeAttr("hidden");
     });
-    $("#file").change(function (e) {
+    function previewBackground(e, target) {
       var f = e.target.files;
       if (f.length < 1) {
         return;
@@ -600,7 +600,13 @@ var singlePageSnippets = {
       i.onload = function () {
         window.URL.revokeObjectURL(this.src);
       };
-      $("#image-background").empty().append(i);
+      $(target).empty().append(i);
+    }
+    $("#file").change(function (e) {
+      previewBackground(e, "#image-background");
+    });
+    $("#giffile").change(function (e) {
+      previewBackground(e, "#gif-background");
     });
   },
 

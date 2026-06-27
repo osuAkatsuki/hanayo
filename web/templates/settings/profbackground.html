@@ -15,9 +15,11 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
       {{ template "settingsSidebar" . }}
       <div class="twelve wide column">
         <div class="ui center aligned segment">
-          {{ $d := qb "SELECT type, value FROM profile_backgrounds WHERE uid = ? LIMIT 1" .Context.User.ID }}
-          {{ $type  := or $d.type.Int -1 }}
+          {{ $d := qb "SELECT 1 AS has_background, type, value, time FROM profile_backgrounds WHERE uid = ? LIMIT 1" .Context.User.ID }}
+          {{ $type  := -1 }}
+          {{ if $d.has_background.Int }}{{ $type = $d.type.Int }}{{ end }}
           {{ $value := or $d.value.String "" }}
+          {{ $time  := or $d.time.Int 0 }}
           <p>
             <select class="ui dropdown" id="background-type" name="type">
               <option value="">{{ .T "Background type" }}</option>
@@ -43,7 +45,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
             {{ if ne $type 1 }}hidden{{ end }}>
             {{ if and (eq $type 1) $value }}
               <img
-                src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/profile-backgrounds/{{ $value }}" />
+                src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/profile-backgrounds/{{ $value }}?v={{ $time }}" />
             {{ else }}
               No image selected
             {{ end }}
@@ -56,7 +58,7 @@ AdditionalJS=https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.4/jque
             {{ if ne $type 3 }}hidden{{ end }}>
             {{ if and (eq $type 3) $value }}
               <img
-                src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/profile-backgrounds/{{ $value }}" />
+                src="{{ .Conf.PUBLIC_AVATARS_SERVICE_BASE_URL }}/profile-backgrounds/{{ $value }}?v={{ $time }}" />
             {{ else }}
               No image selected
             {{ end }}

@@ -68,11 +68,12 @@ func UserProfilePageHandler(c *gin.Context) {
 		var profileBackground struct {
 			Type  int
 			Value string
+			Time  int64
 		}
-		services.DB.Get(&profileBackground, "SELECT type, value FROM profile_backgrounds WHERE uid = ?", data.UserID)
+		services.DB.Get(&profileBackground, "SELECT type, value, time FROM profile_backgrounds WHERE uid = ?", data.UserID)
 		switch profileBackground.Type {
 		case 1, 3:
-			data.BannerContent = fmt.Sprintf("%s/profile-backgrounds/%s", settings.PUBLIC_AVATARS_SERVICE_BASE_URL, profileBackground.Value)
+			data.BannerContent = fmt.Sprintf("%s/profile-backgrounds/%s?v=%d", settings.PUBLIC_AVATARS_SERVICE_BASE_URL, profileBackground.Value, profileBackground.Time)
 			data.BannerAbsolute = true
 			data.BannerType = profileBackground.Type
 		case 2:
