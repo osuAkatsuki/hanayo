@@ -5,19 +5,19 @@ import (
 	"image"
 	"image/gif"
 	"image/jpeg"
+	"io"
 	"os"
 	"regexp"
 	"strings"
 	"time"
-	"io"
 
 	"golang.org/x/exp/slog"
 
-	"github.com/gin-gonic/gin"
-	"github.com/osuAkatsuki/hanayo/app/models"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/gin-gonic/gin"
+	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
@@ -49,7 +49,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 	t := c.Param("type")
 	switch t {
 	case "0":
-		services.DB.Exec("DELETE FROM profile_backgrounds WHERE uid = ?", ctx.User.ID)
+		saveProfileBackground(ctx, 0, "")
 	case "1":
 		// image
 		file, _, err := c.Request.FormFile("value")
@@ -176,7 +176,7 @@ func saveProfileBackground(ctx models.Context, t int, val string) {
 	services.DB.Exec(`INSERT INTO profile_backgrounds(uid, time, type, value)
 		VALUES (?, ?, ?, ?)
 		ON DUPLICATE KEY UPDATE
-			time = VALUES(time),
+			time = GREATEST(VALUES(time), time + 1),
 			type = VALUES(type),
 			value = VALUES(value)
 	`, ctx.User.ID, time.Now().Unix(), t, val)
