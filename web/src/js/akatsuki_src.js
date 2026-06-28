@@ -493,6 +493,18 @@ var singlePageSnippets = {
         true
       );
     });
+    $("#unlink-twitch").click(function (e) {
+      e.preventDefault();
+      api(
+        "users/self/connections/unlink-twitch",
+        {},
+        function () {
+          showMessage("success", "Your Twitch account has been unlinked.");
+          setTimeout(() => { window.location.reload(); }, 1000);
+        },
+        true
+      );
+    });
   },
 
   "/settings/clansettings": function () {

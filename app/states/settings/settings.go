@@ -38,10 +38,10 @@ type Settings struct {
 
 	APP_ENV string
 
-	APP_BASE_URL                    string
-	PUBLIC_AVATARS_SERVICE_BASE_URL string
-	INTERNAL_AKATSUKI_API_BASE_URL  string
-	PUBLIC_AKATSUKI_API_BASE_URL    string
+	APP_BASE_URL                            string
+	PUBLIC_AVATARS_SERVICE_BASE_URL         string
+	INTERNAL_AKATSUKI_API_BASE_URL          string
+	PUBLIC_AKATSUKI_API_BASE_URL            string
 	PUBLIC_BANCHO_SERVICE_BASE_URL          string
 	PUBLIC_PROFILE_HISTORY_SERVICE_BASE_URL string
 
@@ -50,6 +50,7 @@ type Settings struct {
 
 	DISCORD_SERVER_URL string
 	DISCORD_CLIENT_ID  string
+	TWITCH_CLIENT_ID   string
 
 	DB_SCHEME string
 	DB_HOST   string
@@ -111,6 +112,7 @@ func LoadSettings() Settings {
 
 	settings.DISCORD_SERVER_URL = getEnv("DISCORD_SERVER_URL")
 	settings.DISCORD_CLIENT_ID = getEnv("DISCORD_CLIENT_ID")
+	settings.TWITCH_CLIENT_ID = getEnvOptional("TWITCH_CLIENT_ID")
 
 	settings.DB_SCHEME = getEnv("DB_SCHEME")
 	settings.DB_HOST = getEnv("DB_HOST")

@@ -14,7 +14,7 @@ MinPrivileges=2
       {{ template "settingsSidebar" . }}
       <div class="twelve wide column">
         <div class="ui segment">
-          {{ $q := qb "SELECT discord_account_id FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
+          {{ $q := qb "SELECT discord_account_id, twitch_account_id, twitch_username, twitch_display_name FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
           {{ if $q.discord_account_id }}
             <p>
               {{ .T "Your Discord account is already linked with us. If you wish to unlink your Discord, please use the button below." }}
@@ -39,6 +39,34 @@ MinPrivileges=2
                 href="/link-discord">
                 <i class="fa-brands fa-discord"></i>
                 {{ .T "Link Discord" }}
+              </a>
+            </p>
+          {{ end }}
+          <div class="ui divider"></div>
+          {{ if $q.twitch_account_id }}
+            <p>
+              {{ .T "Your Twitch account is already linked with us as %s. If you wish to unlink your Twitch account, please use the button below." (_or $q.twitch_display_name $q.twitch_username) }}
+            </p>
+            <button id="unlink-twitch" tabindex="1" class="ui purple button">
+              <i class="fa-brands fa-twitch"></i>
+              {{ .T "Unlink Twitch" }}
+            </button>
+          {{ else }}
+            <p>
+              <b>
+                {{ .T "Link your Twitch account" }}
+              </b>
+            </p>
+            <p>
+              {{ .T "Linking your Twitch account lets Aika forward beatmap links from your Twitch chat to you in-game while you are streaming and online on Akatsuki." }}
+            </p>
+            <p class="centered">
+              <a
+                tabindex="1"
+                class="ui purple button"
+                href="/link-twitch">
+                <i class="fa-brands fa-twitch"></i>
+                {{ .T "Link Twitch" }}
               </a>
             </p>
           {{ end }}
