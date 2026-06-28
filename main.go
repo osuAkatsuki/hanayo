@@ -239,6 +239,7 @@ func generateEngine() *gin.Engine {
 	)
 
 	r.GET("/link-discord", connectionHandlers.LinkDiscordHandler)
+	r.GET("/link-twitch", connectionHandlers.LinkTwitchHandler)
 
 	r.GET("/about", miscHandlers.AboutPageHandler)
 

@@ -3,6 +3,7 @@ package connections
 import (
 	"database/sql"
 	"fmt"
+	"net/url"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -38,4 +39,29 @@ func LinkDiscordHandler(c *gin.Context) {
 	redirectUrl := fmt.Sprintf("https://discord.com/oauth2/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=identify", settings.DISCORD_CLIENT_ID, discordCallbackUrl)
 
 	c.Redirect(301, redirectUrl)
+}
+
+func LinkTwitchHandler(c *gin.Context) {
+	if sessions.GetContext(c).User.ID == 0 {
+		tu.Resp403(c)
+		return
+	}
+
+	if services.DB.QueryRow("SELECT 1 FROM users WHERE id = ? AND twitch_account_id IS NOT NULL", sessions.GetContext(c).User.ID).
+		Scan(new(int)) != sql.ErrNoRows {
+		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "You already have a Twitch account linked.")})
+		sessions.GetSession(c).Save()
+
+		c.Redirect(302, "/settings/connections")
+		return
+	}
+
+	settings := settingsState.GetSettings()
+	twitchCallbackUrl := fmt.Sprintf("%s/twitch/callback", settings.PUBLIC_AKATSUKI_API_BASE_URL)
+	query := url.Values{}
+	query.Set("client_id", settings.TWITCH_CLIENT_ID)
+	query.Set("redirect_uri", twitchCallbackUrl)
+	query.Set("response_type", "code")
+
+	c.Redirect(301, "https://id.twitch.tv/oauth2/authorize?"+query.Encode())
 }
