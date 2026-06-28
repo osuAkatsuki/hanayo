@@ -57,14 +57,6 @@ func LinkTwitchHandler(c *gin.Context) {
 	}
 
 	settings := settingsState.GetSettings()
-	if settings.TWITCH_CLIENT_ID == "" {
-		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "Twitch account linking is not configured yet.")})
-		sessions.GetSession(c).Save()
-
-		c.Redirect(302, "/settings/connections")
-		return
-	}
-
 	twitchCallbackUrl := fmt.Sprintf("%s/twitch/callback", settings.PUBLIC_AKATSUKI_API_BASE_URL)
 	query := url.Values{}
 	query.Set("client_id", settings.TWITCH_CLIENT_ID)

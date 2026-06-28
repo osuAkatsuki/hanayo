@@ -112,7 +112,7 @@ func LoadSettings() Settings {
 
 	settings.DISCORD_SERVER_URL = getEnv("DISCORD_SERVER_URL")
 	settings.DISCORD_CLIENT_ID = getEnv("DISCORD_CLIENT_ID")
-	settings.TWITCH_CLIENT_ID = getEnvOptional("TWITCH_CLIENT_ID")
+	settings.TWITCH_CLIENT_ID = getEnv("TWITCH_CLIENT_ID")
 
 	settings.DB_SCHEME = getEnv("DB_SCHEME")
 	settings.DB_HOST = getEnv("DB_HOST")
