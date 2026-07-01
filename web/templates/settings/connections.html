@@ -14,89 +14,176 @@ MinPrivileges=2
       {{ template "settingsSidebar" . }}
       <div class="twelve wide column">
         <div class="ui segment">
-          {{ $q := qb "SELECT discord_account_id IS NOT NULL AS discord_linked, twitch_account_id IS NOT NULL AS twitch_linked, twitch_username, official_osu_user_id IS NOT NULL AS osu_linked, official_osu_username FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
-          {{ if $q.discord_linked.Bool }}
-            <p>
-              {{ .T "Your Discord account is already linked with us. If you wish to unlink your Discord, please use the button below." }}
-            </p>
-            <button id="unlink-discord" tabindex="1" class="ui blue button">
-              <i class="fa-brands fa-discord"></i>
-              {{ .T "Unlink Discord" }}
-            </button>
-          {{ else }}
-            <p>
-              <b>
-                {{ .T "Link your Discord account" }}
-              </b>
-            </p>
-            <p>
-              {{ .T "Linking your Discord account will allow you to access extra features related to interacting in our Discord server. For example, linking your Discord account will allow you to automatically receive roles such as Akatsuki+ and Akatsuki Champion." }}
-            </p>
-            <p class="centered">
-              <a
-                tabindex="1"
-                class="ui blue button"
-                href="/link-discord">
-                <i class="fa-brands fa-discord"></i>
-                {{ .T "Link Discord" }}
-              </a>
-            </p>
+          {{ $q := qb "SELECT discord_account_id IS NOT NULL AS discord_linked, IFNULL(CAST(discord_account_id AS CHAR), '') AS discord_account_id, twitch_account_id IS NOT NULL AS twitch_linked, IFNULL(twitch_account_id, '') AS twitch_account_id, IFNULL(twitch_username, '') AS twitch_username, official_osu_user_id IS NOT NULL AS osu_linked, IFNULL(CAST(official_osu_user_id AS CHAR), '') AS official_osu_user_id, IFNULL(official_osu_username, '') AS official_osu_username FROM users WHERE id = ? LIMIT 1" .Context.User.ID }}
+
+          {{ if or $q.discord_linked.Bool $q.twitch_linked.Bool $q.osu_linked.Bool }}
+            <div class="connections-section">
+              <h3>{{ .T "Linked accounts" }}</h3>
+              <div class="connections-card-grid">
+                {{ if $q.discord_linked.Bool }}
+                  <div class="connection-card connection-discord">
+                    <div class="connection-card-header">
+                      <div class="connection-provider">
+                        <span class="connection-provider-mark">
+                          <i class="fa-brands fa-discord"></i>
+                        </span>
+                        <span>{{ .T "Discord" }}</span>
+                      </div>
+                      <span class="connection-status">{{ .T "Linked" }}</span>
+                    </div>
+                    <div class="connection-identity">
+                      <div class="connection-avatar connection-provider-avatar">
+                        <i class="fa-brands fa-discord"></i>
+                      </div>
+                      <div class="connection-identity-copy">
+                        <strong>{{ .T "Discord account" }}</strong>
+                        <span>{{ .T "Discord ID %s" $q.discord_account_id.String }}</span>
+                      </div>
+                    </div>
+                    <div class="connection-actions">
+                      <a
+                        class="ui blue button"
+                        href="https://discord.com/users/{{ $q.discord_account_id.String }}"
+                        rel="noopener noreferrer"
+                        target="_blank">
+                        {{ .T "View profile" }}
+                      </a>
+                      <button id="unlink-discord" tabindex="1" class="ui button">
+                        {{ .T "Unlink" }}
+                      </button>
+                    </div>
+                  </div>
+                {{ end }}
+
+                {{ if $q.twitch_linked.Bool }}
+                  <div class="connection-card connection-twitch">
+                    <div class="connection-card-header">
+                      <div class="connection-provider">
+                        <span class="connection-provider-mark">
+                          <i class="fa-brands fa-twitch"></i>
+                        </span>
+                        <span>{{ .T "Twitch" }}</span>
+                      </div>
+                      <span class="connection-status">{{ .T "Linked" }}</span>
+                    </div>
+                    <div class="connection-identity">
+                      <div class="connection-avatar connection-provider-avatar">
+                        <i class="fa-brands fa-twitch"></i>
+                      </div>
+                      <div class="connection-identity-copy">
+                        <strong>{{ $q.twitch_username.String }}</strong>
+                        <span>@{{ $q.twitch_username.String }}</span>
+                      </div>
+                    </div>
+                    <div class="connection-actions">
+                      <a
+                        class="ui purple button"
+                        href="https://www.twitch.tv/{{ $q.twitch_username.String }}"
+                        rel="noopener noreferrer"
+                        target="_blank">
+                        {{ .T "View profile" }}
+                      </a>
+                      <button id="unlink-twitch" tabindex="1" class="ui button">
+                        {{ .T "Unlink" }}
+                      </button>
+                    </div>
+                  </div>
+                {{ end }}
+
+                {{ if $q.osu_linked.Bool }}
+                  <div class="connection-card connection-osu">
+                    <div class="connection-card-header">
+                      <div class="connection-provider">
+                        <span class="connection-provider-mark">
+                          <img src="/static/images/logos/osu-logo.png" alt="">
+                        </span>
+                        <span>{{ .T "osu!" }}</span>
+                      </div>
+                      <span class="connection-status">{{ .T "Linked" }}</span>
+                    </div>
+                    <div class="connection-identity">
+                      <div class="connection-avatar">
+                        <img src="https://a.ppy.sh/{{ $q.official_osu_user_id.String }}" alt="">
+                      </div>
+                      <div class="connection-identity-copy">
+                        <strong>{{ $q.official_osu_username.String }}</strong>
+                        <span>{{ .T "osu! ID %s" $q.official_osu_user_id.String }}</span>
+                      </div>
+                    </div>
+                    <div class="connection-actions">
+                      <a
+                        class="ui osu button"
+                        href="https://osu.ppy.sh/users/{{ $q.official_osu_user_id.String }}"
+                        rel="noopener noreferrer"
+                        target="_blank">
+                        {{ .T "View profile" }}
+                      </a>
+                      <button id="unlink-osu" tabindex="1" class="ui button">
+                        {{ .T "Unlink" }}
+                      </button>
+                    </div>
+                  </div>
+                {{ end }}
+              </div>
+            </div>
           {{ end }}
-          <div class="ui divider"></div>
-          {{ if $q.twitch_linked.Bool }}
-            <p>
-              {{ .T "Your Twitch account is already linked with us as %s. If you wish to unlink your Twitch account, please use the button below." $q.twitch_username }}
-            </p>
-            <button id="unlink-twitch" tabindex="1" class="ui purple button">
-              <i class="fa-brands fa-twitch"></i>
-              {{ .T "Unlink Twitch" }}
-            </button>
-          {{ else }}
-            <p>
-              <b>
-                {{ .T "Link your Twitch account" }}
-              </b>
-            </p>
-            <p>
-              {{ .T "Linking your Twitch account lets Aika forward beatmap links from your Twitch chat to you in-game while you are streaming and online on Akatsuki." }}
-            </p>
-            <p class="centered">
-              <a
-                tabindex="1"
-                class="ui purple button"
-                href="/link-twitch">
-                <i class="fa-brands fa-twitch"></i>
-                {{ .T "Link Twitch" }}
-              </a>
-            </p>
-          {{ end }}
-          <div class="ui divider"></div>
-          {{ if $q.osu_linked.Bool }}
-            <p>
-              {{ .T "Your official osu! account is already linked with us as %s. If you wish to unlink your official osu! account, please use the button below." $q.official_osu_username }}
-            </p>
-            <button id="unlink-osu" tabindex="1" class="ui osu button">
-              <img src="/static/images/logos/osu-logo.png" alt="" class="osu-logo-icon">
-              {{ .T "Unlink osu!" }}
-            </button>
-          {{ else }}
-            <p>
-              <b>
-                {{ .T "Link your official osu! account" }}
-              </b>
-            </p>
-            <p>
-              {{ .T "Linking your official osu! account lets Akatsuki verify your identity on osu.ppy.sh for future account connection features." }}
-            </p>
-            <p class="centered">
-              <a
-                tabindex="1"
-                class="ui osu button"
-                href="/link-osu">
-                <img src="/static/images/logos/osu-logo.png" alt="" class="osu-logo-icon">
-                {{ .T "Link osu!" }}
-              </a>
-            </p>
+
+          {{ if not (and $q.discord_linked.Bool $q.twitch_linked.Bool $q.osu_linked.Bool) }}
+            <div class="connections-section">
+              <h3>{{ .T "Add a connection" }}</h3>
+              <div class="connections-add-list">
+                {{ if not $q.discord_linked.Bool }}
+                  <div class="connection-add-row connection-discord">
+                    <div class="connection-provider">
+                      <span class="connection-provider-mark">
+                        <i class="fa-brands fa-discord"></i>
+                      </span>
+                      <div class="connection-add-copy">
+                        <strong>{{ .T "Discord" }}</strong>
+                        <span>{{ .T "Sync Discord roles and perks." }}</span>
+                      </div>
+                    </div>
+                    <a tabindex="1" class="ui blue button" href="/link-discord">
+                      {{ .T "Link Discord" }}
+                    </a>
+                  </div>
+                {{ end }}
+
+                {{ if not $q.twitch_linked.Bool }}
+                  <div class="connection-add-row connection-twitch">
+                    <div class="connection-provider">
+                      <span class="connection-provider-mark">
+                        <i class="fa-brands fa-twitch"></i>
+                      </span>
+                      <div class="connection-add-copy">
+                        <strong>{{ .T "Twitch" }}</strong>
+                        <span>{{ .T "Forward Twitch chat map links in-game." }}</span>
+                      </div>
+                    </div>
+                    <a tabindex="1" class="ui purple button" href="/link-twitch">
+                      {{ .T "Link Twitch" }}
+                    </a>
+                  </div>
+                {{ end }}
+
+                {{ if not $q.osu_linked.Bool }}
+                  <div class="connection-add-row connection-osu">
+                    <div class="connection-provider">
+                      <span class="connection-provider-mark">
+                        <img src="/static/images/logos/osu-logo.png" alt="">
+                      </span>
+                      <div class="connection-add-copy">
+                        <strong>{{ .T "osu!" }}</strong>
+                        <span>{{ .T "Verify your official osu! identity." }}</span>
+                      </div>
+                    </div>
+                    <a tabindex="1" class="ui osu button" href="/link-osu">
+                      {{ .T "Link osu!" }}
+                    </a>
+                  </div>
+                {{ end }}
+              </div>
+            </div>
           {{ end }}
         </div>
       </div>
