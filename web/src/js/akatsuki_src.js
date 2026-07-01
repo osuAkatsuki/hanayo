@@ -505,6 +505,18 @@ var singlePageSnippets = {
         true
       );
     });
+    $("#unlink-osu").click(function (e) {
+      e.preventDefault();
+      api(
+        "users/self/connections/unlink-osu",
+        {},
+        function () {
+          showMessage("success", "Your official osu! account has been unlinked.");
+          setTimeout(() => { window.location.reload(); }, 1000);
+        },
+        true
+      );
+    });
   },
 
   "/settings/clansettings": function () {

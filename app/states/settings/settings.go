@@ -48,9 +48,10 @@ type Settings struct {
 	INTERNAL_BEATMAPS_SERVICE_BASE_URL string
 	PUBLIC_BEATMAPS_SERVICE_BASE_URL   string
 
-	DISCORD_SERVER_URL string
-	DISCORD_CLIENT_ID  string
-	TWITCH_CLIENT_ID   string
+	DISCORD_SERVER_URL  string
+	DISCORD_CLIENT_ID   string
+	TWITCH_CLIENT_ID    string
+	OSU_OAUTH_CLIENT_ID string
 
 	DB_SCHEME string
 	DB_HOST   string
@@ -113,6 +114,7 @@ func LoadSettings() Settings {
 	settings.DISCORD_SERVER_URL = getEnv("DISCORD_SERVER_URL")
 	settings.DISCORD_CLIENT_ID = getEnv("DISCORD_CLIENT_ID")
 	settings.TWITCH_CLIENT_ID = getEnv("TWITCH_CLIENT_ID")
+	settings.OSU_OAUTH_CLIENT_ID = getEnv("OSU_OAUTH_CLIENT_ID")
 
 	settings.DB_SCHEME = getEnv("DB_SCHEME")
 	settings.DB_HOST = getEnv("DB_HOST")

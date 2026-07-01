@@ -95,3 +95,41 @@ func LinkTwitchHandler(c *gin.Context) {
 
 	c.Redirect(302, "https://id.twitch.tv/oauth2/authorize?"+query.Encode())
 }
+
+func LinkOfficialOsuHandler(c *gin.Context) {
+	if sessions.GetContext(c).User.ID == 0 {
+		tu.Resp403(c)
+		return
+	}
+
+	if services.DB.QueryRow("SELECT 1 FROM users WHERE id = ? AND official_osu_user_id IS NOT NULL", sessions.GetContext(c).User.ID).
+		Scan(new(int)) != sql.ErrNoRows {
+		sessions.AddMessage(c, msg.ErrorMessage{lu.T(c, "You already have an official osu! account linked.")})
+		sessions.GetSession(c).Save()
+
+		c.Redirect(302, "/settings/connections")
+		return
+	}
+
+	settings := settingsState.GetSettings()
+	state, err := oauthstate.New(
+		"osu",
+		int(sessions.GetContext(c).User.ID),
+		settings.APP_HANAYO_KEY,
+		time.Now().Add(10*time.Minute),
+	)
+	if err != nil {
+		eh.Resp500(c)
+		return
+	}
+
+	osuCallbackUrl := fmt.Sprintf("%s/osu/callback", settings.PUBLIC_AKATSUKI_API_BASE_URL)
+	query := url.Values{}
+	query.Set("client_id", settings.OSU_OAUTH_CLIENT_ID)
+	query.Set("redirect_uri", osuCallbackUrl)
+	query.Set("response_type", "code")
+	query.Set("scope", "public identify")
+	query.Set("state", state)
+
+	c.Redirect(302, "https://osu.ppy.sh/oauth/authorize?"+query.Encode())
+}
