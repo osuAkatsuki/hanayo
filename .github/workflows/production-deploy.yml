@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - redesign-connections-page
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
