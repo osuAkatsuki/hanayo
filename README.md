@@ -1,4 +1,4 @@
-the front-facing portion of https://akatsuki.gg
+The user-facing website: https://akatsuki.gg
 
 ## Development
 
