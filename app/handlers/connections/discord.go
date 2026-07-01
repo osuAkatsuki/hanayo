@@ -56,7 +56,7 @@ func LinkDiscordHandler(c *gin.Context) {
 	query.Set("scope", "identify")
 	query.Set("state", state)
 
-	c.Redirect(301, "https://discord.com/oauth2/authorize?"+query.Encode())
+	c.Redirect(302, "https://discord.com/oauth2/authorize?"+query.Encode())
 }
 
 func LinkTwitchHandler(c *gin.Context) {
@@ -93,7 +93,7 @@ func LinkTwitchHandler(c *gin.Context) {
 	query.Set("response_type", "code")
 	query.Set("state", state)
 
-	c.Redirect(301, "https://id.twitch.tv/oauth2/authorize?"+query.Encode())
+	c.Redirect(302, "https://id.twitch.tv/oauth2/authorize?"+query.Encode())
 }
 
 func LinkOfficialOsuHandler(c *gin.Context) {
@@ -131,5 +131,5 @@ func LinkOfficialOsuHandler(c *gin.Context) {
 	query.Set("scope", "public identify")
 	query.Set("state", state)
 
-	c.Redirect(301, "https://osu.ppy.sh/oauth/authorize?"+query.Encode())
+	c.Redirect(302, "https://osu.ppy.sh/oauth/authorize?"+query.Encode())
 }
