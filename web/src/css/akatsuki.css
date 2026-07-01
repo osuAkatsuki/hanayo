@@ -1165,6 +1165,200 @@ body::-webkit-scrollbar-thumb {
   vertical-align: -.25em;
 }
 
+.connections-section + .connections-section {
+  margin-top: 24px;
+}
+
+.connections-section h3 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.connections-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.connection-card,
+.connection-add-row {
+  background: hsl(var(--base), 0%, 12%);
+  border: 1px solid hsl(var(--base), 0%, 20%);
+  border-radius: 8px;
+}
+
+.connection-card {
+  min-width: 0;
+  padding: 16px;
+  border-top: 3px solid var(--connection-brand);
+}
+
+.connection-card-header,
+.connection-provider,
+.connection-identity,
+.connection-actions,
+.connection-add-row {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.connection-card-header,
+.connection-add-row {
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.connection-provider,
+.connection-identity,
+.connection-actions {
+  gap: 10px;
+}
+
+.connection-provider {
+  color: #fff;
+  font-weight: 700;
+}
+
+.connection-provider-mark {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--connection-brand);
+  color: #fff;
+  font-size: 16px;
+}
+
+.connection-provider-mark img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.connection-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #a8f0bd;
+  font-size: .85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.connection-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #54d878;
+}
+
+.connection-identity {
+  margin-top: 16px;
+}
+
+.connection-avatar {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+  background: hsl(var(--base), 0%, 16%);
+}
+
+.connection-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.connection-provider-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--connection-brand);
+  font-size: 26px;
+}
+
+.connection-identity-copy,
+.connection-add-copy {
+  min-width: 0;
+}
+
+.connection-identity-copy strong,
+.connection-add-copy strong {
+  display: block;
+  overflow: hidden;
+  color: #fff;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connection-add-copy strong {
+  font-size: 1rem;
+}
+
+.connection-identity-copy span,
+.connection-add-copy span {
+  display: block;
+  overflow: hidden;
+  color: rgba(255, 255, 255, .72);
+  font-size: .92rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connection-actions {
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.connection-actions .ui.button,
+.connection-add-row .ui.button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.connections-add-list {
+  display: grid;
+  gap: 10px;
+}
+
+.connection-add-row {
+  padding: 12px;
+}
+
+.connection-discord {
+  --connection-brand: #5865f2;
+}
+
+.connection-twitch {
+  --connection-brand: #9146ff;
+}
+
+.connection-osu {
+  --connection-brand: #ff66aa;
+}
+
+@media only screen and (max-width: 991px) {
+  .connections-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .connection-add-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
 /* Modern button hover effects (exclude dropdowns to prevent menu misalignment) */
 .ui.button:not(.disabled):not(.loading):not(.dropdown) {
   transition: transform 0.15s ease,
