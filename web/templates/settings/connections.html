@@ -75,8 +75,8 @@ MinPrivileges=2
             <p>
               {{ .T "Your official osu! account is already linked with us as %s. If you wish to unlink your official osu! account, please use the button below." $q.official_osu_username }}
             </p>
-            <button id="unlink-osu" tabindex="1" class="ui red button">
-              <i class="fa-solid fa-circle-dot"></i>
+            <button id="unlink-osu" tabindex="1" class="ui osu button">
+              <img src="/static/images/logos/osu-logo.png" alt="" class="osu-logo-icon">
               {{ .T "Unlink osu!" }}
             </button>
           {{ else }}
@@ -91,9 +91,9 @@ MinPrivileges=2
             <p class="centered">
               <a
                 tabindex="1"
-                class="ui red button"
+                class="ui osu button"
                 href="/link-osu">
-                <i class="fa-solid fa-circle-dot"></i>
+                <img src="/static/images/logos/osu-logo.png" alt="" class="osu-logo-icon">
                 {{ .T "Link osu!" }}
               </a>
             </p>

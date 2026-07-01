@@ -1137,6 +1137,34 @@ body::-webkit-scrollbar-thumb {
   background: hsl(0, 0%, 15%) !important;
 }
 
+.ui.osu.button,
+.ui.osu.buttons .button {
+  background-color: #ff66aa;
+  color: #fff;
+}
+
+.ui.osu.button:hover,
+.ui.osu.buttons .button:hover,
+.ui.osu.button:focus,
+.ui.osu.buttons .button:focus {
+  background-color: #ff5a9f;
+  color: #fff;
+}
+
+.ui.osu.button:active,
+.ui.osu.buttons .button:active {
+  background-color: #e85296;
+  color: #fff;
+}
+
+.ui.button .osu-logo-icon {
+  width: 1.25em;
+  height: 1.25em;
+  margin: 0 .45em 0 -.1em;
+  object-fit: contain;
+  vertical-align: -.25em;
+}
+
 /* Modern button hover effects (exclude dropdowns to prevent menu misalignment) */
 .ui.button:not(.disabled):not(.loading):not(.dropdown) {
   transition: transform 0.15s ease,
