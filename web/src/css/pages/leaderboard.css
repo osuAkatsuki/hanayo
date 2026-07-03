@@ -23,6 +23,14 @@
   background: var(--color-bg-elevated);
 }
 
+.leaderboard-placeholder {
+  pointer-events: none;
+}
+
+.leaderboard-placeholder td {
+  color: transparent;
+}
+
 .l-player td div a {
   display: block !important;
   position: relative;
