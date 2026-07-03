@@ -9,7 +9,7 @@ apps:
       targetCPUUtilizationPercentage: 80
     container:
       image:
-        repository: osuakatsuki/hanayo
+        repository: ghcr.io/osuakatsuki/hanayo
         tag: latest
       port: 80
       readinessProbe:
