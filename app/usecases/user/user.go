@@ -136,7 +136,7 @@ var forbiddenUsernames = []string{
 	"walkingtuna", "nathan on osu", "justice", "child", "eb", "kalzo", "ebenezer", "solomon", "murmurtwins", "ggm9", "kaguya", "unspoken mattay",
 	"mattay", "parkourwizard", "woey", "trafis", "klug", "c o i n", "varvalian", "mismagius", "nameless player", "mbmasher", "okinamo", "knalli",
 	"obtio", "konnan", "ppy", "nejzha", "kochiya", "haruki", "kaguya", "miniature lamp", "phabled", "hentai", "coletaku", "zoom", "mathyu",
-	"windshear", "roma4ka", "bad girl", "arfung", "skyapple", "hotzi6", "joueur de visee", "ted", "willcookie", "zerrah", "-ristuki", "yuudachi",
+	"windshear", "roma4ka", "arfung", "skyapple", "hotzi6", "joueur de visee", "ted", "willcookie", "zerrah", "-ristuki", "yuudachi",
 	"idealism", "shiiiiiii", "shayell", "parky", "torahiko", "digidrake", "a12456", "chal", "mathi", "relaxingtuna", "eriksu", "firedigger", "-hibiki-",
 	"notititititi", "mysliderbreak", "qsc20010", "curry3521", "s1ck", "itswinter", "remillia", "astar", "aika", "ruri", "cpugeek", "andros",
 	"xeltol", "merami", "mrekk", "whitecat", "micca", "alumetri", "fgsky", "badeu", "asecretbox", "a_blue", "lifeline", "dereban", "vamhi",
