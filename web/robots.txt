@@ -1,0 +1,29 @@
+User-agent: *
+
+# Expensive or non-indexable resources
+Disallow: /b/
+Disallow: /api/
+Allow: /api/v1/homepage/activity
+Disallow: /web/replays/
+Disallow: /d/
+Disallow: /matches/
+Disallow: /_health
+
+# Account, authentication, and user-specific pages
+Disallow: /settings
+Disallow: /home/
+Disallow: /login
+Disallow: /logout
+Disallow: /register
+Disallow: /pwreset
+Disallow: /friends
+Disallow: /followers
+Disallow: /irc
+Disallow: /link-
+Disallow: /clans/create
+
+# Keep canonical public pages crawlable, but avoid filtered duplicates
+Disallow: /u/*?
+Disallow: /c/*?
+Disallow: /leaderboard?
+Disallow: /clans?
