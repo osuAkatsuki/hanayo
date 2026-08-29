@@ -4,7 +4,6 @@
       "files": ["*.html"],
       "options": {
         "parser": "go-template",
-        "bracketSameLine": true,
         "htmlWhitespaceSensitivity": "ignore",
         "plugins": ["prettier-plugin-go-template"]
       }
