@@ -72,8 +72,17 @@ func HomepageActivityHandler(c *gin.Context) {
 		json.Unmarshal([]byte(highPPRaw.Val()), &highPP)
 	}
 
+	// Fetch trending beatmaps from Redis
+	trendingKey := fmt.Sprintf("akatsuki:trending_beatmaps:%d", combinedMode)
+	trendingRaw := services.RD.Get(trendingKey)
+	var trending []map[string]interface{}
+	if trendingRaw != nil && trendingRaw.Err() == nil {
+		json.Unmarshal([]byte(trendingRaw.Val()), &trending)
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"first_places": firstPlaces,
 		"high_pp":      highPP,
+		"trending":     trending,
 	})
 }
