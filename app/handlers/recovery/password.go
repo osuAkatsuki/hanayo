@@ -1,9 +1,7 @@
 package recovery
 
 import (
-	"crypto/rand"
 	"database/sql"
-	"encoding/hex"
 	"strings"
 	"time"
 
@@ -77,15 +75,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 	}
 
 	// generate key
-	keyBytes := make([]byte, 25)
-	if _, err := rand.Read(keyBytes); err != nil {
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
-		eh.Resp500(c)
-		return
-	}
-	key := hex.EncodeToString(keyBytes)
-	now := time.Now().UTC()
+	key := common.RandomString(50)
 
 	tx, err := services.DB.Begin()
 	if err != nil {
