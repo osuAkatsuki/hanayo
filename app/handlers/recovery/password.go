@@ -76,6 +76,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 
 	// generate key
 	key := common.RandomString(50)
+	now := time.Now().UTC()
 
 	tx, err := services.DB.Begin()
 	if err != nil {
