@@ -1,9 +1,7 @@
 package recovery
 
 import (
-	"crypto/rand"
 	"database/sql"
-	"encoding/hex"
 	"strings"
 
 	"golang.org/x/exp/slog"
@@ -74,14 +72,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 	}
 
 	// generate key
-	keyBytes := make([]byte, 25)
-	if _, err := rand.Read(keyBytes); err != nil {
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
-		eh.Resp500(c)
-		return
-	}
-	key := hex.EncodeToString(keyBytes)
+	key := common.RandomString(50)
 
 	// TODO: WHY THE FUCK DOES THIS USE USERNAME AND NOT ID PLEASE WRITE MIGRATION
 	_, err = services.DB.Exec("INSERT INTO password_recovery(k, u) VALUES (?, ?)", key, username)
