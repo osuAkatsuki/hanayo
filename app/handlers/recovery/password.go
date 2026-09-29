@@ -3,6 +3,7 @@ package recovery
 import (
 	"database/sql"
 	"strings"
+	"time"
 
 	"golang.org/x/exp/slog"
 
@@ -19,6 +20,8 @@ import (
 	tu "github.com/osuAkatsuki/hanayo/app/usecases/templates"
 	"gopkg.in/mailgun/mailgun-go.v1"
 )
+
+const passwordResetLifetime = 30 * time.Minute
 
 func PasswordResetPageHandler(c *gin.Context) {
 	settings := settingsState.GetSettings()
@@ -74,9 +77,20 @@ func PasswordResetPageHandler(c *gin.Context) {
 	// generate key
 	key := common.RandomString(50)
 
-	// TODO: WHY THE FUCK DOES THIS USE USERNAME AND NOT ID PLEASE WRITE MIGRATION
-	_, err = services.DB.Exec("INSERT INTO password_recovery(k, u) VALUES (?, ?)", key, username)
+	tx, err := services.DB.Begin()
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	defer tx.Rollback()
 
+	_, err = tx.Exec(`
+		UPDATE password_recovery
+		SET status = 'revoked'
+		WHERE user_id = ? AND status = 'unused' AND created_at >= ?`,
+		id, now.Add(-passwordResetLifetime))
 	if err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
@@ -84,6 +98,15 @@ func PasswordResetPageHandler(c *gin.Context) {
 		return
 	}
 
+	_, err = tx.Exec(`
+		INSERT INTO password_recovery(user_id, token, created_at, status)
+		VALUES (?, ?, ?, 'unused')`, id, key, now)
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
 	content := lu.T(c,
 		"Hey <b>%s</b>!<br/><br/>Someone (<i>which we really hope was you</i>), requested a password reset for your account. In case it was you, please <a href='%s'>click here</a> to reset your password on Akatsuki.<br/>Otherwise, silently ignore this email.",
 		username,
@@ -104,6 +127,12 @@ func PasswordResetPageHandler(c *gin.Context) {
 		eh.Resp500(c)
 		return
 	}
+	if err := tx.Commit(); err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
 
 	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Done! You should shortly receive an email from us at the email you used to sign up on Akatsuki.")})
 	sessions.GetSession(c).Save()
@@ -119,9 +148,17 @@ func PasswordResetContinuePageHandler(c *gin.Context) {
 		return
 	}
 
-	var username string
-	switch err := services.DB.QueryRow("SELECT u FROM password_recovery WHERE k = ? LIMIT 1", k).
-		Scan(&username); err {
+	var (
+		username  string
+		createdAt time.Time
+	)
+	switch err := services.DB.QueryRow(`
+		SELECT users.username, password_recovery.created_at
+		FROM password_recovery
+		INNER JOIN users ON users.id = password_recovery.user_id
+		WHERE password_recovery.token = ? AND password_recovery.status = 'unused'
+		LIMIT 1`, k).
+		Scan(&username, &createdAt); err {
 	case nil:
 		// move on
 	case sql.ErrNoRows:
@@ -133,15 +170,30 @@ func PasswordResetContinuePageHandler(c *gin.Context) {
 		eh.Resp500(c)
 		return
 	}
+	if time.Now().After(createdAt.Add(passwordResetLifetime)) {
+		tu.RespEmpty(c, lu.T(c, "Reset password"), msg.ErrorMessage{lu.T(c, "That key could not be found. Perhaps it expired?")})
+		return
+	}
 
 	renderResetPassword(c, username, k)
 }
 
 func PasswordResetContinueSubmitHandler(c *gin.Context) {
 	// todo: check logged in
-	var username string
-	switch err := services.DB.QueryRow("SELECT u FROM password_recovery WHERE k = ? LIMIT 1", c.PostForm("k")).
-		Scan(&username); err {
+	var (
+		resetID   int64
+		userID    int
+		username  string
+		createdAt time.Time
+	)
+	key := c.PostForm("k")
+	switch err := services.DB.QueryRow(`
+		SELECT password_recovery.id, users.id, users.username, password_recovery.created_at
+		FROM password_recovery
+		INNER JOIN users ON users.id = password_recovery.user_id
+		WHERE password_recovery.token = ? AND password_recovery.status = 'unused'
+		LIMIT 1`, key).
+		Scan(&resetID, &userID, &username, &createdAt); err {
 	case nil:
 		// move on
 	case sql.ErrNoRows:
@@ -151,6 +203,10 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
+		return
+	}
+	if time.Now().After(createdAt.Add(passwordResetLifetime)) {
+		tu.RespEmpty(c, lu.T(c, "Reset password"), msg.ErrorMessage{lu.T(c, "That key could not be found. Perhaps it expired?")})
 		return
 	}
 
@@ -169,8 +225,39 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	_, err = services.DB.Exec("UPDATE users SET password_md5 = ? WHERE username = ?",
-		pass, username)
+	tx, err := services.DB.Begin()
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	defer tx.Rollback()
+
+	result, err := tx.Exec(`
+		UPDATE password_recovery
+		SET status = 'used', used_at = CURRENT_TIMESTAMP
+		WHERE id = ? AND status = 'unused' AND created_at >= ?`,
+		resetID, time.Now().Add(-passwordResetLifetime))
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	if rowsAffected != 1 {
+		tu.RespEmpty(c, lu.T(c, "Reset password"), msg.ErrorMessage{lu.T(c, "That key could not be found. Perhaps it expired?")})
+		return
+	}
+
+	_, err = tx.Exec("UPDATE users SET password_md5 = ? WHERE id = ?", pass, userID)
 	if err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
@@ -178,8 +265,7 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	_, err = services.DB.Exec("DELETE FROM password_recovery WHERE k = ? LIMIT 1", c.PostForm("k"))
-	if err != nil {
+	if err := tx.Commit(); err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
