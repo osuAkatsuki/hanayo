@@ -83,8 +83,10 @@ func PasswordResetPageHandler(c *gin.Context) {
 	}
 	key := hex.EncodeToString(keyBytes)
 
-	// TODO: WHY THE FUCK DOES THIS USE USERNAME AND NOT ID PLEASE WRITE MIGRATION
-	_, err = services.DB.Exec("INSERT INTO password_recovery(k, u) VALUES (?, ?)", key, username)
+	_, err = services.DB.Exec(`
+		INSERT INTO password_recovery(user_id, token) VALUES (?, ?)
+		ON DUPLICATE KEY UPDATE token = VALUES(token), created_at = CURRENT_TIMESTAMP`,
+		id, key)
 
 	if err != nil {
 		c.Error(err)
@@ -129,7 +131,12 @@ func PasswordResetContinuePageHandler(c *gin.Context) {
 	}
 
 	var username string
-	switch err := services.DB.QueryRow("SELECT u FROM password_recovery WHERE k = ? LIMIT 1", k).
+	switch err := services.DB.QueryRow(`
+		SELECT users.username
+		FROM password_recovery
+		INNER JOIN users ON users.id = password_recovery.user_id
+		WHERE password_recovery.token = ?
+		LIMIT 1`, k).
 		Scan(&username); err {
 	case nil:
 		// move on
@@ -148,9 +155,18 @@ func PasswordResetContinuePageHandler(c *gin.Context) {
 
 func PasswordResetContinueSubmitHandler(c *gin.Context) {
 	// todo: check logged in
-	var username string
-	switch err := services.DB.QueryRow("SELECT u FROM password_recovery WHERE k = ? LIMIT 1", c.PostForm("k")).
-		Scan(&username); err {
+	var (
+		userID   int
+		username string
+	)
+	key := c.PostForm("k")
+	switch err := services.DB.QueryRow(`
+		SELECT users.id, users.username
+		FROM password_recovery
+		INNER JOIN users ON users.id = password_recovery.user_id
+		WHERE password_recovery.token = ?
+		LIMIT 1`, key).
+		Scan(&userID, &username); err {
 	case nil:
 		// move on
 	case sql.ErrNoRows:
@@ -178,8 +194,35 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	_, err = services.DB.Exec("UPDATE users SET password_md5 = ? WHERE username = ?",
-		pass, username)
+	tx, err := services.DB.Begin()
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	defer tx.Rollback()
+
+	result, err := tx.Exec("DELETE FROM password_recovery WHERE user_id = ? AND token = ?", userID, key)
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	if rowsAffected != 1 {
+		tu.RespEmpty(c, lu.T(c, "Reset password"), msg.ErrorMessage{lu.T(c, "That key could not be found. Perhaps it expired?")})
+		return
+	}
+
+	_, err = tx.Exec("UPDATE users SET password_md5 = ? WHERE id = ?", pass, userID)
 	if err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
@@ -187,8 +230,7 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	_, err = services.DB.Exec("DELETE FROM password_recovery WHERE k = ? LIMIT 1", c.PostForm("k"))
-	if err != nil {
+	if err := tx.Commit(); err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
