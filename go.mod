@@ -21,7 +21,7 @@ require (
 	github.com/thehowl/cieca v0.0.0-20161122163418-3d95e04c9b12
 	github.com/thehowl/conf v0.1.1-0.20161010150023-bdfc17531a74
 	github.com/thehowl/qsql v0.0.0-20160712153739-9b9405451f47
-	golang.org/x/crypto v0.18.0
+	golang.org/x/crypto v0.25.0
 	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a
 	gopkg.in/DataDog/dd-trace-go.v1 v1.43.1
 	gopkg.in/mailgun/mailgun-go.v1 v1.1.1
@@ -47,7 +47,6 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/eko/gocache v1.2.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
-	github.com/getsentry/raven-go v0.2.1-0.20190105153127-d5057ceb70ca // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
@@ -95,7 +94,6 @@ require (
 require (
 	github.com/DataDog/datadog-go v4.8.2+incompatible // indirect
 	github.com/boj/redistore v0.0.0-20160128113310-fc113767cd6b // indirect
-	github.com/certifi/gocertifi v0.0.0-20210507211836-431795d63e8d // indirect
 	github.com/facebookgo/ensure v0.0.0-20200202191622-63f1cf65ac4c // indirect
 	github.com/facebookgo/stack v0.0.0-20160209184415-751773369052 // indirect
 	github.com/facebookgo/subset v0.0.0-20200203212716-c811ad88dec4 // indirect
@@ -110,13 +108,13 @@ require (
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/osuAkatsuki/akatsuki-api v0.0.0-20240128010655-62449c1fcc60
+	github.com/osuAkatsuki/akatsuki-api v0.0.0-20260929153043-d3662c988d42
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rs/zerolog v1.31.0
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
-	golang.org/x/net v0.20.0 // indirect
-	golang.org/x/sys v0.16.0 // indirect
+	golang.org/x/net v0.27.0
+	golang.org/x/sys v0.22.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
