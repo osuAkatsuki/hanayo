@@ -36,7 +36,8 @@ func StructuredLogger() gin.HandlerFunc {
 		param.StatusCode = c.Writer.Status()
 		param.ErrorMessage = c.Errors.ByType(gin.ErrorTypePrivate).String()
 		param.BodySize = c.Writer.Size()
-		if raw != "" {
+		// Recovery links contain bearer tokens, including attempts blocked by the handler.
+		if raw != "" && path != "/pwreset/continue" {
 			path = path + "?" + raw
 		}
 		param.Path = path
