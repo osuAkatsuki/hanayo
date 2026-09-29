@@ -23,6 +23,16 @@ import (
 
 const passwordResetLifetime = 30 * time.Minute
 
+func requiresManualPasswordRecovery(userID int, privileges common.UserPrivileges) bool {
+	// Aika requires manual recovery even when its staff privileges are removed.
+	const aikaUserID = 999
+	const playerPrivileges = common.UserPrivilegePublic | common.UserPrivilegeNormal |
+		common.UserPrivilegeDonor | common.UserPrivilegePendingVerification | common.UserPrivilegePremium
+
+	// Any additional privilege, including newly introduced staff flags, requires manual recovery.
+	return userID == aikaUserID || privileges&^playerPrivileges != 0
+}
+
 func PasswordResetPageHandler(c *gin.Context) {
 	settings := settingsState.GetSettings()
 	ctx := sessions.GetContext(c)
@@ -68,8 +78,11 @@ func PasswordResetPageHandler(c *gin.Context) {
 		return
 	}
 
+	// Protected accounts still receive recovery emails so use of their tokens can be observed.
+	// Redemption silently revokes those tokens without changing the password.
 	if common.UserPrivileges(privileges)&
-		(common.UserPrivilegeNormal|common.UserPrivilegePendingVerification) == 0 {
+		(common.UserPrivilegeNormal|common.UserPrivilegePendingVerification) == 0 &&
+		!requiresManualPasswordRecovery(id, common.UserPrivileges(privileges)) {
 		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "You look pretty banned/locked here.")})
 		return
 	}
@@ -135,6 +148,11 @@ func PasswordResetPageHandler(c *gin.Context) {
 		return
 	}
 
+	if requiresManualPasswordRecovery(id, common.UserPrivileges(privileges)) {
+		slog.WarnContext(c, "Password recovery issued for protected account",
+			"user_id", id, "client_ip", c.ClientIP(), "stage", "request")
+	}
+
 	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Done! You should shortly receive an email from us at the email you used to sign up on Akatsuki.")})
 	sessions.GetSession(c).Save()
 	c.Redirect(302, "/")
@@ -150,16 +168,19 @@ func PasswordResetContinuePageHandler(c *gin.Context) {
 	}
 
 	var (
-		username  string
-		createdAt time.Time
+		resetID    int64
+		userID     int
+		username   string
+		privileges uint64
+		createdAt  time.Time
 	)
 	switch err := services.DB.QueryRow(`
-		SELECT users.username, password_recovery.created_at
+		SELECT password_recovery.id, users.id, users.username, users.privileges, password_recovery.created_at
 		FROM password_recovery
 		INNER JOIN users ON users.id = password_recovery.user_id
 		WHERE password_recovery.token = ? AND password_recovery.status = 'unused'
 		LIMIT 1`, k).
-		Scan(&username, &createdAt); err {
+		Scan(&resetID, &userID, &username, &privileges, &createdAt); err {
 	case nil:
 		// move on
 	case sql.ErrNoRows:
@@ -175,6 +196,11 @@ func PasswordResetContinuePageHandler(c *gin.Context) {
 		tu.RespEmpty(c, lu.T(c, "Reset password"), msg.ErrorMessage{lu.T(c, "That key could not be found. Perhaps it expired?")})
 		return
 	}
+	if requiresManualPasswordRecovery(userID, common.UserPrivileges(privileges)) {
+		slog.WarnContext(c, "Password recovery token viewed for protected account",
+			"reset_id", resetID, "user_id", userID, "client_ip", c.ClientIP(),
+			"user_agent", c.Request.UserAgent(), "stage", "view")
+	}
 
 	renderResetPassword(c, username, k)
 }
@@ -182,19 +208,20 @@ func PasswordResetContinuePageHandler(c *gin.Context) {
 func PasswordResetContinueSubmitHandler(c *gin.Context) {
 	// todo: check logged in
 	var (
-		resetID   int64
-		userID    int
-		username  string
-		createdAt time.Time
+		resetID    int64
+		userID     int
+		username   string
+		privileges uint64
+		createdAt  time.Time
 	)
 	key := c.PostForm("k")
 	switch err := services.DB.QueryRow(`
-		SELECT password_recovery.id, users.id, users.username, password_recovery.created_at
+		SELECT password_recovery.id, users.id, users.username, users.privileges, password_recovery.created_at
 		FROM password_recovery
 		INNER JOIN users ON users.id = password_recovery.user_id
 		WHERE password_recovery.token = ? AND password_recovery.status = 'unused'
 		LIMIT 1`, key).
-		Scan(&resetID, &userID, &username, &createdAt); err {
+		Scan(&resetID, &userID, &username, &privileges, &createdAt); err {
 	case nil:
 		// move on
 	case sql.ErrNoRows:
@@ -235,11 +262,26 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 	}
 	defer tx.Rollback()
 
+	// Recheck under a lock: the account may have gained staff permissions since the token lookup.
+	if err := tx.QueryRow("SELECT privileges FROM users WHERE id = ? FOR UPDATE", userID).Scan(&privileges); err != nil {
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	manualRecovery := requiresManualPasswordRecovery(userID, common.UserPrivileges(privileges))
+	status := "used"
+	usedAt := sql.NullTime{Time: time.Now(), Valid: true}
+	if manualRecovery {
+		status = "revoked"
+		usedAt.Valid = false
+	}
+
 	result, err := tx.Exec(`
 		UPDATE password_recovery
-		SET status = 'used', used_at = CURRENT_TIMESTAMP
+		SET status = ?, used_at = ?
 		WHERE id = ? AND status = 'unused' AND created_at >= ?`,
-		resetID, time.Now().Add(-passwordResetLifetime))
+		status, usedAt, resetID, time.Now().Add(-passwordResetLifetime))
 	if err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
@@ -258,12 +300,14 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	_, err = tx.Exec("UPDATE users SET password_md5 = ? WHERE id = ?", pass, userID)
-	if err != nil {
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
-		eh.Resp500(c)
-		return
+	if !manualRecovery {
+		_, err = tx.Exec("UPDATE users SET password_md5 = ? WHERE id = ?", pass, userID)
+		if err != nil {
+			c.Error(err)
+			slog.ErrorContext(c, err.Error())
+			eh.Resp500(c)
+			return
+		}
 	}
 
 	if err := tx.Commit(); err != nil {
@@ -271,6 +315,12 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
 		return
+	}
+
+	if manualRecovery {
+		slog.WarnContext(c, "Password recovery blocked for protected account",
+			"reset_id", resetID, "user_id", userID, "client_ip", c.ClientIP(),
+			"user_agent", c.Request.UserAgent(), "stage", "redeem", "outcome", "password_write_blocked")
 	}
 
 	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Alright, we've changed your password, you should be able to login! Have fun!")})
