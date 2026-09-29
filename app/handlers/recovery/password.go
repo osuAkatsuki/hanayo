@@ -108,7 +108,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 		return
 	}
 
-	result, err := tx.Exec(`
+	_, err = tx.Exec(`
 		INSERT INTO password_recovery(user_id, token, created_at, status)
 		VALUES (?, ?, ?, 'unused')`, id, key, now)
 	if err != nil {
@@ -117,20 +117,6 @@ func PasswordResetPageHandler(c *gin.Context) {
 		eh.Resp500(c)
 		return
 	}
-	resetID, err := result.LastInsertId()
-	if err != nil {
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
-		eh.Resp500(c)
-		return
-	}
-	if err := tx.Commit(); err != nil {
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
-		eh.Resp500(c)
-		return
-	}
-
 	content := lu.T(c,
 		"Hey <b>%s</b>!<br/><br/>Someone (<i>which we really hope was you</i>), requested a password reset for your account. In case it was you, please <a href='%s'>click here</a> to reset your password on Akatsuki.<br/>Otherwise, silently ignore this email.",
 		username,
@@ -146,12 +132,12 @@ func PasswordResetPageHandler(c *gin.Context) {
 	_, _, err = services.MG.Send(mailMessage)
 
 	if err != nil {
-		if _, revokeErr := services.DB.Exec(`
-			UPDATE password_recovery SET status = 'revoked'
-			WHERE id = ? AND status = 'unused'`, resetID); revokeErr != nil {
-			c.Error(revokeErr)
-			slog.ErrorContext(c, revokeErr.Error())
-		}
+		c.Error(err)
+		slog.ErrorContext(c, err.Error())
+		eh.Resp500(c)
+		return
+	}
+	if err := tx.Commit(); err != nil {
 		c.Error(err)
 		slog.ErrorContext(c, err.Error())
 		eh.Resp500(c)
