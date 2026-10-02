@@ -75,7 +75,7 @@ BannerType=1
       <a class="item" id="country-chooser-modal">...</a>
     </div>
 
-    <table class="ui table leaderboard-table" id="main">
+    <table class="ui table leaderboard-table loading" id="main">
       <thead>
         {{ template "simplepag" 5 }}
         <tr>
@@ -92,7 +92,19 @@ BannerType=1
           <th class="t-heading center aligned">{{ .T "Playcount" }}</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        {{ range _range 50 }}
+          <tr class="l-player leaderboard-placeholder" aria-hidden="true">
+            <td>&nbsp;</td>
+            <td>
+              <div class="flag-container">&nbsp;</div>
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        {{ end }}
+      </tbody>
       <tfoot>
         {{ template "simplepag" 5 }}
       </tfoot>
