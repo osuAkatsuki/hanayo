@@ -11,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"
+	"github.com/osuAkatsuki/hanayo/app/sessions"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
 )
 
@@ -38,8 +39,12 @@ func SetYCookie(userID int, c *gin.Context) {
 
 func AddY(c *gin.Context, y string) {
 	http.SetCookie(c.Writer, &http.Cookie{
-		Name:    "y",
-		Value:   y,
-		Expires: time.Now().Add(time.Hour * 24 * 30 * 6),
+		Name:     "y",
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   sessions.SecureCookies(),
+		SameSite: http.SameSiteLaxMode,
+		Value:    y,
+		Expires:  time.Now().Add(time.Hour * 24 * 30 * 6),
 	})
 }

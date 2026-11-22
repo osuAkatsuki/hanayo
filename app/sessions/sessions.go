@@ -3,20 +3,39 @@ package sessions
 import (
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"golang.org/x/exp/slog"
 
-	"github.com/gin-gonic/contrib/sessions"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/osuAkatsuki/akatsuki-api/common"
 	"github.com/osuAkatsuki/hanayo/app/models"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/states/services"
+	"github.com/osuAkatsuki/hanayo/app/states/settings"
 	"github.com/osuAkatsuki/hanayo/app/usecases/auth/cryptography"
 	lu "github.com/osuAkatsuki/hanayo/app/usecases/localisation"
 	su "github.com/osuAkatsuki/hanayo/app/usecases/sessions"
 )
+
+func SecureCookies() bool {
+	return strings.HasPrefix(settings.GetSettings().APP_BASE_URL, "https://")
+}
+
+func SetAPICookie(c *gin.Context, token string) {
+	cookie := &http.Cookie{
+		Name: "rt", Value: token, Path: "/", HttpOnly: true,
+		Secure: SecureCookies(), SameSite: http.SameSiteLaxMode,
+		Expires: time.Now().Add(30 * 24 * time.Hour),
+	}
+	if token == "" {
+		cookie.MaxAge = -1
+		cookie.Expires = time.Unix(1, 0)
+	}
+	http.SetCookie(c.Writer, cookie)
+}
 
 func SessionInitializer() func(c *gin.Context) {
 	return func(c *gin.Context) {
@@ -65,11 +84,7 @@ func SessionInitializer() func(c *gin.Context) {
 			// - Token has been updated with checkToken
 			// - user still has old token in rt
 			if x, _ := c.Cookie("rt"); oldToken != ctx.Token || x != ctx.Token {
-				http.SetCookie(c.Writer, &http.Cookie{
-					Name:    "rt",
-					Value:   ctx.Token,
-					Expires: time.Now().Add(time.Hour * 24 * 30 * 1),
-				})
+				SetAPICookie(c, ctx.Token)
 				sess.Set("token", ctx.Token)
 			}
 		}

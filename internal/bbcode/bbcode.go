@@ -2,6 +2,7 @@ package bbcode
 
 import (
 	"fmt"
+	"html"
 	"html/template"
 	"math/rand"
 	"net/url"
@@ -137,7 +138,7 @@ func parseNotice(text string) string {
 }
 
 func parseColour(text string) string { // support both colour and color
-	regex := regexp.MustCompile(`\[(color|colour)=([^]:]+)\]`)
+	regex := regexp.MustCompile(`\[(color|colour)=([^\[\]<>;:]+)\]`)
 	text = regex.ReplaceAllString(text, "<span style='color: $2'>")
 
 	regex2 := regexp.MustCompile(`\[\/(color|colour)\]`)
@@ -146,17 +147,18 @@ func parseColour(text string) string { // support both colour and color
 }
 
 func parseAudio(text string) string {
-	regex := regexp.MustCompile(`\[audio\]([^[]+)\[\/audio\]\n?`)
+	regex := regexp.MustCompile(`\[audio\]([^\[<>
+]+)\[\/audio\]\n?`)
 
 	text = regex.ReplaceAllString(text, "<audio controls='controls' preload='none' src='$1'></audio>")
 	return text
 }
 
 func parseUrl(text string) string {
-	regex := regexp.MustCompile(`\[url\](.+?)\[\/url\]`)
+	regex := regexp.MustCompile(`\[url\]([^\[<>\r\n]+)\[\/url\]`)
 	text = regex.ReplaceAllString(text, "<a rel='nofollow' href='$1'>$1</a>")
 
-	regex2 := regexp.MustCompile(`\[url=([^\]]+)\]`)
+	regex2 := regexp.MustCompile(`\[url=([^\[\]<>\r\n]+)\]`)
 	text = regex2.ReplaceAllString(text, "<a rel='nofollow' href='$1'>")
 	text = strings.Replace(text, "[/url]", "</a>", -1)
 
@@ -190,10 +192,14 @@ func parseSize(text string) string {
 }
 
 func parseEmail(text string) string {
-	regex := regexp.MustCompile(`\[email\](([^[]+)@([^[]+))\[\/email\]`)
+	regex := regexp.MustCompile(`\[email\](([^\[<>
+]+)@([^\[<>
+]+))\[\/email\]`)
 	text = regex.ReplaceAllString(text, "<a rel='nofollow' href='mailto:$1'>$1</a>")
 
-	regex2 := regexp.MustCompile(`\[email=(([^[]+)@([^[]+))\]`)
+	regex2 := regexp.MustCompile(`\[email=(([^\[<>
+]+)@([^\[<>
+]+))\]`)
 	text = regex2.ReplaceAllString(text, "<a rel='nofollow' href='mailto:$1'>")
 	text = strings.Replace(text, "[/email]", "</a>", -1)
 
@@ -209,6 +215,9 @@ func parseProfile(text string) string {
 			return fmt.Sprintf("<a href='/u/%s'>%s</a>", groups[1], groups[2])
 		}
 
+		if strings.ContainsAny(groups[2], "[]<>") {
+			return groups[0]
+		}
 		return fmt.Sprintf("<a href='/u/%s'>/u/%s</a>", groups[2], groups[2])
 	})
 
@@ -216,14 +225,16 @@ func parseProfile(text string) string {
 }
 
 func parseImage(text string) string {
-	regex := regexp.MustCompile(`\[img\]([^[]+)\[\/img\]`)
+	regex := regexp.MustCompile(`\[img\]([^\[<>
+]+)\[\/img\]`)
 	text = ReplaceAllStringSubmatchFunc(regex, text, func(groups []string, _ string) string {
 		decoded, _ := url.QueryUnescape(groups[1])
 		return fmt.Sprintf("<img src='%s' loading='lazy'/>", template.HTMLEscapeString(decoded))
 	})
 
 	// there is also a case of our old bbcode parsing [img=url][/img]
-	regex2 := regexp.MustCompile(`\[img=([^[]+)\]\[\/img\]`)
+	regex2 := regexp.MustCompile(`\[img=([^\[<>
+]+)\]\[\/img\]`)
 	text = ReplaceAllStringSubmatchFunc(regex2, text, func(groups []string, _ string) string {
 		decoded, _ := url.QueryUnescape(groups[1])
 		return fmt.Sprintf("<img src='%s' loading='lazy'/>", template.HTMLEscapeString(decoded))
@@ -267,7 +278,7 @@ func parseImagemap(text string) string {
 
 		pseudoHtml := fmt.Sprintf(
 			"<div class='bbcode-imagemap'><img src='%s' class='bbcode-imagemap-image' loading='lazy'>",
-			matches[regex.SubexpIndex("image_url")],
+			strings.ReplaceAll(matches[regex.SubexpIndex("image_url")], "[", "&#91;"),
 		)
 
 		lineRegex := regexp.MustCompile(`(?m)^\s*(?P<x>\S+)\s+(?P<y>\S+)\s+(?P<width>\S+)\s+(?P<height>\S+)\s+(?P<redirect>\S+)\s+(?P<title>.+?)\s*$`)
@@ -312,12 +323,12 @@ func parseImagemap(text string) string {
 			pseudoHtml += fmt.Sprintf(
 				"<%s class='bbcode-imagemap-tooltip' href='%s' style='left: %f%%; top: %f%%; width: %f%%; height: %f%%;' data-tooltip='%s' data-position='%s'></%s>",
 				tag,
-				redirect,
+				strings.ReplaceAll(redirect, "[", "&#91;"),
 				xAxisClamped,
 				yAxisClamped,
 				widthClamped,
 				heightClamped,
-				title,
+				strings.ReplaceAll(title, "[", "&#91;"),
 				tooltipPos,
 				tag,
 			)
@@ -335,14 +346,11 @@ func parseImagemap(text string) string {
 func parseBox(text string) string {
 	regex := regexp.MustCompile(`\[box=((\\\[\[\]]|[^][]|\[(\\\[\[\]]|[^][]|(.*?))*\])*?)\]\n*`)
 
-	text = ReplaceAllStringSubmatchFunc(regex, text, func(groups []string, identifier string) string {
+	text = ReplaceAllStringSubmatchFunc(regex, text, func(groups []string, _ string) string {
 
 		return fmt.Sprintf(
-			"<div class='bbcode-box'><button class='bbcode-box-btn' id='btn-%s' type='button' onclick='toggleBBCodeBox(this)'><i id='icon-%s' class='bbcode-box-icon fa-solid fa-angle-right'></i><span>%s</span></button><div class='bbcode-box-content bbcode-hidden' id='content-%s'>",
-			identifier,
-			identifier,
+			"<div class='bbcode-box'><button class='bbcode-box-btn' type='button'><i class='bbcode-box-icon fa-solid fa-angle-right'></i><span>%s</span></button><div class='bbcode-box-content bbcode-hidden'>",
 			groups[1],
-			identifier,
 		)
 	})
 
@@ -350,12 +358,9 @@ func parseBox(text string) string {
 	text = regex2.ReplaceAllString(text, "</div></div>")
 
 	regex3 := regexp.MustCompile(`\[spoilerbox\]\n*`)
-	text = ReplaceAllStringSubmatchFunc(regex3, text, func(_ []string, identifier string) string {
+	text = ReplaceAllStringSubmatchFunc(regex3, text, func(_ []string, _ string) string {
 		return fmt.Sprintf(
-			"<div class='bbcode-box'><button class='bbcode-box-btn' id='btn-%s' type='button' onclick='toggleBBCodeBox(this)'><i id='icon-%s' class='bbcode-box-icon fa-solid fa-angle-right'></i><span>SPOILER</span></button><div class='bbcode-box-content bbcode-hidden' id='content-%s'>",
-			identifier,
-			identifier,
-			identifier,
+			"<div class='bbcode-box'><button class='bbcode-box-btn' type='button'><i class='bbcode-box-icon fa-solid fa-angle-right'></i><span>SPOILER</span></button><div class='bbcode-box-content bbcode-hidden'>",
 		)
 	})
 
@@ -365,41 +370,47 @@ func parseBox(text string) string {
 	return text
 }
 
+var (
+	youtubeTag = regexp.MustCompile(`\[youtube\]([^\[<>
+]+)\[/youtube\]
+?`)
+	youtubeVideo = regexp.MustCompile(`^(?:https://(?:(?:www\.|m\.)?youtube\.com/(?:watch\?v=|embed/)|youtu\.be/))?([A-Za-z0-9_-]{11})(?:[?&][^[:space:]]*)?$`)
+	twitchTag    = regexp.MustCompile(`\[twitch\]([^\[<>
+]+)\[/twitch\]
+?`)
+	twitchClip = regexp.MustCompile(`^(?:https://(?:clips\.twitch\.tv/|(?:www\.)?twitch\.tv/[^/]+/clip/))?([A-Za-z0-9_-]+)(?:\?[^[:space:]]*)?$`)
+)
+
+func videoFrame(src string) string {
+	return "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='" +
+		html.EscapeString(src) + "' frameborder='0' allowfullscreen></iframe></div></div>"
+}
+
 func parseYoutube(text string) string {
-
-	regex := regexp.MustCompile(`\[youtube\]https:\/\/(.*)youtube\.com\/watch\?v=([^&]+)`)
-	text = regex.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/$2")
-
-	regex2 := regexp.MustCompile(`\[youtube\]https:\/\/(.*)youtu\.be\/([^?]+)`)
-	text = regex2.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/$2")
-
-	regex3 := regexp.MustCompile(`\[youtube\]https:\/\/(.*)youtube\.com\/embed\/([^?]+)`)
-	text = regex3.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/$2")
-
-	regex4 := regexp.MustCompile(`\[youtube\](.*)`)
-	text = regex4.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://www.youtube.com/embed/$1")
-
-	regex5 := regexp.MustCompile(`\[\/youtube\]\n?`)
-	text = regex5.ReplaceAllString(text, "?rel=0' frameborder='0' allowfullscreen></iframe></div></div>")
-
-	return text
+	return youtubeTag.ReplaceAllStringFunc(text, func(tag string) string {
+		video := youtubeVideo.FindStringSubmatch(html.UnescapeString(youtubeTag.FindStringSubmatch(tag)[1]))
+		if video == nil {
+			return tag
+		}
+		return videoFrame("https://www.youtube.com/embed/" + video[1] + "?rel=0")
+	})
 }
 
 func parseTwitch(text string) string {
-
-	regex := regexp.MustCompile(`\[twitch\]https:\/\/(.*)\.twitch\.tv\/(.*)\/clip\/([^?]+)`)
-	text = regex.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://clips.twitch.tv/embed?clip=$3")
-
-	regex2 := regexp.MustCompile(`\[twitch\](.*)`)
-	text = regex2.ReplaceAllString(text, "<div class='bbcode-video-box'><div class='bbcode-video'><iframe src='https://clips.twitch.tv/embed?clip=$1")
-
-	regex3 := regexp.MustCompile(`\[\/twitch\]\n?`)
-	text = regex3.ReplaceAllString(text, fmt.Sprintf(
-		"&parent=%s' frameborder='0' allowfullscreen></iframe></div></div>",
-		strings.Split(settings.GetSettings().APP_BASE_URL, "://")[1],
-	))
-
-	return text
+	if !twitchTag.MatchString(text) {
+		return text
+	}
+	baseURL, err := url.Parse(settings.GetSettings().APP_BASE_URL)
+	if err != nil {
+		return text
+	}
+	return twitchTag.ReplaceAllStringFunc(text, func(tag string) string {
+		clip := twitchClip.FindStringSubmatch(html.UnescapeString(twitchTag.FindStringSubmatch(tag)[1]))
+		if clip == nil {
+			return tag
+		}
+		return videoFrame("https://clips.twitch.tv/embed?clip=" + clip[1] + "&parent=" + url.QueryEscape(baseURL.Hostname()))
+	})
 }
 
 func parseCode(text string) string {
@@ -425,7 +436,7 @@ func parseContainer(text string) string {
 		if matches != nil {
 			args := strings.Split(strings.TrimSpace(matches[1]), " ")
 			for _, arg := range args {
-				argVars := strings.Split(arg, "=")
+				argVars := strings.SplitN(arg, "=", 2)
 				switch argVars[0] {
 				case "compact":
 					class += "compact-container"
@@ -434,6 +445,9 @@ func parseContainer(text string) string {
 					style += "margin: 0 auto;"
 					break
 				case "width":
+					if len(argVars) != 2 {
+						continue
+					}
 					if parsedInt, err := strconv.Atoi(argVars[1]); err == nil {
 						fixedInt := Clamp(parsedInt, 0, 100)
 						style += fmt.Sprintf("width: %d%%;", fixedInt)
@@ -474,13 +488,19 @@ var policy = func() *bluemonday.Policy {
 	)
 
 	p.AllowStandardURLs()
-	p.AllowStyling()
-	p.AllowAttrs("style", "class", "id").Globally()
+	p.AllowAttrs("class").Matching(regexp.MustCompile(`^(?:bbcode-[a-z-]+|compact-container|ui divider|bbcode-box-content bbcode-hidden|bbcode-box-icon fa-solid fa-angle-right)$`)).Globally()
+	p.AllowStyles("color", "font-size").OnElements("span")
+	p.AllowStyles("text-align").MatchingEnum("left", "right", "center").OnElements("div")
+	p.AllowStyles("margin").MatchingEnum("0 auto").OnElements("div")
+	p.AllowStyles("width").Matching(regexp.MustCompile(`^(?:100|[0-9]{1,2})%$`)).OnElements("div")
+	p.AllowStyles("list-style-type").MatchingEnum("disc").OnElements("ol")
+	p.AllowStyles("left", "top", "width", "height").Matching(regexp.MustCompile(`^[0-9]{1,3}(?:\.[0-9]+)?%$`)).OnElements("a", "span")
 	p.AllowAttrs("href", "rel").OnElements("a")
 	p.AllowAttrs("loading", "src").OnElements("img")
 	p.AllowAttrs("controls", "src", "preload").OnElements("audio")
-	p.AllowAttrs("src", "frameborder", "allowfullscreen").OnElements("iframe")
-	p.AllowAttrs("onclick", "type").OnElements("button")
+	p.AllowAttrs("src").Matching(regexp.MustCompile(`^https://(?:www\.youtube\.com/embed/[A-Za-z0-9_-]{11}\?rel=0|clips\.twitch\.tv/embed\?clip=[A-Za-z0-9_-]+&parent=[a-zA-Z0-9.-]+)$`)).OnElements("iframe")
+	p.AllowAttrs("frameborder", "allowfullscreen").OnElements("iframe")
+	p.AllowAttrs("type").Matching(regexp.MustCompile(`^button$`)).OnElements("button")
 
 	p.AllowAttrs("data-tooltip", "data-position").OnElements("a", "span")
 

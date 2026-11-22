@@ -97,24 +97,54 @@ func ChangePasswordSubmitHandler(c *gin.Context) {
 		uq.Add("email", email)
 	}
 
+	var newPasswordHash string
 	if c.PostForm("newpassword") != "" {
 		if s := au.ValidatePassword(c.PostForm("newpassword")); s != "" {
 			messages = append(messages, msg.ErrorMessage{lu.T(c, s)})
 			return
 		}
 		pw, err := au.GeneratePassword(c.PostForm("newpassword"))
-		if err == nil {
-			uq.Add("password_md5", pw)
+		if err != nil {
+			c.Error(err)
+			return
 		}
-		sess := sessions.GetSession(c)
-		sess.Set("pw", cryptography.MakeMD5(pw))
-		sess.Save()
+		newPasswordHash = pw
+		uq.Add("password_md5", pw)
 	}
 
-	_, err := services.DB.Exec("UPDATE users SET "+uq.Fields()+" WHERE id = ? LIMIT 1", append(uq.Parameters, ctx.User.ID)...)
-	if err != nil {
-		c.Error(err)
-		slog.ErrorContext(c, err.Error())
+	if len(uq.Parameters) != 0 {
+		err := func() error {
+			tx, err := services.DB.Beginx()
+			if err != nil {
+				return err
+			}
+			defer tx.Rollback()
+			_, err = tx.Exec("UPDATE users SET "+uq.Fields()+" WHERE id = ? LIMIT 1", append(uq.Parameters, ctx.User.ID)...)
+			if err != nil {
+				return err
+			}
+			if newPasswordHash != "" {
+				if _, err := tx.Exec("DELETE FROM tokens WHERE user = ?", ctx.User.ID); err != nil {
+					return err
+				}
+				if _, err := tx.Exec("DELETE FROM remember WHERE userid = ?", ctx.User.ID); err != nil {
+					return err
+				}
+			}
+			return tx.Commit()
+		}()
+		if err != nil {
+			c.Error(err)
+			messages = append(messages, msg.ErrorMessage{lu.T(c, "Could not save your settings.")})
+			return
+		}
+	}
+	if newPasswordHash != "" {
+		sess := sessions.GetSession(c)
+		sess.Set("pw", cryptography.MakeMD5(newPasswordHash))
+		sess.Delete("token")
+		sess.Save()
+		sessions.SetAPICookie(c, "")
 	}
 
 	messages = append(messages, msg.SuccessMessage{lu.T(c, "Your settings have been saved.")})

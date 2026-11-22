@@ -48,23 +48,13 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	// check whether tag already exists
-	if services.DB.QueryRow("SELECT 1 FROM clans WHERE tag = ?", c.PostForm("tag")).
-		Scan(new(int)) != sql.ErrNoRows {
-		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "A clan with that tag already exists!")})
+	tag := strings.TrimSpace(c.PostForm("tag"))
+	if matched, _ := regexp.MatchString(`^[A-Za-z0-9 _\[\]-]{1,8}$`, tag); !matched {
+		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "Enter a clan tag of 1–8 letters, numbers, spaces, or the characters _[]-.")})
 		return
 	}
-
-	// recaptcha verify
-
-	tag := "0"
-	if c.PostForm("tag") != "" {
-		tag = c.PostForm("tag")
-	}
-
-	tagRunes := []rune(tag)
-	if len(tagRunes) > 8 {
-		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "The provided clan tag is too long!")})
+	if services.DB.QueryRow("SELECT 1 FROM clans WHERE tag = ?", tag).Scan(new(int)) != sql.ErrNoRows {
+		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "A clan with that tag already exists!")})
 		return
 	}
 
@@ -83,9 +73,22 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 		return
 	}
 
+	defer tx.Rollback()
+	userID := sessions.GetContext(c).User.ID
+	var clanID int
+	if err := tx.QueryRow("SELECT clan_id FROM users WHERE id = ? FOR UPDATE", userID).Scan(&clanID); err != nil {
+		c.Error(err)
+		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "An error occurred while creating a clan.")})
+		return
+	}
+	if clanID != 0 {
+		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "You're already in a Clan.")})
+		return
+	}
+
 	res, err := tx.Exec(`INSERT INTO clans(name, description, icon, tag, owner, invite, status)
 							  VALUES (?, ?, ?, ?, ?, ?, 2);`,
-		username, c.PostForm("password"), c.PostForm("email"), tag, sessions.GetContext(c).User.ID, invite)
+		username, c.PostForm("password"), c.PostForm("email"), tag, userID, invite)
 	if err != nil {
 		tx.Rollback()
 		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "An error occurred while creating a clan.")})
@@ -94,7 +97,7 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 	}
 	lid, _ := res.LastInsertId()
 
-	_, err = tx.Exec("UPDATE users SET clan_id = ? WHERE id = ?", lid, sessions.GetContext(c).User.ID)
+	_, err = tx.Exec("UPDATE users SET clan_id = ? WHERE id = ?", lid, userID)
 	if err != nil {
 		tx.Rollback()
 		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "An error occurred while creating a clan.")})
@@ -102,7 +105,11 @@ func ClanCreateSubmitHandler(c *gin.Context) {
 		return
 	}
 
-	tx.Commit()
+	if err := tx.Commit(); err != nil {
+		c.Error(err)
+		clanCreateResp(c, msg.ErrorMessage{lu.T(c, "An error occurred while creating a clan.")})
+		return
+	}
 
 	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Clan created.")})
 	sessions.GetSession(c).Save()

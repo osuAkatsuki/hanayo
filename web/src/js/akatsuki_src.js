@@ -677,7 +677,7 @@ $(document).ready(function () {
         };
         $.each(resp.users, function (index, item) {
           r.results.push({
-            title: item.username,
+            title: escapeHTML(item.username),
             url: "/u/" + item.id,
             image: hanayoConf.avatars + "/" + item.id,
           });
@@ -1169,10 +1169,9 @@ function toggleModeAvailability(mode, rx) {
   }
 }
 
-function toggleBBCodeBox(e) {
-  identifier = $(e).attr("id").split("-")[1];
-  contentBox = $("#content-" + identifier);
-  icon = $("#icon-" + identifier);
+$(document).on("click", ".bbcode-container .bbcode-box-btn", function () {
+  const contentBox = $(this).next(".bbcode-box-content");
+  const icon = $(this).find(".bbcode-box-icon");
 
   if (contentBox.hasClass("bbcode-hidden")) {
     contentBox.slideDown(100, () => {
@@ -1185,4 +1184,4 @@ function toggleBBCodeBox(e) {
       icon.removeClass("fa-angle-down").addClass("fa-angle-right");
     });
   }
-}
+});

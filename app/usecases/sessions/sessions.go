@@ -22,8 +22,8 @@ func ClientIP(c *gin.Context) string {
 func GenerateToken(id int, c *gin.Context) (string, error) {
 	tok := common.RandomString(32)
 	_, err := services.DB.Exec(
-		`INSERT INTO tokens(user, privileges, description, token, private)
-					VALUES (   ?,        '0',           ?,     ?,     '1');`,
+		`INSERT INTO tokens(user, privileges, description, token, private, last_updated)
+					VALUES (?, '0', ?, ?, '1', UNIX_TIMESTAMP());`,
 		id, ClientIP(c), cryptography.MakeMD5(tok))
 	if err != nil {
 		slog.Error("Could not generate token", "error", err.Error())
@@ -37,7 +37,7 @@ func CheckToken(s string, id int, c *gin.Context) (string, error) {
 		return GenerateToken(id, c)
 	}
 
-	if err := services.DB.QueryRow("SELECT 1 FROM tokens WHERE token = ?", cryptography.MakeMD5(s)).Scan(new(int)); err == sql.ErrNoRows {
+	if err := services.DB.QueryRow("SELECT 1 FROM tokens WHERE token = ? AND user = ? AND private = 1 AND last_updated >= UNIX_TIMESTAMP() - 30 * 86400", cryptography.MakeMD5(s), id).Scan(new(int)); err == sql.ErrNoRows {
 		return GenerateToken(id, c)
 	} else if err != nil {
 		slog.Error("Could not check token", err.Error())

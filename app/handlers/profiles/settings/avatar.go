@@ -7,6 +7,7 @@ import (
 	_ "image/jpeg"
 	"image/png"
 	"io"
+	"net/http"
 	"os"
 
 	"golang.org/x/exp/slog"
@@ -34,9 +35,15 @@ func AvatarSubmitHandler(c *gin.Context) {
 	defer func() {
 		tu.SimpleReply(c, m)
 	}()
+	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, maxImageUploadBytes)
 	file, _, err := c.Request.FormFile("avatar")
 	if err != nil {
 		m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
+		return
+	}
+	defer file.Close()
+	if err := validateImageDimensions(file); err != nil {
+		m = msg.ErrorMessage{lu.T(c, "The image must be at most 4096 pixels on each side and 12 megapixels total.")}
 		return
 	}
 	img, _, err := image.Decode(file)
@@ -53,6 +60,7 @@ func AvatarSubmitHandler(c *gin.Context) {
 		return
 	}
 	defer os.Remove(f.Name())
+	defer f.Close()
 
 	err = png.Encode(f, img)
 	if err != nil {

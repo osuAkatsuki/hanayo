@@ -68,3 +68,24 @@ func assertSafeImageBBCode(t *testing.T, input string) {
 		t.Fatalf("expected one image element, got %d: %s", imageCount, output)
 	}
 }
+
+func TestConvertBBCodeToHTMLProfileFormatting(t *testing.T) {
+	input := "[youtube]https://youtu.be/dQw4w9WgXcQ[/youtube]\n" +
+		"[box=Details][b]Example[/b][/box] [size=120]bigger[/size] <p>literal</p>"
+	html := ConvertBBCodeToHTML(input)
+	for _, expected := range []string{
+		"https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0",
+		"bbcode-box-btn",
+		"bbcode-box-content bbcode-hidden",
+		"<strong>Example</strong>",
+		"font-size: 120%",
+		"&lt;p&gt;literal&lt;/p&gt;",
+	} {
+		if !strings.Contains(html, expected) {
+			t.Errorf("expected %q in %s", expected, html)
+		}
+	}
+	if strings.Contains(html, "onclick=") {
+		t.Error("spoiler button uses an inline handler")
+	}
+}
