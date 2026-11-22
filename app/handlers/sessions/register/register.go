@@ -32,9 +32,7 @@ func RegisterPageHandler(c *gin.Context) {
 	if c.Query("stopsign") != "1" {
 		u, _ := tryBotnets(c)
 		if u != "" {
-			tu.Simple(c, tu.GetSimpleByFilename("register/elmo.html"), nil, map[string]interface{}{
-				"Username": u,
-			})
+			tu.Simple(c, tu.GetSimpleByFilename("register/elmo.html"), nil, nil)
 			return
 		}
 	}
@@ -115,7 +113,7 @@ func RegisterSubmitHandler(c *gin.Context) {
 	// check whether an user with that email already exists
 	if services.DB.QueryRow("SELECT 1 FROM users WHERE email = ?", email).
 		Scan(new(int)) != sql.ErrNoRows {
-		registerResp(c, msg.ErrorMessage{lu.T(c, "An user with that email address already exists!")})
+		registerResp(c, msg.ErrorMessage{lu.T(c, "We could not register this account with those details.")})
 		return
 	}
 

@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/gin-gonic/contrib/sessions"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	settingsState "github.com/osuAkatsuki/hanayo/app/states/settings"

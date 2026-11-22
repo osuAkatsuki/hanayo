@@ -1,9 +1,6 @@
 package logout
 
 import (
-	"net/http"
-	"time"
-
 	"github.com/gin-gonic/gin"
 	msg "github.com/osuAkatsuki/hanayo/app/models/messages"
 	"github.com/osuAkatsuki/hanayo/app/sessions"
@@ -25,11 +22,7 @@ func LogoutSubmitHandler(c *gin.Context) {
 		return
 	}
 	sess.Clear()
-	http.SetCookie(c.Writer, &http.Cookie{
-		Name:    "rt",
-		Value:   "",
-		Expires: time.Now().Add(-time.Hour),
-	})
+	sessions.SetAPICookie(c, "")
 	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Successfully logged out.")})
 	sess.Save()
 	c.Redirect(302, "/")

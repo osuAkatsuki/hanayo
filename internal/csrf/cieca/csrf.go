@@ -25,17 +25,17 @@ func (c *ciecaCSRF) Generate(u int) (string, error) {
 	var s string
 	for {
 		s = common.RandomString(10)
-		_, e := c.GetWithExist(s)
+		_, e := c.GetWithExist(strconv.Itoa(u) + ":" + s)
 		if !e {
 			break
 		}
 	}
-	c.SetWithExpiration(strconv.Itoa(u)+s, nil, time.Minute*15)
+	c.SetWithExpiration(strconv.Itoa(u)+":"+s, nil, time.Minute*15)
 	return s, nil
 }
 
 func (c *ciecaCSRF) Validate(u int, token string) (bool, error) {
-	key := strconv.Itoa(u) + token
+	key := strconv.Itoa(u) + ":" + token
 	_, e := c.GetWithExist(key)
 	if e {
 		c.Delete(key)

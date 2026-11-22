@@ -343,12 +343,12 @@ function buildGame(game) {
             <div class="game-header-map-text">
               <div class="game-header-map-title">
                 <div class="shadow-text">
-                  ${game.beatmap.title} [${game.beatmap.version}]
+                  ${escapeHTML(game.beatmap.title)} [${escapeHTML(game.beatmap.version)}]
                 </div>
               </div>
               <div class="game-header-map-artist">
                 <div class="shadow-text">
-                  ${game.beatmap.artist}
+                  ${escapeHTML(game.beatmap.artist)}
                 </div>
               </div>
             </div>

@@ -6,7 +6,6 @@ require (
 	github.com/aws/aws-sdk-go v1.47.3
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/structs v1.1.0
-	github.com/gin-gonic/contrib v0.0.0-20181101072842-54170a7b0b4b
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-email-validator/go-email-validator v0.0.0-20220810051442-a2133f859f98
 	github.com/go-sql-driver/mysql v1.7.1
@@ -93,16 +92,15 @@ require (
 
 require (
 	github.com/DataDog/datadog-go v4.8.2+incompatible // indirect
-	github.com/boj/redistore v0.0.0-20160128113310-fc113767cd6b // indirect
 	github.com/facebookgo/ensure v0.0.0-20200202191622-63f1cf65ac4c // indirect
 	github.com/facebookgo/stack v0.0.0-20160209184415-751773369052 // indirect
 	github.com/facebookgo/subset v0.0.0-20200203212716-c811ad88dec4 // indirect
-	github.com/garyburd/redigo v1.6.3 // indirect
+	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
-	github.com/gorilla/sessions v1.1.3 // indirect
+	github.com/gorilla/sessions v1.2.1 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/klauspost/compress v1.17.5 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect

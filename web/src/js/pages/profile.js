@@ -1302,7 +1302,7 @@ function viewScoreInfo() {
 
   $("#score-data-table tr").remove();
   $("#score-data-table").append(els);
-  $(".ui.modal").modal("show");
+  $("#profile-score-modal").modal("show");
 }
 
 var modeTranslations = [

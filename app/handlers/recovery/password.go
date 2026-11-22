@@ -69,7 +69,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 	case nil:
 		// ignore
 	case sql.ErrNoRows:
-		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "That user could not be found.")})
+		showRecoveryRequestConfirmation(c)
 		return
 	default:
 		c.Error(err)
@@ -83,7 +83,7 @@ func PasswordResetPageHandler(c *gin.Context) {
 	if common.UserPrivileges(privileges)&
 		(common.UserPrivilegeNormal|common.UserPrivilegePendingVerification) == 0 &&
 		!requiresManualPasswordRecovery(id, common.UserPrivileges(privileges)) {
-		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "You look pretty banned/locked here.")})
+		showRecoveryRequestConfirmation(c)
 		return
 	}
 
@@ -153,7 +153,11 @@ func PasswordResetPageHandler(c *gin.Context) {
 			"user_id", id, "client_ip", c.ClientIP(), "stage", "request")
 	}
 
-	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "Done! You should shortly receive an email from us at the email you used to sign up on Akatsuki.")})
+	showRecoveryRequestConfirmation(c)
+}
+
+func showRecoveryRequestConfirmation(c *gin.Context) {
+	sessions.AddMessage(c, msg.SuccessMessage{lu.T(c, "If your account is eligible for password recovery, you will receive an email shortly.")})
 	sessions.GetSession(c).Save()
 	c.Redirect(302, "/")
 }
@@ -308,6 +312,14 @@ func PasswordResetContinueSubmitHandler(c *gin.Context) {
 			eh.Resp500(c)
 			return
 		}
+		for _, query := range []string{"DELETE FROM tokens WHERE user = ?", "DELETE FROM remember WHERE userid = ?"} {
+			if _, err := tx.Exec(query, userID); err != nil {
+				c.Error(err)
+				eh.Resp500(c)
+				return
+			}
+		}
+
 	}
 
 	if err := tx.Commit(); err != nil {

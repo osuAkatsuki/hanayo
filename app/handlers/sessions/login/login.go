@@ -64,10 +64,7 @@ func LoginSubmitHandler(c *gin.Context) {
 
 	switch {
 	case err == sql.ErrNoRows:
-		if param == "username_safe" {
-			param = "username"
-		}
-		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "No user with such %s!", param)})
+		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Incorrect username or password.")})
 		return
 	case err != nil:
 		c.Error(err)
@@ -88,7 +85,7 @@ func LoginSubmitHandler(c *gin.Context) {
 			"input_username",
 			data.Username,
 		)
-		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Wrong password.")})
+		tu.SimpleReply(c, msg.ErrorMessage{lu.T(c, "Incorrect username or password.")})
 		return
 	}
 
@@ -129,7 +126,7 @@ func LoginSubmitHandler(c *gin.Context) {
 	AfterLogin(c, data.ID, data.Country)
 
 	redir := c.PostForm("redir")
-	if len(redir) > 0 && (redir[0] != '/' || strings.HasPrefix(redir, "//")) {
+	if len(redir) > 0 && (redir[0] != '/' || strings.HasPrefix(redir, "//") || strings.ContainsAny(redir, "\\\r\n\t")) {
 		redir = ""
 	}
 

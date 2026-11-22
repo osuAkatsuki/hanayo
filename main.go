@@ -9,13 +9,15 @@ import (
 	"crypto/tls"
 	"encoding/gob"
 	"fmt"
+	"net/http"
 	"os"
 	"time"
 
 	"golang.org/x/exp/slog"
 
 	"github.com/fatih/structs"
-	"github.com/gin-gonic/contrib/sessions"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -161,7 +163,13 @@ func generateEngine() *gin.Engine {
 	slog.Info("Starting session system")
 	settings := settingsState.GetSettings()
 
-	store := sessions.NewCookieStore([]byte(settings.APP_COOKIE_SECRET))
+	store := cookie.NewStore([]byte(settings.APP_COOKIE_SECRET))
+	store.Options(sessions.Options{
+		Path: "/", HttpOnly: true, Secure: sessionsmanager.SecureCookies(),
+		MaxAge:   30 * 24 * 60 * 60,
+		SameSite: http.SameSiteLaxMode,
+	})
+	sameOrigin := middleware.RequireSameOrigin(settings.APP_BASE_URL)
 
 	// Initalize Gin
 	gin.SetMode(gin.ReleaseMode)
@@ -186,7 +194,7 @@ func generateEngine() *gin.Engine {
 		c.String(200, "ok")
 	})
 
-	r.POST("/login", loginHandlers.LoginSubmitHandler)
+	r.POST("/login", sameOrigin, loginHandlers.LoginSubmitHandler)
 	r.GET("/logout", logoutHandlers.LogoutSubmitHandler)
 
 	r.GET("/", miscHandlers.HomepagePageHandler)
@@ -198,7 +206,7 @@ func generateEngine() *gin.Engine {
 	r.GET("/register/welcome", registerHandlers.WelcomePageHandler)
 
 	r.GET("/clans/create", clanCreationHandlers.ClanCreatePageHandler)
-	r.POST("/clans/create", clanCreationHandlers.ClanCreateSubmitHandler)
+	r.POST("/clans/create", sameOrigin, clanCreationHandlers.ClanCreateSubmitHandler)
 
 	r.GET("/u/:user", profilesHandlers.UserProfilePageHandler)
 	r.GET("/rx/u/:user", func(c *gin.Context) { // redirect for old links.
@@ -224,14 +232,14 @@ func generateEngine() *gin.Engine {
 		accountRecoveryHandlers.PasswordResetContinueSubmitHandler,
 	)
 
-	r.POST("/irc/generate", ircHandlers.IrcGenTokenSubmitHandler)
+	r.POST("/irc/generate", sameOrigin, ircHandlers.IrcGenTokenSubmitHandler)
 
 	r.GET("/settings/password", profileEditHandlers.ChangePasswordPageHandler)
 	r.POST("/settings/password", profileEditHandlers.ChangePasswordSubmitHandler)
 	r.POST("/settings/userpage/parse", profileEditHandlers.ParseBBCodeSubmitHandler)
-	r.POST("/settings/avatar", profileEditHandlers.AvatarSubmitHandler)
+	r.POST("/settings/avatar", sameOrigin, profileEditHandlers.AvatarSubmitHandler)
 	// r.POST("/settings/flag", profileEditHandlers.FlagChangeSubmitHandler)
-	r.POST("/settings/username", profileEditHandlers.NameChangeSubmitHandler)
+	r.POST("/settings/username", sameOrigin, profileEditHandlers.NameChangeSubmitHandler)
 	//r.GET("/settings/discord/finish", profileEditHandlers.discordFinish)
 	r.POST(
 		"/settings/profbackground/:type",

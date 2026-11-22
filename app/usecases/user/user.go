@@ -53,6 +53,9 @@ func SafeUsername(u string) string {
 }
 
 func ValidateEmail(email string) bool {
+	if strings.ContainsAny(email, "\"<>") {
+		return false
+	}
 
 	result := make(chan ev.ValidationResult)
 	go func() {
