@@ -6,6 +6,7 @@ import (
 	"image/gif"
 	"image/jpeg"
 	"io"
+	"net/http"
 	"os"
 	"regexp"
 	"strings"
@@ -42,6 +43,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		sessions.GetSession(c).Save()
 		c.Redirect(302, "/settings/profbackground")
 	}()
+	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, maxImageUploadBytes)
 	if ok, _ := services.CSRF.Validate(ctx.User.ID, c.PostForm("csrf")); !ok {
 		m = msg.ErrorMessage{lu.T(c, "Your session has expired. Please try redoing what you were trying to do.")}
 		return
@@ -55,6 +57,11 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 		file, _, err := c.Request.FormFile("value")
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
+			return
+		}
+		defer file.Close()
+		if err := validateImageDimensions(file); err != nil {
+			m = msg.ErrorMessage{lu.T(c, "The image must be at most 4096 pixels on each side and 12 megapixels total.")}
 			return
 		}
 		img, _, err := image.Decode(file)
@@ -121,6 +128,11 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
 			return
 		}
+		defer file.Close()
+		if err := validateImageDimensions(file); err != nil {
+			m = msg.ErrorMessage{lu.T(c, "The image must be at most 4096 pixels on each side and 12 megapixels total.")}
+			return
+		}
 		gifImage, err := gif.DecodeAll(file)
 		if err != nil {
 			m = msg.ErrorMessage{lu.T(c, "An error occurred.")}
@@ -137,6 +149,7 @@ func ProfileBackgroundSubmitHandler(c *gin.Context) {
 			return
 		}
 		defer os.Remove(f.Name())
+		defer f.Close()
 
 		err = gif.EncodeAll(f, gifImage)
 		if err != nil {
