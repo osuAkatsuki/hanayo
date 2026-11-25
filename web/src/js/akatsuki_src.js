@@ -161,6 +161,19 @@ var singlePageSnippets = {
 
   "/leaderboard": function () {
     page = page === 0 ? 1 : page;
+    var leaderboardPageSize = 50;
+
+    function buildLeaderboardPlaceholderRow() {
+      return $(
+        "<tr class='l-player leaderboard-placeholder' aria-hidden='true' />"
+      ).append(
+        $("<td />").html("&nbsp;"),
+        $("<td />").append($("<div class='flag-container' />").html("&nbsp;")),
+        $("<td />").html("&nbsp;"),
+        $("<td />").html("&nbsp;"),
+        $("<td />").html("&nbsp;")
+      );
+    }
 
     function loadLeaderboard() {
       var wl = window.location;
@@ -185,7 +198,7 @@ var singlePageSnippets = {
           mode: favouriteMode,
           rx: rx,
           p: page,
-          l: 50,
+          l: leaderboardPageSize,
           country: country,
           sort: sort,
         },
@@ -240,7 +253,11 @@ var singlePageSnippets = {
               )
             );
           });
-          disableSimplepagButtons(data.users.length < 50);
+          while (i < leaderboardPageSize) {
+            i++;
+            tb.append(buildLeaderboardPlaceholderRow());
+          }
+          disableSimplepagButtons(data.users.length < leaderboardPageSize);
         }
       );
     }
